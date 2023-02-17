@@ -1,0 +1,38 @@
+Mô tả cơ bản
+
+- Tham khảo http://www.cgv.vn/
+- Mô tả: Xây dựng trang web phục vụ
+cho một hãng chiếu phim ví dụ
+CGV, gồm nhiều cụm rạp. Cho khác
+hàng xem thông tin phim và đặt vé
+trực tuyến. Phía quản lý rạp thì xem
+được lịch sử đặt vé, quản lý thông
+tin phim....
+- Tính năng:
+ 
+Admin
+
+- Quản lý danh sách các
+bộ phim, các rạp
+phim, lịch chiếu phim
+(rạp nào chiếu phim
+nào lúc mấy giờ).
+- Quản lý khách hàng
+- Quản lý lịch sử đặt vé
+- Quản lý thu nhập,
+thống kê đặt vé...
+
+ 
+Khách hàng:
+
+- Cho phép người dùng xem danh
+sách các phim đang chiếu, phim sắp
+chiếu, thông tin chi tiết của từng bộ
+phim, trailer phim.
+- Cho phép người dùng đặt vé và chọn
+các gói bombo bắp nước. Người
+dùng phải đăng nhập để đặt vé.
+- Có nhiều loại vé khác nhau: 2D, 3D,
+4DX...
+- Người dùng được xem lại lịch sử đặt
+vé, thông tin cá nhân.
