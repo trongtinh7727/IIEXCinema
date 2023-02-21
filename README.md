@@ -5,7 +5,7 @@
 <br />
 <div align="center">
   <a href="https://gitlab.duthu.net/S52100852/webud">
-    <img src="www\assets\logo.png" alt="Logo" width="" height="">
+    <img src="www/assets/logo.png" alt="Logo" width="" height="">
   </a>
 
   <h3 align="center">IIEX - Cinema</h3>
