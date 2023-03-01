@@ -16,7 +16,11 @@
 .bg-4 {
     background-color: var(--color-4);
 }
+.hover-effect:hover {
+    opacity: 0.5;
+    transition: 0.4s;
+}
 
 #wrapper {
-    margin-top: 100px;
+    margin-top: 50px;
 }
