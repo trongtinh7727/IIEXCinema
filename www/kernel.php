@@ -14,10 +14,23 @@ spl_autoload_register(function ($class) {
     }
 });
 
+include_once(__DIR__ . '/routes/web.php');
+
+if (!empty($route)) {
+    $routes = explode('@', $route);
+    $controller = ucfirst($routes[0]);
+    $model = ucfirst(str_replace("Controller", '', $routes[0])) . 'Model';
+    $action = lcfirst($routes[1]);
+} else {
+    $controller = 'HomeController';
+    $model = 'HomeModel';
+    $action = 'indexAction';
+}
+
 $db = Connection::connect();
 
-$load_Home = new HomeController();
-$model = new HomeModel();
+$load_Home = new $controller();
+$model = new $model();
 $load_Home->model = $model;
 $model->db = $db;
-$index = $load_Home->indexAction();
+$index = $load_Home->$action();

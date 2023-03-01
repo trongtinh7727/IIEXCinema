@@ -11,7 +11,7 @@
 <body>
 
     admin ne
-    <a href="logout">đăng xuất nè</a>
+    <a href="?logout">đăng xuất nè</a>
 
 </body>
 
