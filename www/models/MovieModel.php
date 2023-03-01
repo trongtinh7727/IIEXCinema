@@ -1,5 +1,5 @@
 <?php
-class HomeModel
+class MovieModel
 {
     public $db;
 }
