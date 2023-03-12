@@ -11,3 +11,4 @@ class UserModel
         return $stmt;
     }
 }
+?>
