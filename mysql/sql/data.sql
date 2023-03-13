@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 12, 2023 at 04:26 PM
+-- Generation Time: Mar 12, 2023 at 05:10 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -242,8 +242,16 @@ CREATE TABLE `ticket` (
   `ID` int(11) NOT NULL,
   `SCH_ID` int(11) NOT NULL,
   `BOO_ID` int(11) NOT NULL,
-  `SEAT` char(15) DEFAULT NULL
+  `SEAT_ID` int(11) DEFAULT NULL,
+  `price` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `ticket`
+--
+
+INSERT INTO `ticket` (`ID`, `SCH_ID`, `BOO_ID`, `SEAT_ID`, `price`) VALUES
+(2, 1, 1, 1, 25000);
 
 --
 -- Indexes for dumped tables
@@ -321,7 +329,8 @@ ALTER TABLE `theater`
 ALTER TABLE `ticket`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `FK_SCHEDULE_TICKET` (`SCH_ID`),
-  ADD KEY `FK_TICKET_BOOKING` (`BOO_ID`);
+  ADD KEY `FK_TICKET_BOOKING` (`BOO_ID`),
+  ADD KEY `FK_TICKET_SEAT` (`SEAT_ID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -385,7 +394,7 @@ ALTER TABLE `theater`
 -- AUTO_INCREMENT for table `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -428,7 +437,8 @@ ALTER TABLE `theater`
 --
 ALTER TABLE `ticket`
   ADD CONSTRAINT `FK_SCHEDULE_TICKET` FOREIGN KEY (`SCH_ID`) REFERENCES `schedule` (`ID`),
-  ADD CONSTRAINT `FK_TICKET_BOOKING` FOREIGN KEY (`BOO_ID`) REFERENCES `booking` (`ID`);
+  ADD CONSTRAINT `FK_TICKET_BOOKING` FOREIGN KEY (`BOO_ID`) REFERENCES `booking` (`ID`),
+  ADD CONSTRAINT `FK_TICKET_SEAT` FOREIGN KEY (`SEAT_ID`) REFERENCES `seat` (`ID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
