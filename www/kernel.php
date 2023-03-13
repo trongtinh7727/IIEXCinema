@@ -22,8 +22,8 @@ if (!empty($route)) {
     $model = ucfirst(str_replace("Controller", '', $routes[0])) . 'Model';
     $action = lcfirst($routes[1]);
 } else {
-    $controller = 'HomeController';
-    $model = 'HomeModel';
+    $controller = 'AdminController';
+    $model = 'AdminModel';
     $action = 'indexAction';
 }
 

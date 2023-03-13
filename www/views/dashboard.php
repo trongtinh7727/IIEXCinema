@@ -9,10 +9,8 @@
 </head>
 
 <body>
-
     admin ne
     <a href="?logout">đăng xuất nè</a>
-
 </body>
 
 </html>
