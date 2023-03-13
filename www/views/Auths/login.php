@@ -51,7 +51,7 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <!-- Checkbox -->
                                     <div class="form-check mb-0">
-                                        <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
+                                        <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" name="remember" />
                                         <label class="form-check-label" for="form2Example3">
                                             Remember me
                                         </label>
@@ -63,7 +63,7 @@
                                     <button type="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
                                     <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="#!" class="link-danger">Register</a></p>
                                 </div>
-                                <input type="text" value="true" name="LoginSubmit">
+                                <input type="hidden" name="LoginSubmit">
                             </form>
                         </div>
                     </div>
