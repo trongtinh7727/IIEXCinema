@@ -24,33 +24,33 @@
             <div class="login-html w-100 h-100 position-absolute px-5 py-5 rounded-5">
                 <!-- Tab 1 -->
                 <input id="tab-1" type="radio" name="tab" class="sign-in" checked>
-                <label for="tab-1" class="tab me-4">Sign In</label>
+                <label for="tab-1" class="tab me-4 text-uppercase">Sign In</label>
 
                 <!-- Tab 2 -->
                 <input id="tab-2" type="radio" name="tab" class="sign-up">
-                <label for="tab-2" class="tab">Sign Up</label>
+                <label for="tab-2" class="tab text-uppercase">Sign Up</label>
 
                 <!-- Form main -->
-                <div class="login-form">
+                <div class="login-form position-relative">
 
                     <!-- Sign in -->
                     <div class="sign-in-html">
 
                         <!-- Input -->
                         <div class="group mt-4">
-                            <label for="user" class="label">Username or Email</label>
-                            <input id="user" type="text" class="input mt-2 rounded-5">
+                            <label for="user" class="label text-uppercase w-100 d-block text-black fw-semibold">Username or Email</label>
+                            <input id="sign-in-user" type="text" class="input mt-2 rounded-5 w-100 d-block text-black fw-semibold">
                         </div>
 
                         <!-- Input -->
                         <div class="group mt-4">
-                            <label for="pass" class="label">Password</label>
-                            <input id="pass" type="password" class="input mt-2 rounded-5" data-type="password">
+                            <label for="pass" class="label text-uppercase w-100 d-block text-black fw-semibold">Password</label>
+                            <input id="sign-in-pass" type="password" class="input mt-2 rounded-5 w-100 d-block text-black fw-semibold" data-type="password">
                         </div>
 
                         <!-- Button -->
                         <div class="group mt-5">
-                            <input type="submit" class="button rounded-5" value="Sign In">
+                            <input type="submit" class="button rounded-5 text-uppercase w-100 d-block text-black fw-semibold" value="Sign In">
                         </div>
                         <hr style="height: 2px; background-color: rgb(0, 0, 0, 0.5);">
                     </div>
@@ -60,25 +60,25 @@
 
                         <!-- Input -->
                         <div class="group mt-4">
-                            <label for="user" class="label">Username</label>
-                            <input id="user" type="text" class="input mt-2 rounded-5">
+                            <label for="user" class="label text-uppercase w-100 d-block text-black fw-semibold">Username</label>
+                            <input id="sign-up-user" type="text" class="input mt-2 rounded-5 w-100 d-block text-black fw-semibold">
                         </div>
                         <div class="group mt-4">
-                            <label for="user" class="label">Email</label>
-                            <input id="user" type="email" class="input mt-2 rounded-5">
+                            <label for="user" class="label text-uppercase w-100 d-block text-black fw-semibold">Email</label>
+                            <input id="sign-up-email" type="email" class="input mt-2 rounded-5 w-100 d-block text-black fw-semibold">
                         </div>
                         <div class="group mt-4">
-                            <label for="user" class="label">Password</label>
-                            <input id="user" type="password" class="input mt-2 rounded-5">
+                            <label for="user" class="label text-uppercase w-100 d-block text-black fw-semibold">Password</label>
+                            <input id="sign-up-password" type="password" class="input mt-2 rounded-5 w-100 d-block text-black fw-semibold">
                         </div>
                         <div class="group mt-4">
-                            <label for="user" class="label">Confirm Password</label>
-                            <input id="user" type="password" class="input mt-2 rounded-5">
+                            <label for="user" class="label text-uppercase w-100 d-block text-black fw-semibold">Confirm Password</label>
+                            <input id="sign-up-cfpassword" type="password" class="input mt-2 rounded-5 w-100 d-block text-black fw-semibold">
                         </div>
                         <div class="group mt-5">
-                            <input type="submit" class="button rounded-5" value="Sign Up">
+                            <input type="submit" class="button rounded-5 text-uppercase w-100 d-block text-black fw-semibold" value="Sign Up">
                         </div>
-                        <div class="hr"></div>
+                        <hr style="height: 2px; background-color: rgb(0, 0, 0, 0.5);">
                     </div>
                 </div>
             </div>
@@ -86,10 +86,13 @@
     </div>
 
     <!-- Bootstrap 5.3 -->
-    <script src="/bootstrap-5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/bootstrap-5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JQuery -->
+    <script language="JavaScript" type="text/javascript" src="/js/jquery-3.6.4.min.js"></script>
 
     <!-- JS -->
-    <script src="/js/script.js"></script>
+    <script language="JavaScript" type="text/javascript" src="/js/script.js"></script>
 </body>
 
 </html>
