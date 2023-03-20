@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Homepage</title>
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="../assets/swiper/swiper-bundle.min.css">
+    
+    <!-- Font awesome 5 -->
+    <link rel="stylesheet" href="../assets/FontAwesome.Pro.6.3.0/css/all.css">
+
+    <!-- Bootstrap 5.3 -->
+    <link rel="stylesheet" href="../assets/bootstrap-5.3.0/css/bootstrap.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsive.css">
+
+</head>
+
+<body>
+    <div id="wrapper">
+
+        <!-- Main -->
+        <div id="main" class="container">
+
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <!-- Container wrapper -->
+                <div class="container">
+                    <!-- Toggle button -->
+                    <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                        data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fas fa-bars"></i>
+                    </button>
+
+                    <!-- Collapsible wrapper -->
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <!-- Navbar brand -->
+                        <a class="navbar-brand mt-2 mt-lg-0" href="#">
+                            <img src="../assets/img/logo.png" height="60rem" alt="IIEX Logo" loading="lazy" />
+                        </a>
+                        <!-- Left links -->
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item hover-effect h4 mx-1">
+                                <a class="nav-link" href="#">Phim</a>
+                            </li>
+                            <li class="nav-item hover-effect h4 mx-1">
+                                <a class="nav-link" href="#">Rạp phim</a>
+                            </li>
+                            <li class="nav-item hover-effect h4 mx-1">
+                                <a class="nav-link" href="#">Liên hệ</a>
+                            </li>
+                        </ul>
+                        <!-- Left links -->
+                    </div>
+                    <!-- Collapsible wrapper -->
+
+                    <!-- Right elements -->
+                    <div class="d-flex align-items-center">
+                        <!-- Avatar -->
+                        <div class="dropdown">
+                            <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="../assets/img/chuot.jfif" class="rounded-circle" height="50rem" alt="Avatar">
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item align-middle" href="#">Profile</a></li>
+                                <li><a class="dropdown-item align-middle" href="#">Setting</a></li>
+                                <li><a class="dropdown-item align-middle" href="#">Log out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Right elements -->
+                </div>
+                <!-- Container wrapper -->
+            </nav>
+
+            <!-- Banner -->
+            <div id="slide_banner">
+                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                            class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                            aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                            aria-label="Slide 3"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="../assets/img/banner1.jpg" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="../assets/img/banner2.jpg" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="../assets/img/banner3.jpeg" class="d-block w-100" alt="...">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Movie slider -->
+            <div class="slide-container swiper mb-4">
+                <h2 class="my-4">Phim đang chiếu</h2>
+                <div class="slide-content pb-4 mx-5">
+                    <div class="card-wrapper swiper-wrapper">
+                        <div class="card-image swiper-slide">
+                            <img src="../assets/img/p1.jpg" class="card-img" alt="">
+                            <div class="card-img-info w-100 h-100 flex-column">
+                                <button class="custom-button my-3">Đặt vé</button>
+                                <button class="custom-button my-3">Chi tiết</button>
+                            </div>
+                        </div>
+                        <div class="card-image swiper-slide">
+                            <img src="../assets/img/p2.jpg" class="card-img" alt="">
+                            <div class="card-img-info w-100 h-100 flex-column">
+                                <button class="custom-button my-3">Đặt vé</button>
+                                <button class="custom-button my-3">Chi tiết</button>
+                            </div>
+                        </div>
+                        <div class="card-image swiper-slide">
+                            <img src="../assets/img/p3.jpg" class="card-img" alt="">
+                            <div class="card-img-info w-100 h-100 flex-column">
+                                <button class="custom-button my-3">Đặt vé</button>
+                                <button class="custom-button my-3">Chi tiết</button>
+                            </div>
+                        </div>
+                        <div class="card-image swiper-slide">
+                            <img src="../assets/img/p4.jpg" class="card-img" alt="">
+                            <div class="card-img-info w-100 h-100 flex-column">
+                                <button class="custom-button my-3">Đặt vé</button>
+                                <button class="custom-button my-3">Chi tiết</button>
+                            </div>
+                        </div>
+                        <div class="card-image swiper-slide">
+                            <img src="../assets/img/p5.jpg" class="card-img" alt="">
+                            <div class="card-img-info w-100 h-100 flex-column">
+                                <button class="custom-button my-3">Đặt vé</button>
+                                <button class="custom-button my-3">Chi tiết</button>
+                            </div>
+                        </div>
+                        <div class="card-image swiper-slide">
+                            <img src="../assets/img/p6.jpg" class="card-img" alt="">
+                            <div class="card-img-info w-100 h-100 flex-column">
+                                <button class="custom-button my-3">Đặt vé</button>
+                                <button class="custom-button my-3">Chi tiết</button>
+                            </div>
+                        </div>
+                        <div class="card-image swiper-slide">
+                            <img src="../assets/img/p7.jpg" class="card-img" alt="">
+                            <div class="card-img-info w-100 h-100 flex-column">
+                                <button class="custom-button my-3">Đặt vé</button>
+                                <button class="custom-button my-3">Chi tiết</button>
+                            </div>
+                        </div>
+                        <div class="card-image swiper-slide">
+                            <img src="../assets/img/p8.jpg" class="card-img" alt="">
+                            <div class="card-img-info w-100 h-100 flex-column">
+                                <button class="custom-button my-3">Đặt vé</button>
+                                <button class="custom-button my-3">Chi tiết</button>
+                            </div>
+                        </div>
+                        <div class="card-image swiper-slide">
+                            <img src="../assets/img/p9.jpg" class="card-img" alt="">
+                            <div class="card-img-info w-100 h-100 flex-column">
+                                <button class="custom-button my-3">Đặt vé</button>
+                                <button class="custom-button my-3">Chi tiết</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-button-next swiper-navBtn"></div>
+                <div class="swiper-button-prev swiper-navBtn"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+
+            <!-- Footer -->
+            <footer class="text-center text-white" style="background-color: #f1f1f1;">
+                <!-- Copyright -->
+                <div class="text-center text-dark p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                    © 2023 Copyright:
+                    <a class="text-dark" href="#">IIEX</a>
+                </div>
+                <!-- Copyright -->
+            </footer>
+        </div>
+    </div>
+
+    <!-- Swiper JS -->
+    <script language="JavaScript" type="text/javascript" src="../assets/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Bootstrap 5.3 -->
+    <script language="JavaScript" type="text/javascript" src="../assets/bootstrap-5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JQuery -->
+    <script language="JavaScript" type="text/javascript" src="../assets/jquery/jquery-3.6.4.min.js"></script>
+
+    <!-- JS -->
+    <script language="JavaScript" type="text/javascript" src="script.js"></script>
+</body>
+
+</html>
