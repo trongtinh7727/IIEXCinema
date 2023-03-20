@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <!-- Font awesome 5 -->
+    <link rel="stylesheet" href="../assets/FontAwesome.Pro.6.3.0/css/all.css">
+
+    <!-- Bootstrap 5.3 -->
+    <link rel="stylesheet" href="../assets/bootstrap-5.3.0/css/bootstrap.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <div id="wrapper" class="vh-100">
+        <div class="login-wrap w-100 m-auto position-relative top-50 translate-middle-y rounded-5">
+            <div class="login-html w-100 h-100 position-absolute px-5 py-5 rounded-5">
+                <!-- Tab 1 -->
+                <input id="tab-1" type="radio" name="tab" class="sign-in" checked>
+                <label for="tab-1" class="tab me-4 text-uppercase">Sign In</label>
+
+                <!-- Tab 2 -->
+                <input id="tab-2" type="radio" name="tab" class="sign-up">
+                <label for="tab-2" class="tab text-uppercase">Sign Up</label>
+
+                <!-- Form main -->
+                <div class="login-form position-relative">
+
+                    <!-- Sign in -->
+                    <div class="sign-in-html">
+
+                        <!-- Input -->
+                        <div class="group mt-4">
+                            <label for="user" class="label text-uppercase w-100 d-block text-black fw-semibold">Username or Email</label>
+                            <input id="sign-in-user" type="text" class="input mt-2 rounded-5 w-100 d-block text-black fw-semibold">
+                        </div>
+
+                        <!-- Input -->
+                        <div class="group mt-4">
+                            <label for="pass" class="label text-uppercase w-100 d-block text-black fw-semibold">Password</label>
+                            <input id="sign-in-pass" type="password" class="input mt-2 rounded-5 w-100 d-block text-black fw-semibold" data-type="password">
+                        </div>
+
+                        <!-- Button -->
+                        <div class="group mt-5">
+                            <input type="submit" class="button rounded-5 text-uppercase w-100 d-block text-black fw-semibold" value="Sign In">
+                        </div>
+                        <hr style="height: 2px; background-color: rgb(0, 0, 0, 0.5);">
+                    </div>
+
+                    <!-- Sign up -->
+                    <div class="sign-up-html">
+
+                        <!-- Input -->
+                        <div class="group mt-4">
+                            <label for="user" class="label text-uppercase w-100 d-block text-black fw-semibold">Username</label>
+                            <input id="sign-up-user" type="text" class="input mt-2 rounded-5 w-100 d-block text-black fw-semibold">
+                        </div>
+                        <div class="group mt-4">
+                            <label for="user" class="label text-uppercase w-100 d-block text-black fw-semibold">Email</label>
+                            <input id="sign-up-email" type="email" class="input mt-2 rounded-5 w-100 d-block text-black fw-semibold">
+                        </div>
+                        <div class="group mt-4">
+                            <label for="user" class="label text-uppercase w-100 d-block text-black fw-semibold">Password</label>
+                            <input id="sign-up-password" type="password" class="input mt-2 rounded-5 w-100 d-block text-black fw-semibold">
+                        </div>
+                        <div class="group mt-4">
+                            <label for="user" class="label text-uppercase w-100 d-block text-black fw-semibold">Confirm Password</label>
+                            <input id="sign-up-cfpassword" type="password" class="input mt-2 rounded-5 w-100 d-block text-black fw-semibold">
+                        </div>
+                        <div class="group mt-5">
+                            <input type="submit" class="button rounded-5 text-uppercase w-100 d-block text-black fw-semibold" value="Sign Up">
+                        </div>
+                        <hr style="height: 2px; background-color: rgb(0, 0, 0, 0.5);">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5.3 -->
+    <script language="JavaScript" type="text/javascript" src="../assets/bootstrap-5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JQuery -->
+    <script language="JavaScript" type="text/javascript" src="../assets/jquery/jquery-3.6.4.min.js"></script>
+
+    <!-- JS -->
+    <script language="JavaScript" type="text/javascript" src="script.js"></script>
+</body>
+
+</html>
