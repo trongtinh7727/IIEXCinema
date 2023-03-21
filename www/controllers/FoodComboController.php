@@ -1,5 +1,5 @@
 <?php
-class CinemaController extends AdminController
+class FoodComboController extends AdminController
 { 
     public $model;
 
@@ -17,15 +17,16 @@ class CinemaController extends AdminController
     {
         if (
             !isset($_POST['NAME'])
-            !isset($_POST['PHONE']) || !isset($_POST['ADDRESS'])
+            !isset($_POST['PRICE']) || !isset($_POST['TYPE']) || !isset($_POST['QUANTITY'])
         ) {
             die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
         }
 
         $NAME = $_POST['NAME'];
-        $PHONE = $_POST['PHONE'];
-        $ADDRESS = $_POST['ADDRESS'];
-        echo $this->model->add($NAME, $ADDRESS, $PHONE);
+        $PRICE = $_POST['PRICE'];
+        $TYPE = $_POST['TYPE'];
+        $QUANTITY = $_POST['QUANTITY'];
+        echo $this->model->add($NAME, $PRICE, $TYPE, $QUANTITY);
     }
 
     public function delete()
@@ -43,16 +44,18 @@ class CinemaController extends AdminController
     public function update()
     {
         if (
-            !isset($_POST['NAME']) 
-            !isset($_POST['PHONE']) || !isset($_POST['ADDRESS']) || !isset($_POST['ID']) 
+            !isset($_POST['NAME'])
+            !isset($_POST['PRICE']) || !isset($_POST['TYPE']) || !isset($_POST['QUANTITY']) 
+            || !isset($_POST['ID'])
         ) {
             die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
         }
 
         $ID = $_POST['ID'];
         $NAME = $_POST['NAME'];
-        $PHONE = $_POST['PHONE'];
-        $ADDRESS = $_POST['ADDRESS'];
-        echo $this->model->update($NAME, $ADDRESS, $PHONE, $ID);
+        $PRICE = $_POST['PRICE'];
+        $TYPE = $_POST['TYPE'];
+        $QUANTITY = $_POST['QUANTITY'];
+        echo $this->model->update($NAME, $PRICE, $TYPE, $QUANTITY, $ID);
     }
 }

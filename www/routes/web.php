@@ -21,3 +21,9 @@ Route::add("/?api/movie/add", "MovieController@add");
 Route::add("/?api/movie/update", "MovieController@update");
 Route::add("/?api/movie/delete", "MovieController@delete");
 $route = Route::run();
+
+// FoodCombo
+Route::add("/?api/foodcombo/getall", "FoodComboController@getAll");
+Route::add("/?api/foodcombo/add", "FoodComboController@add");
+Route::add("/?api/foodcombo/update", "FoodComboController@update");
+Route::add("/?api/foodcombo/delete", "FoodComboController@delete");
