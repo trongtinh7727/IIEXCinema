@@ -36,4 +36,42 @@ class TicketModel
             die(json_encode(array('status' => false, 'data' => $ex->getMessage())));
         }
     }
+
+    public function delete($ID)
+    {
+        $sql = 'DELETE FROM ticket WHERE ID = ?';
+
+        try{
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute(array($ID));
+
+            $count = $stmt->rowCount();
+            if($count == 1){
+                echo json_encode(array('status'=>true, 'data' => 'Xóa ticket thành công'));
+            } else {
+                die(json_encode(array('status'=>false, 'data'=> 'Mã không hợp lệ')));
+            }
+        } catch (PDOException $ex){
+            die(json_encode(array('status'=>false, 'data'=>$ex -> getMessage())));
+        }
+    }
+
+    public function update($ID, $SCH_ID, $BOO_ID, $SEAT_ID, $price)
+    {
+        $sql = 'UPDATE `ticket` SET `ID` = ?, `SCH_ID` = ?, `BOO_ID` = ?, `SEAT_ID` = ?, `price` = ? WHERE `ticket`.`ID` = ?';
+
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute(array($ID, $SCH_ID, $BOO_ID, $SEAT_ID, $price));
+
+            $count = $stmt->rowCount();
+            if($count == 1){
+                echo json_encode(array('status'=>true, 'data' => 'Cập nhật ticket thành công'));
+            } else {
+                die(json_encode(array('status'=>false, 'status'=>'Mã ticket không hợp lệ')));
+            }
+        } catch(PDOException $ex) {
+            die(json_encode(array('status'=>false, 'data'=>$ex->getMessage())));
+        }
+    }
 }
