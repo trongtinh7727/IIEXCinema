@@ -15,9 +15,8 @@ class CinemaController extends AdminController
 
     public function add()
     {
-        if (
-            !isset($_POST['NAME'])
-            !isset($_POST['PHONE']) || !isset($_POST['ADDRESS'])
+        if ( !isset($_POST['NAME'])
+          ||  !isset($_POST['PHONE']) || !isset($_POST['ADDRESS'])
         ) {
             die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
         }
@@ -44,7 +43,7 @@ class CinemaController extends AdminController
     {
         if (
             !isset($_POST['NAME']) 
-            !isset($_POST['PHONE']) || !isset($_POST['ADDRESS']) || !isset($_POST['ID']) 
+          ||  !isset($_POST['PHONE']) || !isset($_POST['ADDRESS']) || !isset($_POST['ID']) 
         ) {
             die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
         }
@@ -54,5 +53,12 @@ class CinemaController extends AdminController
         $PHONE = $_POST['PHONE'];
         $ADDRESS = $_POST['ADDRESS'];
         echo $this->model->update($NAME, $ADDRESS, $PHONE, $ID);
+    }
+
+    public function getByID()
+    {
+        if(isset($_POST['ID'])){
+            echo $this->model->getByID($_POST['ID']);
+        }
     }
 }

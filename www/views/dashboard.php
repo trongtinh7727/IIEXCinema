@@ -32,15 +32,15 @@
         <div class="container">
             <!-- Modal -->
             <?php
-            include_once(__DIR__ . "/Staff/Add.php");
-            include_once(__DIR__ . "/Staff/Remove.php");
+            include_once(__DIR__ . "/Cinema/Add.php");
+            include_once(__DIR__ . "/Cinema/Remove.php");
 
             ?>
-            <?php include_once(__DIR__ . "/Staff/Table.php"); ?>
+            <?php include_once(__DIR__ . "/Cinema/Table.php"); ?>
         </div>
     </div>
     <?php include_once(__DIR__ . "/Layouts/Footer.php"); ?>
-    <?php include_once(__DIR__ . "/Staff/Script.php"); ?>
+    <?php include_once(__DIR__ . "/Cinema/Script.php"); ?>
 
 </body>
 

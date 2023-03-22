@@ -65,7 +65,7 @@ class CinemaModel
 
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($NAME, $ADDRESS, $PHONE, $ID, $ID));
+            $stmt->execute(array($NAME, $ADDRESS, $PHONE, $ID));
             $count = $stmt->rowCount();
 
             if ($count == 1) {
@@ -76,5 +76,21 @@ class CinemaModel
         } catch (PDOException $ex) {
             die(json_encode(array('status' => false, 'data' => $ex->getMessage())));
         }
+    }
+    public function getByID($ID)
+    {
+        $sql = "SELECT * FROM cinema where ID = '$ID'";
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+        } catch (PDOException $ex) {
+            die(json_encode(array('status' => false, 'data' => $ex->getMessage())));
+        }
+        $data = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $data[] = $row;
+        }
+
+        return json_encode(array('status' => true, 'data' => $data));
     }
 }
