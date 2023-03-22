@@ -17,7 +17,7 @@ class FoodComboController extends AdminController
     {
         if (
             !isset($_POST['NAME'])
-            !isset($_POST['PRICE']) || !isset($_POST['TYPE']) || !isset($_POST['QUANTITY'])
+          ||  !isset($_POST['PRICE']) || !isset($_POST['TYPE']) || !isset($_POST['QUANTITY'])
         ) {
             die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
         }
@@ -45,7 +45,7 @@ class FoodComboController extends AdminController
     {
         if (
             !isset($_POST['NAME'])
-            !isset($_POST['PRICE']) || !isset($_POST['TYPE']) || !isset($_POST['QUANTITY']) 
+           || !isset($_POST['PRICE']) || !isset($_POST['TYPE']) || !isset($_POST['QUANTITY']) 
             || !isset($_POST['ID'])
         ) {
             die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
@@ -58,4 +58,5 @@ class FoodComboController extends AdminController
         $QUANTITY = $_POST['QUANTITY'];
         echo $this->model->update($NAME, $PRICE, $TYPE, $QUANTITY, $ID);
     }
+    
 }
