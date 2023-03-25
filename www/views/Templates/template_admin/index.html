@@ -13,9 +13,6 @@
     <!-- Bootstrap 5.3 -->
     <link rel="stylesheet" href="../assets/bootstrap-5.3.0/css/bootstrap.min.css">
 
-    <!-- DataTable -->
-    <link rel="stylesheet" href="../assets/DataTables/datatables.min.css">
-
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
 
@@ -73,14 +70,12 @@
                 <h2>Employee Manager</h2>
             </div>
             <div>
-                <button type="button" name="btn_add_employee" class="btn btn-outline-primary" data-bs-toggle="modal"
-                    data-bs-target="#addEmployeeModal">Add</button>
-                <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
-                <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
+                <button type="button" name="btn_add_employee" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#addEmployeeModal">Add New Employee</button>
             </div>
         </div>
 
-        <!-- Modal -->
+        <!-- Add Employee Modal -->
         <div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-labelledby="addEmployeeModalLabel"
             aria-hidden="true">
             <div class="modal-dialog">
@@ -95,48 +90,62 @@
 
                         <!-- Input -->
                         <div class="input-group mb-3">
-                            <span class="input-group-text" id="input_employee_id">ID</span>
+                            <span class="input-group-text" id="input_employee_id" style="min-width: 100px;">ID</span>
                             <input type="text" class="form-control" placeholder="ID" aria-label="ID"
                                 aria-describedby="input_employee_id">
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text" id="input_employee_username">Username</span>
-                            <input type="text" class="form-control" placeholder="Your User Name" aria-label="ID"
+                            <span class="input-group-text" id="input_employee_email"
+                                style="min-width: 100px;">Email</span>
+                            <input type="text" class="form-control" placeholder="abc123@xyz.com" aria-label="Email"
+                                aria-describedby="input_employee_email">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="input_employee_username"
+                                style="min-width: 100px;">Username</span>
+                            <input type="text" class="form-control" placeholder="Your User Name" aria-label="Username"
                                 aria-describedby="input_employee_username">
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text" id="input_employee_password">Password</span>
-                            <input type="text" class="form-control" placeholder="yourPassword" aria-label="ID"
+                            <span class="input-group-text" id="input_employee_password"
+                                style="min-width: 100px;">Password</span>
+                            <input type="text" class="form-control" placeholder="yourPassword" aria-label="Password"
                                 aria-describedby="input_employee_password">
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text" id="input_employee_lastname">Last name</span>
-                            <input type="text" class="form-control" placeholder="Jon" aria-label="ID"
+                            <span class="input-group-text" id="input_employee_lastname" style="min-width: 100px;">Last
+                                name</span>
+                            <input type="text" class="form-control" placeholder="Jon" aria-label="Last name"
                                 aria-describedby="input_employee_lastname">
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text" id="input_employee_firstname">First name</span>
-                            <input type="text" class="form-control" placeholder="Snow" aria-label="ID"
+                            <span class="input-group-text" id="input_employee_firstname" style="min-width: 100px;">First
+                                name</span>
+                            <input type="text" class="form-control" placeholder="Snow" aria-label="First name"
                                 aria-describedby="input_employee_firstname">
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text" id="input_employee_code">Code</span>
-                            <input type="text" class="form-control" placeholder="C123" aria-label="ID"
+                            <span class="input-group-text" id="input_employee_code"
+                                style="min-width: 100px;">Code</span>
+                            <input type="text" class="form-control" placeholder="C123" aria-label="Code"
                                 aria-describedby="input_employee_code">
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text" id="input_employee_phone">Phone</span>
-                            <input type="text" class="form-control" placeholder="0123456789" aria-label="ID"
+                            <span class="input-group-text" id="input_employee_phone"
+                                style="min-width: 100px;">Phone</span>
+                            <input type="text" class="form-control" placeholder="0123456789" aria-label="Phone"
                                 aria-describedby="input_employee_phone">
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text" id="input_employee_address">Address</span>
-                            <input type="text" class="form-control" placeholder="HCMC, Vietnam" aria-label="ID"
+                            <span class="input-group-text" id="input_employee_address"
+                                style="min-width: 100px;">Address</span>
+                            <input type="text" class="form-control" placeholder="HCMC, Vietnam" aria-label="Address"
                                 aria-describedby="input_employee_address">
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text" id="input_employee_salary">Salary</span>
-                            <input type="text" class="form-control" placeholder="5000000" aria-label="ID"
+                            <span class="input-group-text" id="input_employee_salary"
+                                style="min-width: 100px;">Salary</span>
+                            <input type="text" class="form-control" placeholder="5000000" aria-label="Salary"
                                 aria-describedby="input_employee_salary">
                         </div>
                     </div>
@@ -148,281 +157,165 @@
             </div>
         </div>
 
-        <!-- Data table -->
+        <!-- Main -->
         <div class="container">
-            <table id="employee_manager" class="table table-striped table-bordered nowrap mt-4" style="width:100%">
+
+            <!-- Search bar -->
+            <input id="myInput" type="text" placeholder="Search.." class="form-control">
+
+            <!-- Pagination header -->
+            <div class="pagination-header my-4 d-flex">
+                <div class="dropdown-container">
+                    <select name="pagination_header" id="pagination_header" class="text-center">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="50">50</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Table -->
+            <table id="employee_manager" class="table table-bordered nowrap table-hover" style="width:100%">
 
                 <!-- Table Header -->
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
-                        <th>Start date</th>
-                        <th>Salary</th>
+                        <th class="text-center">ID</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Username</th>
+                        <th class="text-center">Password</th>
+                        <th class="text-center">First name</th>
+                        <th class="text-center">Last name</th>
+                        <th class="text-center">Code</th>
+                        <th class="text-center">Phone</th>
+                        <th class="text-center">Address</th>
+                        <th class="text-center">Salary</th>
+                        <th class="text-center">Action</th>
                     </tr>
                 </thead>
 
                 <!-- Table body -->
-                <tbody>
+                <tbody id="myTable">
                     <tr>
-                        <td>Fiona Green</td>
-                        <td>Chief Operating Officer (COO)</td>
-                        <td>San Francisco</td>
-                        <td>48</td>
-                        <td>2010/03/11</td>
-                        <td>$850,000</td>
+                        <td class="text-center">1</td>
+                        <td>phuvip@gmail.com</td>
+                        <td>phule</td>
+                        <td>phulevippro</td>
+                        <td>Phu</td>
+                        <td>Le</td>
+                        <td>CEO001</td>
+                        <td>012345789</td>
+                        <td>Tây Ninh</td>
+                        <td>100000000</td>
+                        <td>
+                            <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
+                            <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
+                        </td>
+
                     </tr>
                     <tr>
-                        <td>Shou Itou</td>
-                        <td>Regional Marketing</td>
-                        <td>Tokyo</td>
-                        <td>20</td>
-                        <td>2011/08/14</td>
-                        <td>$163,000</td>
+                        <td class="text-center">2</td>
+                        <td>ducnguyenne@gmail.com</td>
+                        <td>ducnguyen</td>
+                        <td>duccoops</td>
+                        <td>Duc</td>
+                        <td>Nguyen</td>
+                        <td>LB001</td>
+                        <td>0987654321</td>
+                        <td>Long An</td>
+                        <td>1000</td>
+                        <td>
+                            <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
+                            <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
+                        </td>
                     </tr>
                     <tr>
-                        <td>Michelle House</td>
-                        <td>Integration Specialist</td>
-                        <td>Sydney</td>
-                        <td>37</td>
-                        <td>2011/06/02</td>
-                        <td>$95,400</td>
+                        <td class="text-center">3</td>
+                        <td>atindonglai@gmail.com</td>
+                        <td>tinhne</td>
+                        <td>tinhga</td>
+                        <td>Tinh</td>
+                        <td>Vo</td>
+                        <td>PM001</td>
+                        <td>0862859427</td>
+                        <td>Đồng Nai</td>
+                        <td>1000000</td>
+                        <td>
+                            <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
+                            <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
+                        </td>
                     </tr>
                     <tr>
-                        <td>Suki Burks</td>
-                        <td>Developer</td>
-                        <td>London</td>
-                        <td>53</td>
-                        <td>2009/10/22</td>
-                        <td>$114,500</td>
+                        <td class="text-center">4</td>
+                        <td>puchatin@gmail.com</td>
+                        <td>pucpeo</td>
+                        <td>peopeovodich</td>
+                        <td>Phuc</td>
+                        <td>Le</td>
+                        <td>DEV001</td>
+                        <td>0295826384</td>
+                        <td>Hà Tĩnh</td>
+                        <td>1000000</td>
+                        <td>
+                            <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
+                            <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
+                        </td>
                     </tr>
                     <tr>
-                        <td>Prescott Bartlett</td>
-                        <td>Technical Author</td>
-                        <td>London</td>
-                        <td>27</td>
-                        <td>2011/05/07</td>
-                        <td>$145,000</td>
-                    </tr>
-                    <tr>
-                        <td>Gavin Cortez</td>
-                        <td>Team Leader</td>
-                        <td>San Francisco</td>
-                        <td>22</td>
-                        <td>2008/10/26</td>
-                        <td>$235,500</td>
-                    </tr>
-                    <tr>
-                        <td>Martena Mccray</td>
-                        <td>Post-Sales support</td>
-                        <td>Edinburgh</td>
-                        <td>46</td>
-                        <td>2011/03/09</td>
-                        <td>$324,050</td>
-                    </tr>
-                    <tr>
-                        <td>Unity Butler</td>
-                        <td>Marketing Designer</td>
-                        <td>San Francisco</td>
-                        <td>47</td>
-                        <td>2009/12/09</td>
-                        <td>$85,675</td>
-                    </tr>
-                    <tr>
-                        <td>Howard Hatfield</td>
-                        <td>Office Manager</td>
-                        <td>San Francisco</td>
-                        <td>51</td>
-                        <td>2008/12/16</td>
-                        <td>$164,500</td>
-                    </tr>
-                    <tr>
-                        <td>Hope Fuentes</td>
-                        <td>Secretary</td>
-                        <td>San Francisco</td>
-                        <td>41</td>
-                        <td>2010/02/12</td>
-                        <td>$109,850</td>
-                    </tr>
-                    <tr>
-                        <td>Vivian Harrell</td>
-                        <td>Financial Controller</td>
-                        <td>San Francisco</td>
-                        <td>62</td>
-                        <td>2009/02/14</td>
-                        <td>$452,500</td>
-                    </tr>
-                    <tr>
-                        <td>Timothy Mooney</td>
-                        <td>Office Manager</td>
-                        <td>London</td>
-                        <td>37</td>
-                        <td>2008/12/11</td>
-                        <td>$136,200</td>
-                    </tr>
-                    <tr>
-                        <td>Jackson Bradshaw</td>
-                        <td>Director</td>
-                        <td>New York</td>
-                        <td>65</td>
-                        <td>2008/09/26</td>
-                        <td>$645,750</td>
-                    </tr>
-                    <tr>
-                        <td>Olivia Liang</td>
-                        <td>Support Engineer</td>
-                        <td>Singapore</td>
-                        <td>64</td>
-                        <td>2011/02/03</td>
-                        <td>$234,500</td>
-                    </tr>
-                    <tr>
-                        <td>Bruno Nash</td>
-                        <td>Software Engineer</td>
-                        <td>London</td>
-                        <td>38</td>
-                        <td>2011/05/03</td>
-                        <td>$163,500</td>
-                    </tr>
-                    <tr>
-                        <td>Sakura Yamamoto</td>
-                        <td>Support Engineer</td>
-                        <td>Tokyo</td>
-                        <td>37</td>
-                        <td>2009/08/19</td>
-                        <td>$139,575</td>
-                    </tr>
-                    <tr>
-                        <td>Thor Walton</td>
-                        <td>Developer</td>
-                        <td>New York</td>
-                        <td>61</td>
-                        <td>2013/08/11</td>
-                        <td>$98,540</td>
-                    </tr>
-                    <tr>
-                        <td>Finn Camacho</td>
-                        <td>Support Engineer</td>
-                        <td>San Francisco</td>
-                        <td>47</td>
-                        <td>2009/07/07</td>
-                        <td>$87,500</td>
-                    </tr>
-                    <tr>
-                        <td>Serge Baldwin</td>
-                        <td>Data Coordinator</td>
-                        <td>Singapore</td>
-                        <td>64</td>
-                        <td>2012/04/09</td>
-                        <td>$138,575</td>
-                    </tr>
-                    <tr>
-                        <td>Zenaida Frank</td>
-                        <td>Software Engineer</td>
-                        <td>New York</td>
-                        <td>63</td>
-                        <td>2010/01/04</td>
-                        <td>$125,250</td>
-                    </tr>
-                    <tr>
-                        <td>Zorita Serrano</td>
-                        <td>Software Engineer</td>
-                        <td>San Francisco</td>
-                        <td>56</td>
-                        <td>2012/06/01</td>
-                        <td>$115,000</td>
-                    </tr>
-                    <tr>
-                        <td>Jennifer Acosta</td>
-                        <td>Junior Javascript Developer</td>
-                        <td>Edinburgh</td>
-                        <td>43</td>
-                        <td>2013/02/01</td>
-                        <td>$75,650</td>
-                    </tr>
-                    <tr>
-                        <td>Cara Stevens</td>
-                        <td>Sales Assistant</td>
-                        <td>New York</td>
-                        <td>46</td>
-                        <td>2011/12/06</td>
-                        <td>$145,600</td>
-                    </tr>
-                    <tr>
-                        <td>Hermione Butler</td>
-                        <td>Regional Director</td>
-                        <td>London</td>
-                        <td>47</td>
-                        <td>2011/03/21</td>
-                        <td>$356,250</td>
-                    </tr>
-                    <tr>
-                        <td>Lael Greer</td>
-                        <td>Systems Administrator</td>
-                        <td>London</td>
-                        <td>21</td>
-                        <td>2009/02/27</td>
-                        <td>$103,500</td>
-                    </tr>
-                    <tr>
-                        <td>Jonas Alexander</td>
-                        <td>Developer</td>
-                        <td>San Francisco</td>
-                        <td>30</td>
-                        <td>2010/07/14</td>
-                        <td>$86,500</td>
-                    </tr>
-                    <tr>
-                        <td>Shad Decker</td>
-                        <td>Regional Director</td>
-                        <td>Edinburgh</td>
-                        <td>51</td>
-                        <td>2008/11/13</td>
-                        <td>$183,000</td>
-                    </tr>
-                    <tr>
-                        <td>Michael Bruce</td>
-                        <td>Javascript Developer</td>
-                        <td>Singapore</td>
-                        <td>29</td>
-                        <td>2011/06/27</td>
-                        <td>$183,000</td>
-                    </tr>
-                    <tr>
-                        <td>Donna Snider</td>
-                        <td>Customer Support</td>
-                        <td>New York</td>
-                        <td>27</td>
-                        <td>2011/01/25</td>
-                        <td>$112,000</td>
+                        <td class="text-center">5</td>
+                        <td>gemgaga@gmail.com</td>
+                        <td>gemga</td>
+                        <td>gemgavai</td>
+                        <td>Gam</td>
+                        <td>Nguyen</td>
+                        <td>BA001</td>
+                        <td>0127592745</td>
+                        <td>Long An</td>
+                        <td>1000000</td>
+                        <td>
+                            <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
+                            <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
+                        </td>
                     </tr>
                 </tbody>
-
-                <!-- Table footer -->
-                <tfoot>
-                    <tr>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
-                        <th>Start date</th>
-                        <th>Salary</th>
-                    </tr>
-                </tfoot>
             </table>
+
+            <!-- Pagination -->
+            <nav aria-label="pagination">
+                <ul class="pagination pagination-buttons justify-content-end">
+                    <!-- <li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="#">1 <span class="visually-hidden">(current)</span></a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li> -->
+                </ul>
+            </nav>
+            <div class="pagination">
+                <!--<li class="page-item previous-page disable"><a class="page-link" href="#">Prev</a></li>
+                <li class="page-item current-page active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item dots"><a class="page-link" href="#">...</a></li>
+                <li class="page-item current-page"><a class="page-link" href="#">5</a></li>
+                <li class="page-item current-page"><a class="page-link" href="#">6</a></li>
+                <li class="page-item dots"><a class="page-link" href="#">...</a></li>
+                <li class="page-item current-page"><a class="page-link" href="#">10</a></li>
+                <li class="page-item next-page"><a class="page-link" href="#">Next</a></li>-->
+              </div>
         </div>
     </div>
 
     <!-- Bootstrap 5.3 -->
-    <script language="JavaScript" type="text/javascript" src="../assets/bootstrap-5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script language="JavaScript" type="text/javascript"
+        src="../assets/bootstrap-5.3.0/js/bootstrap.bundle.min.js"></script>
 
     <!-- JQuery -->
     <script language="JavaScript" type="text/javascript" src="../assets/jquery/jquery-3.6.4.min.js"></script>
-
-    <!-- DataTable -->
-    <script language="JavaScript" type="text/javascript" src="../assets/DataTables/datatables.min.js"></script>
 
     <!-- JS -->
     <script language="JavaScript" type="text/javascript" src="script.js"></script>
