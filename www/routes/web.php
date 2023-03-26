@@ -34,6 +34,10 @@ Route::add("/?api/cinema/add", "CinemaController@add");
 Route::add("/?api/cinema/update", "CinemaController@update");
 Route::add("/?api/cinema/delete", "CinemaController@delete");
 
-
+Route::add("/?api/ticket/getbyid", "TicketController@getByID");
+Route::add("/?api/ticket/getall", "TicketController@getAll");
+Route::add("/?api/ticket/add", "TicketController@add");
+Route::add("/?api/ticket/update", "TicketController@update");
+Route::add("/?api/ticket/delete", "TicketController@delete");
 
 $route = Route::run();
