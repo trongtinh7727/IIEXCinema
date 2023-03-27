@@ -2,9 +2,10 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
-#pagination_header {
+.dropdown-container > select {
     width: 80px;
     height: 30px;
 }
