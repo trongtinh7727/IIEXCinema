@@ -21,16 +21,16 @@ $(document).ready(function () {
 		{email: "dummy11@gmail.com", username: "dummyUser11", password: "password11", firstname: "firstname11", lastname: "lastname11", code: "code11", phone: "01234511", address: "address11", salary: "1000"},
 		{email: "dummy12@gmail.com", username: "dummyUser12", password: "password12", firstname: "firstname12", lastname: "lastname12", code: "code12", phone: "01234512", address: "address12", salary: "1000"},
 		{email: "dummy13@gmail.com", username: "dummyUser13", password: "password13", firstname: "firstname13", lastname: "lastname13", code: "code13", phone: "01234513", address: "address13", salary: "1000"},
-		{email: "dummy14@gmail.com", username: "dummyUser14", password: "password14", firstname: "firstname14", lastname: "lastname14", code: "code14", phone: "01234514", address: "address14", salary: "1000"},
-		{email: "dummy14@gmail.com", username: "dummyUser14", password: "password14", firstname: "firstname14", lastname: "lastname14", code: "code14", phone: "01234514", address: "address14", salary: "1000"},
-		{email: "dummy14@gmail.com", username: "dummyUser14", password: "password14", firstname: "firstname14", lastname: "lastname14", code: "code14", phone: "01234514", address: "address14", salary: "1000"},
-		{email: "dummy14@gmail.com", username: "dummyUser14", password: "password14", firstname: "firstname14", lastname: "lastname14", code: "code14", phone: "01234514", address: "address14", salary: "1000"},
-		{email: "dummy14@gmail.com", username: "dummyUser14", password: "password14", firstname: "firstname14", lastname: "lastname14", code: "code14", phone: "01234514", address: "address14", salary: "1000"},
-		{email: "dummy14@gmail.com", username: "dummyUser14", password: "password14", firstname: "firstname14", lastname: "lastname14", code: "code14", phone: "01234514", address: "address14", salary: "1000"},
-		{email: "dummy14@gmail.com", username: "dummyUser14", password: "password14", firstname: "firstname14", lastname: "lastname14", code: "code14", phone: "01234514", address: "address14", salary: "1000"},
-		{email: "dummy14@gmail.com", username: "dummyUser14", password: "password14", firstname: "firstname14", lastname: "lastname14", code: "code14", phone: "01234514", address: "address14", salary: "1000"},
-		{email: "dummy14@gmail.com", username: "dummyUser14", password: "password14", firstname: "firstname14", lastname: "lastname14", code: "code14", phone: "01234514", address: "address14", salary: "1000"},
-		{email: "dummy14@gmail.com", username: "dummyUser14", password: "password14", firstname: "firstname14", lastname: "lastname14", code: "code14", phone: "01234514", address: "address14", salary: "1000"}
+		{email: "dummy15@gmail.com", username: "dummyUser15", password: "password15", firstname: "firstname15", lastname: "lastname15", code: "code15", phone: "01234515", address: "address15", salary: "1000"},
+		{email: "dummy16@gmail.com", username: "dummyUser16", password: "password16", firstname: "firstname16", lastname: "lastname16", code: "code16", phone: "01234516", address: "address16", salary: "1000"},
+		{email: "dummy17@gmail.com", username: "dummyUser17", password: "password17", firstname: "firstname17", lastname: "lastname17", code: "code17", phone: "01234517", address: "address17", salary: "1000"},
+		{email: "dummy18@gmail.com", username: "dummyUser18", password: "password18", firstname: "firstname18", lastname: "lastname18", code: "code18", phone: "01234518", address: "address18", salary: "1000"},
+		{email: "dummy19@gmail.com", username: "dummyUser19", password: "password19", firstname: "firstname19", lastname: "lastname19", code: "code19", phone: "01234519", address: "address19", salary: "1000"},
+		{email: "dummy20@gmail.com", username: "dummyUser20", password: "password20", firstname: "firstname20", lastname: "lastname20", code: "code20", phone: "01234520", address: "address20", salary: "1000"},
+		{email: "dummy21@gmail.com", username: "dummyUser21", password: "password21", firstname: "firstname21", lastname: "lastname21", code: "code21", phone: "01234521", address: "address21", salary: "1000"},
+		{email: "dummy22@gmail.com", username: "dummyUser22", password: "password22", firstname: "firstname22", lastname: "lastname22", code: "code22", phone: "01234522", address: "address22", salary: "1000"},
+		{email: "dummy23@gmail.com", username: "dummyUser23", password: "password23", firstname: "firstname23", lastname: "lastname23", code: "code23", phone: "01234523", address: "address23", salary: "1000"},
+		{email: "dummy24@gmail.com", username: "dummyUser24", password: "password24", firstname: "firstname24", lastname: "lastname24", code: "code24", phone: "01234524", address: "address24", salary: "1000"}
 	];
 
 	var pageNumber = 1;
@@ -69,17 +69,17 @@ $(document).ready(function () {
 		var inner_html = "";
 		for(var i = start_index; i <= end_index; i++) {
 			inner_html = inner_html + 	`<tr>
-											<td class="align-middle" name="data_id">` + (i + 1) + `</td>
-											<td class="align-middle" name="data_email">` + jsonArrayObj[i].email + `</td>
-											<td class="align-middle" name="data_username">` + jsonArrayObj[i].username + `</td>
-											<td class="align-middle" name="data_password">` + jsonArrayObj[i].password + `</td>
-											<td class="align-middle" name="data_firstname">` + jsonArrayObj[i].firstname + `</td>
-											<td class="align-middle" name="data_lastname">` + jsonArrayObj[i].lastname + `</td>
-											<td class="align-middle" name="data_code">` + jsonArrayObj[i].code + `</td>
-											<td class="align-middle" name="data_phone">` + jsonArrayObj[i].phone + `</td>
-											<td class="align-middle" name="data_address">` + jsonArrayObj[i].address + `</td>
-											<td class="align-middle" name="data_salary">` + jsonArrayObj[i].salary + `</td>
-											<td class="align-middle" name="data_action">
+											<td class="align-middle text-center" name="data_id">` + (i + 1) + `</td>
+											<td class="align-middle text-center" name="data_email">` + jsonArrayObj[i].email + `</td>
+											<td class="align-middle text-center" name="data_username">` + jsonArrayObj[i].username + `</td>
+											<td class="align-middle text-center" name="data_password">` + jsonArrayObj[i].password + `</td>
+											<td class="align-middle text-center" name="data_firstname">` + jsonArrayObj[i].firstname + `</td>
+											<td class="align-middle text-center" name="data_lastname">` + jsonArrayObj[i].lastname + `</td>
+											<td class="align-middle text-center" name="data_code">` + jsonArrayObj[i].code + `</td>
+											<td class="align-middle text-center" name="data_phone">` + jsonArrayObj[i].phone + `</td>
+											<td class="align-middle text-center" name="data_address">` + jsonArrayObj[i].address + `</td>
+											<td class="align-middle text-center" name="data_salary">` + jsonArrayObj[i].salary + `</td>
+											<td class="align-middle text-center" name="data_action">
 												<button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
 												<button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
 											</td>

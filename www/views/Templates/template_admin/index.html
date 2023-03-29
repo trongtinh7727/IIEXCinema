@@ -49,7 +49,10 @@
                 <!-- Right -->
                 <div>
                     <button id="btn_logout" type="button" name="btn_logout" class="btn text-white shadow border-0 btn_custom" data-bs-toggle="modal"
-                    data-bs-target="#signOutModal">Log out<i class="fa-solid fa-right-from-bracket ms-2"></i></button>
+                        data-bs-target="#signOutModal">
+                            Log out
+                            <i class="fa-solid fa-right-from-bracket ms-2"></i>
+                    </button>
                 </div>
             </div>
         </nav>
@@ -66,10 +69,10 @@
 
             <!-- Offcanvas body -->
             <div class="offcanvas-body">
-                <a href="#" class="btn active btn-lg btn-dark my-1 w-100">
+                <a href="#" id="employees_manager" class="btn btn-lg btn-dark my-1 w-100">
                     Employees Manager
                 </a>
-                <a href="#" class="btn active btn-lg my-1 w-100">
+                <a href="#" id="supplies_manager" class="btn btn-lg my-1 w-100">
                     Supplies Manager
                 </a>
             </div>
@@ -77,22 +80,6 @@
             <!-- Offcanvas footer -->
             <div class="offcanvas-bottom">
 
-            </div>
-        </div>
-
-        <!-- Title + Button -->
-        <div class="container my-4">
-            <div class="mb-3">
-                <h2>Employees Manager</h2>
-            </div>
-            <div class="d-flex flex-wrap justify-content-between">
-                
-                <!-- New Employee Button -->
-                <button id="btn_add_employee" type="button" name="btn_add_employee" class="btn text-white shadow border-0 btn_custom" data-bs-toggle="modal"
-                    data-bs-target="#addEmployeeModal"><i class="fa-solid fa-plus me-1"></i>New Employee</button>
-                
-                    <!-- Search bar -->
-                <input id="searchBarInput" type="text" placeholder="Search.." class="form-control shadow w-25">
             </div>
         </div>
 
@@ -199,136 +186,157 @@
             </div>
         </div>
 
-        <!-- Main -->
-        <div class="container">
-            
-            <!-- Pagination header -->
-            <div class="pagination-header my-4 d-flex">
-                <div class="dropdown-container">
-                    <select name="pagination_header" id="data_size" class="text-center border rounded">
-                        <option value="10">10</option>
-                        <option value="20">20</option>
-                        <option value="30">30</option>
-                        <option value="50">50</option>
-                    </select>
+        <div id="employee_manager" class="card mx-auto my-4 shadow rounded-4">
+
+            <!-- Title + Button -->
+            <div class="card-header bg-white rounded-top-4">
+                <span class="fs-4">Employees Manager</span>
+                <br>
+                <span>Track and manage your employees</span>
+            </div>
+            <div class="container my-4">
+                <div class="d-flex flex-wrap justify-content-between">
+                    
+                    <!-- New Employee Button -->
+                    <button id="btn_add_employee" type="button" name="btn_add_employee" class="btn text-white shadow border-0 btn_custom" data-bs-toggle="modal"
+                        data-bs-target="#addEmployeeModal"><i class="fa-solid fa-plus me-1"></i>New Employee</button>
+                    
+                        <!-- Search bar -->
+                    <input id="searchBarInput" type="text" placeholder="&#xf002; Search..." class="form-control shadow w-25">
                 </div>
             </div>
-            
-            <!-- Table -->
-            <div class="table-responsive">
-                <table id="employee_manager" class="table table-hover" style="width:100%">
     
-                    <!-- Table Header -->
-                    <thead>
-                        <tr">
-                            <th scope="col" class="text-center">ID</th>
-                            <th scope="col" class="text-center">Email</th>
-                            <th scope="col" class="text-center">Username</th>
-                            <th scope="col" class="text-center">Password</th>
-                            <th scope="col" class="text-center">First name</th>
-                            <th scope="col" class="text-center">Last name</th>
-                            <th scope="col" class="text-center">Code</th>
-                            <th scope="col" class="text-center">Phone</th>
-                            <th scope="col" class="text-center">Address</th>
-                            <th scope="col" class="text-center">Salary</th>
-                            <th scope="col" class="text-center">Action</th>
-                        </tr>
-                    </thead>
+            <!-- Main -->
+            <div class="container">
+                
+                <!-- Pagination header -->
+                <div class="pagination-header mb-4 d-flex">
+                    <div class="dropdown-container">
+                        <select name="pagination_header" id="data_size" class="text-center border rounded">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="50">50</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Table -->
+                <div class="table-responsive">
+                    <table id="employee_manager" class="table table-hover" style="width:100%">
+        
+                        <!-- Table Header -->
+                        <thead>
+                            <tr">
+                                <th scope="col" class="text-center">ID</th>
+                                <th scope="col" class="text-center">Email</th>
+                                <th scope="col" class="text-center">Username</th>
+                                <th scope="col" class="text-center">Password</th>
+                                <th scope="col" class="text-center">First name</th>
+                                <th scope="col" class="text-center">Last name</th>
+                                <th scope="col" class="text-center">Code</th>
+                                <th scope="col" class="text-center">Phone</th>
+                                <th scope="col" class="text-center">Address</th>
+                                <th scope="col" class="text-center">Salary</th>
+                                <th scope="col" class="text-center">Action</th>
+                            </tr>
+                        </thead>
+        
+                        <!-- Table body -->
+                        <tbody id="myTable" style="font-size: 14px;">
+                            <tr>
+                                <td class="text-center">1</td>
+                                <td>phuvip@gmail.com</td>
+                                <td>phule</td>
+                                <td>phulevippro</td>
+                                <td>Phu</td>
+                                <td>Le</td>
+                                <td>CEO001</td>
+                                <td>012345789</td>
+                                <td>Tây Ninh</td>
+                                <td>100000000</td>
+                                <td>
+                                    <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
+                                    <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
+                                </td>
+        
+                            </tr>
+                            <tr>
+                                <td class="text-center">2</td>
+                                <td>ducnguyenne@gmail.com</td>
+                                <td>ducnguyen</td>
+                                <td>duccoops</td>
+                                <td>Duc</td>
+                                <td>Nguyen</td>
+                                <td>LB001</td>
+                                <td>0987654321</td>
+                                <td>Long An</td>
+                                <td>1000</td>
+                                <td>
+                                    <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
+                                    <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">3</td>
+                                <td>atindonglai@gmail.com</td>
+                                <td>tinhne</td>
+                                <td>tinhga</td>
+                                <td>Tinh</td>
+                                <td>Vo</td>
+                                <td>PM001</td>
+                                <td>0862859427</td>
+                                <td>Đồng Nai</td>
+                                <td>1000000</td>
+                                <td>
+                                    <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
+                                    <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">4</td>
+                                <td>puchatin@gmail.com</td>
+                                <td>pucpeo</td>
+                                <td>peopeovodich</td>
+                                <td>Phuc</td>
+                                <td>Le</td>
+                                <td>DEV001</td>
+                                <td>0295826384</td>
+                                <td>Hà Tĩnh</td>
+                                <td>1000000</td>
+                                <td>
+                                    <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
+                                    <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">5</td>
+                                <td>gemgaga@gmail.com</td>
+                                <td>gemga</td>
+                                <td>gemgavai</td>
+                                <td>Gam</td>
+                                <td>Nguyen</td>
+                                <td>BA001</td>
+                                <td>0127592745</td>
+                                <td>Long An</td>
+                                <td>1000000</td>
+                                <td>
+                                    <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
+                                    <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
     
-                    <!-- Table body -->
-                    <tbody id="myTable" style="font-size: 14px;">
-                        <tr>
-                            <td class="text-center">1</td>
-                            <td>phuvip@gmail.com</td>
-                            <td>phule</td>
-                            <td>phulevippro</td>
-                            <td>Phu</td>
-                            <td>Le</td>
-                            <td>CEO001</td>
-                            <td>012345789</td>
-                            <td>Tây Ninh</td>
-                            <td>100000000</td>
-                            <td>
-                                <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
-                                <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
-                            </td>
+                </div>
     
-                        </tr>
-                        <tr>
-                            <td class="text-center">2</td>
-                            <td>ducnguyenne@gmail.com</td>
-                            <td>ducnguyen</td>
-                            <td>duccoops</td>
-                            <td>Duc</td>
-                            <td>Nguyen</td>
-                            <td>LB001</td>
-                            <td>0987654321</td>
-                            <td>Long An</td>
-                            <td>1000</td>
-                            <td>
-                                <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
-                                <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">3</td>
-                            <td>atindonglai@gmail.com</td>
-                            <td>tinhne</td>
-                            <td>tinhga</td>
-                            <td>Tinh</td>
-                            <td>Vo</td>
-                            <td>PM001</td>
-                            <td>0862859427</td>
-                            <td>Đồng Nai</td>
-                            <td>1000000</td>
-                            <td>
-                                <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
-                                <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">4</td>
-                            <td>puchatin@gmail.com</td>
-                            <td>pucpeo</td>
-                            <td>peopeovodich</td>
-                            <td>Phuc</td>
-                            <td>Le</td>
-                            <td>DEV001</td>
-                            <td>0295826384</td>
-                            <td>Hà Tĩnh</td>
-                            <td>1000000</td>
-                            <td>
-                                <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
-                                <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">5</td>
-                            <td>gemgaga@gmail.com</td>
-                            <td>gemga</td>
-                            <td>gemgavai</td>
-                            <td>Gam</td>
-                            <td>Nguyen</td>
-                            <td>BA001</td>
-                            <td>0127592745</td>
-                            <td>Long An</td>
-                            <td>1000000</td>
-                            <td>
-                                <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
-                                <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
+                <!-- Pagination -->
+                <nav aria-label="pagination" class="d-flex justify-content-between">
+                    <span class="data_size_details"></span>
+                    <ul class="pagination pagination-buttons justify-content-end">
+                    </ul>
+                </nav>
             </div>
-
-            <!-- Pagination -->
-            <nav aria-label="pagination" class="d-flex justify-content-between">
-                <span class="data_size_details"></span>
-                <ul class="pagination pagination-buttons justify-content-end">
-                </ul>
-            </nav>
         </div>
     </div>
 
