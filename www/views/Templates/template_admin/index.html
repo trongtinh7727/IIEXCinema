@@ -3,9 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Admin</title>
+
+    <!-- Font -->
+    <link rel="stylesheet" href="../assets/fonts/main.css">
 
     <!-- Font awesome 5 -->
     <link rel="stylesheet" href="../assets/FontAwesome.Pro.6.3.0/css/all.css">
@@ -16,6 +20,9 @@
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
 
+    <!-- Responsive -->
+    <link rel="stylesheet" href="responsive.css">
+
 </head>
 
 <body>
@@ -25,16 +32,28 @@
         <nav class="navbar navbar-expand-sm navbar-light bg-white shadow" style="height: 60px;">
             <div class="container-fluid">
 
-                <!-- Logo -->
-                <a class="navbar-brand" href="#">
-                    <img src="../assets/img/logo.png" height="60rem" alt="IIEX Logo" loading="lazy" />
-                </a>
+                <!-- Left -->
+                <div>
+                    <!-- Side navigation button -->
+                    <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
+                        aria-controls="offcanvasExample">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    
+                    <!-- Logo -->
+                    <a class="navbar-brand" href="#">
+                        <img src="../assets/img/logo.png" height="60rem" alt="IIEX Logo" loading="lazy" />
+                    </a>
+                </div>
 
-                <!-- Side navigation button -->
-                <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
-                    aria-controls="offcanvasExample">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
+                <!-- Right -->
+                <div>
+                    <button id="btn_logout" type="button" name="btn_logout" class="btn text-white shadow border-0 btn_custom" data-bs-toggle="modal"
+                        data-bs-target="#signOutModal">
+                            Log out
+                            <i class="fa-solid fa-right-from-bracket ms-2"></i>
+                    </button>
+                </div>
             </div>
         </nav>
 
@@ -50,11 +69,11 @@
 
             <!-- Offcanvas body -->
             <div class="offcanvas-body">
-                <a href="#" class="btn active btn-lg btn-dark my-1 w-100">
-                    Employee Manager
+                <a href="#" id="employees_manager" class="btn btn-lg btn-dark my-1 w-100">
+                    Employees Manager
                 </a>
-                <a href="#" class="btn active btn-lg my-1 w-100">
-                    Supply Manager
+                <a href="#" id="supplies_manager" class="btn btn-lg my-1 w-100">
+                    Supplies Manager
                 </a>
             </div>
 
@@ -64,14 +83,24 @@
             </div>
         </div>
 
-        <!-- Title + Button -->
-        <div class="container my-4">
-            <div class="mb-3">
-                <h2>Employee Manager</h2>
-            </div>
-            <div>
-                <button type="button" name="btn_add_employee" class="btn btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#addEmployeeModal">Add New Employee</button>
+        <!-- Log out modal -->
+        <div class="modal fade align-content-center" id="signOutModal" tabindex="-1" aria-labelledby="addEmployeeModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content" style="width: 360px;">
+                    <!-- Log out -->
+                    <div class="modal-body d-flex flex-column my-4">
+                        <div id="log_out_modal_icon" class="m-auto align-middle">
+                                <span class="align-middle";">
+                                    <i class="fa-solid fa-door-open fa-2xl text-center w-100"></i>
+                                </span>
+                        </div>
+                        <h1 class="modal-title fs-2 text-center my-2" id="addEmployeeModalLabel">Are you leaving?</h1>
+                        <span class="text-center text-secondary my-2">Are you sure you want to sign out?</span>
+                        <button type="button" class="btn btn-danger my-2 py-2 rounded-5">Yes, sign out</button>
+                        <button type="button" class="btn btn-secondary my-2 py-2 rounded-5" data-bs-dismiss="modal">No, I am staying</button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -81,14 +110,14 @@
             <div class="modal-dialog">
                 <div class="modal-content">
 
-                    <!-- Header -->
+                    <!-- Add employee -->
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="addEmployeeModalLabel">Add an Employee</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
 
-                        <!-- Input -->
+                        <!-- Input-->
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="input_employee_id" style="min-width: 100px;">ID</span>
                             <input type="text" class="form-control" placeholder="ID" aria-label="ID"
@@ -157,156 +186,157 @@
             </div>
         </div>
 
-        <!-- Main -->
-        <div class="container">
+        <div id="employee_manager" class="card mx-auto my-4 shadow rounded-4">
 
-            <!-- Search bar -->
-            <input id="myInput" type="text" placeholder="Search.." class="form-control">
-
-            <!-- Pagination header -->
-            <div class="pagination-header my-4 d-flex">
-                <div class="dropdown-container">
-                    <select name="pagination_header" id="pagination_header" class="text-center">
-                        <option value="10">10</option>
-                        <option value="20">20</option>
-                        <option value="30">30</option>
-                        <option value="50">50</option>
-                    </select>
+            <!-- Title + Button -->
+            <div class="card-header bg-white rounded-top-4">
+                <span class="fs-4">Employees Manager</span>
+                <br>
+                <span>Track and manage your employees</span>
+            </div>
+            <div class="container my-4">
+                <div class="d-flex flex-wrap justify-content-between">
+                    
+                    <!-- New Employee Button -->
+                    <button id="btn_add_employee" type="button" name="btn_add_employee" class="btn text-white shadow border-0 btn_custom" data-bs-toggle="modal"
+                        data-bs-target="#addEmployeeModal"><i class="fa-solid fa-plus me-1"></i>New Employee</button>
+                    
+                        <!-- Search bar -->
+                    <input id="searchBarInput" type="text" placeholder="&#xf002; Search..." class="form-control shadow w-25">
                 </div>
             </div>
-            
-            <!-- Table -->
-            <table id="employee_manager" class="table table-bordered nowrap table-hover" style="width:100%">
-
-                <!-- Table Header -->
-                <thead>
-                    <tr>
-                        <th class="text-center">ID</th>
-                        <th class="text-center">Email</th>
-                        <th class="text-center">Username</th>
-                        <th class="text-center">Password</th>
-                        <th class="text-center">First name</th>
-                        <th class="text-center">Last name</th>
-                        <th class="text-center">Code</th>
-                        <th class="text-center">Phone</th>
-                        <th class="text-center">Address</th>
-                        <th class="text-center">Salary</th>
-                        <th class="text-center">Action</th>
-                    </tr>
-                </thead>
-
-                <!-- Table body -->
-                <tbody id="myTable">
-                    <tr>
-                        <td class="text-center">1</td>
-                        <td>phuvip@gmail.com</td>
-                        <td>phule</td>
-                        <td>phulevippro</td>
-                        <td>Phu</td>
-                        <td>Le</td>
-                        <td>CEO001</td>
-                        <td>012345789</td>
-                        <td>Tây Ninh</td>
-                        <td>100000000</td>
-                        <td>
-                            <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
-                            <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td class="text-center">2</td>
-                        <td>ducnguyenne@gmail.com</td>
-                        <td>ducnguyen</td>
-                        <td>duccoops</td>
-                        <td>Duc</td>
-                        <td>Nguyen</td>
-                        <td>LB001</td>
-                        <td>0987654321</td>
-                        <td>Long An</td>
-                        <td>1000</td>
-                        <td>
-                            <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
-                            <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">3</td>
-                        <td>atindonglai@gmail.com</td>
-                        <td>tinhne</td>
-                        <td>tinhga</td>
-                        <td>Tinh</td>
-                        <td>Vo</td>
-                        <td>PM001</td>
-                        <td>0862859427</td>
-                        <td>Đồng Nai</td>
-                        <td>1000000</td>
-                        <td>
-                            <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
-                            <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">4</td>
-                        <td>puchatin@gmail.com</td>
-                        <td>pucpeo</td>
-                        <td>peopeovodich</td>
-                        <td>Phuc</td>
-                        <td>Le</td>
-                        <td>DEV001</td>
-                        <td>0295826384</td>
-                        <td>Hà Tĩnh</td>
-                        <td>1000000</td>
-                        <td>
-                            <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
-                            <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">5</td>
-                        <td>gemgaga@gmail.com</td>
-                        <td>gemga</td>
-                        <td>gemgavai</td>
-                        <td>Gam</td>
-                        <td>Nguyen</td>
-                        <td>BA001</td>
-                        <td>0127592745</td>
-                        <td>Long An</td>
-                        <td>1000000</td>
-                        <td>
-                            <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
-                            <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <!-- Pagination -->
-            <nav aria-label="pagination">
-                <ul class="pagination pagination-buttons justify-content-end">
-                    <!-- <li class="page-item disabled">
-                        <a class="page-link">Previous</a>
-                    </li>
-                    <li class="page-item active" aria-current="page">
-                        <a class="page-link" href="#">1 <span class="visually-hidden">(current)</span></a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                    </li> -->
-                </ul>
-            </nav>
-            <div class="pagination">
-                <!--<li class="page-item previous-page disable"><a class="page-link" href="#">Prev</a></li>
-                <li class="page-item current-page active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item dots"><a class="page-link" href="#">...</a></li>
-                <li class="page-item current-page"><a class="page-link" href="#">5</a></li>
-                <li class="page-item current-page"><a class="page-link" href="#">6</a></li>
-                <li class="page-item dots"><a class="page-link" href="#">...</a></li>
-                <li class="page-item current-page"><a class="page-link" href="#">10</a></li>
-                <li class="page-item next-page"><a class="page-link" href="#">Next</a></li>-->
-              </div>
+    
+            <!-- Main -->
+            <div class="container">
+                
+                <!-- Pagination header -->
+                <div class="pagination-header mb-4 d-flex">
+                    <div class="dropdown-container">
+                        <select name="pagination_header" id="data_size" class="text-center border rounded">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="50">50</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Table -->
+                <div class="table-responsive">
+                    <table id="employee_manager" class="table table-hover" style="width:100%">
+        
+                        <!-- Table Header -->
+                        <thead>
+                            <tr">
+                                <th scope="col" class="text-center">ID</th>
+                                <th scope="col" class="text-center">Email</th>
+                                <th scope="col" class="text-center">Username</th>
+                                <th scope="col" class="text-center">Password</th>
+                                <th scope="col" class="text-center">First name</th>
+                                <th scope="col" class="text-center">Last name</th>
+                                <th scope="col" class="text-center">Code</th>
+                                <th scope="col" class="text-center">Phone</th>
+                                <th scope="col" class="text-center">Address</th>
+                                <th scope="col" class="text-center">Salary</th>
+                                <th scope="col" class="text-center">Action</th>
+                            </tr>
+                        </thead>
+        
+                        <!-- Table body -->
+                        <tbody id="myTable" style="font-size: 14px;">
+                            <tr>
+                                <td class="text-center">1</td>
+                                <td>phuvip@gmail.com</td>
+                                <td>phule</td>
+                                <td>phulevippro</td>
+                                <td>Phu</td>
+                                <td>Le</td>
+                                <td>CEO001</td>
+                                <td>012345789</td>
+                                <td>Tây Ninh</td>
+                                <td>100000000</td>
+                                <td>
+                                    <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
+                                    <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
+                                </td>
+        
+                            </tr>
+                            <tr>
+                                <td class="text-center">2</td>
+                                <td>ducnguyenne@gmail.com</td>
+                                <td>ducnguyen</td>
+                                <td>duccoops</td>
+                                <td>Duc</td>
+                                <td>Nguyen</td>
+                                <td>LB001</td>
+                                <td>0987654321</td>
+                                <td>Long An</td>
+                                <td>1000</td>
+                                <td>
+                                    <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
+                                    <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">3</td>
+                                <td>atindonglai@gmail.com</td>
+                                <td>tinhne</td>
+                                <td>tinhga</td>
+                                <td>Tinh</td>
+                                <td>Vo</td>
+                                <td>PM001</td>
+                                <td>0862859427</td>
+                                <td>Đồng Nai</td>
+                                <td>1000000</td>
+                                <td>
+                                    <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
+                                    <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">4</td>
+                                <td>puchatin@gmail.com</td>
+                                <td>pucpeo</td>
+                                <td>peopeovodich</td>
+                                <td>Phuc</td>
+                                <td>Le</td>
+                                <td>DEV001</td>
+                                <td>0295826384</td>
+                                <td>Hà Tĩnh</td>
+                                <td>1000000</td>
+                                <td>
+                                    <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
+                                    <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">5</td>
+                                <td>gemgaga@gmail.com</td>
+                                <td>gemga</td>
+                                <td>gemgavai</td>
+                                <td>Gam</td>
+                                <td>Nguyen</td>
+                                <td>BA001</td>
+                                <td>0127592745</td>
+                                <td>Long An</td>
+                                <td>1000000</td>
+                                <td>
+                                    <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
+                                    <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+    
+                </div>
+    
+                <!-- Pagination -->
+                <nav aria-label="pagination" class="d-flex justify-content-between">
+                    <span class="data_size_details"></span>
+                    <ul class="pagination pagination-buttons justify-content-end">
+                    </ul>
+                </nav>
+            </div>
         </div>
     </div>
 
