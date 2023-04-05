@@ -2,4 +2,63 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.btn_custom:hover {
+    transform: translateY(-2px) !important;
+}
+
+.btn_custom:active {
+    transform: translateY(-2px) !important;
+}
+
+/* ===================== */
+
+/* Employees Manager */
+#employee_manager {
+    max-width: 1440px;
+}
+
+/* Button log out */
+#btn_logout {
+    background: rgb(228, 58, 21);
+    background: linear-gradient(90deg, rgba(228, 58, 21, 1) 0%, rgba(230, 82, 69, 1) 100%);
+    transition: all 0.3s ease 0s !important;
+}
+
+#btn_logout:hover {
+    background-color: rgb(228, 58, 21) !important;
+    box-shadow: 0px 5px 5px rgb(213, 160, 148) !important;
+}
+
+/* Log out modal icon */
+#log_out_modal_icon {
+    height: 80px;
+    width: 80px;
+    background-color: red !important;
+}
+
+/* Button add employee */
+#btn_add_employee {
+    background: rgb(20, 136, 204);
+    background: linear-gradient(90deg, rgba(20, 136, 204, 1) 0%, rgba(43, 50, 178, 1) 100%);
+    transition: all 0.3s ease 0s !important;
+}
+
+#btn_add_employee:hover {
+    background-color: rgba(20, 136, 204, 1) !important;
+    box-shadow: 0px 5px 5px rgb(88, 169, 217) !important;
+}
+
+/* Entries selector */
+.dropdown-container>select {
+    width: 80px;
+    height: 30px;
+}
+
+/* Search */
+#searchBarInput {
+    padding:10px;
+    font-family: FontAwesome, "Open Sans", Verdana, sans-serif;
 }

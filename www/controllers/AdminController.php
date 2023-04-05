@@ -21,11 +21,11 @@ class AdminController
 
             if ($check == 1) {
                 $_SESSION['userLogin'] = 1;
-                require_once('views/dashboard.php');
+                require_once('views/Admin/dashboard.php');
             }
         }
         if (isset($_SESSION['userLogin'])) {
-            require_once('views/dashboard.php');
+            require_once('views/Admin/dashboard.php');
         } else {
             require_once('views/Auths/login.php');
         }
@@ -39,6 +39,32 @@ class AdminController
     public function indexAction()
     {
         $this->isAuthenticated();
-        require_once('views/dashboard.php');
+        $_SESSION['path'] = 'Cinema';
+        require_once('views/Admin/dashboard.php');
+    }
+
+    public function staffAction()
+    {
+        $this->isAuthenticated();
+        $_SESSION['path'] = 'Staff';
+        require_once('views/Admin/dashboard.php');
+    }
+    public function cinemaAction()
+    {
+        $this->isAuthenticated();
+        $_SESSION['path'] = 'Cinema';
+        require_once('views/Admin/dashboard.php');
+    }
+    public function movieAction()
+    {
+        $this->isAuthenticated();
+        $_SESSION['path'] = 'Movie';
+        require_once('views/Admin/dashboard.php');
+    }
+    public function suppliesAction()
+    {
+        $this->isAuthenticated();
+        $_SESSION['path'] = 'Supplies';
+        require_once('views/Admin/dashboard.php');
     }
 }

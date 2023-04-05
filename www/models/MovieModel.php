@@ -19,15 +19,15 @@ class MovieModel
         return json_encode(array('status' => true, 'data' => $data));
     }
 
-    public function add($NAME, $INFO, $DATE, $START, $END, $CATEGORY, $RATING,$IMAGE, $ID)
+    public function add($TITLE, $GENRE, $DURATION, $RATING, $STORY, $POSTER)
     {
-        $sql = 'INSERT INTO Movie(`NAME`, `INFO`, `DATE`, `START`, `END`, `CATEGORY`, `RATING`, `IMAGE`) VALUES(?,?,?,?,?,?)';
+        $sql = 'INSERT INTO `movie` (`TITLE`, `GENRE`, `DURATION`, `RATING`, `STORY`, `POSTER`) VALUES(?,?,?,?,?,?)';
 
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($NAME, $INFO, $DATE, $START, $END, $CATEGORY, $RATING,$IMAGE, $ID));
+            $stmt->execute(array($TITLE, $GENRE, $DURATION, $RATING, $STORY, $POSTER));
 
-            return json_encode(array('status' => true, 'data' => 'Thêm nhân viên thành công'));
+            return json_encode(array('status' => true, 'data' => 'Thêm phim thành công'));
         } catch (PDOException $ex) {
             die(json_encode(array('status' => false, 'data' => $ex->getMessage())));
         }
@@ -54,14 +54,14 @@ class MovieModel
         }
     }
 
-    public function update($NAME, $INFO, $DATE, $START, $END, $CATEGORY, $RATING,$IMAGE, $ID)
+    public function update($NAME, $INFO, $DATE, $START, $END, $CATEGORY, $RATING, $IMAGE, $ID)
     {
         $sql = 'UPDATE `movie` SET `NAME` = ?, `INFO` = ?, `DATE` = ?,
                 `START` = ?, `END` = ?, `CATEGORY` = ?, `RATING` = ? ,`IMAGE`= ? WHERE `movie`.`ID` = ?';
 
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($NAME, $INFO, $DATE, $START, $END, $CATEGORY, $RATING,$IMAGE, $ID));
+            $stmt->execute(array($NAME, $INFO, $DATE, $START, $END, $CATEGORY, $RATING, $IMAGE, $ID));
             $count = $stmt->rowCount();
 
             if ($count == 1) {
