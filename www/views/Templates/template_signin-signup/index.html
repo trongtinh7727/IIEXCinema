@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IIEX Cinema - sign in or sign up</title>
+
+    <!-- Font -->
+    <link rel="stylesheet" href="../assets/fonts/main.css">
+
+    <!-- Font awesome 5 -->
+    <link rel="stylesheet" href="../assets/FontAwesome.Pro.6.3.0/css/all.css">
+
+    <!-- Bootstrap 5.3 -->
+    <link rel="stylesheet" href="../assets/bootstrap-5.3.0/css/bootstrap.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <div id="wrapper" class="vh-100 d-flex justify-content-around">
+        <div class="d-flex flex-column justify-content-center">
+            <img src="../assets/img/signin-signup/Logo.png" class="align-self-center" alt="Logo">
+            <img src="../assets/img/signin-signup/Photo.png" class="align-self-center" alt="Logo">
+        </div>
+        <!-- Login form -->
+        <div class="login-wrap rounded-5">
+            <div class="login-html w-100 h-100 px-5 py-5 rounded-5 clearfix">
+                <!-- Tab 1 -->
+                <input id="tab-1" type="radio" name="tab" class="sign-in" checked>
+                <label id="tab-1-label" for="tab-1" class="tab text-uppercase fs-3 text-white text-yellow">Đăng nhập</label>
+
+                <!-- Tab 2 -->
+                <input id="tab-2" type="radio" name="tab" class="sign-up">
+                <label id="tab-2-label" for="tab-2" class="tab text-uppercase fs-3 text-white float-end">Đăng ký</label>
+
+                <!-- Form main -->
+                <div class="login-form">
+
+                    <!-- Sign in -->
+                    <div class="sign-in-html">
+
+                        <!-- Input -->
+                        <div class="group mt-5">
+                            <label for="user" class="label text-uppercase w-100 d-block text-black fw-semibold text-yellow fs-6">Username hoặc Email</label>
+                            <input id="sign-in-user" placeholder="Username" aria-label="sign-in-username" type="text" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
+                        </div>
+
+                        <!-- Input -->
+                        <div class="group mt-5">
+                            <label for="pass" class="label text-uppercase w-100 d-block text-black fw-semibold text-yellow fs-6">Mật khẩu</label>
+                            <input id="sign-in-pass" placeholder="Password" aria-label="sign-in-password" type="password" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold" data-type="password">
+                        </div>
+
+                        <!-- Button -->
+                        <div class="group mt-5">
+                            <input type="submit" class="button rounded-5 text-uppercase w-100 d-block text-black fw-semibold bg-yellow fs-4" value="Đăng nhập">
+                        </div>
+                        <hr style="height: 2px; background-color: rgb(0, 0, 0, 0.5);">
+                    </div>
+
+                    <!-- Sign up -->
+                    <div class="sign-up-html">
+
+                        <!-- Input -->
+                        <!-- Sign up username -->
+                        <div class="group mt-5">
+                            <label for="user" class="label text-uppercase w-100 d-block text-black fw-semibold text-yellow fs-6">Username</label>
+                            <input id="sign-up-user" placeholder="Username123" type="text" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
+                        </div>
+                        <!-- Sign up email -->
+                        <div class="group mt-5">
+                            <label for="user" class="label text-uppercase w-100 d-block text-black fw-semibold text-yellow fs-6">Email</label>
+                            <input id="sign-up-email" placeholder="abc123@xyz.com.vn" type="email" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
+                        </div>
+                        <!-- Sign up password -->
+                        <div class="group mt-5">
+                            <label for="user" class="label text-uppercase w-100 d-block text-black fw-semibold text-yellow fs-6">Mật khẩu</label>
+                            <input id="sign-up-password" placeholder="p@sSword" type="password" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
+                        </div>
+                        <!-- Sign up confirm password -->
+                        <div class="group mt-5">
+                            <label for="user" class="label text-uppercase w-100 d-block text-black fw-semibold text-yellow fs-6">Xác nhận mật khẩu</label>
+                            <input id="sign-up-cfpassword" placeholder="p@sSword" type="password" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
+                        </div>
+                        <div class="group mt-5">
+                            <input type="submit" class="button rounded-5 text-uppercase w-100 d-block text-black fw-semibold bg-yellow fs-4" value="Đăng ký">
+                        </div>
+                        <hr style="height: 2px; background-color: rgb(0, 0, 0, 0.5);">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5.3 -->
+    <script language="JavaScript" type="text/javascript" src="../assets/bootstrap-5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JQuery -->
+    <script language="JavaScript" type="text/javascript" src="../assets/jquery/jquery-3.6.4.min.js"></script>
+
+    <!-- JS -->
+    <script language="JavaScript" type="text/javascript" src="script.js"></script>
+</body>
+
+</html>
