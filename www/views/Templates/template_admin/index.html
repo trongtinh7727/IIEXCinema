@@ -39,7 +39,7 @@
                         aria-controls="offcanvasExample">
                         <i class="fa-solid fa-bars"></i>
                     </button>
-                    
+
                     <!-- Logo -->
                     <a class="navbar-brand" href="#">
                         <img src="../assets/img/logo.png" height="60rem" alt="IIEX Logo" loading="lazy" />
@@ -48,10 +48,11 @@
 
                 <!-- Right -->
                 <div>
-                    <button id="btn_logout" type="button" name="btn_logout" class="btn text-white shadow border-0 btn_custom" data-bs-toggle="modal"
+                    <button id="btn_logout" type="button" name="btn_logout"
+                        class="btn text-white shadow border-0 btn_custom" data-bs-toggle="modal"
                         data-bs-target="#signOutModal">
-                            Log out
-                            <i class="fa-solid fa-right-from-bracket ms-2"></i>
+                        Log out
+                        <i class="fa-solid fa-right-from-bracket ms-2"></i>
                     </button>
                 </div>
             </div>
@@ -84,21 +85,22 @@
         </div>
 
         <!-- Log out modal -->
-        <div class="modal fade align-content-center" id="signOutModal" tabindex="-1" aria-labelledby="addEmployeeModalLabel"
-            aria-hidden="true">
+        <div class="modal fade align-content-center" id="signOutModal" tabindex="-1"
+            aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content" style="width: 360px;">
                     <!-- Log out -->
                     <div class="modal-body d-flex flex-column my-4">
                         <div id="log_out_modal_icon" class="m-auto align-middle">
-                                <span class="align-middle";">
-                                    <i class="fa-solid fa-door-open fa-2xl text-center w-100"></i>
-                                </span>
+                            <span class="align-middle">
+                                <i class="fa-solid fa-door-open fa-2xl text-center w-100"></i>
+                            </span>
                         </div>
                         <h1 class="modal-title fs-2 text-center my-2" id="addEmployeeModalLabel">Are you leaving?</h1>
                         <span class="text-center text-secondary my-2">Are you sure you want to sign out?</span>
                         <button type="button" class="btn btn-danger my-2 py-2 rounded-5">Yes, sign out</button>
-                        <button type="button" class="btn btn-secondary my-2 py-2 rounded-5" data-bs-dismiss="modal">No, I am staying</button>
+                        <button type="button" class="btn btn-secondary my-2 py-2 rounded-5" data-bs-dismiss="modal">No,
+                            I am staying</button>
                     </div>
                 </div>
             </div>
@@ -109,14 +111,12 @@
             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-
                     <!-- Add employee -->
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="addEmployeeModalLabel">Add an Employee</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-
                         <!-- Input-->
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="input_employee_id" style="min-width: 100px;">ID</span>
@@ -126,8 +126,8 @@
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="input_employee_email"
                                 style="min-width: 100px;">Email</span>
-                            <input type="text" class="form-control" placeholder="abc123@xyz.com" aria-label="Email"
-                                aria-describedby="input_employee_email">
+                            <input id="EMAIL" type="text" class="form-control" placeholder="abc123@xyz.com"
+                                aria-label="Email" aria-describedby="input_employee_email">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="input_employee_username"
@@ -196,19 +196,21 @@
             </div>
             <div class="container my-4">
                 <div class="d-flex flex-wrap justify-content-between">
-                    
+
                     <!-- New Employee Button -->
-                    <button id="btn_add_employee" type="button" name="btn_add_employee" class="btn text-white shadow border-0 btn_custom" data-bs-toggle="modal"
+                    <button id="btn_add_employee" type="button" name="btn_add_employee"
+                        class="btn text-white shadow border-0 btn_custom" data-bs-toggle="modal"
                         data-bs-target="#addEmployeeModal"><i class="fa-solid fa-plus me-1"></i>New Employee</button>
-                    
-                        <!-- Search bar -->
-                    <input id="searchBarInput" type="text" placeholder="&#xf002; Search..." class="form-control shadow w-25">
+
+                    <!-- Search bar -->
+                    <input id="searchBarInput" type="text" placeholder="&#xf002; Search..."
+                        class="form-control shadow w-25">
                 </div>
             </div>
-    
+
             <!-- Main -->
             <div class="container">
-                
+
                 <!-- Pagination header -->
                 <div class="pagination-header mb-4 d-flex">
                     <div class="dropdown-container">
@@ -220,11 +222,11 @@
                         </select>
                     </div>
                 </div>
-                
+
                 <!-- Table -->
                 <div class="table-responsive">
                     <table id="employee_manager" class="table table-hover" style="width:100%">
-        
+
                         <!-- Table Header -->
                         <thead>
                             <tr">
@@ -239,76 +241,11 @@
                                 <th scope="col" class="text-center">Address</th>
                                 <th scope="col" class="text-center">Salary</th>
                                 <th scope="col" class="text-center">Action</th>
-                            </tr>
+                                </tr>
                         </thead>
-        
+
                         <!-- Table body -->
                         <tbody id="myTable" style="font-size: 14px;">
-                            <tr>
-                                <td class="text-center">1</td>
-                                <td>phuvip@gmail.com</td>
-                                <td>phule</td>
-                                <td>phulevippro</td>
-                                <td>Phu</td>
-                                <td>Le</td>
-                                <td>CEO001</td>
-                                <td>012345789</td>
-                                <td>Tây Ninh</td>
-                                <td>100000000</td>
-                                <td>
-                                    <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
-                                    <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
-                                </td>
-        
-                            </tr>
-                            <tr>
-                                <td class="text-center">2</td>
-                                <td>ducnguyenne@gmail.com</td>
-                                <td>ducnguyen</td>
-                                <td>duccoops</td>
-                                <td>Duc</td>
-                                <td>Nguyen</td>
-                                <td>LB001</td>
-                                <td>0987654321</td>
-                                <td>Long An</td>
-                                <td>1000</td>
-                                <td>
-                                    <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
-                                    <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">3</td>
-                                <td>atindonglai@gmail.com</td>
-                                <td>tinhne</td>
-                                <td>tinhga</td>
-                                <td>Tinh</td>
-                                <td>Vo</td>
-                                <td>PM001</td>
-                                <td>0862859427</td>
-                                <td>Đồng Nai</td>
-                                <td>1000000</td>
-                                <td>
-                                    <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
-                                    <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">4</td>
-                                <td>puchatin@gmail.com</td>
-                                <td>pucpeo</td>
-                                <td>peopeovodich</td>
-                                <td>Phuc</td>
-                                <td>Le</td>
-                                <td>DEV001</td>
-                                <td>0295826384</td>
-                                <td>Hà Tĩnh</td>
-                                <td>1000000</td>
-                                <td>
-                                    <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
-                                    <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
-                                </td>
-                            </tr>
                             <tr>
                                 <td class="text-center">5</td>
                                 <td>gemgaga@gmail.com</td>
@@ -327,9 +264,10 @@
                             </tr>
                         </tbody>
                     </table>
-    
+
                 </div>
-    
+
+
                 <!-- Pagination -->
                 <nav aria-label="pagination" class="d-flex justify-content-between">
                     <span class="data_size_details"></span>

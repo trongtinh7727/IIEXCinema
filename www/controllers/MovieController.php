@@ -16,22 +16,20 @@ class MovieController extends AdminController
     public function add()
     {
         if (
-            !isset($_POST['NAME']) || !isset($_POST['INFO']) || !isset($_POST['DATE'])
-            || !isset($_POST['START']) || !isset($_POST['END']) || !isset($_POST['CATEGORY'])
-            || !isset($_POST['RATING']) || !isset($_POST['IMAGE'])
+            !isset($_POST['TITLE']) || !isset($_POST['GENRE']) || !isset($_POST['DURATION'])
+            || !isset($_POST['RATING']) || !isset($_POST['STORY']) || !isset($_POST['POSTER'])
         ) {
             die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
         }
 
-        $NAME = $_POST['NAME'];
-        $INFO = $_POST['INFO'];
-        $DATE = $_POST['DATE'];
-        $START = $_POST['START'];
-        $END = $_POST['END'];
-        $CATEGORY = $_POST['CATEGORY'];
+        $TITLE = $_POST['TITLE'];
+        $GENRE = $_POST['GENRE'];
+        $DURATION = $_POST['DURATION'];
         $RATING = $_POST['RATING'];
-        $IMAGE = $_POST['IMAGE'];
-        echo $this->model->add($NAME, $INFO, $DATE, $START, $END, $CATEGORY, $RATING, $IMAGE);
+        $STORY = $_POST['STORY'];
+        $POSTER = $_POST['POSTER'];
+
+        echo $this->model->add($TITLE, $GENRE, $DURATION, $RATING, $STORY, $POSTER, $RATING);
     }
 
     public function delete()
@@ -49,20 +47,20 @@ class MovieController extends AdminController
     public function update()
     {
         if (
-            !isset($_POST['NAME']) || !isset($_POST['INFO']) || !isset($_POST['DATE'])
-            || !isset($_POST['START']) || !isset($_POST['END']) || !isset($_POST['CATEGORY'])
+            !isset($_POST['TITLE']) || !isset($_POST['GENRE']) || !isset($_POST['DURATION'])
+            || !isset($_POST['RATING']) || !isset($_POST['STORY']) || !isset($_POST['POSTER'])
             || !isset($_POST['RATING']) || !isset($_POST['IMAGE'])
         ) {
             die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
         }
-        $NAME = $_POST['NAME'];
-        $INFO = $_POST['INFO'];
-        $DATE = $_POST['DATE'];
-        $START = $_POST['START'];
-        $END = $_POST['END'];
-        $CATEGORY = $_POST['CATEGORY'];
+        $ID = $_POST['ID'];
+        $TITLE = $_POST['TITLE'];
+        $GENRE = $_POST['GENRE'];
+        $DURATION = $_POST['DURATION'];
         $RATING = $_POST['RATING'];
-        $IMAGE = $_POST['IMAGE'];
-        echo $this->model->add($NAME, $INFO, $DATE, $START, $END, $CATEGORY, $RATING, $IMAGE);
+        $STORY = $_POST['STORY'];
+        $POSTER = $_POST['POSTER'];
+
+        echo $this->model->update($TITLE, $GENRE, $DURATION, $RATING, $STORY, $POSTER, $RATING, $ID);
     }
 }

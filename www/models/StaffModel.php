@@ -23,7 +23,7 @@ class StaffModel
 
     public function add($USERNAME, $PASSWORD, $NAME, $CODE, $PHONE, $ADDRESS, $SALARY)
     {
-        $sql = 'INSERT INTO staff(USERNAME, PASSWORD, NAME, CODE, PHONE, ADDRESS, SALARY) VALUES(?,?,?,?,?,?)';
+        $sql = 'INSERT INTO staff(USERNAME, PASSWORD, NAME, CODE, PHONE, ADDRESS, SALARY) VALUES(?,?,?,?,?,?,?)';
 
         try {
             $stmt = $this->db->prepare($sql);

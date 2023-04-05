@@ -64,4 +64,10 @@ class StaffController extends AdminController
         $SALARY = $_POST['SALARY'];
         echo $this->model->update($USERNAME, $PASSWORD, $NAME, $CODE, $PHONE, $ADDRESS, $SALARY, $ID);
     }
+    public function getByID()
+    {
+        if (isset($_POST['ID'])) {
+            echo $this->model->getByID($_POST['ID']);
+        }
+    }
 }

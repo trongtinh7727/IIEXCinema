@@ -1,10 +1,12 @@
 <?php
-class MovieModel
+
+class TheaterModel
 {
     public $db;
+
     public function getAll()
     {
-        $sql = 'SELECT * FROM Movie';
+        $sql = 'SELECT * FROM theater';
         try {
             $stmt = $this->db->prepare($sql);
             $stmt->execute();
@@ -19,15 +21,15 @@ class MovieModel
         return json_encode(array('status' => true, 'data' => $data));
     }
 
-    public function add($TITLE, $GENRE, $DURATION, $RATING, $STORY, $POSTER)
+    public function add($CIN_ID, $THEATERNUM, $SEATCOUNT, $ISSHOWING)
     {
-        $sql = 'INSERT INTO `movie` (`TITLE`, `GENRE`, `DURATION`, `RATING`, `STORY`, `POSTER`) VALUES(?,?,?,?,?,?)';
+        $sql = 'INSERT INTO theater(CIN_ID, THEATERNUM, SEATCOUNT, ISSHOWING) VALUES(?,?,?,?)';
 
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($TITLE, $GENRE, $DURATION, $RATING, $STORY, $POSTER));
+            $stmt->execute(array($CIN_ID, $THEATERNUM, $SEATCOUNT, $ISSHOWING));
 
-            return json_encode(array('status' => true, 'data' => 'Thêm phim thành công'));
+            return json_encode(array('status' => true, 'data' => 'Thêm seat thành công'));
         } catch (PDOException $ex) {
             die(json_encode(array('status' => false, 'data' => $ex->getMessage())));
         }
@@ -36,7 +38,7 @@ class MovieModel
     public function delete($id)
     {
 
-        $sql = 'DELETE FROM Movie where id = ?';
+        $sql = 'DELETE FROM theater where id = ?';
 
         try {
             $stmt = $this->db->prepare($sql);
@@ -54,20 +56,22 @@ class MovieModel
         }
     }
 
-    public function update($NAME, $INFO, $DATE, $START, $END, $CATEGORY, $RATING, $IMAGE, $ID)
+    public function update($CIN_ID, $THEATERNUM, $SEATCOUNT, $ISSHOWING, $ID)
     {
-        $sql = 'UPDATE `movie` SET `NAME` = ?, `INFO` = ?, `DATE` = ?,
-                `START` = ?, `END` = ?, `CATEGORY` = ?, `RATING` = ? ,`IMAGE`= ? WHERE `movie`.`ID` = ?';
+
+
+        $sql = 'UPDATE `theater` SET  `CIN_ID` = ?,
+                `THEATERNUM` = ?, `SEATCOUNT, ISSHOWING` = ? WHERE `theater`.`ID` = ?';
 
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($NAME, $INFO, $DATE, $START, $END, $CATEGORY, $RATING, $IMAGE, $ID));
+            $stmt->execute(array($CIN_ID, $THEATERNUM, $SEATCOUNT, $ISSHOWING, $ID));
             $count = $stmt->rowCount();
 
             if ($count == 1) {
-                echo json_encode(array('status' => true, 'data' => 'Cập nhật nhân viên thành công'));
+                echo json_encode(array('status' => true, 'data' => 'Cập nhật seat thành công'));
             } else {
-                die(json_encode(array('status' => false, 'data' => 'Không có nhân viên nào được cập nhật')));
+                die(json_encode(array('status' => false, 'data' => 'Không có seat nào được cập nhật')));
             }
         } catch (PDOException $ex) {
             die(json_encode(array('status' => false, 'data' => $ex->getMessage())));
