@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Mar 12, 2023 at 05:10 PM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- Host: localhost:3306
+-- Generation Time: Apr 04, 2023 at 06:38 PM
+-- Server version: 8.0.32
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `students`
+-- Database: `test`
 --
 
 -- --------------------------------------------------------
@@ -28,16 +28,18 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `booking` (
-  `ID` int(11) NOT NULL,
-  `CLI_ID` int(11) NOT NULL
+  `ID` int NOT NULL,
+  `STAFF_ID` int DEFAULT NULL,
+  `CLIENT_ID` int DEFAULT NULL,
+  `CREATED_AT` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `booking`
 --
 
-INSERT INTO `booking` (`ID`, `CLI_ID`) VALUES
-(1, 1);
+INSERT INTO `booking` (`ID`, `STAFF_ID`, `CLIENT_ID`, `CREATED_AT`) VALUES
+(1, 1, 1, '2023-04-04 15:23:50');
 
 -- --------------------------------------------------------
 
@@ -46,10 +48,10 @@ INSERT INTO `booking` (`ID`, `CLI_ID`) VALUES
 --
 
 CREATE TABLE `cinema` (
-  `ID` int(11) NOT NULL,
-  `NAME` varchar(50) DEFAULT NULL,
-  `ADDRESS` varchar(50) DEFAULT NULL,
-  `PHONE` char(15) DEFAULT NULL
+  `ID` int NOT NULL,
+  `NAME` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `ADDRESS` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `PHONE` char(15) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -66,12 +68,12 @@ INSERT INTO `cinema` (`ID`, `NAME`, `ADDRESS`, `PHONE`) VALUES
 --
 
 CREATE TABLE `client` (
-  `ID` int(11) NOT NULL,
-  `USERNAME` varchar(50) DEFAULT NULL,
-  `PASSWORD` varchar(50) DEFAULT NULL,
-  `NAME` varchar(50) DEFAULT NULL,
-  `PHONE` char(15) DEFAULT NULL,
-  `ADDRESS` varchar(50) DEFAULT NULL
+  `ID` int NOT NULL,
+  `USERNAME` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `PASSWORD` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `NAME` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `PHONE` char(15) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `ADDRESS` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -88,19 +90,17 @@ INSERT INTO `client` (`ID`, `USERNAME`, `PASSWORD`, `NAME`, `PHONE`, `ADDRESS`) 
 --
 
 CREATE TABLE `foodcombo` (
-  `ID` int(11) NOT NULL,
-  `NAME` varchar(50) DEFAULT NULL,
-  `PRICE` float DEFAULT NULL,
-  `TYPE` varchar(15) DEFAULT NULL,
-  `QUANTITY` int(11) DEFAULT NULL
+  `ID` int NOT NULL,
+  `NAME` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `PRICE` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `foodcombo`
 --
 
-INSERT INTO `foodcombo` (`ID`, `NAME`, `PRICE`, `TYPE`, `QUANTITY`) VALUES
-(1, '1 Bắp + 2 nước', 100000, 'Combo1', 100);
+INSERT INTO `foodcombo` (`ID`, `NAME`, `PRICE`) VALUES
+(1, '1 Bắp + 2 nước', 100000);
 
 -- --------------------------------------------------------
 
@@ -109,15 +109,15 @@ INSERT INTO `foodcombo` (`ID`, `NAME`, `PRICE`, `TYPE`, `QUANTITY`) VALUES
 --
 
 CREATE TABLE `food_booking` (
-  `FOO_ID` int(11) NOT NULL,
-  `ID` int(11) NOT NULL
+  `FOOD_ID` int NOT NULL,
+  `BOOKING_ID` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `food_booking`
 --
 
-INSERT INTO `food_booking` (`FOO_ID`, `ID`) VALUES
+INSERT INTO `food_booking` (`FOOD_ID`, `BOOKING_ID`) VALUES
 (1, 1);
 
 -- --------------------------------------------------------
@@ -127,22 +127,50 @@ INSERT INTO `food_booking` (`FOO_ID`, `ID`) VALUES
 --
 
 CREATE TABLE `movie` (
-  `ID` int(11) NOT NULL,
-  `TITLE` varchar(20) DEFAULT NULL,
-  `GENRE` varchar(20) DEFAULT NULL,
-  `DURATION` int(11) DEFAULT NULL,
+  `ID` int NOT NULL,
+  `TITLE` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `GENRE` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `DURATION` int DEFAULT NULL,
   `RATING` float DEFAULT NULL,
-  `STORY` varchar(200) DEFAULT NULL,
-  `POSTER` longtext DEFAULT NULL
+  `STORY` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `POSTER` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `OPENING_DAY` date DEFAULT NULL,
+  `CLOSING_DAY` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `movie`
 --
 
-INSERT INTO `movie` (`ID`, `TITLE`, `GENRE`, `DURATION`, `RATING`, `STORY`, `POSTER`) VALUES
-(1, 'Con mèo ngu ngốc', 'Drama', 90, 5, 'Một câu chuyện về những chú mèo', 'https://phimtuoitho.tv/uploads/video_thumb/1747.jp'),
-(2, 'Con mèo ngu ngốc', 'Drama', 90, 5, 'Câu chuyện về chó và mèo', 'https://phimtuoitho.tv/uploads/video_thumb/1747.jpg');
+INSERT INTO `movie` (`ID`, `TITLE`, `GENRE`, `DURATION`, `RATING`, `STORY`, `POSTER`, `OPENING_DAY`, `CLOSING_DAY`) VALUES
+(1, 'Con mèo ngu ngốc', 'Drama', 90, 5, 'Một câu chuyện về những chú mèo', 'https://phimtuoitho.tv/uploads/video_thumb/1747.jp', NULL, NULL),
+(2, 'Con mèo ngu ngốc', 'Drama', 90, 5, 'Câu chuyện về chó và mèo', 'https://phimtuoitho.tv/uploads/video_thumb/1747.jp', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product`
+--
+
+CREATE TABLE `product` (
+  `ID` int NOT NULL,
+  `NAME` varchar(50) DEFAULT NULL,
+  `TYPE` varchar(20) DEFAULT NULL,
+  `PRICE` float DEFAULT NULL,
+  `QUANTITY` int DEFAULT NULL,
+  `Expiry_Date` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_fcb`
+--
+
+CREATE TABLE `product_fcb` (
+  `PRODUCT_ID` int NOT NULL,
+  `FCB_ID` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -151,19 +179,20 @@ INSERT INTO `movie` (`ID`, `TITLE`, `GENRE`, `DURATION`, `RATING`, `STORY`, `POS
 --
 
 CREATE TABLE `schedule` (
-  `ID` int(11) NOT NULL,
-  `CIN_ID` int(11) NOT NULL,
-  `MOV_ID` int(11) NOT NULL,
+  `ID` int NOT NULL,
+  `CIN_ID` int NOT NULL,
+  `MOV_ID` int NOT NULL,
   `STARTTIME` datetime DEFAULT NULL,
-  `ENDTIME` datetime DEFAULT NULL
+  `ENDTIME` datetime DEFAULT NULL,
+  `THEA_ID` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `schedule`
 --
 
-INSERT INTO `schedule` (`ID`, `CIN_ID`, `MOV_ID`, `STARTTIME`, `ENDTIME`) VALUES
-(1, 1, 2, '2023-03-12 19:00:00', '2023-03-12 21:30:00');
+INSERT INTO `schedule` (`ID`, `CIN_ID`, `MOV_ID`, `STARTTIME`, `ENDTIME`, `THEA_ID`) VALUES
+(1, 1, 2, '2023-03-12 19:00:00', '2023-03-12 21:30:00', 1);
 
 -- --------------------------------------------------------
 
@@ -172,10 +201,10 @@ INSERT INTO `schedule` (`ID`, `CIN_ID`, `MOV_ID`, `STARTTIME`, `ENDTIME`) VALUES
 --
 
 CREATE TABLE `seat` (
-  `ID` int(11) NOT NULL,
-  `THE_ID` int(11) NOT NULL,
-  `SEATNUMBER` int(11) DEFAULT NULL,
-  `SEATTYPE` varchar(20) DEFAULT NULL
+  `ID` int NOT NULL,
+  `THE_ID` int NOT NULL,
+  `SEATNUMBER` int DEFAULT NULL,
+  `SEATTYPE` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -201,15 +230,25 @@ INSERT INTO `seat` (`ID`, `THE_ID`, `SEATNUMBER`, `SEATTYPE`) VALUES
 --
 
 CREATE TABLE `staff` (
-  `ID` int(11) NOT NULL,
-  `USERNAME` varchar(50) DEFAULT NULL,
-  `PASSWORD` varchar(50) DEFAULT NULL,
-  `NAME` varchar(50) DEFAULT NULL,
-  `CODE` varchar(20) DEFAULT NULL,
-  `PHONE` char(15) DEFAULT NULL,
-  `ADDRESS` varchar(50) DEFAULT NULL,
-  `SALARY` float DEFAULT NULL
+  `ID` int NOT NULL,
+  `USERNAME` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `PASSWORD` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `FIRSTNAME` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `LASTNAME` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `SEX` varchar(5) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `BIRTHDAY` date DEFAULT NULL,
+  `PHONE` char(15) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `ADDRESS` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `SALARY` float DEFAULT NULL,
+  `ROLE` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `staff`
+--
+
+INSERT INTO `staff` (`ID`, `USERNAME`, `PASSWORD`, `FIRSTNAME`, `LASTNAME`, `SEX`, `BIRTHDAY`, `PHONE`, `ADDRESS`, `SALARY`, `ROLE`) VALUES
+(1, 'admin', 'admin', 'Lê Hoàng', 'Phú', 'nam', '2003-02-02', '0123456789', 'Quận 7', 50000, 0);
 
 -- --------------------------------------------------------
 
@@ -218,11 +257,11 @@ CREATE TABLE `staff` (
 --
 
 CREATE TABLE `theater` (
-  `ID` int(11) NOT NULL,
-  `CIN_ID` int(11) NOT NULL,
-  `THEATERNUM` int(11) DEFAULT NULL,
-  `SEATCOUNT` int(11) DEFAULT NULL,
-  `ISSHOWING` int(11) DEFAULT NULL
+  `ID` int NOT NULL,
+  `CIN_ID` int NOT NULL,
+  `THEATERNUM` int DEFAULT NULL,
+  `SEATCOUNT` int DEFAULT NULL,
+  `ISSHOWING` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -239,10 +278,8 @@ INSERT INTO `theater` (`ID`, `CIN_ID`, `THEATERNUM`, `SEATCOUNT`, `ISSHOWING`) V
 --
 
 CREATE TABLE `ticket` (
-  `ID` int(11) NOT NULL,
-  `SCH_ID` int(11) NOT NULL,
-  `BOO_ID` int(11) NOT NULL,
-  `SEAT_ID` int(11) DEFAULT NULL,
+  `ID` int NOT NULL,
+  `BOO_ID` int NOT NULL,
   `price` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -250,8 +287,28 @@ CREATE TABLE `ticket` (
 -- Dumping data for table `ticket`
 --
 
-INSERT INTO `ticket` (`ID`, `SCH_ID`, `BOO_ID`, `SEAT_ID`, `price`) VALUES
-(2, 1, 1, 1, 25000);
+INSERT INTO `ticket` (`ID`, `BOO_ID`, `price`) VALUES
+(2, 1, 25000);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ticket_seat_schedule`
+--
+
+CREATE TABLE `ticket_seat_schedule` (
+  `SEAT_ID` int NOT NULL,
+  `SCHEDULE_ID` int NOT NULL,
+  `TICKET_ID` int NOT NULL,
+  `ISSHOWING` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `ticket_seat_schedule`
+--
+
+INSERT INTO `ticket_seat_schedule` (`SEAT_ID`, `SCHEDULE_ID`, `TICKET_ID`, `ISSHOWING`) VALUES
+(1, 1, 2, 1);
 
 --
 -- Indexes for dumped tables
@@ -262,7 +319,8 @@ INSERT INTO `ticket` (`ID`, `SCH_ID`, `BOO_ID`, `SEAT_ID`, `price`) VALUES
 --
 ALTER TABLE `booking`
   ADD PRIMARY KEY (`ID`),
-  ADD KEY `FK_CLIENT_BOOKING` (`CLI_ID`);
+  ADD KEY `FK_BOOKING_CLIENT` (`CLIENT_ID`),
+  ADD KEY `FK_BOOKING_STAFF` (`STAFF_ID`);
 
 --
 -- Indexes for table `cinema`
@@ -286,8 +344,8 @@ ALTER TABLE `foodcombo`
 -- Indexes for table `food_booking`
 --
 ALTER TABLE `food_booking`
-  ADD PRIMARY KEY (`FOO_ID`,`ID`),
-  ADD KEY `FK_FOOD_BOOKING_BOOKING` (`ID`);
+  ADD PRIMARY KEY (`FOOD_ID`,`BOOKING_ID`),
+  ADD KEY `FK_FCB_BOOKING` (`BOOKING_ID`);
 
 --
 -- Indexes for table `movie`
@@ -296,19 +354,32 @@ ALTER TABLE `movie`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Indexes for table `product`
+--
+ALTER TABLE `product`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `product_fcb`
+--
+ALTER TABLE `product_fcb`
+  ADD PRIMARY KEY (`PRODUCT_ID`,`FCB_ID`),
+  ADD KEY `FK_FCB_PRODUCT` (`FCB_ID`);
+
+--
 -- Indexes for table `schedule`
 --
 ALTER TABLE `schedule`
   ADD PRIMARY KEY (`ID`),
-  ADD KEY `FK_CINEMA_SCHEDULE` (`CIN_ID`),
-  ADD KEY `FK_MOVIE_SCHEDULE` (`MOV_ID`);
+  ADD KEY `FK_SCHEDULE_MOVIE` (`MOV_ID`),
+  ADD KEY `FK_SCHEDULE_THEATER` (`THEA_ID`);
 
 --
 -- Indexes for table `seat`
 --
 ALTER TABLE `seat`
   ADD PRIMARY KEY (`ID`),
-  ADD KEY `FK_THEATER_SEAT` (`THE_ID`);
+  ADD KEY `FK_SEAT_THEATER` (`THE_ID`);
 
 --
 -- Indexes for table `staff`
@@ -320,17 +391,22 @@ ALTER TABLE `staff`
 -- Indexes for table `theater`
 --
 ALTER TABLE `theater`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `FK_CINEMA_THEATER` (`CIN_ID`);
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `ticket`
 --
 ALTER TABLE `ticket`
   ADD PRIMARY KEY (`ID`),
-  ADD KEY `FK_SCHEDULE_TICKET` (`SCH_ID`),
-  ADD KEY `FK_TICKET_BOOKING` (`BOO_ID`),
-  ADD KEY `FK_TICKET_SEAT` (`SEAT_ID`);
+  ADD KEY `FK_TICKET_BOOKING` (`BOO_ID`);
+
+--
+-- Indexes for table `ticket_seat_schedule`
+--
+ALTER TABLE `ticket_seat_schedule`
+  ADD PRIMARY KEY (`SEAT_ID`,`SCHEDULE_ID`,`TICKET_ID`),
+  ADD KEY `Seat_Schedule` (`SCHEDULE_ID`),
+  ADD KEY `FK_SEAT_SCHEDULE_TICKET` (`TICKET_ID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -340,61 +416,61 @@ ALTER TABLE `ticket`
 -- AUTO_INCREMENT for table `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `cinema`
 --
 ALTER TABLE `cinema`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `client`
 --
 ALTER TABLE `client`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `foodcombo`
 --
 ALTER TABLE `foodcombo`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `movie`
 --
 ALTER TABLE `movie`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `product`
+--
+ALTER TABLE `product`
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `seat`
 --
 ALTER TABLE `seat`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `staff`
 --
 ALTER TABLE `staff`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `theater`
---
-ALTER TABLE `theater`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -404,41 +480,49 @@ ALTER TABLE `ticket`
 -- Constraints for table `booking`
 --
 ALTER TABLE `booking`
-  ADD CONSTRAINT `FK_CLIENT_BOOKING` FOREIGN KEY (`CLI_ID`) REFERENCES `client` (`ID`);
+  ADD CONSTRAINT `FK_BOOKING_CLIENT` FOREIGN KEY (`CLIENT_ID`) REFERENCES `client` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_BOOKING_STAFF` FOREIGN KEY (`STAFF_ID`) REFERENCES `staff` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `food_booking`
 --
 ALTER TABLE `food_booking`
-  ADD CONSTRAINT `FK_FOOD_BOOKING_BOOKING` FOREIGN KEY (`ID`) REFERENCES `booking` (`ID`),
-  ADD CONSTRAINT `FK_FOOD_BOOKING_FOODCOMBO` FOREIGN KEY (`FOO_ID`) REFERENCES `foodcombo` (`ID`);
+  ADD CONSTRAINT `FK_Booking_FCB` FOREIGN KEY (`FOOD_ID`) REFERENCES `foodcombo` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_FCB_BOOKING` FOREIGN KEY (`BOOKING_ID`) REFERENCES `booking` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `product_fcb`
+--
+ALTER TABLE `product_fcb`
+  ADD CONSTRAINT `FK_FCB_PRODUCT` FOREIGN KEY (`FCB_ID`) REFERENCES `foodcombo` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_PRODUCT_FCB` FOREIGN KEY (`PRODUCT_ID`) REFERENCES `product` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `schedule`
 --
 ALTER TABLE `schedule`
-  ADD CONSTRAINT `FK_CINEMA_SCHEDULE` FOREIGN KEY (`CIN_ID`) REFERENCES `cinema` (`ID`),
-  ADD CONSTRAINT `FK_MOVIE_SCHEDULE` FOREIGN KEY (`MOV_ID`) REFERENCES `movie` (`ID`);
+  ADD CONSTRAINT `FK_SCHEDULE_MOVIE` FOREIGN KEY (`MOV_ID`) REFERENCES `movie` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_SCHEDULE_THEATER` FOREIGN KEY (`THEA_ID`) REFERENCES `theater` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `seat`
 --
 ALTER TABLE `seat`
-  ADD CONSTRAINT `FK_THEATER_SEAT` FOREIGN KEY (`THE_ID`) REFERENCES `theater` (`ID`);
-
---
--- Constraints for table `theater`
---
-ALTER TABLE `theater`
-  ADD CONSTRAINT `FK_CINEMA_THEATER` FOREIGN KEY (`CIN_ID`) REFERENCES `cinema` (`ID`);
+  ADD CONSTRAINT `FK_SEAT_THEATER` FOREIGN KEY (`THE_ID`) REFERENCES `theater` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `ticket`
 --
 ALTER TABLE `ticket`
-  ADD CONSTRAINT `FK_SCHEDULE_TICKET` FOREIGN KEY (`SCH_ID`) REFERENCES `schedule` (`ID`),
-  ADD CONSTRAINT `FK_TICKET_BOOKING` FOREIGN KEY (`BOO_ID`) REFERENCES `booking` (`ID`),
-  ADD CONSTRAINT `FK_TICKET_SEAT` FOREIGN KEY (`SEAT_ID`) REFERENCES `seat` (`ID`);
+  ADD CONSTRAINT `FK_TICKET_BOOKING` FOREIGN KEY (`BOO_ID`) REFERENCES `booking` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `ticket_seat_schedule`
+--
+ALTER TABLE `ticket_seat_schedule`
+  ADD CONSTRAINT `FK_SCHEDULE_SEAT` FOREIGN KEY (`SEAT_ID`) REFERENCES `seat` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_SEAT_SCHEDULE_TICKET` FOREIGN KEY (`TICKET_ID`) REFERENCES `ticket` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `Seat_Schedule` FOREIGN KEY (`SCHEDULE_ID`) REFERENCES `schedule` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
