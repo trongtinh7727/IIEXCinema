@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.text-yellow {
+    color: #FFBA08 !important;
+}
+
+.text-green {
+    color: #CCF381 !important;
+}
+
+#toppart {
+    margin: 0;
+    height: 1000px;
+    background: url(../assets/img/homepage/movie-area.png);
+    background-size: cover;
+}
+
+#maincontent {
+    height: 1000px;
+    background-color: antiquewhite;
+}
