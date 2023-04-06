@@ -6,7 +6,8 @@ class AdminController
     function isAuthenticated()
     {
         if (!isset($_SESSION['userLogin'])) {
-            require_once('views/Auths/login.php');
+            header("Location: /?admin/login");
+            // require_once('views/Auths/login.php');
             exit;
         }
     }
@@ -21,11 +22,12 @@ class AdminController
 
             if ($check == 1) {
                 $_SESSION['userLogin'] = 1;
-                require_once('views/Admin/dashboard.php');
+                $this->indexAction();
             }
         }
         if (isset($_SESSION['userLogin'])) {
-            require_once('views/Admin/dashboard.php');
+            header("Location: /?admin/");
+            // $this->indexAction();
         } else {
             require_once('views/Auths/login.php');
         }
@@ -39,7 +41,7 @@ class AdminController
     public function indexAction()
     {
         $this->isAuthenticated();
-        $_SESSION['path'] = 'Cinema';
+        $_SESSION['path'] = 'Staff';
         require_once('views/Admin/dashboard.php');
     }
 
