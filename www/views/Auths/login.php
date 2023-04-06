@@ -39,13 +39,13 @@
                                 <!-- Email input -->
                                 <div class="form-outline mb-4">
                                     <input type="text" name="username" id="form3Example3" class="form-control form-control-lg" placeholder="Enter a valid email address" />
-                                    <label class="form-label" for="form3Example3">Email address</label>
+                                    <label class="form-label" for="form3Example3">Tên tài khoản</label>
                                 </div>
 
                                 <!-- Password input -->
                                 <div class="form-outline mb-3">
                                     <input type="password" name="password" id="form3Example4" class="form-control form-control-lg" placeholder="Enter password" />
-                                    <label class="form-label" for="form3Example4">Password</label>
+                                    <label class="form-label" for="form3Example4">Mật khẩu</label>
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center">
@@ -56,12 +56,11 @@
                                             Remember me
                                         </label>
                                     </div>
-                                    <a href="#!" class="text-body">Forgot password?</a>
+                                    <a href="#!" class="text-body">Quên mật khẩu?</a>
                                 </div>
 
                                 <div class="text-center text-lg-start mt-4 pt-2">
-                                    <button type="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
-                                    <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="#!" class="link-danger">Register</a></p>
+                                    <button type="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">Đăng nhập</button>
                                 </div>
                                 <input type="hidden" name="LoginSubmit">
                             </form>

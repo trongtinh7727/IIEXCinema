@@ -7,7 +7,7 @@ class AdminController
     {
         if (!isset($_SESSION['userLogin'])) {
             header("Location: /?admin/login");
-            // require_once('views/Auths/login.php');
+            // require_once('views/admin/Auths/login.php');
             exit;
         }
     }
@@ -29,13 +29,13 @@ class AdminController
             header("Location: /?admin/");
             // $this->indexAction();
         } else {
-            require_once('views/Auths/login.php');
+            require_once('views/admin/Auths/login.php');
         }
     }
     function logout()
     {
         unset($_SESSION['userLogin']);
-        require_once('views/Auths/login.php');
+        require_once('views/admin/Auths/login.php');
     }
 
     public function indexAction()
