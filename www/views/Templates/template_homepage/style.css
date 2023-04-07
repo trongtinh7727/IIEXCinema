@@ -72,11 +72,18 @@
     background-color: antiquewhite;
 }
 
-#content-toggler .row::after {
+#content-toggler .row::after,
+#trailer-separator .container::after {
     content: "";
     position: absolute;
     background-color: #ffffff;
     height: 1px;
     width: 100%;
-    bottom: 0;
+    bottom: -10px;
+}
+
+/* Trailer */
+#carousel-trailer iframe {
+    width: 75%;
+    aspect-ratio: 16/9;
 }

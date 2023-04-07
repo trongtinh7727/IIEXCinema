@@ -74,22 +74,25 @@
             </nav>
         </div>
 
+        <!-- Content -->
         <div id="content">
             <!-- Toggler -->
             <div id="content-toggler" class="py-4">
                 <div class="container position-relative">
                     <div class="row">
-                        <div id="icon-camera" class="col col-lg-2 text-yellow fs-1">
+                        <div id="content-icon-camera" class="col col-lg-2 text-yellow fs-1">
                             <i class="fa-solid fa-video"></i>
                         </div>
                         <div id="toggler-ongoing-movies"
                             class="col-12 col-lg-5 fs-3 d-flex justify-content-center py-sm-2">
-                            <a class="text-decoration-none border-0 bg-transparent fw-semibold text-white text-yellow">Phim đang
+                            <a class="text-decoration-none border-0 bg-transparent fw-semibold text-white text-yellow">Phim
+                                đang
                                 chiếu</a>
                         </div>
                         <div id="toggler-upcoming-movies"
                             class="col-12 col-lg-5 fs-3 d-flex justify-content-center py-sm-2">
-                            <a class="text-decoration-none border-0 bg-transparent fw-semibold text-white">Phim sắp chiếu</a>
+                            <a class="text-decoration-none border-0 bg-transparent fw-semibold text-white">Phim sắp
+                                chiếu</a>
                         </div>
                     </div>
                 </div>
@@ -349,6 +352,97 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Trailer part -->
+        <div id="trailer">
+            <!-- Separator -->
+            <div id="trailer-separator" class="py-4">
+                <div class="container position-relative">
+                    <div class="d-flex justify-content-start align-items-center">
+                        <div id="trailer-icon-play" class="text-yellow fs-1 me-5">
+                            <i class="fa-solid fa-play"></i>
+                        </div>
+                        <div id="trailer-text" class="text-white">
+                            <h1>Trailers</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main trailer -->
+            <div id="carousel-trailer" class="carousel slide py-5">
+                <div class="carousel-inner row">
+                    <div class="carousel-item col-12 active">
+                        <div align="center">
+                            <iframe class="trailer-video" src="https://www.youtube.com/embed/gorb-Yhu2Wc?start=0"
+                                title="YouTube video player" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-12">
+                        <div align="center">
+                            <iframe class="trailer-video" src="https://www.youtube.com/embed/gorb-Yhu2Wc?start=0"
+                                title="YouTube video player" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="carousel-item col-12">
+                        <div align="center">
+                            <iframe class="trailer-video" src="https://www.youtube.com/embed/gorb-Yhu2Wc?start=0"
+                                title="YouTube video player" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carousel-trailer"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carousel-trailer"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="container-fluid" style="background-color: rgba(0, 19, 55, 0.48);">
+            <div class="container">
+                <footer class="d-flex flex-wrap justify-content-between align-items-center py-5 text-white">
+                    <!-- Logo -->
+                    <a class="col-12 navbar-brand col-lg-4 me-0 border-end" href="#">
+                        <img src="../assets/img/homepage/Logo.png" alt="Logo" style="height: 4rem;">
+                    </a>
+                    <!-- Link -->
+                    <div class="col-12 col-lg-4 d-flex justify-content-center flex-column my-2">
+                        <div class="row ms-5 my-1">
+                            <div class="col-12 col-md-4 ps-0 py-2">
+                                <a href="#" class="text-white text-decoration-none">Trang chủ</a>
+                            </div>
+                            <div class="col-12 col-md-4 ps-0 py-2">
+                                <a href="#" class="text-white text-decoration-none">Hỗ trợ</a>
+                            </div>
+                            <div class="col-12 col-md-4 ps-0 py-2">
+                                <a href="#" class="text-white text-decoration-none">Liên hệ</a>
+                            </div>
+                        </div>
+                        <div class="ms-5 my-1">
+                            <p class="mb-0">Copyright © 2023, IIEX Cinema</p>
+                        </div>
+                    </div>
+                    <!-- Brand -->
+                    <ul class="col-12 col-lg-4 nav justify-content-end">
+                        <li class="nav-item"><a href="#" class="nav-link px-2 text-white"><i class="fa-brands fa-facebook fa-2xl"></i></a></li>
+                        <li class="nav-item"><a href="#" class="nav-link px-2 text-white"><i class="fa-brands fa-instagram fa-2xl"></i></a></li>
+                    </ul>
+                </footer>
             </div>
         </div>
     </div>
