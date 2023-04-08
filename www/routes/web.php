@@ -3,10 +3,11 @@
 
 include_once(__DIR__ . '/Route.php');
 
-Route::add("/", "AdminController@indexAction");
-Route::add("/?home", "AdminController@indexAction");
-Route::add("/?login", "AdminController@login");
-Route::add("/?logout", "AdminController@logout");
+// ADMIN
+Route::add("/?admin", "AdminController@indexAction");
+Route::add("/?admin/home", "AdminController@indexAction");
+Route::add("/?admin/login", "AdminController@login");
+Route::add("/?admin/logout", "AdminController@logout");
 
 // manager
 Route::add("/?admin/staff", "AdminController@staffAction");

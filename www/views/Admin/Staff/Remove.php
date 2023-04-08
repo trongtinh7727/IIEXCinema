@@ -33,7 +33,7 @@
                 </div>
                 <h1 class="modal-title fs-2 text-center my-2" id="addEmployeeModalLabel">Are you leaving?</h1>
                 <span class="text-center text-secondary my-2">Are you sure you want to sign out?</span>
-                <button type="button" class="btn btn-danger my-2 py-2 rounded-5">Yes, sign out</button>
+                <a href="./?admin/logout"><button type="button" class="btn btn-danger my-2 py-2 rounded-5">Yes, sign out</button></a>
                 <button type="button" class="btn btn-secondary my-2 py-2 rounded-5" data-bs-dismiss="modal">No,
                     I am staying</button>
             </div>

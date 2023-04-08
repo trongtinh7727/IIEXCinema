@@ -6,16 +6,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Admin</title>
+    <title>IIEX Cinema - Quản lý</title>
 
     <!-- Font -->
-    <link rel="stylesheet" href="../assets/fonts/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
 
     <!-- Font awesome 5 -->
-    <link rel="stylesheet" href="../assets/FontAwesome.Pro.6.3.0/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Bootstrap 5.3 -->
-    <link rel="stylesheet" href="../assets/bootstrap-5.3.0/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
@@ -51,7 +58,7 @@
                     <button id="btn_logout" type="button" name="btn_logout"
                         class="btn text-white shadow border-0 btn_custom" data-bs-toggle="modal"
                         data-bs-target="#signOutModal">
-                        Log out
+                        Đăng xuất
                         <i class="fa-solid fa-right-from-bracket ms-2"></i>
                     </button>
                 </div>
@@ -64,17 +71,17 @@
 
             <!-- Offcanvas header -->
             <div class="offcanvas-header border-bottom">
-                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Admin Control Panel</h5>
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Quản lý</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
 
             <!-- Offcanvas body -->
             <div class="offcanvas-body">
                 <a href="#" id="employees_manager" class="btn btn-lg btn-dark my-1 w-100">
-                    Employees Manager
+                    Quản lý nhân viên
                 </a>
                 <a href="#" id="supplies_manager" class="btn btn-lg my-1 w-100">
-                    Supplies Manager
+                    Quản lý sản phẩm
                 </a>
             </div>
 
@@ -96,11 +103,10 @@
                                 <i class="fa-solid fa-door-open fa-2xl text-center w-100"></i>
                             </span>
                         </div>
-                        <h1 class="modal-title fs-2 text-center my-2" id="addEmployeeModalLabel">Are you leaving?</h1>
-                        <span class="text-center text-secondary my-2">Are you sure you want to sign out?</span>
-                        <button type="button" class="btn btn-danger my-2 py-2 rounded-5">Yes, sign out</button>
-                        <button type="button" class="btn btn-secondary my-2 py-2 rounded-5" data-bs-dismiss="modal">No,
-                            I am staying</button>
+                        <h1 class="modal-title fs-2 text-center my-2" id="addEmployeeModalLabel">Đăng xuất?</h1>
+                        <span class="text-center text-secondary my-2">Bạn có chắc chắn rằng muốn đăng xuất?</span>
+                        <button type="button" class="btn btn-danger my-2 py-2 rounded-5">Đăng xuất</button>
+                        <button type="button" class="btn btn-secondary my-2 py-2 rounded-5" data-bs-dismiss="modal">Ở lại</button>
                     </div>
                 </div>
             </div>
@@ -113,7 +119,7 @@
                 <div class="modal-content">
                     <!-- Add employee -->
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="addEmployeeModalLabel">Add an Employee</h1>
+                        <h1 class="modal-title fs-5" id="addEmployeeModalLabel">Thêm nhân viên</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -137,50 +143,48 @@
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="input_employee_password"
-                                style="min-width: 100px;">Password</span>
+                                style="min-width: 100px;">Mật khẩu</span>
                             <input type="text" class="form-control" placeholder="yourPassword" aria-label="Password"
                                 aria-describedby="input_employee_password">
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text" id="input_employee_lastname" style="min-width: 100px;">Last
-                                name</span>
+                            <span class="input-group-text" id="input_employee_lastname" style="min-width: 100px;">Họ</span>
                             <input type="text" class="form-control" placeholder="Jon" aria-label="Last name"
                                 aria-describedby="input_employee_lastname">
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text" id="input_employee_firstname" style="min-width: 100px;">First
-                                name</span>
+                            <span class="input-group-text" id="input_employee_firstname" style="min-width: 100px;">Tên</span>
                             <input type="text" class="form-control" placeholder="Snow" aria-label="First name"
                                 aria-describedby="input_employee_firstname">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="input_employee_code"
-                                style="min-width: 100px;">Code</span>
+                                style="min-width: 100px;">Mã</span>
                             <input type="text" class="form-control" placeholder="C123" aria-label="Code"
                                 aria-describedby="input_employee_code">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="input_employee_phone"
-                                style="min-width: 100px;">Phone</span>
+                                style="min-width: 100px;">Số điện thoại</span>
                             <input type="text" class="form-control" placeholder="0123456789" aria-label="Phone"
                                 aria-describedby="input_employee_phone">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="input_employee_address"
-                                style="min-width: 100px;">Address</span>
+                                style="min-width: 100px;">Địa chỉ</span>
                             <input type="text" class="form-control" placeholder="HCMC, Vietnam" aria-label="Address"
                                 aria-describedby="input_employee_address">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="input_employee_salary"
-                                style="min-width: 100px;">Salary</span>
+                                style="min-width: 100px;">Lương</span>
                             <input type="text" class="form-control" placeholder="5000000" aria-label="Salary"
                                 aria-describedby="input_employee_salary">
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Confirm</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn btn-primary">Xác nhận</button>
                     </div>
                 </div>
             </div>
@@ -190,9 +194,9 @@
 
             <!-- Title + Button -->
             <div class="card-header bg-white rounded-top-4">
-                <span class="fs-4">Employees Manager</span>
+                <span class="fs-4">Quản lý nhân viên</span>
                 <br>
-                <span>Track and manage your employees</span>
+                <span>Theo dõi và quản lý nhân viên</span>
             </div>
             <div class="container my-4">
                 <div class="d-flex flex-wrap justify-content-between">
@@ -200,7 +204,7 @@
                     <!-- New Employee Button -->
                     <button id="btn_add_employee" type="button" name="btn_add_employee"
                         class="btn text-white shadow border-0 btn_custom" data-bs-toggle="modal"
-                        data-bs-target="#addEmployeeModal"><i class="fa-solid fa-plus me-1"></i>New Employee</button>
+                        data-bs-target="#addEmployeeModal"><i class="fa-solid fa-plus me-1"></i>Thêm nhân viên</button>
 
                     <!-- Search bar -->
                     <input id="searchBarInput" type="text" placeholder="&#xf002; Search..."
@@ -233,14 +237,14 @@
                                 <th scope="col" class="text-center">ID</th>
                                 <th scope="col" class="text-center">Email</th>
                                 <th scope="col" class="text-center">Username</th>
-                                <th scope="col" class="text-center">Password</th>
-                                <th scope="col" class="text-center">First name</th>
-                                <th scope="col" class="text-center">Last name</th>
+                                <th scope="col" class="text-center">Mật khẩu</th>
+                                <th scope="col" class="text-center">Tên</th>
+                                <th scope="col" class="text-center">Họ</th>
                                 <th scope="col" class="text-center">Code</th>
-                                <th scope="col" class="text-center">Phone</th>
-                                <th scope="col" class="text-center">Address</th>
-                                <th scope="col" class="text-center">Salary</th>
-                                <th scope="col" class="text-center">Action</th>
+                                <th scope="col" class="text-center">Số điện thoại</th>
+                                <th scope="col" class="text-center">Địa chỉ</th>
+                                <th scope="col" class="text-center">Lương</th>
+                                <th scope="col" class="text-center">Hành động</th>
                                 </tr>
                         </thead>
 
@@ -248,18 +252,18 @@
                         <tbody id="myTable" style="font-size: 14px;">
                             <tr>
                                 <td class="text-center">5</td>
-                                <td>gemgaga@gmail.com</td>
-                                <td>gemga</td>
-                                <td>gemgavai</td>
-                                <td>Gam</td>
-                                <td>Nguyen</td>
-                                <td>BA001</td>
-                                <td>0127592745</td>
-                                <td>Long An</td>
-                                <td>1000000</td>
-                                <td>
-                                    <button name="btn_edit_employee" class="btn btn-outline-secondary">Edit</button>
-                                    <button name="btn_delete_employee" class="btn btn-outline-danger">Delete</button>
+                                <td class="text-center">gemgaga@gmail.com</td>
+                                <td class="text-center">gemga</td>
+                                <td class="text-center">gemgavai</td>
+                                <td class="text-center">Gam</td>
+                                <td class="text-center">Nguyen</td>
+                                <td class="text-center">BA001</td>
+                                <td class="text-center">0127592745</td>
+                                <td class="text-center">Long An</td>
+                                <td class="text-center">1000000</td>
+                                <td class="text-center">
+                                    <button name="btn_edit_employee" class="btn btn-outline-secondary">Sửa</button>
+                                    <button name="btn_delete_employee" class="btn btn-outline-danger">Xóa</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -279,11 +283,13 @@
     </div>
 
     <!-- Bootstrap 5.3 -->
-    <script language="JavaScript" type="text/javascript"
-        src="../assets/bootstrap-5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
 
     <!-- JQuery -->
-    <script language="JavaScript" type="text/javascript" src="../assets/jquery/jquery-3.6.4.min.js"></script>
+    <script language="JavaScript" type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
 
     <!-- JS -->
     <script language="JavaScript" type="text/javascript" src="script.js"></script>
