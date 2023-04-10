@@ -7,41 +7,95 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Showtime</title>
-    
+
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-    rel="stylesheet">
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
 
     <!-- Font awesome 5 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
+
     <!-- Bootstrap 5.3 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    
+
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <div id="wrapper">
+        <!-- Top part -->
+        <div id="toppart">
+            <!-- Navigation bar -->
+            <nav class="navbar navbar-expand-lg bg-transparent" aria-label="Thirteenth navbar example"
+                style="background: transparent;">
+                <div class="container-fluid">
+                    <!-- Navbar toggler for mobile -->
+                    <button class="navbar-toggler collapsed bg-yellow" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#showtimeNavBar" aria-controls="showtimeNavBar" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
 
+                    <div class="navbar-collapse d-lg-flex collapse mt-sm-3" id="showtimeNavBar">
+                        <a class="navbar-brand col-lg-3 me-0" href="#">
+                            <img src="../assets/img/showtime/Logo.png" alt="Logo" style="height: 4rem;">
+                        </a>
+                        <ul class="navbar-nav col-lg-6 justify-content-lg-center">
+                            <li class="nav-item">
+                                <a class="nav-link mx-4 text-white hover-green fs-5 fw-semibold" href="../template_homepage/index.html">Trang chủ</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mx-4 text-white hover-green fs-5 fw-semibold" href="#">Phim</a>
+                            </li>
+                            <li class="nav-item position-relative">
+                                <a class="nav-link mx-4 text-yellow fs-5 fw-semibold active custom-active"
+                                    aria-current="page" href="#">Lịch chiếu</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mx-4 text-white hover-green fs-5 fw-semibold" href="../template_promotion/index.html">Khuyến mãi</a>
+                            </li>
+                        </ul>
+                        <div id="btn-signin" class="d-lg-flex col-lg-3 justify-content-lg-end">
+                            <a href="../template_signin-signup/index.html"
+                                class="btn text-green text-decoration-none hover-yellow">Đăng nhập</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Slider -->
+
+        </div>
 
         <!-- Showtime -->
-        <div id="showtime">
+        <div id="showtime" class="mb-5">
+            <!-- Separator -->
+            <div id="showtime-separator" class="py-4">
+                <div class="container position-relative">
+                    <div class="d-flex justify-content-start align-items-center">
+                        <div id="showtime-icon-play" class="text-yellow fs-1 me-5">
+                            <i class="fa-solid fa-play"></i>
+                        </div>
+                        <div id="showtime-text" class="text-white">
+                            <h1>Suất chiếu</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <!-- Item -->
-            <div class="showtime-item mx-auto d-flex mb-4">
-
+            <!-- DATAFILL ITEM -->
+            <div class="showtime-item mx-auto d-flex mt-5">
                 <!-- Left side info -->
                 <div class="showtime-item-info d-flex align-items-center">
 
-                    <!-- Poster -->
+                    <!-- DATAFILL POSTER -->
                     <div class="showtime-item-info-poster">
                         <img src="../assets/img/showtime-item.png" alt="Movie Poster">
                     </div>
@@ -49,14 +103,14 @@
                     <!-- Content -->
                     <div class="showtime-item-info-content text-white d-flex flex-column mx-4">
 
-                        <!-- Title -->
+                        <!-- DATAFILL MOVIE TITLE -->
                         <h4 class="showtime-item-info-content-title text-center">Cô Ba Sài Gòn</h4>
 
-                        <!-- Main content -->
+                        <!-- DATAFILL MOVIE DESCRIPTION -->
                         <p class="showtime-item-info-content-content">Cô Ba Sài Gòn mở đầu bằng một đoạn phim tư liệu
                             lấy cột mốc Sài Gòn năm 1969 và đó dường như là “cảnh ngoại” duy nhất của cột mốc này. </p>
 
-                        <!-- Rating -->
+                        <!-- DATAFILL RATING -->
                         <span class="showtime-item-info-content-rating">
                             <i class="fa fa-star" aria-hidden="true"></i>
                             <i class="fa fa-star" aria-hidden="true"></i>
@@ -65,7 +119,7 @@
                             <i class="fa fa-star" aria-hidden="true"></i>
                         </span>
 
-                        <!-- Voters -->
+                        <!-- DATAFILL RATING -->
                         <span>180k voters</span>
                     </div>
                 </div>
@@ -77,6 +131,8 @@
                     <div class="showtime-item-time-date position-relative d-flex">
                         <div class="showtime-item-time-date-cut1"></div>
                         <div class="showtime-item-time-date-cut2"></div>
+
+                        <!-- DATAFILL DATE -->
                         <div
                             class="showtime-item-time-date-date text-white position-absolute top-50 translate-middle-y">
                             <h3>22/02</h3>
@@ -95,42 +151,42 @@
                         <!-- Time slot -->
                         <div class="showtime-item-time-tagntime-time d-flex">
 
-                            <!-- Item -->
+                            <!-- DATAFILL TIME -->
                             <div class="showtime-item-time-tagntime-time-slot me-4">
                                 <a href=""
                                     class="showtime-item-time-tagntime-time-slot-inner text-white text-center text-decoration-none">
                                     <h4>15:30</h4>
                                 </a>
                             </div>
-                            <!-- Item -->
+                            <!-- DATAFILL TIME -->
                             <div class="showtime-item-time-tagntime-time-slot me-4">
                                 <a href=""
                                     class="showtime-item-time-tagntime-time-slot-inner text-white text-center text-decoration-none">
                                     <h4>15:30</h4>
                                 </a>
                             </div>
-                            <!-- Item -->
+                            <!-- DATAFILL TIME -->
                             <div class="showtime-item-time-tagntime-time-slot me-4">
                                 <a href=""
                                     class="showtime-item-time-tagntime-time-slot-inner text-white text-center text-decoration-none">
                                     <h4>15:30</h4>
                                 </a>
                             </div>
-                            <!-- Item -->
+                            <!-- DATAFILL TIME -->
                             <div class="showtime-item-time-tagntime-time-slot me-4">
                                 <a href=""
                                     class="showtime-item-time-tagntime-time-slot-inner text-white text-center text-decoration-none">
                                     <h4>15:30</h4>
                                 </a>
                             </div>
-                            <!-- Item -->
+                            <!-- DATAFILL TIME -->
                             <div class="showtime-item-time-tagntime-time-slot me-4">
                                 <a href=""
                                     class="showtime-item-time-tagntime-time-slot-inner text-white text-center text-decoration-none">
                                     <h4>15:30</h4>
                                 </a>
                             </div>
-                            <!-- Item -->
+                            <!-- DATAFILL TIME -->
                             <div class="showtime-item-time-tagntime-time-slot me-4">
                                 <a href=""
                                     class="showtime-item-time-tagntime-time-slot-inner text-white text-center text-decoration-none">
@@ -141,13 +197,12 @@
                     </div>
                 </div>
             </div>
-            <!-- Item -->
-            <div class="showtime-item mx-auto d-flex mb-4">
-
+            <!-- DATAFILL ITEM -->
+            <div class="showtime-item mx-auto d-flex mt-5">
                 <!-- Left side info -->
                 <div class="showtime-item-info d-flex align-items-center">
 
-                    <!-- Poster -->
+                    <!-- DATAFILL POSTER -->
                     <div class="showtime-item-info-poster">
                         <img src="../assets/img/showtime-item.png" alt="Movie Poster">
                     </div>
@@ -155,14 +210,14 @@
                     <!-- Content -->
                     <div class="showtime-item-info-content text-white d-flex flex-column mx-4">
 
-                        <!-- Title -->
+                        <!-- DATAFILL MOVIE TITLE -->
                         <h4 class="showtime-item-info-content-title text-center">Cô Ba Sài Gòn</h4>
 
-                        <!-- Main content -->
+                        <!-- DATAFILL MOVIE DESCRIPTION -->
                         <p class="showtime-item-info-content-content">Cô Ba Sài Gòn mở đầu bằng một đoạn phim tư liệu
                             lấy cột mốc Sài Gòn năm 1969 và đó dường như là “cảnh ngoại” duy nhất của cột mốc này. </p>
 
-                        <!-- Rating -->
+                        <!-- DATAFILL RATING -->
                         <span class="showtime-item-info-content-rating">
                             <i class="fa fa-star" aria-hidden="true"></i>
                             <i class="fa fa-star" aria-hidden="true"></i>
@@ -171,7 +226,7 @@
                             <i class="fa fa-star" aria-hidden="true"></i>
                         </span>
 
-                        <!-- Voters -->
+                        <!-- DATAFILL RATING -->
                         <span>180k voters</span>
                     </div>
                 </div>
@@ -183,6 +238,8 @@
                     <div class="showtime-item-time-date position-relative d-flex">
                         <div class="showtime-item-time-date-cut1"></div>
                         <div class="showtime-item-time-date-cut2"></div>
+
+                        <!-- DATAFILL DATE -->
                         <div
                             class="showtime-item-time-date-date text-white position-absolute top-50 translate-middle-y">
                             <h3>22/02</h3>
@@ -201,42 +258,42 @@
                         <!-- Time slot -->
                         <div class="showtime-item-time-tagntime-time d-flex">
 
-                            <!-- Item -->
+                            <!-- DATAFILL TIME -->
                             <div class="showtime-item-time-tagntime-time-slot me-4">
                                 <a href=""
                                     class="showtime-item-time-tagntime-time-slot-inner text-white text-center text-decoration-none">
                                     <h4>15:30</h4>
                                 </a>
                             </div>
-                            <!-- Item -->
+                            <!-- DATAFILL TIME -->
                             <div class="showtime-item-time-tagntime-time-slot me-4">
                                 <a href=""
                                     class="showtime-item-time-tagntime-time-slot-inner text-white text-center text-decoration-none">
                                     <h4>15:30</h4>
                                 </a>
                             </div>
-                            <!-- Item -->
+                            <!-- DATAFILL TIME -->
                             <div class="showtime-item-time-tagntime-time-slot me-4">
                                 <a href=""
                                     class="showtime-item-time-tagntime-time-slot-inner text-white text-center text-decoration-none">
                                     <h4>15:30</h4>
                                 </a>
                             </div>
-                            <!-- Item -->
+                            <!-- DATAFILL TIME -->
                             <div class="showtime-item-time-tagntime-time-slot me-4">
                                 <a href=""
                                     class="showtime-item-time-tagntime-time-slot-inner text-white text-center text-decoration-none">
                                     <h4>15:30</h4>
                                 </a>
                             </div>
-                            <!-- Item -->
+                            <!-- DATAFILL TIME -->
                             <div class="showtime-item-time-tagntime-time-slot me-4">
                                 <a href=""
                                     class="showtime-item-time-tagntime-time-slot-inner text-white text-center text-decoration-none">
                                     <h4>15:30</h4>
                                 </a>
                             </div>
-                            <!-- Item -->
+                            <!-- DATAFILL TIME -->
                             <div class="showtime-item-time-tagntime-time-slot me-4">
                                 <a href=""
                                     class="showtime-item-time-tagntime-time-slot-inner text-white text-center text-decoration-none">
@@ -246,6 +303,258 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <!-- DATAFILL ITEM -->
+            <div class="showtime-item mx-auto d-flex mt-5">
+                <!-- Left side info -->
+                <div class="showtime-item-info d-flex align-items-center">
+
+                    <!-- DATAFILL POSTER -->
+                    <div class="showtime-item-info-poster">
+                        <img src="../assets/img/showtime-item.png" alt="Movie Poster">
+                    </div>
+
+                    <!-- Content -->
+                    <div class="showtime-item-info-content text-white d-flex flex-column mx-4">
+
+                        <!-- DATAFILL MOVIE TITLE -->
+                        <h4 class="showtime-item-info-content-title text-center">Cô Ba Sài Gòn</h4>
+
+                        <!-- DATAFILL MOVIE DESCRIPTION -->
+                        <p class="showtime-item-info-content-content">Cô Ba Sài Gòn mở đầu bằng một đoạn phim tư liệu
+                            lấy cột mốc Sài Gòn năm 1969 và đó dường như là “cảnh ngoại” duy nhất của cột mốc này. </p>
+
+                        <!-- DATAFILL RATING -->
+                        <span class="showtime-item-info-content-rating">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                        </span>
+
+                        <!-- DATAFILL RATING -->
+                        <span>180k voters</span>
+                    </div>
+                </div>
+
+                <!-- Time -->
+                <div class="showtime-item-time my-auto d-flex">
+
+                    <!-- Date -->
+                    <div class="showtime-item-time-date position-relative d-flex">
+                        <div class="showtime-item-time-date-cut1"></div>
+                        <div class="showtime-item-time-date-cut2"></div>
+
+                        <!-- DATAFILL DATE -->
+                        <div
+                            class="showtime-item-time-date-date text-white position-absolute top-50 translate-middle-y">
+                            <h3>22/02</h3>
+                            <h3>2022</h3>
+                        </div>
+                    </div>
+
+                    <!-- Tag and time-->
+                    <div class="showtime-item-time-tagntime d-flex flex-column mx-4 my-2 justify-content-around w-100">
+
+                        <!-- Tag -->
+                        <div class="showtime-item-time-tagntime-tag">
+                            <img src="../assets/img/2dtag.png" alt="Tag 2D">
+                        </div>
+
+                        <!-- Time slot -->
+                        <div class="showtime-item-time-tagntime-time d-flex">
+
+                            <!-- DATAFILL TIME -->
+                            <div class="showtime-item-time-tagntime-time-slot me-4">
+                                <a href=""
+                                    class="showtime-item-time-tagntime-time-slot-inner text-white text-center text-decoration-none">
+                                    <h4>15:30</h4>
+                                </a>
+                            </div>
+                            <!-- DATAFILL TIME -->
+                            <div class="showtime-item-time-tagntime-time-slot me-4">
+                                <a href=""
+                                    class="showtime-item-time-tagntime-time-slot-inner text-white text-center text-decoration-none">
+                                    <h4>15:30</h4>
+                                </a>
+                            </div>
+                            <!-- DATAFILL TIME -->
+                            <div class="showtime-item-time-tagntime-time-slot me-4">
+                                <a href=""
+                                    class="showtime-item-time-tagntime-time-slot-inner text-white text-center text-decoration-none">
+                                    <h4>15:30</h4>
+                                </a>
+                            </div>
+                            <!-- DATAFILL TIME -->
+                            <div class="showtime-item-time-tagntime-time-slot me-4">
+                                <a href=""
+                                    class="showtime-item-time-tagntime-time-slot-inner text-white text-center text-decoration-none">
+                                    <h4>15:30</h4>
+                                </a>
+                            </div>
+                            <!-- DATAFILL TIME -->
+                            <div class="showtime-item-time-tagntime-time-slot me-4">
+                                <a href=""
+                                    class="showtime-item-time-tagntime-time-slot-inner text-white text-center text-decoration-none">
+                                    <h4>15:30</h4>
+                                </a>
+                            </div>
+                            <!-- DATAFILL TIME -->
+                            <div class="showtime-item-time-tagntime-time-slot me-4">
+                                <a href=""
+                                    class="showtime-item-time-tagntime-time-slot-inner text-white text-center text-decoration-none">
+                                    <h4>15:30</h4>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- DATAFILL ITEM -->
+            <div class="showtime-item mx-auto d-flex mt-5">
+                <!-- Left side info -->
+                <div class="showtime-item-info d-flex align-items-center">
+
+                    <!-- DATAFILL POSTER -->
+                    <div class="showtime-item-info-poster">
+                        <img src="../assets/img/showtime-item.png" alt="Movie Poster">
+                    </div>
+
+                    <!-- Content -->
+                    <div class="showtime-item-info-content text-white d-flex flex-column mx-4">
+
+                        <!-- DATAFILL MOVIE TITLE -->
+                        <h4 class="showtime-item-info-content-title text-center">Cô Ba Sài Gòn</h4>
+
+                        <!-- DATAFILL MOVIE DESCRIPTION -->
+                        <p class="showtime-item-info-content-content">Cô Ba Sài Gòn mở đầu bằng một đoạn phim tư liệu
+                            lấy cột mốc Sài Gòn năm 1969 và đó dường như là “cảnh ngoại” duy nhất của cột mốc này. </p>
+
+                        <!-- DATAFILL RATING -->
+                        <span class="showtime-item-info-content-rating">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                        </span>
+
+                        <!-- DATAFILL RATING -->
+                        <span>180k voters</span>
+                    </div>
+                </div>
+
+                <!-- Time -->
+                <div class="showtime-item-time my-auto d-flex">
+
+                    <!-- Date -->
+                    <div class="showtime-item-time-date position-relative d-flex">
+                        <div class="showtime-item-time-date-cut1"></div>
+                        <div class="showtime-item-time-date-cut2"></div>
+
+                        <!-- DATAFILL DATE -->
+                        <div
+                            class="showtime-item-time-date-date text-white position-absolute top-50 translate-middle-y">
+                            <h3>22/02</h3>
+                            <h3>2022</h3>
+                        </div>
+                    </div>
+
+                    <!-- Tag and time-->
+                    <div class="showtime-item-time-tagntime d-flex flex-column mx-4 my-2 justify-content-around w-100">
+
+                        <!-- Tag -->
+                        <div class="showtime-item-time-tagntime-tag">
+                            <img src="../assets/img/2dtag.png" alt="Tag 2D">
+                        </div>
+
+                        <!-- Time slot -->
+                        <div class="showtime-item-time-tagntime-time d-flex">
+
+                            <!-- DATAFILL TIME -->
+                            <div class="showtime-item-time-tagntime-time-slot me-4">
+                                <a href=""
+                                    class="showtime-item-time-tagntime-time-slot-inner text-white text-center text-decoration-none">
+                                    <h4>15:30</h4>
+                                </a>
+                            </div>
+                            <!-- DATAFILL TIME -->
+                            <div class="showtime-item-time-tagntime-time-slot me-4">
+                                <a href=""
+                                    class="showtime-item-time-tagntime-time-slot-inner text-white text-center text-decoration-none">
+                                    <h4>15:30</h4>
+                                </a>
+                            </div>
+                            <!-- DATAFILL TIME -->
+                            <div class="showtime-item-time-tagntime-time-slot me-4">
+                                <a href=""
+                                    class="showtime-item-time-tagntime-time-slot-inner text-white text-center text-decoration-none">
+                                    <h4>15:30</h4>
+                                </a>
+                            </div>
+                            <!-- DATAFILL TIME -->
+                            <div class="showtime-item-time-tagntime-time-slot me-4">
+                                <a href=""
+                                    class="showtime-item-time-tagntime-time-slot-inner text-white text-center text-decoration-none">
+                                    <h4>15:30</h4>
+                                </a>
+                            </div>
+                            <!-- DATAFILL TIME -->
+                            <div class="showtime-item-time-tagntime-time-slot me-4">
+                                <a href=""
+                                    class="showtime-item-time-tagntime-time-slot-inner text-white text-center text-decoration-none">
+                                    <h4>15:30</h4>
+                                </a>
+                            </div>
+                            <!-- DATAFILL TIME -->
+                            <div class="showtime-item-time-tagntime-time-slot me-4">
+                                <a href=""
+                                    class="showtime-item-time-tagntime-time-slot-inner text-white text-center text-decoration-none">
+                                    <h4>15:30</h4>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div id="footer" class="container-fluid" style="background-color: rgba(0, 19, 55, 0.48);">
+            <div class="container">
+                <footer class="d-flex flex-wrap justify-content-between align-items-center py-5 text-white">
+                    <!-- Logo -->
+                    <a class="col-12 navbar-brand col-lg-4 me-0 border-end" href="#">
+                        <img src="../assets/img/showtime/Logo.png" alt="Logo" style="height: 4rem;">
+                    </a>
+                    <!-- Link -->
+                    <div class="col-12 col-lg-4 d-flex justify-content-center flex-column my-2">
+                        <div class="row ms-5 my-1">
+                            <div class="col-12 col-md-4 ps-0 py-2">
+                                <a href="#" class="text-white hover-yellow text-decoration-none">Trang chủ</a>
+                            </div>
+                            <div class="col-12 col-md-4 ps-0 py-2">
+                                <a href="#" class="text-white hover-yellow text-decoration-none">Hỗ trợ</a>
+                            </div>
+                            <div class="col-12 col-md-4 ps-0 py-2">
+                                <a href="#" class="text-white hover-yellow text-decoration-none">Liên hệ</a>
+                            </div>
+                        </div>
+                        <div class="ms-5 my-1">
+                            <p class="mb-0">Copyright © 2023, IIEX Cinema</p>
+                        </div>
+                    </div>
+                    <!-- Brand -->
+                    <ul class="col-12 col-lg-4 nav justify-content-end">
+                        <li class="nav-item"><a href="#" class="nav-link px-2 text-white hover-yellow"><i
+                                    class="fa-brands fa-facebook fa-2xl"></i></a></li>
+                        <li class="nav-item"><a href="#" class="nav-link px-2 text-white hover-yellow"><i
+                                    class="fa-brands fa-instagram fa-2xl"></i></a></li>
+                        <li class="nav-item"><a href="#" class="nav-link px-2 text-white hover-yellow"><i
+                                    class="fa-brands fa-twitter fa-2xl"></i></a></li>
+                    </ul>
+                </footer>
             </div>
         </div>
     </div>

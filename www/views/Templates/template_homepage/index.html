@@ -36,6 +36,7 @@
     <div id="wrapper" style="background-color: #000218;">
         <!-- Top part -->
         <div id="toppart">
+            <!-- Navigation bar -->
             <nav class="navbar navbar-expand-lg bg-transparent" aria-label="Thirteenth navbar example"
                 style="background: transparent;">
                 <div class="container-fluid">
@@ -56,22 +57,25 @@
                                     aria-current="page" href="#">Trang chủ</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link mx-4 text-white fs-5 fw-semibold" href="#">Phim</a>
+                                <a class="nav-link mx-4 text-white hover-green fs-5 fw-semibold" href="#">Phim</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link mx-4 text-white fs-5 fw-semibold" href="#">Lịch chiếu</a>
+                                <a class="nav-link mx-4 text-white hover-green fs-5 fw-semibold" href="../template_showtime/index.html">Lịch chiếu</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link mx-4 text-white fs-5 fw-semibold" href="#">Khuyến mãi</a>
+                                <a class="nav-link mx-4 text-white hover-green fs-5 fw-semibold" href="../template_promotion/">Khuyến mãi</a>
                             </li>
                         </ul>
                         <div id="btn-signin" class="d-lg-flex col-lg-3 justify-content-lg-end">
                             <a href="../template_signin-signup/index.html"
-                                class="btn text-green text-decoration-none">Đăng nhập</a>
+                                class="btn text-green text-decoration-none hover-yellow">Đăng nhập</a>
                         </div>
                     </div>
                 </div>
             </nav>
+
+            <!-- Slider -->
+            
         </div>
 
         <!-- Content -->
@@ -85,13 +89,13 @@
                         </div>
                         <div id="toggler-ongoing-movies"
                             class="col-12 col-lg-5 fs-3 d-flex justify-content-center py-sm-2">
-                            <a class="text-decoration-none border-0 bg-transparent fw-semibold text-white text-yellow">Phim
+                            <a class="text-decoration-none border-0 bg-transparent fw-semibold hover-green text-white text-yellow">Phim
                                 đang
                                 chiếu</a>
                         </div>
                         <div id="toggler-upcoming-movies"
                             class="col-12 col-lg-5 fs-3 d-flex justify-content-center py-sm-2">
-                            <a class="text-decoration-none border-0 bg-transparent fw-semibold text-white">Phim sắp
+                            <a class="text-decoration-none border-0 bg-transparent fw-semibold hover-green text-white">Phim sắp
                                 chiếu</a>
                         </div>
                     </div>
@@ -401,19 +405,21 @@
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carousel-trailer"
                     data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <!-- <span class="carousel-control-prev-icon" aria-hidden="true"></span> -->
+                    <span aria-hidden="true"><i class="fa-solid fa-chevron-left fa-2xl text-yellow"></i></span>
                     <span class="visually-hidden">Previous</span>
                 </button>
                 <button class="carousel-control-next" type="button" data-bs-target="#carousel-trailer"
                     data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <!-- <span class="carousel-control-next-icon" aria-hidden="true"></span> -->
+                    <span aria-hidden="true"><i class="fa-solid fa-chevron-right fa-2xl text-yellow"></i></span>
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
         </div>
 
         <!-- Footer -->
-        <div class="container-fluid" style="background-color: rgba(0, 19, 55, 0.48);">
+        <div id="footer" class="container-fluid" style="background-color: rgba(0, 19, 55, 0.48);">
             <div class="container">
                 <footer class="d-flex flex-wrap justify-content-between align-items-center py-5 text-white">
                     <!-- Logo -->
@@ -424,13 +430,13 @@
                     <div class="col-12 col-lg-4 d-flex justify-content-center flex-column my-2">
                         <div class="row ms-5 my-1">
                             <div class="col-12 col-md-4 ps-0 py-2">
-                                <a href="#" class="text-white text-decoration-none">Trang chủ</a>
+                                <a href="#" class="text-white hover-yellow text-decoration-none">Trang chủ</a>
                             </div>
                             <div class="col-12 col-md-4 ps-0 py-2">
-                                <a href="#" class="text-white text-decoration-none">Hỗ trợ</a>
+                                <a href="#" class="text-white hover-yellow text-decoration-none">Hỗ trợ</a>
                             </div>
                             <div class="col-12 col-md-4 ps-0 py-2">
-                                <a href="#" class="text-white text-decoration-none">Liên hệ</a>
+                                <a href="#" class="text-white hover-yellow text-decoration-none">Liên hệ</a>
                             </div>
                         </div>
                         <div class="ms-5 my-1">
@@ -439,8 +445,9 @@
                     </div>
                     <!-- Brand -->
                     <ul class="col-12 col-lg-4 nav justify-content-end">
-                        <li class="nav-item"><a href="#" class="nav-link px-2 text-white"><i class="fa-brands fa-facebook fa-2xl"></i></a></li>
-                        <li class="nav-item"><a href="#" class="nav-link px-2 text-white"><i class="fa-brands fa-instagram fa-2xl"></i></a></li>
+                        <li class="nav-item"><a href="#" class="nav-link px-2 text-white hover-yellow"><i class="fa-brands fa-facebook fa-2xl"></i></a></li>
+                        <li class="nav-item"><a href="#" class="nav-link px-2 text-white hover-yellow"><i class="fa-brands fa-instagram fa-2xl"></i></a></li>
+                        <li class="nav-item"><a href="#" class="nav-link px-2 text-white hover-yellow"><i class="fa-brands fa-twitter fa-2xl"></i></a></li>
                     </ul>
                 </footer>
             </div>
