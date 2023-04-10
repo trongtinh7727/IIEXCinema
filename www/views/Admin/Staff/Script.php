@@ -11,9 +11,10 @@
             console.log(data)
             data.data.forEach(function(object) {
                 $('#USERNAME').val(object.USERNAME)
-                $('#PASSWORD').val().trim(object.PASSWORD)
-                $('#NAME').val(object.NAME)
-                $('#CODE').val(object.CODE)
+                $('.pass').hide();
+                $('#FNAME').val(object.FIRSTNAME)
+                $('#LNAME').val(object.LASTNAME)
+                $('#BIRTHDAY').val(object.BIRTHDAY)
                 $('#PHONE').val(object.PHONE)
                 $('#ADDRESS').val(object.ADDRESS)
                 $('#SALARY').val(object.SALARY)
@@ -23,18 +24,15 @@
     }
     $(document).ready(function() {
         function deleteRow() {
-            var table = document.querySelector("table");
+            var table = document.querySelector("myTable");
             var rowCount = table.rows.length;
             for (let index = rowCount; index > 1; index--) {
                 if (rowCount > 1) {
                     table.deleteRow(index - 1);
                 }
             }
-
         }
-
         let jsonArrayObj = [{}];
-
         function load_studen() {
             fetch('./?api/staff/getall')
                 .then(response => response.json())
@@ -67,7 +65,7 @@
                     <tr>
                         <td class="align-middle text-center" name="data_id"> ${jsonArrayObj[i].ID}</td>
                         <td class="align-middle text-center" name="data_username"> ${jsonArrayObj[i].USERNAME}</td>
-                        <td class="align-middle text-center" name="data_firstname"> ${jsonArrayObj[i].NAME}</td>
+                        <td class="align-middle text-center" name="data_firstname"> ${jsonArrayObj[i].FIRSTNAME + ` `+ jsonArrayObj[i].LASTNAME}</td>
                         <td class="align-middle text-center" name="data_phone"> ${jsonArrayObj[i].PHONE}</td>
                         <td class="align-middle text-center" name="data_address"> ${jsonArrayObj[i].ADDRESS}</td>
                         <td class="align-middle text-center" name="data_salary"> ${jsonArrayObj[i].SALARY}</td>
@@ -83,7 +81,6 @@
                 tr.id = `${id}`;
                 $("table tbody").append(tr);
             }
-
             $(".page_index").removeClass("active");
             $("#page_index" + pageNumber).addClass("active");
             $(".data_size_details").text(`Showing ` + (start_index + 1) + ` to ` + (end_index + 1) + ` of ` + jsonArrayObj.length + ` entries`);
@@ -132,23 +129,37 @@
         $.fn.dataTable();
 
         $("#addStaff").click(function() {
-            let USERNAME = $('#USERNAME').val()
+
             let PASSWORD = $('#PASSWORD').val().trim()
-            let NAME = $('#NAME').val()
-            let CODE = $('#CODE').val()
+            let PASS_CONFIRM = $('#PASS-CONFIRM').val().trim()
+            if (PASSWORD != PASS_CONFIRM) {
+                console.assert("Mật khẩu không trùng khớp !");
+                return;
+            }
+
+            let USERNAME = $('#USERNAME').val()
+            let FIRSTNAME = $('#FNAME').val() 
+            let LASTNAME = $('#LNAME').val()
+            let SEX = $("#SEX").val() === "M" ? "nam" : "nữ" 
+            let BIRTHDAY = $("#BIRTHDAY").val()
             let PHONE = $('#PHONE').val()
             let ADDRESS = $('#ADDRESS').val()
             let SALARY = $('#SALARY').val()
+            let ROLE = $("#ROLE").val()
             let action = $("#action").val();
+            console.log(action);
             if (action == "Add") {
                 $.post("./?api/staff/add", {
                     USERNAME,
                     PASSWORD,
-                    NAME,
-                    CODE,
+                    FIRSTNAME,
+                    LASTNAME,
+                    SEX,
+                    BIRTHDAY,
                     PHONE,
                     ADDRESS,
-                    SALARY
+                    SALARY,
+                    ROLE
                 }, function(data, status) {
                     console.log(data)
                     if (data.status) {
@@ -168,12 +179,15 @@
                 $.post("./?api/staff/update", {
                     USERNAME,
                     PASSWORD,
-                    NAME,
-                    CODE,
+                    FIRSTNAME,
+                    LASTNAME,
+                    SEX,
+                    BIRTHDAY,
                     PHONE,
                     ADDRESS,
                     SALARY,
-                    ID,
+                    ROLE,
+                    ID
                 }, function(data, status) {
                     console.log(data)
                     if (data.status) {
@@ -259,17 +273,6 @@
         $("#email").val("");
         $("#phone").val("");
     }
-
-
     $(document).ready(function() {
-
-
-
-
-
-
-
-
-
     });
 </script>
