@@ -26,6 +26,9 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Responsive -->
+    <link rel="stylesheet" href="responsive.css">
 </head>
 
 <body>
@@ -43,26 +46,29 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
-                    <div class="navbar-collapse d-lg-flex collapse mt-sm-3" id="promotionNavBar">
+                    <div class="navbar-collapse d-lg-flex collapse mt-3 mt-lg-0 clearfix" id="promotionNavBar">
                         <a class="navbar-brand col-lg-3 me-0" href="#">
-                            <img src="../assets/img/promotion/Logo.png" alt="Logo" style="height: 4rem;">
+                            <img src="../assets/img/moviedetails/Logo.png" alt="Logo" style="height: 4rem;">
                         </a>
                         <ul class="navbar-nav col-lg-6 justify-content-lg-center">
                             <li class="nav-item">
-                                <a class="nav-link mx-4 text-white hover-green fs-5 fw-semibold" href="../template_homepage/index.html">Trang chủ</a>
+                                <a class="nav-link mx-4 text-white hover-green fs-5 fw-semibold"
+                                    href="../template_homepage/index.html">Trang chủ</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link mx-4 text-white hover-green fs-5 fw-semibold" href="#">Phim</a>
+                                <a class="nav-link mx-4 text-white hover-green fs-5 fw-semibold" 
+                                href="#">Phim</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link mx-4 text-white hover-green fs-5 fw-semibold" href="../template_showtime/index.html">Lịch chiếu</a>
+                                <a class="nav-link mx-4 text-white hover-green fs-5 fw-semibold"
+                                href="../template_showtime/index.html">Lịch chiếu</a>
                             </li>
                             <li class="nav-item position-relative">
                                 <a class="nav-link mx-4 text-yellow fs-5 fw-semibold active custom-active"
                                     aria-current="page" href="#">Khuyến mãi</a>
                             </li>
                         </ul>
-                        <div id="btn-signin" class="d-lg-flex col-lg-3 justify-content-lg-end">
+                        <div id="btn-signin" class="d-lg-flex col-lg-3 justify-content-end mt-3 mt-lg-0 float-end">
                             <a href="../template_signin-signup/index.html"
                                 class="btn text-green text-decoration-none hover-yellow">Đăng nhập</a>
                         </div>
@@ -74,8 +80,117 @@
 
         </div>
 
-        <!-- Showtime -->
-        <div></div>
+        <!-- Promotion -->
+        <div id="promotion-main">
+            <!-- Separator -->
+            <div id="promotion-separator" class="py-4">
+                <div class="container position-relative">
+                    <div class="d-flex justify-content-start align-items-center">
+                        <div id="promotion-icon-play" class="text-yellow fs-1 me-5">
+                            <i class="fa-solid fa-ticket"></i>
+                        </div>
+                        <div id="promotion-text" class="text-white">
+                            <h1>Khuyến mãi</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="promotion-main-content">
+                <!-- DATAFILL ITEM -->
+                <div class="promotion-item container my-5">
+                    <div class="row">
+                        <!-- DATAFILL PHOTO -->
+                        <div class="col-xs-12 col-lg-4 promotion-item-photo d-flex align-self-center">
+                            <img src="../assets/img/promotion/promotion.png" class="w-100" alt="Promotion">
+                        </div>
+                        <!-- Description -->
+                        <div class="col-xs-12 col-lg-8 promotion-item-desc">
+                            <!-- DATAFILL TITLE-->
+                            <h3 name="promotion-item-desc-title" class="promotion-item-desc-title text-white">Giá vé 45k
+                                cho
+                                học sinh, sinh viên suốt tuần</h3>
+                            <!-- DATAFILL SUBTITLE -->
+                            <p name="promotion-item-desc-subtitle" class="text-white">Nhanh chóng tận hưởng trọn vẹn
+                                trải nghiệm xem phim mà không cần phải lo lắng</p>
+                            <!-- DATAFILL DESCRIPTION -->
+                            <p name="promotion-item-desc-details" class="text-white">Chương trình áp dụng cho giáo viên,
+                                giảng viên, học sinh, sinh viên và
+                                thanh niên dưới 22
+                                tuổi trên toàn hệ thống. Để được hưởng ưu đãi, khách hàng cần xuất trình thẻ HSSV-GV
+                                hoặc
+                                CMND có dán ảnh và còn hiệu lực khi mua vé, với mỗi thẻ chỉ được mua một vé. Chương
+                                trình
+                                không áp dụng cho các ngày Lễ, Tết, hoặc suất chiếu có phụ thu từ nhà phát hành phim.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- DATAFILL ITEM -->
+                <div class="promotion-item container my-5">
+                    <div class="row">
+                        <!-- DATAFILL PHOTO -->
+                        <div class="col-xs-12 col-lg-4 promotion-item-photo d-flex align-self-center">
+                            <img src="../assets/img/promotion/promotion.png" class="w-100" alt="Promotion">
+                        </div>
+                        <!-- Description -->
+                        <div class="col-xs-12 col-lg-8 promotion-item-desc">
+                            <!-- DATAFILL TITLE-->
+                            <h3 name="promotion-item-desc-title" class="promotion-item-desc-title text-white">Giá vé 45k
+                                cho
+                                học sinh, sinh viên suốt tuần</h3>
+                            <!-- DATAFILL SUBTITLE -->
+                            <p name="promotion-item-desc-subtitle" class="text-white">Nhanh chóng tận hưởng trọn vẹn
+                                trải nghiệm xem phim mà không cần phải lo lắng</p>
+                            <!-- DATAFILL DESCRIPTION -->
+                            <p name="promotion-item-desc-details" class="text-white">Chương trình áp dụng cho giáo viên,
+                                giảng viên, học sinh, sinh viên và
+                                thanh niên dưới 22
+                                tuổi trên toàn hệ thống. Để được hưởng ưu đãi, khách hàng cần xuất trình thẻ HSSV-GV
+                                hoặc
+                                CMND có dán ảnh và còn hiệu lực khi mua vé, với mỗi thẻ chỉ được mua một vé. Chương
+                                trình
+                                không áp dụng cho các ngày Lễ, Tết, hoặc suất chiếu có phụ thu từ nhà phát hành phim.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- DATAFILL ITEM -->
+                <div class="promotion-item container my-5">
+                    <div class="row">
+                        <!-- DATAFILL PHOTO -->
+                        <div class="col-xs-12 col-lg-4 promotion-item-photo d-flex align-self-center">
+                            <img src="../assets/img/promotion/promotion.png" class="w-100" alt="Promotion">
+                        </div>
+                        <!-- Description -->
+                        <div class="col-xs-12 col-lg-8 promotion-item-desc">
+                            <!-- DATAFILL TITLE-->
+                            <h3 name="promotion-item-desc-title" class="promotion-item-desc-title text-white">Giá vé 45k
+                                cho
+                                học sinh, sinh viên suốt tuần</h3>
+                            <!-- DATAFILL SUBTITLE -->
+                            <p name="promotion-item-desc-subtitle" class="text-white">Nhanh chóng tận hưởng trọn vẹn
+                                trải nghiệm xem phim mà không cần phải lo lắng</p>
+                            <!-- DATAFILL DESCRIPTION -->
+                            <p name="promotion-item-desc-details" class="text-white">Chương trình áp dụng cho giáo viên,
+                                giảng viên, học sinh, sinh viên và
+                                thanh niên dưới 22
+                                tuổi trên toàn hệ thống. Để được hưởng ưu đãi, khách hàng cần xuất trình thẻ HSSV-GV
+                                hoặc
+                                CMND có dán ảnh và còn hiệu lực khi mua vé, với mỗi thẻ chỉ được mua một vé. Chương
+                                trình
+                                không áp dụng cho các ngày Lễ, Tết, hoặc suất chiếu có phụ thu từ nhà phát hành phim.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Footer -->
         <div id="footer" class="container-fluid" style="background-color: rgba(0, 19, 55, 0.48);">

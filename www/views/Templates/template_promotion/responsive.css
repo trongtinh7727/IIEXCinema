@@ -1,8 +1,4 @@
 @media screen and (max-width: 992px) {
-    #icon-camera {
-        display: flex;
-        justify-content: center;
-    }
     .custom-active::after {
         content: "";
         position: absolute;
