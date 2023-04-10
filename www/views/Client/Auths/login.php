@@ -171,7 +171,7 @@
                 <label id="tab-1-label" for="tab-1" class="tab fs-3 text-white text-yellow">Đăng nhập</label>
 
                 <!-- Tab 2 -->
-                <input id="tab-2" type="radio" name="tab" class="sign-up" disabled>
+                <input id="tab-2" type="radio" name="tab" class="sign-up">
                 <label id="tab-2-label" for="tab-2" class="tab fs-3 text-white float-end">Đăng ký</label>
 
                 <!-- Form main -->
@@ -179,7 +179,7 @@
 
                     <!-- Sign in -->
                     <div class="sign-in-html">
-                        <form action="./?admin/login" method="post">
+                        <form action="./?login" method="post">
                             <!-- Input -->
                             <div class="group mt-5">
                                 <label for="user" class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Username hoặc Email</label>
@@ -197,7 +197,7 @@
                                 <input type="submit" class="button rounded-5 w-100 d-block text-black fw-semibold bg-yellow fs-4" value="Đăng nhập">
                             </div>
                             <hr style="height: 2px; background-color: rgb(0, 0, 0, 0.5);">
-                            <input type="hidden" name="tb" value="staff">
+                            <input type="hidden" name="tb" value="client">
                         </form>
                     </div>
 

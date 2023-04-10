@@ -5,7 +5,6 @@ class MovieController extends AdminController
 
     function __construct()
     {
-        $this->isAuthenticated();
     }
 
     public function getAll()
@@ -15,6 +14,7 @@ class MovieController extends AdminController
 
     public function add()
     {
+        $this->isAuthenticated();
         if (
             !isset($_POST['TITLE']) || !isset($_POST['GENRE']) || !isset($_POST['DURATION'])
             || !isset($_POST['RATING']) || !isset($_POST['STORY']) || !isset($_POST['POSTER'])
@@ -34,6 +34,7 @@ class MovieController extends AdminController
 
     public function delete()
     {
+        $this->isAuthenticated();
         if (!isset($_POST['id'])) {
             die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
         }
@@ -46,6 +47,7 @@ class MovieController extends AdminController
 
     public function update()
     {
+        $this->isAuthenticated();
         if (
             !isset($_POST['TITLE']) || !isset($_POST['GENRE']) || !isset($_POST['DURATION'])
             || !isset($_POST['RATING']) || !isset($_POST['STORY']) || !isset($_POST['POSTER'])
@@ -62,5 +64,10 @@ class MovieController extends AdminController
         $POSTER = $_POST['POSTER'];
 
         echo $this->model->update($TITLE, $GENRE, $DURATION, $RATING, $STORY, $POSTER, $RATING, $ID);
+    }
+
+    public function ongoing()
+    {
+        echo $this->model->ongoing();
     }
 }

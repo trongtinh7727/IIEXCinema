@@ -1,11 +1,11 @@
 <?php
 class CinemaController extends AdminController
-{ 
+{
     public $model;
 
     function __construct()
     {
-        $this->isAuthenticated();
+        // $this->isAuthenticated();
     }
 
     public function getAll()
@@ -15,8 +15,10 @@ class CinemaController extends AdminController
 
     public function add()
     {
-        if ( !isset($_POST['NAME'])
-          ||  !isset($_POST['PHONE']) || !isset($_POST['ADDRESS'])
+        $this->isAuthenticated();
+        if (
+            !isset($_POST['NAME'])
+            ||  !isset($_POST['PHONE']) || !isset($_POST['ADDRESS'])
         ) {
             die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
         }
@@ -29,6 +31,7 @@ class CinemaController extends AdminController
 
     public function delete()
     {
+        $this->isAuthenticated();
         if (!isset($_POST['id'])) {
             die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
         }
@@ -41,9 +44,10 @@ class CinemaController extends AdminController
 
     public function update()
     {
+        $this->isAuthenticated();
         if (
-            !isset($_POST['NAME']) 
-          ||  !isset($_POST['PHONE']) || !isset($_POST['ADDRESS']) || !isset($_POST['ID']) 
+            !isset($_POST['NAME'])
+            ||  !isset($_POST['PHONE']) || !isset($_POST['ADDRESS']) || !isset($_POST['ID'])
         ) {
             die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
         }
@@ -57,7 +61,7 @@ class CinemaController extends AdminController
 
     public function getByID()
     {
-        if(isset($_POST['ID'])){
+        if (isset($_POST['ID'])) {
             echo $this->model->getByID($_POST['ID']);
         }
     }
