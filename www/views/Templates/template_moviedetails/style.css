@@ -64,3 +64,19 @@
     width: 100%;
     bottom: -10px;
 }
+
+/* Movie Details Main Item */
+.moviedetails-main-content-item {
+    background: rgba(217, 217, 217, 0.25);
+}
+
+.moviedetails-main-content-item-infohead {
+    width: 8rem;
+}
+
+.moviedetails-main-content-item-info {
+    height: 40px;
+    min-width: 200px;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}

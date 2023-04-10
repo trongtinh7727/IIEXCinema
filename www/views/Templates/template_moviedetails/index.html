@@ -26,6 +26,9 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Responsive -->
+    <link rel="stylesheet" href="responsive.css">
 </head>
 
 <body>
@@ -43,7 +46,7 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
-                    <div class="navbar-collapse d-lg-flex collapse mt-sm-3" id="moviedetailsNavBar">
+                    <div class="navbar-collapse d-lg-flex collapse mt-3 mt-lg-0 clearfix" id="moviedetailsNavBar">
                         <a class="navbar-brand col-lg-3 me-0" href="#">
                             <img src="../assets/img/moviedetails/Logo.png" alt="Logo" style="height: 4rem;">
                         </a>
@@ -52,19 +55,20 @@
                                 <a class="nav-link mx-4 text-white hover-green fs-5 fw-semibold"
                                     href="../template_homepage/index.html">Trang chủ</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link mx-4 text-white hover-green fs-5 fw-semibold" href="#">Phim</a>
+                            <li class="nav-item position-relative">
+                                <a class="nav-link mx-4 text-yellow fs-5 fw-semibold active custom-active"
+                                    aria-current="page" href="#">Phim</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link mx-4 text-white hover-green fs-5 fw-semibold"
                                     href="../template_showtime/index.html">Lịch chiếu</a>
                             </li>
-                            <li class="nav-item position-relative">
-                                <a class="nav-link mx-4 text-yellow fs-5 fw-semibold active custom-active"
-                                    aria-current="page" href="#">Khuyến mãi</a>
+                            <li class="nav-item">
+                                <a class="nav-link mx-4 text-white hover-green fs-5 fw-semibold"
+                                    href="../template_promotion/index.html">Khuyến mãi</a>
                             </li>
                         </ul>
-                        <div id="btn-signin" class="d-lg-flex col-lg-3 justify-content-lg-end">
+                        <div id="btn-signin" class="d-lg-flex col-lg-3 justify-content-end mt-3 mt-lg-0 float-end">
                             <a href="../template_signin-signup/index.html"
                                 class="btn text-green text-decoration-none hover-yellow">Đăng nhập</a>
                         </div>
@@ -87,6 +91,96 @@
                         </div>
                         <div id="moviedetails-text" class="text-white">
                             <h1>Chi tiết phim</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="moviedetails-main-content">
+                <!-- DATAFILL ITEM -->
+                <div class="moviedetails-main-content-item my-5 py-5">
+                    <div class="moviedetails-main-content-item-inner container">
+                        <div class="row">
+                            <!-- Photo -->
+                            <div class="moviedetails-main-content-item-img col-12 col-lg-6 text-center">
+                                <img name="moviedetails-item-poster"
+                                    src="../assets/img/moviedetails/upcoming-movie-poster.png" alt="Movie Poster">
+                            </div>
+
+                            <!-- Details -->
+                            <div class="moviedetails-main-content-item-details col-12 col-lg-6">
+                                <!-- Title -->
+                                <h3 name="moviedetails-main-content-item-title"
+                                    class="text-white text-uppercase text-center mb-5">Khóa
+                                    chặt cửa nào Phú Lê</h3>
+                                <!-- Premiere -->
+                                <div name="moviedetails-main-content-item-premiere" class="d-flex mt-3">
+                                    <span name="moviedetails-main-content-item-premiere-infohead"
+                                        class="moviedetails-main-content-item-infohead text-white d-flex align-items-center">Khởi
+                                        chiếu</span>
+                                    <div name="moviedetails-main-content-item-premiere-info"
+                                        class="moviedetails-main-content-item-info text-dark bg-yellow d-flex align-items-center">
+                                        <div class="mx-3">
+                                            Từ ngày 21/5 đến 21/5
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Genre -->
+                                <div name="moviedetails-main-content-item-genre" class="d-flex mt-3">
+                                    <span name="moviedetails-main-content-item-genre-infohead"
+                                        class="moviedetails-main-content-item-infohead text-white d-flex align-items-center">Thể
+                                        loại</span>
+                                    <div name="moviedetails-main-content-item-genre-info"
+                                        class="moviedetails-main-content-item-info text-dark bg-yellow d-flex align-items-center">
+                                        <div class="mx-3">
+                                            Kinh dị | Phiêu lưu | Giả tưởng
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Actors -->
+                                <div name="moviedetails-main-content-item-actors" class="d-flex mt-3">
+                                    <span name="moviedetails-main-content-item-actors-infohead"
+                                        class="moviedetails-main-content-item-infohead text-white d-flex align-items-center">Diễn
+                                        viên</span>
+                                    <div name="moviedetails-main-content-item-actors-info"
+                                        class="moviedetails-main-content-item-info text-dark bg-yellow d-flex align-items-center text-capitalize">
+                                        <div class="mx-3">
+                                            Lê Trần Phú, Phú đẹp
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Director -->
+                                <div name="moviedetails-main-content-item-director" class="d-flex mt-3">
+                                    <span name="moviedetails-main-content-item-director-infohead"
+                                        class="moviedetails-main-content-item-infohead text-white d-flex align-items-center">Đạo
+                                        diễn</span>
+                                    <div name="moviedetails-main-content-item-director-info"
+                                        class="moviedetails-main-content-item-info text-dark bg-yellow d-flex align-items-center text-capitalize">
+                                        <div class="mx-3">
+                                            Phú đạo diễn
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Tag -->
+                                <div class="my-3">
+                                    <img src="../assets/img/moviedetails/2dtag.png" alt="Tag">
+                                </div>
+                                <!-- Rating -->
+                                <div name="moviedetails-main-content-item-rating" class="d-flex mt-3">
+                                    <span name="moviedetails-main-content-item-rating-infohead"
+                                        class="moviedetails-main-content-item-infohead text-white d-flex align-items-center">Đánh giá</span>
+                                    <div name="moviedetails-main-content-item-rating-info"
+                                        class="moviedetails-main-content-item-info text-dark bg-yellow d-flex align-items-center rounded-0 text-yellow" style="background-color: transparent !important;">
+                                        <div class="mx-3">
+                                            <i class="fa-solid fa-star fa-xl"></i>
+                                            <i class="fa-solid fa-star fa-xl"></i>
+                                            <i class="fa-solid fa-star fa-xl"></i>
+                                            <i class="fa-solid fa-star fa-xl"></i>
+                                            <i class="fa-solid fa-star fa-xl"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
