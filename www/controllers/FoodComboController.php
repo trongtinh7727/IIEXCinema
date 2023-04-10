@@ -1,11 +1,10 @@
 <?php
 class FoodComboController extends AdminController
-{ 
+{
     public $model;
 
     function __construct()
     {
-        $this->isAuthenticated();
     }
 
     public function getAll()
@@ -15,9 +14,10 @@ class FoodComboController extends AdminController
 
     public function add()
     {
+        $this->isAuthenticated();
         if (
             !isset($_POST['NAME'])
-          ||  !isset($_POST['PRICE']) || !isset($_POST['TYPE']) || !isset($_POST['QUANTITY'])
+            ||  !isset($_POST['PRICE']) || !isset($_POST['TYPE']) || !isset($_POST['QUANTITY'])
         ) {
             die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
         }
@@ -31,6 +31,7 @@ class FoodComboController extends AdminController
 
     public function delete()
     {
+        $this->isAuthenticated();
         if (!isset($_POST['id'])) {
             die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
         }
@@ -43,9 +44,10 @@ class FoodComboController extends AdminController
 
     public function update()
     {
+        $this->isAuthenticated();
         if (
             !isset($_POST['NAME'])
-           || !isset($_POST['PRICE']) || !isset($_POST['TYPE']) || !isset($_POST['QUANTITY']) 
+            || !isset($_POST['PRICE']) || !isset($_POST['TYPE']) || !isset($_POST['QUANTITY'])
             || !isset($_POST['ID'])
         ) {
             die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
@@ -58,5 +60,4 @@ class FoodComboController extends AdminController
         $QUANTITY = $_POST['QUANTITY'];
         echo $this->model->update($NAME, $PRICE, $TYPE, $QUANTITY, $ID);
     }
-    
 }

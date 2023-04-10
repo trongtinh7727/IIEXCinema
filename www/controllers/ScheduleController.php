@@ -5,7 +5,6 @@ class ScheduleController extends AdminController
 
     function __construct()
     {
-        $this->isAuthenticated();
     }
 
     public function getAll()
@@ -15,6 +14,7 @@ class ScheduleController extends AdminController
 
     public function add()
     {
+        $this->isAuthenticated();
         if (
             !isset($_POST['CIN_ID']) ||
             !isset($_POST['MOV_ID']) || !isset($_POST['STARTTIME']) || !isset($_POST['ENDTIME'])
@@ -31,6 +31,7 @@ class ScheduleController extends AdminController
 
     public function delete()
     {
+        $this->isAuthenticated();
         if (!isset($_POST['id'])) {
             die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
         }
@@ -43,6 +44,7 @@ class ScheduleController extends AdminController
 
     public function update()
     {
+        $this->isAuthenticated();
         if (
             !isset($_POST['CIN_ID']) ||
             !isset($_POST['MOV_ID']) || !isset($_POST['STARTTIME']) || !isset($_POST['ENDTIME'])

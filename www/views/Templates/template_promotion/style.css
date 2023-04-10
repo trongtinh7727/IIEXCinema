@@ -40,9 +40,13 @@
     bottom: 0;
 }
 
-/* ============================= */
+#wrapper {
+    min-height: 100vh;
+    background-color: #000218;
+}
 
-/* Top part*/
+/* ============================= */
+/* Top part */
 #toppart {
     margin: 0;
     height: 1000px;
@@ -50,28 +54,12 @@
     background-size: cover;
 }
 
-/* Main content */
-#maincontent {
-    height: 1000px;
-    background-color: antiquewhite;
-}
-
-#content-toggler .row::after,
-#trailer-separator .container::after {
+/* Separator */
+#promotion-separator .container::after {
     content: "";
     position: absolute;
     background-color: #ffffff;
     height: 1px;
     width: 100%;
     bottom: -10px;
-}
-
-/* Trailer */
-#carousel-trailer iframe {
-    width: 75%;
-    aspect-ratio: 16/9;
-}
-
-.carousel-control-prev-icon {
-    color: #FFBA08;
 }

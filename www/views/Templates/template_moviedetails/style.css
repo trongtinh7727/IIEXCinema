@@ -40,9 +40,14 @@
     bottom: 0;
 }
 
+#wrapper {
+    min-height: 100vh;
+    background-color: #000218;
+}
+
 /* ============================= */
 
-/* Top part*/
+/* Top part */
 #toppart {
     margin: 0;
     height: 1000px;
@@ -50,14 +55,8 @@
     background-size: cover;
 }
 
-/* Main content */
-#maincontent {
-    height: 1000px;
-    background-color: antiquewhite;
-}
-
-#content-toggler .row::after,
-#trailer-separator .container::after {
+/* Movie Details toggler */
+#moviedetails-separator .container::after {
     content: "";
     position: absolute;
     background-color: #ffffff;
@@ -66,12 +65,18 @@
     bottom: -10px;
 }
 
-/* Trailer */
-#carousel-trailer iframe {
-    width: 75%;
-    aspect-ratio: 16/9;
+/* Movie Details Main Item */
+.moviedetails-main-content-item {
+    background: rgba(217, 217, 217, 0.25);
 }
 
-.carousel-control-prev-icon {
-    color: #FFBA08;
+.moviedetails-main-content-item-infohead {
+    width: 8rem;
+}
+
+.moviedetails-main-content-item-info {
+    height: 40px;
+    min-width: 200px;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 }

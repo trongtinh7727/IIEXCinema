@@ -1,5 +1,5 @@
 <?php
-class AdminController
+class AdminController extends AuthController
 {
     public $model;
 
@@ -7,35 +7,11 @@ class AdminController
     {
         if (!isset($_SESSION['userLogin'])) {
             header("Location: /?admin/login");
-            // require_once('views/admin/Auths/login.php');
+            exit;
+        } else if ($_SESSION['userLogin'] == 2) {
+            header("Location: /?");
             exit;
         }
-    }
-
-    function Login()
-    {
-        if (isset($_POST['username']) && isset($_POST['password'])) {
-            $username = $_POST['username'];
-            $password = $_POST['password'];
-
-            $check =  $this->model->CheckUserLogin($username, $password);
-
-            if ($check == 1) {
-                $_SESSION['userLogin'] = 1;
-                $this->indexAction();
-            }
-        }
-        if (isset($_SESSION['userLogin'])) {
-            header("Location: /?admin/");
-            // $this->indexAction();
-        } else {
-            require_once('views/admin/Auths/login.php');
-        }
-    }
-    function logout()
-    {
-        unset($_SESSION['userLogin']);
-        require_once('views/admin/Auths/login.php');
     }
 
     public function indexAction()

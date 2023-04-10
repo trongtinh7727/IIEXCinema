@@ -6,8 +6,16 @@ include_once(__DIR__ . '/Route.php');
 // ADMIN
 Route::add("/?admin", "AdminController@indexAction");
 Route::add("/?admin/home", "AdminController@indexAction");
-Route::add("/?admin/login", "AdminController@login");
+
 Route::add("/?admin/logout", "AdminController@logout");
+
+// Client
+Route::add("/?", "HomeController@indexAction");
+Route::add("/?", "HomeController@indexAction");
+
+// Auth
+Route::add("/?admin/login", "AuthController@login");
+Route::add("/?login", "AuthController@login");
 
 // manager
 Route::add("/?admin/staff", "AdminController@staffAction");
@@ -29,6 +37,7 @@ Route::add("/?api/movie/getall", "MovieController@getAll");
 Route::add("/?api/movie/add", "MovieController@add");
 Route::add("/?api/movie/update", "MovieController@update");
 Route::add("/?api/movie/delete", "MovieController@delete");
+Route::add("/?api/movie/ongoing", "MovieController@ongoing");
 
 // FoodCombo
 Route::add("/?api/foodcombo/getall", "FoodComboController@getAll");

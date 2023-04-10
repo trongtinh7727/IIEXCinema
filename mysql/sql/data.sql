@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Apr 04, 2023 at 06:38 PM
--- Server version: 8.0.32
--- PHP Version: 8.1.10
+-- Host: mysql-server
+-- Generation Time: Apr 10, 2023 at 05:22 PM
+-- Server version: 8.0.27
+-- PHP Version: 8.1.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,8 +18,17 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `test`
+-- Database: `iiex_cinema`
 --
+
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`root`@`%` PROCEDURE `ongoing_movies` ()   SELECT * FROM movie
+    WHERE CURDATE() BETWEEN OPENING_DAY AND CLOSING_DAY$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -49,9 +58,9 @@ INSERT INTO `booking` (`ID`, `STAFF_ID`, `CLIENT_ID`, `CREATED_AT`) VALUES
 
 CREATE TABLE `cinema` (
   `ID` int NOT NULL,
-  `NAME` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `ADDRESS` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `PHONE` char(15) COLLATE utf8mb4_general_ci DEFAULT NULL
+  `NAME` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `ADDRESS` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `PHONE` char(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -59,7 +68,10 @@ CREATE TABLE `cinema` (
 --
 
 INSERT INTO `cinema` (`ID`, `NAME`, `ADDRESS`, `PHONE`) VALUES
-(1, 'Lotte Cinema Q7', 'Q7, Thành phố Hồ Chí minh', '0843206397');
+(1, 'Lotte Cinema Q7', 'Q7, Thành phố Hồ Chí minh', '0843206397'),
+(2, 'Cineplex', '123 Main St', '555-1234'),
+(3, 'AMC Theaters', '456 Elm St', '555-5678'),
+(4, 'Regal Cinemas', '789 Oak St', '555-9012');
 
 -- --------------------------------------------------------
 
@@ -69,11 +81,11 @@ INSERT INTO `cinema` (`ID`, `NAME`, `ADDRESS`, `PHONE`) VALUES
 
 CREATE TABLE `client` (
   `ID` int NOT NULL,
-  `USERNAME` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `PASSWORD` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `NAME` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `PHONE` char(15) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `ADDRESS` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL
+  `USERNAME` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `PASSWORD` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `NAME` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `PHONE` char(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `ADDRESS` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -81,7 +93,10 @@ CREATE TABLE `client` (
 --
 
 INSERT INTO `client` (`ID`, `USERNAME`, `PASSWORD`, `NAME`, `PHONE`, `ADDRESS`) VALUES
-(1, 'user', '123456', 'Lê Hoàng', '0843201578', NULL);
+(1, 'user', '123456', 'Lê Hoàng', '0843201578', NULL),
+(2, 'johndoe', 'password', 'John Doe', '555-1234', '123 Main St'),
+(3, 'janedoe', 'password', 'Jane Doe', '555-5678', '456 Elm St'),
+(4, 'bobsmith', 'password', 'Bob Smith', '555-9012', '789 Oak St');
 
 -- --------------------------------------------------------
 
@@ -91,7 +106,7 @@ INSERT INTO `client` (`ID`, `USERNAME`, `PASSWORD`, `NAME`, `PHONE`, `ADDRESS`) 
 
 CREATE TABLE `foodcombo` (
   `ID` int NOT NULL,
-  `NAME` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `NAME` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `PRICE` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -100,7 +115,10 @@ CREATE TABLE `foodcombo` (
 --
 
 INSERT INTO `foodcombo` (`ID`, `NAME`, `PRICE`) VALUES
-(1, '1 Bắp + 2 nước', 100000);
+(1, '1 Bắp + 2 nước', 100000),
+(2, 'Small Popcorn and Drink', 5.99),
+(3, 'Medium Popcorn and Drink', 7.99),
+(4, 'Large Popcorn and Drink', 9.99);
 
 -- --------------------------------------------------------
 
@@ -128,12 +146,12 @@ INSERT INTO `food_booking` (`FOOD_ID`, `BOOKING_ID`) VALUES
 
 CREATE TABLE `movie` (
   `ID` int NOT NULL,
-  `TITLE` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `GENRE` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `TITLE` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `GENRE` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `DURATION` int DEFAULT NULL,
   `RATING` float DEFAULT NULL,
-  `STORY` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `POSTER` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `STORY` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `POSTER` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `OPENING_DAY` date DEFAULT NULL,
   `CLOSING_DAY` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -143,8 +161,9 @@ CREATE TABLE `movie` (
 --
 
 INSERT INTO `movie` (`ID`, `TITLE`, `GENRE`, `DURATION`, `RATING`, `STORY`, `POSTER`, `OPENING_DAY`, `CLOSING_DAY`) VALUES
-(1, 'Con mèo ngu ngốc', 'Drama', 90, 5, 'Một câu chuyện về những chú mèo', 'https://phimtuoitho.tv/uploads/video_thumb/1747.jp', NULL, NULL),
-(2, 'Con mèo ngu ngốc', 'Drama', 90, 5, 'Câu chuyện về chó và mèo', 'https://phimtuoitho.tv/uploads/video_thumb/1747.jp', NULL, NULL);
+(4, 'Avengers: Endgame', 'Action', 182, 8.4, 'The Avengers take one final stand against Thanos.', '../assets/img/p3.jpg', '2023-04-01', '2023-04-20'),
+(5, 'Jurassic Park', 'Adventure', 127, 8.1, 'A wealthy entrepreneur secretly creates a theme park featuring living dinosaurs.', '../assets/img/p5.jpg', '2023-03-01', '2023-04-30'),
+(6, 'The Godfather', 'Crime', 175, 9.2, 'The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.', '../assets/img/p4.jpg', '1972-03-24', '1972-12-31');
 
 -- --------------------------------------------------------
 
@@ -160,6 +179,15 @@ CREATE TABLE `product` (
   `QUANTITY` int DEFAULT NULL,
   `Expiry_Date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `product`
+--
+
+INSERT INTO `product` (`ID`, `NAME`, `TYPE`, `PRICE`, `QUANTITY`, `Expiry_Date`) VALUES
+(1, 'Coke', 'Beverage', 2.99, 100, '2024-04-10'),
+(2, 'Popcorn', 'Snack', 4.99, 50, '2023-08-31'),
+(3, 'Sour Patch Kids', 'Candy', 1.99, 75, '2023-12-31');
 
 -- --------------------------------------------------------
 
@@ -187,13 +215,6 @@ CREATE TABLE `schedule` (
   `THEA_ID` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `schedule`
---
-
-INSERT INTO `schedule` (`ID`, `CIN_ID`, `MOV_ID`, `STARTTIME`, `ENDTIME`, `THEA_ID`) VALUES
-(1, 1, 2, '2023-03-12 19:00:00', '2023-03-12 21:30:00', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -204,7 +225,7 @@ CREATE TABLE `seat` (
   `ID` int NOT NULL,
   `THE_ID` int NOT NULL,
   `SEATNUMBER` int DEFAULT NULL,
-  `SEATTYPE` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL
+  `SEATTYPE` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -231,14 +252,14 @@ INSERT INTO `seat` (`ID`, `THE_ID`, `SEATNUMBER`, `SEATTYPE`) VALUES
 
 CREATE TABLE `staff` (
   `ID` int NOT NULL,
-  `USERNAME` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `PASSWORD` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `FIRSTNAME` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `LASTNAME` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `SEX` varchar(5) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `USERNAME` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `PASSWORD` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `FIRSTNAME` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `LASTNAME` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `SEX` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `BIRTHDAY` date DEFAULT NULL,
-  `PHONE` char(15) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `ADDRESS` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `PHONE` char(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `ADDRESS` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `SALARY` float DEFAULT NULL,
   `ROLE` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -302,13 +323,6 @@ CREATE TABLE `ticket_seat_schedule` (
   `TICKET_ID` int NOT NULL,
   `ISSHOWING` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `ticket_seat_schedule`
---
-
-INSERT INTO `ticket_seat_schedule` (`SEAT_ID`, `SCHEDULE_ID`, `TICKET_ID`, `ISSHOWING`) VALUES
-(1, 1, 2, 1);
 
 --
 -- Indexes for dumped tables
@@ -422,31 +436,31 @@ ALTER TABLE `booking`
 -- AUTO_INCREMENT for table `cinema`
 --
 ALTER TABLE `cinema`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `client`
 --
 ALTER TABLE `client`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `foodcombo`
 --
 ALTER TABLE `foodcombo`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `movie`
 --
 ALTER TABLE `movie`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `schedule`

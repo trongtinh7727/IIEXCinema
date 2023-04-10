@@ -5,8 +5,8 @@ class TheaterController extends AdminController
 
     function __construct()
     {
-        $this->isAuthenticated();
     }
+
 
     public function getAll()
     {
@@ -15,6 +15,7 @@ class TheaterController extends AdminController
 
     public function add()
     {
+        $this->isAuthenticated();
         if (
             !isset($_POST['CIN_ID']) ||
             !isset($_POST['THEATERNUM'])
@@ -33,6 +34,7 @@ class TheaterController extends AdminController
 
     public function delete()
     {
+        $this->isAuthenticated();
         if (!isset($_POST['id'])) {
             die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
         }
@@ -45,6 +47,7 @@ class TheaterController extends AdminController
 
     public function update()
     {
+        $this->isAuthenticated();
         if (
             !isset($_POST['CIN_ID']) ||
             !isset($_POST['THEATERNUM']) || !isset($_POST['SEATCOUNT'])

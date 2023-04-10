@@ -5,7 +5,6 @@ class SeatController extends AdminController
 
     function __construct()
     {
-        $this->isAuthenticated();
     }
 
     public function getAll()
@@ -15,6 +14,7 @@ class SeatController extends AdminController
 
     public function add()
     {
+        $this->isAuthenticated();
         if (
             !isset($_POST['THE_ID']) ||
             !isset($_POST['SEATNUMBER']) || !isset($_POST['SEATTYPE'])
@@ -30,6 +30,7 @@ class SeatController extends AdminController
 
     public function delete()
     {
+        $this->isAuthenticated();
         if (!isset($_POST['id'])) {
             die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
         }
@@ -42,6 +43,7 @@ class SeatController extends AdminController
 
     public function update()
     {
+        $this->isAuthenticated();
         if (
             !isset($_POST['THE_ID']) ||
             !isset($_POST['SEATNUMBER']) || !isset($_POST['SEATTYPE'])
