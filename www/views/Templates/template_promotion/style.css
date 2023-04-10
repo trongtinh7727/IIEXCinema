@@ -53,3 +53,13 @@
     background: url(../assets/img/homepage/movie-area.png);
     background-size: cover;
 }
+
+/* Separator */
+#promotion-separator .container::after {
+    content: "";
+    position: absolute;
+    background-color: #ffffff;
+    height: 1px;
+    width: 100%;
+    bottom: -10px;
+}
