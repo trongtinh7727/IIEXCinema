@@ -45,7 +45,7 @@
                             <td>${object.DURATION}</td>
                             <td>${object.RATING}</td>
                             <td>${object.STORY}</td>
-                            <td>${object.POSTER}</td>
+                            <td><img class="poster" src="${object.POSTER}" alt=""></td>
                             <td>
                                 <button name="btn_delete_employee" class="btn btn-outline-danger" onclick="confirmRemoval(this)">Delete</button>
                                 <button name="btn_edit_employee" class="btn btn-outline-secondary" onclick="fillEditForm(this)" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">Edit</button>
