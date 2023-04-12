@@ -9,7 +9,41 @@
 }
 
 .bg-yellow {
-	background-color: #FFBA08 !important;
+    background-color: #FFBA08 !important;
+}
+
+.text-green {
+    color: #CCF381 !important;
+}
+
+.bg-green {
+    background-color: #CCF381 !important;
+}
+
+.hover-green:hover {
+    transition: 0.5s;
+    cursor: pointer !important;
+    color: #CCF381 !important;
+}
+
+.hover-bg-green:hover {
+    color: #000000 !important;
+    transition: 0.5s !important;
+    cursor: pointer !important;
+    background-color: #CCF381 !important;
+}
+
+.hover-yellow:hover {
+    transition: 0.5s;
+    cursor: pointer !important;
+    color: #FFBA08 !important;
+}
+
+.hover-bg-yellow:hover {
+    color: #000000 !important;
+    transition: 0.5s !important;
+    cursor: pointer !important;
+    background-color: #FFBA08 !important;
 }
 
 input::placeholder {
