@@ -168,7 +168,7 @@
             <div class="login-html w-100 h-100 px-5 py-5 rounded-5 clearfix">
                 <!-- Tab 1 -->
                 <input id="tab-1" type="radio" name="tab" class="sign-in" checked>
-                <label id="tab-1-label" for="tab-1" class="tab fs-3 text-white text-yellow">Đăng nhập</label>
+                <label id="tab-1-label" for="tab-1" class="tab fs-3 text-white text-yellow">Admin</label>
 
                 <!-- Tab 2 -->
                 <input id="tab-2" type="radio" name="tab" class="sign-up" disabled>

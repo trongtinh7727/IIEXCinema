@@ -6,10 +6,10 @@
         $("#action").val(ID);
         $.post("./?api/staff/getbyid", {
             ID
-        }, function(data, status) {
+        }, function (data, status) {
             var table = $('#table');
             console.log(data)
-            data.data.forEach(function(object) {
+            data.data.forEach(function (object) {
                 $('#USERNAME').val(object.USERNAME)
                 $('.pass').hide();
                 $('#FNAME').val(object.FIRSTNAME)
@@ -22,7 +22,7 @@
 
         }, "json");
     }
-    $(document).ready(function() {
+    $(document).ready(function () {
         function deleteRow() {
             var table = document.querySelector("myTable");
             var rowCount = table.rows.length;
@@ -33,7 +33,7 @@
             }
         }
         let jsonArrayObj = [{}];
-        function load_studen() {
+        function load_data() {
             fetch('./?api/staff/getall')
                 .then(response => response.json())
                 .then(data => {
@@ -46,13 +46,13 @@
                 });
         }
         var pageNumber = 1;
+        load_data();
         var entriesPerPage = 10;
         var totalPage = Math.ceil(jsonArrayObj.length / entriesPerPage);
-        load_studen();
 
 
         // Data from json
-        $.fn.dataTable = function() {
+        $.fn.dataTable = function () {
             var start_index = (pageNumber - 1) * entriesPerPage;
             var end_index = start_index + (entriesPerPage - 1);
             end_index = (end_index >= jsonArrayObj.length) ? jsonArrayObj.length - 1 : end_index;
@@ -65,7 +65,7 @@
                     <tr>
                         <td class="align-middle text-center" name="data_id"> ${jsonArrayObj[i].ID}</td>
                         <td class="align-middle text-center" name="data_username"> ${jsonArrayObj[i].USERNAME}</td>
-                        <td class="align-middle text-center" name="data_firstname"> ${jsonArrayObj[i].FIRSTNAME + ` `+ jsonArrayObj[i].LASTNAME}</td>
+                        <td class="align-middle text-center" name="data_firstname"> ${jsonArrayObj[i].FIRSTNAME + ` ` + jsonArrayObj[i].LASTNAME}</td>
                         <td class="align-middle text-center" name="data_phone"> ${jsonArrayObj[i].PHONE}</td>
                         <td class="align-middle text-center" name="data_address"> ${jsonArrayObj[i].ADDRESS}</td>
                         <td class="align-middle text-center" name="data_salary"> ${jsonArrayObj[i].SALARY}</td>
@@ -95,7 +95,7 @@
             $.fn.dataTable();
         }, 100);
 
-        $.fn.nextPage = function() {
+        $.fn.nextPage = function () {
             if (pageNumber != totalPage) {
                 pageNumber++;
                 $.fn.dataTable();
@@ -103,7 +103,7 @@
         }
 
         // Previous page
-        $.fn.prevPage = function() {
+        $.fn.prevPage = function () {
             if (pageNumber > 1) {
                 pageNumber--;
                 $.fn.dataTable();
@@ -111,13 +111,13 @@
         }
 
         // Index page
-        $.fn.indexPage = function(index) {
+        $.fn.indexPage = function (index) {
             pageNumber = parseInt(index)
             $.fn.dataTable();
         }
 
         // Data size change
-        $("#data_size").change(function() {
+        $("#data_size").change(function () {
             var tab_size = $(this).val();
             pageNumber = 1;
             entriesPerPage = parseInt(tab_size);
@@ -128,19 +128,18 @@
 
         $.fn.dataTable();
 
-        $("#addStaff").click(function() {
-
-            let PASSWORD = $('#PASSWORD').val().trim()
-            let PASS_CONFIRM = $('#PASS-CONFIRM').val().trim()
-            if (PASSWORD != PASS_CONFIRM) {
-                console.assert("Mật khẩu không trùng khớp !");
-                return;
-            }
-
+        $("#addStaff").click(function () {
+            // let PASSWORD = $('#PASSWORD').val().trim()
+            // let PASS_CONFIRM = $('#PASS-CONFIRM').val().trim()
+            // if (PASSWORD != PASS_CONFIRM) {
+            //     console.assert("Mật khẩu không trùng khớp !");
+            //     return;
+            // }
+            // let PASSWORD = 'Admin@123';
             let USERNAME = $('#USERNAME').val()
-            let FIRSTNAME = $('#FNAME').val() 
+            let FIRSTNAME = $('#FNAME').val()
             let LASTNAME = $('#LNAME').val()
-            let SEX = $("#SEX").val() === "M" ? "nam" : "nữ" 
+            let SEX = $("#SEX").val() === "M" ? "nam" : "nữ"
             let BIRTHDAY = $("#BIRTHDAY").val()
             let PHONE = $('#PHONE').val()
             let ADDRESS = $('#ADDRESS').val()
@@ -151,7 +150,6 @@
             if (action == "Add") {
                 $.post("./?api/staff/add", {
                     USERNAME,
-                    PASSWORD,
                     FIRSTNAME,
                     LASTNAME,
                     SEX,
@@ -160,17 +158,19 @@
                     ADDRESS,
                     SALARY,
                     ROLE
-                }, function(data, status) {
+                }, function (data, status) {
                     console.log(data)
                     if (data.status) {
-                        console.log("Okee")
-                        load_studen();
+                        load_data();
                         $.fn.dataTable();
-                        $("#msg-success").css('display', 'flex').text("Add staff success")
+                        let msg = data.data;
+                        console.log(msg)
+                        $("#msg-success").css('display', 'flex').text(msg)
                         $("#msg-failed").css('display', 'none')
                     } else {
-                        console.log("Nooo")
-                        $("#msg-failed").css('display', 'flex').text("An unknown error occured. Please try again later")
+                        let msg = data.data;
+                        console.log(msg)
+                        $("#msg-failed").css('display', 'flex').text("Có lỗi xảy ra! Vui lòng thử lại sau: " + msg)
                         $("#msg-success").css('display', 'none')
                     }
                 }, "json")
@@ -188,17 +188,20 @@
                     SALARY,
                     ROLE,
                     ID
-                }, function(data, status) {
+                }, function (data, status) {
                     console.log(data)
                     if (data.status) {
                         console.log("Okee")
-                        load_studen();
+                        load_data();
                         $.fn.dataTable();
-                        $("#msg-success").css('display', 'flex').text("Update staff success")
+                        let msg = data.data;
+                        console.log(msg)
+                        $("#msg-success").css('display', 'flex').text(msg)
                         $("#msg-failed").css('display', 'none')
                     } else {
-                        console.log("Nooo")
-                        $("#msg-failed").css('display', 'flex').text("An unknown error occured. Please try again later")
+                        let msg = data.data;
+                        console.log(msg)
+                        $("#msg-failed").css('display', 'flex').text("Có lỗi xảy ra! Vui lòng thử lại sau: " + msg)
                         $("#msg-success").css('display', 'none')
                     }
                 }, "json")
@@ -207,19 +210,23 @@
             clearForm()
         });
 
-        $("#delete-button").on('click', function() {
+        $("#delete-button").on('click', function () {
             let uid = $('#delete-button').attr('uid');
             $.post("./?api/staff/delete", {
                 id: uid
-            }, function(data, status) {
+            }, function (data, status) {
                 console.log(data)
                 if (data.status) {
-                    load_studen();
+                    load_data();
                     $.fn.dataTable();
-                    $("#msg-success").css('display', 'flex')
+                    let msg = data.data;
+                    console.log(msg)
+                    $("#msg-success").css('display', 'flex').text(msg)
                     $("#msg-failed").css('display', 'none')
                 } else {
-                    $("#msg-failed").css('display', 'flex')
+                    let msg = data.data;
+                    console.log(msg)
+                    $("#msg-failed").css('display', 'flex').text("Có lỗi xảy ra! Vui lòng thử lại sau: " + msg)
                     $("#msg-success").css('display', 'none')
                     $('#confirm-removal-modal').modal({
                         show: false
@@ -229,15 +236,15 @@
         })
 
 
-        $("#searchBarInput").on("keyup", function() {
+        $("#searchBarInput").on("keyup", function () {
             var value = $(this).val().toLowerCase();
-            $("#myTable tr").filter(function() {
+            $("#myTable tr").filter(function () {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
 
         // Pagination button
-        $.fn.paginationButtons = function() {
+        $.fn.paginationButtons = function () {
             var buttons_text = `<li class="page-item"><a class="page-link" onClick="javascript:$.fn.prevPage();" href="#">Previous</a></li>`;
             var active = "";
             for (var i = 1; i <= totalPage; i++) {
@@ -273,6 +280,6 @@
         $("#email").val("");
         $("#phone").val("");
     }
-    $(document).ready(function() {
+    $(document).ready(function () {
     });
 </script>

@@ -15,6 +15,12 @@
         <!-- Top Navigation -->
         <?php include_once(__DIR__ . "/Layouts/Nav.php"); ?>
         <!-- Data table -->
+        <div class="alert alert-success" id="msg-success" role="alert" style="display: none;">
+            This is a success alert—check it out!
+        </div>
+        <div class="alert alert-danger" id="msg-failed" role="alert" style="display: none;">
+            This is a danger alert—check it out!
+        </div>
         <div class="container">
             <!-- Modal -->
             <?php

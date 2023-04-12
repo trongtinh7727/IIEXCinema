@@ -65,6 +65,12 @@ class MovieController extends AdminController
 
         echo $this->model->update($TITLE, $GENRE, $DURATION, $RATING, $STORY, $POSTER, $RATING, $ID);
     }
+    public function getByID()
+    {
+        if (isset($_POST['ID'])) {
+            echo $this->model->getByID($_POST['ID']);
+        }
+    }
 
     public function ongoing()
     {

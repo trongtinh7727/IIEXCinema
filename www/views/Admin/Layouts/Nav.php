@@ -36,13 +36,13 @@
     <!-- Offcanvas body -->
     <div class="offcanvas-body">
         <a href="./?admin/staff" id="Staff" class="btn btn-lg  my-1 w-100">
-            Employees Manager
+            Quản lý nhân viên
         </a>
         <a href="/?admin/cinema" id="Cinema" class="btn btn-lg my-1 w-100">
-            Cinema Manager
+            Quản lý rạp chiếu phim
         </a>
         <a href="/?admin/movie" id="Movie" class="btn btn-lg my-1 w-100">
-            Movie Manager
+            Quản lý phim
         </a>
         <!-- <a href="/?admin/supplies" id="supplies_manager" class="btn btn-lg my-1 w-100">
             Supplies Manager
