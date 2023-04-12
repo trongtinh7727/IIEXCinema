@@ -28,7 +28,8 @@
 }
 
 .hover-bg-green:hover {
-    transition: 0.5s;
+    color: #000000 !important;
+    transition: 0.5s !important;
     cursor: pointer !important;
     background-color: #CCF381 !important;
 }
@@ -40,7 +41,8 @@
 }
 
 .hover-bg-yellow:hover {
-    transition: 0.5s;
+    color: #000000 !important;
+    transition: 0.5s !important;
     cursor: pointer !important;
     background-color: #FFBA08 !important;
 }
@@ -102,4 +104,35 @@
 #moviedetails-main-content-item-trailer-modal iframe {
     width: 100%;
     aspect-ratio: 16/9;
+}
+
+/* Shift */
+.moviedetails-main-shift-item-time {
+    width: 80%;
+    height: 80px;
+}
+
+.moviedetails-main-shift-item-time-slot {
+    width: 72px;
+    height: 44px;
+    background-color: rgb(85, 189, 203);
+}
+
+.moviedetails-main-shift-item-date {
+    width: 20%;
+    height: 80px;
+}
+
+.triangle-bottom-left {
+    width: 0px;
+    height: 0px;
+    border-bottom: 80px solid rgb(255, 186, 8);
+    border-right: 80px solid transparent;
+}
+
+.triangle-top-left {
+    width: 0px;
+    height: 0px;
+    border-top: 80px solid rgb(255, 186, 8);
+    border-right: 40px solid transparent;
 }

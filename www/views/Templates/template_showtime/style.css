@@ -28,7 +28,8 @@
 }
 
 .hover-bg-green:hover {
-    transition: 0.5s;
+    color: #000000 !important;
+    transition: 0.5s !important;
     cursor: pointer !important;
     background-color: #CCF381 !important;
 }
@@ -40,7 +41,8 @@
 }
 
 .hover-bg-yellow:hover {
-    transition: 0.5s;
+    color: #000000 !important;
+    transition: 0.5s !important;
     cursor: pointer !important;
     background-color: #FFBA08 !important;
 }
