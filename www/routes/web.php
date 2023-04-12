@@ -16,13 +16,13 @@ Route::add("/?", "HomeController@indexAction");
 // Auth
 Route::add("/?admin/login", "AuthController@login");
 Route::add("/?login", "AuthController@login");
+Route::add("/?logout", "AuthController@logout");
 
 // manager
 Route::add("/?admin/staff", "AdminController@staffAction");
 Route::add("/?admin/cinema", "AdminController@cinemaAction");
 Route::add("/?admin/movie", "AdminController@movieAction");
 Route::add("/?admin/supplies", "AdminController@suppliesAction");
-
 
 // API
 // Staff
@@ -38,6 +38,8 @@ Route::add("/?api/movie/add", "MovieController@add");
 Route::add("/?api/movie/update", "MovieController@update");
 Route::add("/?api/movie/delete", "MovieController@delete");
 Route::add("/?api/movie/ongoing", "MovieController@ongoing");
+Route::add("/?api/movie/upcoming", "MovieController@upcoming");
+Route::add("/?api/movie/gettrailer", "MovieController@gettrailer");
 
 // FoodCombo
 Route::add("/?api/foodcombo/getall", "FoodComboController@getAll");
@@ -63,13 +65,6 @@ Route::add("/?api/theater/getall", "TheaterController@getAll");
 Route::add("/?api/theater/add", "TheaterController@add");
 Route::add("/?api/theater/update", "TheaterController@update");
 Route::add("/?api/theater/delete", "TheaterController@delete");
-
-
-Route::add("/?api/ticket/getbyid", "TicketController@getByID");
-Route::add("/?api/ticket/getall", "TicketController@getAll");
-Route::add("/?api/ticket/add", "TicketController@add");
-Route::add("/?api/ticket/update", "TicketController@update");
-Route::add("/?api/ticket/delete", "TicketController@delete");
 
 
 $route = Route::run();

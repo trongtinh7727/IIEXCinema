@@ -17,10 +17,6 @@
     color: #CCF381 !important;
 }
 
-.bg-green {
-    background-color: #CCF381 !important;
-}
-
 .hover-green:hover {
     transition: 0.5s;
     cursor: pointer !important;

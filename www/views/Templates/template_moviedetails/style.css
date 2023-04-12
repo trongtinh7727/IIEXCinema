@@ -17,10 +17,6 @@
     color: #CCF381 !important;
 }
 
-.bg-green {
-    background-color: #CCF381 !important;
-}
-
 .hover-green:hover {
     transition: 0.5s;
     cursor: pointer !important;
@@ -88,8 +84,11 @@
     background: rgba(217, 217, 217, 0.25);
 }
 
+.moviedetails-main-content-item-infohead {
+    width: 8rem;
+}
+
 .moviedetails-main-content-item-info {
-    width: auto;
     height: 40px;
     border-radius: 10px 0 10px 0;
 }

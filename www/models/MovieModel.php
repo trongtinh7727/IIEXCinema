@@ -34,6 +34,36 @@ class MovieModel
         }
         return json_encode(array('status' => true, 'data' => $data));
     }
+    public function upcoming()
+    {
+        $sql = 'CALL `upcoming_movies`()';
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+        } catch (PDOException $ex) {
+            die(json_encode(array('status' => false, 'data' => $ex->getMessage())));
+        }
+        $data = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $data[] = $row;
+        }
+        return json_encode(array('status' => true, 'data' => $data));
+    }
+    public function gettrailer()
+    {
+        $sql = 'CALL `get_trailers`()';
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+        } catch (PDOException $ex) {
+            die(json_encode(array('status' => false, 'data' => $ex->getMessage())));
+        }
+        $data = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $data[] = $row;
+        }
+        return json_encode(array('status' => true, 'data' => $data));
+    }
 
     public function add($TITLE, $GENRE, $DURATION, $RATING, $STORY, $POSTER)
     {

@@ -70,4 +70,12 @@ class MovieController extends AdminController
     {
         echo $this->model->ongoing();
     }
+    public function upcoming()
+    {
+        echo $this->model->upcoming();
+    }
+    public function gettrailer()
+    {
+        echo $this->model->gettrailer();
+    }
 }

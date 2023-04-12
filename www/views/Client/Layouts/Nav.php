@@ -4,7 +4,6 @@
         <button class="navbar-toggler collapsed bg-yellow" type="button" data-bs-toggle="collapse" data-bs-target="#homepageNavBar" aria-controls="homepageNavBar" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="navbar-collapse d-lg-flex collapse mt-sm-3" id="homepageNavBar">
             <a class="navbar-brand col-lg-3 me-0" href="#">
                 <img src="../assets/img/homepage/Logo.png" alt="Logo" style="height: 4rem;">

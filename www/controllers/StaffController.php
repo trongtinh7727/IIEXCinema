@@ -16,26 +16,23 @@ class StaffController extends AdminController
     public function add()
     {
         if (
-            !isset($_POST['USERNAME']) || !isset($_POST['PASSWORD']) || !isset($_POST['FIRSTNAME']) 
-            || !isset($_POST['LASTNAME']) || !isset($_POST['SEX']) || !isset($_POST['BIRTHDAY']) 
-            || !isset($_POST['PHONE']) || !isset($_POST['ADDRESS'])
-            || !isset($_POST['SALARY']) || !isset($_POST['ROLE'])
+            !isset($_POST['USERNAME']) || !isset($_POST['PASSWORD']) || !isset($_POST['NAME'])
+            || !isset($_POST['CODE']) || !isset($_POST['PHONE']) || !isset($_POST['ADDRESS'])
+            || !isset($_POST['SALARY'])
         ) {
             die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
         }
 
         $USERNAME = $_POST['USERNAME'];
         $PASSWORD = $_POST['PASSWORD'];
-        $FIRSTNAME = $_POST['FIRSTNAME'];
-        $LASTNAME = $_POST['LASTNAME'];
-        $BIRTHDAY = $_POST['BIRTHDAY'];
-        $SEX = $_POST['SEX'];
+        $NAME = $_POST['NAME'];
+        $CODE = $_POST['CODE'];
         $PHONE = $_POST['PHONE'];
         $ADDRESS = $_POST['ADDRESS'];
         $SALARY = $_POST['SALARY'];
-        $ROLE = $_POST['ROLE'];
-        echo $this->model->add($USERNAME, $PASSWORD, $FIRSTNAME,$LASTNAME, $SEX,$BIRTHDAY,$PHONE, $ADDRESS, $SALARY,$ROLE);
+        echo $this->model->add($USERNAME, $PASSWORD, $NAME, $CODE, $PHONE, $ADDRESS, $SALARY);
     }
+
     public function delete()
     {
         if (!isset($_POST['id'])) {
@@ -46,29 +43,26 @@ class StaffController extends AdminController
 
         echo $this->model->delete($id);
     }
+
+
     public function update()
     {
         if (
-            !isset($_POST['USERNAME'])  || !isset($_POST['FIRSTNAME']) 
-            || !isset($_POST['LASTNAME']) || !isset($_POST['SEX']) || !isset($_POST['BIRTHDAY']) 
-            || !isset($_POST['PHONE']) || !isset($_POST['ADDRESS'])
-            || !isset($_POST['SALARY']) || !isset($_POST['ROLE']) || !isset($_POST['ID'])
+            !isset($_POST['USERNAME']) || !isset($_POST['PASSWORD']) || !isset($_POST['NAME'])
+            || !isset($_POST['CODE']) || !isset($_POST['PHONE']) || !isset($_POST['ADDRESS'])
+            || !isset($_POST['SALARY'])
         ) {
             die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
         }
-
         $ID = $_POST['ID'];
         $USERNAME = $_POST['USERNAME'];
-        $FIRSTNAME = $_POST['FIRSTNAME'];
-        $LASTNAME = $_POST['LASTNAME'];
-        $BIRTHDAY = $_POST['BIRTHDAY'];
-        $SEX = $_POST['SEX'];
+        $PASSWORD = $_POST['PASSWORD'];
+        $NAME = $_POST['NAME'];
+        $CODE = $_POST['CODE'];
         $PHONE = $_POST['PHONE'];
         $ADDRESS = $_POST['ADDRESS'];
         $SALARY = $_POST['SALARY'];
-        $ROLE = $_POST['ROLE'];
-
-        echo $this->model->update($USERNAME,$FIRSTNAME,$LASTNAME,$SEX,$BIRTHDAY,$PHONE, $ADDRESS,$SALARY,$ROLE,$ID);
+        echo $this->model->update($USERNAME, $PASSWORD, $NAME, $CODE, $PHONE, $ADDRESS, $SALARY, $ID);
     }
     public function getByID()
     {
