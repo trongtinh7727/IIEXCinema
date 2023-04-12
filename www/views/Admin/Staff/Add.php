@@ -4,60 +4,39 @@
 
             <!-- Header -->
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="addEmployeeModalLabel">Thêm Nhân Viên</h1>
+                <h1 class="modal-title fs-5" id="addEmployeeModalLabel">Add an Employee</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form  method="POST">
-              
-                <div class="mb-3">
-                    <label for="username" class="form-label">Tên đăng nhập :</label>
-                    <input type="text" class="form-control" id="USERNAME" name="username">
-                </div>
-                <div class="pass mb-3">
-                    <label for="password" class="form-label">Mật khẩu :</label>
-                    <input type="password" class="form-control" id="PASSWORD" name="password">
-                </div>                
-                <div class="pass mb-3">
-                    <label for="password" class="form-label">Xác nhận mật khẩu :</label>
-                    <input type="password" class="form-control" id="PASS-CONFIRM" name="password">
-                </div>
-                <div class="mb-3">
-                    <label for="firstname" class="form-label">Họ và tên lót :</label>
-                    <input type="text" class="form-control" id="FNAME" name="firstname">
-                </div>
-                <div class="mb-3">
-                    <label for="lastname" class="form-label">Tên :</label>
-                    <input type="text" class="form-control" id="LNAME" name="lastname">
-                </div>
-                <div class="mb-3">
-                    <label for="sex" class="form-label">Giới tính :</label>
-                    <select class="form-select" id="SEX" name="sex">
-                        <option value="M">Male</option>
-                        <option value="F">Female</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="birthday" class="form-label">Ngày sinh :</label>
-                    <input type="date" class="form-control" id="BIRTHDAY" name="birthday">
-                </div>
-                <div class="mb-3">
-                    <label for="phone" class="form-label">Số điện thoại :</label>
-                    <input type="text" class="form-control" id="PHONE" name="phone">
-                </div>
-                <div class="mb-3">
-                    <label for="address" class="form-label">Địa chỉ :</label>
-                    <input type="text" class="form-control" id="ADDRESS" name="address">
-                </div>
-                <div class="mb-3">
-                    <label for="salary" class="form-label">Lương :</label>
-                    <input type="number" class="form-control" id="SALARY" name="salary">
-                </div>
-                <div class="mb-3">
-                    <label for="role" class="form-label">Chức vụ :</label>
-                    <select class="form-select" id="ROLE" name="role">
-                        <option value="1">ADMIN</option>
-                        <option value="2">USER</option>
-                    </select>
+            <form action="./?api/staff/add" method="post">
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="input_employee_username">Username</span>
+                        <input id="USERNAME" type="text" class="form-control" placeholder="Your User Name" aria-label="ID" aria-describedby="input_employee_username">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="input_employee_password">Password</span>
+                        <input id="PASSWORD" type="text" class="form-control" placeholder="yourPassword" aria-label="ID" aria-describedby="input_employee_password">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="input_employee_lastname">Name</span>
+                        <input id="NAME" type="text" class="form-control" placeholder="Jon" aria-label="ID" aria-describedby="input_employee_name">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="input_employee_phone">Code</span>
+                        <input id="CODE" type="text" class="form-control" placeholder="NS001" aria-label="ID" aria-describedby="input_employee_code">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="input_employee_phone">Phone</span>
+                        <input id="PHONE" type="text" class="form-control" placeholder="0123456789" aria-label="ID" aria-describedby="input_employee_phone">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="input_employee_address">Address</span>
+                        <input id="ADDRESS" type="text" class="form-control" placeholder="HCMC, Vietnam" aria-label="ID" aria-describedby="input_employee_address">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="input_employee_salary">Salary</span>
+                        <input id="SALARY" type="text" class="form-control" placeholder="5000000" aria-label="ID" aria-describedby="input_employee_salary">
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

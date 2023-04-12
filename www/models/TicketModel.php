@@ -23,13 +23,13 @@ class TicketModel
         return json_encode(array('status' => true, 'data' => $data));
     }
 
-    public function add( $SCH_ID, $BOO_ID, $SEAT_ID, $price)
+    public function add($ID, $SCH_ID, $BOO_ID, $SEAT_ID, $price)
     {
-        $sql = 'INSERT INTO ticket( SCH_ID, BOO_ID, SEAT_ID, price) VALUE(?,?,?,?)';
+        $sql = 'INSERT INTO ticket(ID, SCH_ID, BOO_ID, SEAT_ID, price) VALUE(?,?,?,?,?)';
 
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array( $SCH_ID, $BOO_ID, $SEAT_ID, $price));
+            $stmt->execute(array($ID, $SCH_ID, $BOO_ID, $SEAT_ID, $price));
 
             return json_encode(array('status' => true, 'data' => 'Thêm ticket thành công'));
         } catch (PDOException $ex) {
@@ -58,11 +58,11 @@ class TicketModel
 
     public function update($ID, $SCH_ID, $BOO_ID, $SEAT_ID, $price)
     {
-        $sql = 'UPDATE `ticket` SET `SCH_ID` = ?, `BOO_ID` = ?, `SEAT_ID` = ?, `price` = ? WHERE `ticket`.`ID` = ?';
+        $sql = 'UPDATE `ticket` SET `ID` = ?, `SCH_ID` = ?, `BOO_ID` = ?, `SEAT_ID` = ?, `price` = ? WHERE `ticket`.`ID` = ?';
 
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array( $SCH_ID, $BOO_ID, $SEAT_ID, $price,$ID));
+            $stmt->execute(array($ID, $SCH_ID, $BOO_ID, $SEAT_ID, $price));
 
             $count = $stmt->rowCount();
             if($count == 1){
@@ -73,21 +73,5 @@ class TicketModel
         } catch(PDOException $ex) {
             die(json_encode(array('status'=>false, 'data'=>$ex->getMessage())));
         }
-    }
-    public function getByID($ID)
-    {
-        $sql = "SELECT * FROM ticket where ID = '$ID'";
-        try {
-            $stmt = $this->db->prepare($sql);
-            $stmt->execute();
-        } catch (PDOException $ex) {
-            die(json_encode(array('status' => false, 'data' => $ex->getMessage())));
-        }
-        $data = array();
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $data[] = $row;
-        }
-
-        return json_encode(array('status' => true, 'data' => $data));
     }
 }

@@ -18,7 +18,6 @@
             <!-- Navigation bar -->
             <?php include_once(__DIR__ . "/Layouts/Nav.php"); ?>
             <!-- Slider -->
-
         </div>
 
         <!-- Content -->
@@ -51,17 +50,10 @@
                 <div id="content-ongoing-movies" class="row" style="background-color: rgba(217, 217, 217, 0.25);">
                     <!-- Ongoing Movies list -->
                     <div id="ongoing-movies-list" class="col-lg-9 row mt-5 mx-auto">
-                        <!-- DATAFILL - Movie item -->
                         <!-- @TODO:  Movie item -->
                     </div>
 
-                    <!-- Movies Ads -->
-                    <div name="movie-ads" class="row col-lg-3 d-flex justify-content-center mt-5">
-                        <!-- DATAFILL - Ads item -->
-                        <div name="movie-ads-item" class="col-12 d-flex justify-content-center mb-4">
-                            <img src="../assets/img/homepage/ads.png" alt="Advertisement">
-                        </div>
-                    </div>
+
                 </div>
 
                 <!-- Upcoming movie -->
@@ -69,18 +61,9 @@
                     <!-- Upcoming Movies list -->
                     <div id="upcoming-movies-list" class="col-lg-9 row mt-5 mx-auto">
                         <!-- DATAFILL - Movie item -->
-                        <div name="upcoming-movie-item" class="movie-item col-12 col-lg-6 col-xl-4">
-
-                        </div>
                     </div>
 
-                    <!-- Movies Ads -->
-                    <div name="movie-ads" class="row col-lg-3 d-flex justify-content-center mt-5">
-                        <!-- DATAFILL - Ads item -->
-                        <div name="movie-ads-item" class="col-12 d-flex justify-content-center mb-4">
-                            <img src="../assets/img/homepage/ads.png" alt="Advertisement">
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -103,7 +86,7 @@
 
             <!-- Main trailer -->
             <div id="carousel-trailer" class="carousel slide py-5">
-                <div class="carousel-inner row">
+                <div class="carousel-inner row" id="trailer-container">
                     <div class="carousel-item col-12 active">
                         <div align="center">
                             <iframe width="560" height="315" src="https://www.youtube.com/embed/BQ1pusupDK0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -122,7 +105,6 @@
                 </div>
             </div>
             <!-- Footer -->
-
             <?php include_once(__DIR__ . "/Layouts/Footer.php"); ?>
         </div>
 </body>

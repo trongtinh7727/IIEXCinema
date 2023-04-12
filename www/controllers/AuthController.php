@@ -18,7 +18,6 @@ class AuthController
             $password = $_POST['password'];
             $tb = $_POST['tb'];
             $check =  $this->model->CheckUserLogin($username, $password, $tb);
-
             if ($check == 1) {
                 if ($tb == 'staff') {
                     $_SESSION['userLogin'] = 1;
