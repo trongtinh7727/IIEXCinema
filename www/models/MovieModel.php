@@ -65,13 +65,13 @@ class MovieModel
         return json_encode(array('status' => true, 'data' => $data));
     }
 
-    public function add($TITLE, $GENRE, $DURATION, $RATING, $STORY, $POSTER)
+    public function add($TITLE,$DIRECTOR,$ACTORS,$GENRE,$STORY,$DURATION,$OPENING_DAY,$CLOSING_DAY,$POSTER,$TRAILER)
     {
-        $sql = 'INSERT INTO `movie` (`TITLE`, `GENRE`, `DURATION`, `RATING`, `STORY`, `POSTER`) VALUES(?,?,?,?,?,?)';
+        $sql = 'INSERT INTO `movie` (`TITLE`,`DIRECTOR`,`ACTORS`,`GENRE`,`STORY`,`DURATION`,`OPENING_DAY`,`CLOSING_DAY`,`POSTER`,`TRAILER`) VALUES(?,?,?,?,?,?,?,?,?,?)';
 
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($TITLE, $GENRE, $DURATION, $RATING, $STORY, $POSTER));
+            $stmt->execute(array($TITLE,$DIRECTOR,$ACTORS,$GENRE,$STORY,$DURATION,$OPENING_DAY,$CLOSING_DAY,$POSTER,$TRAILER));
 
             return json_encode(array('status' => true, 'data' => 'Thêm phim thành công'));
         } catch (PDOException $ex) {
@@ -100,14 +100,13 @@ class MovieModel
         }
     }
 
-    public function update($NAME, $INFO, $DATE, $START, $END, $CATEGORY, $RATING, $IMAGE, $ID)
+    public function update($TITLE,$DIRECTOR,$ACTORS,$GENRE,$STORY,$DURATION,$OPENING_DAY,$CLOSING_DAY,$POSTER,$TRAILER, $ID)
     {
-        $sql = 'UPDATE `movie` SET `NAME` = ?, `INFO` = ?, `DATE` = ?,
-                `START` = ?, `END` = ?, `CATEGORY` = ?, `RATING` = ? ,`IMAGE`= ? WHERE `movie`.`ID` = ?';
+        $sql = 'UPDATE `movie` SET `TITLE` = ?,`DIRECTOR` = ?,`ACTORS` = ?,`GENRE` = ?,`STORY` = ?,`DURATION` = ?,`OPENING_DAY` = ?,`CLOSING_DAY` = ?,`POSTER` = ?,`TRAILER` = ? WHERE `movie`.`ID` = ?';
 
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($NAME, $INFO, $DATE, $START, $END, $CATEGORY, $RATING, $IMAGE, $ID));
+            $stmt->execute(array($TITLE,$DIRECTOR,$ACTORS,$GENRE,$STORY,$DURATION,$OPENING_DAY,$CLOSING_DAY,$POSTER,$TRAILER, $ID));
             $count = $stmt->rowCount();
 
             if ($count == 1) {

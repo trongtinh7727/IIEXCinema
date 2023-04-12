@@ -16,20 +16,32 @@ class MovieController extends AdminController
     {
         $this->isAuthenticated();
         if (
-            !isset($_POST['TITLE']) || !isset($_POST['GENRE']) || !isset($_POST['DURATION'])
-            || !isset($_POST['RATING']) || !isset($_POST['STORY']) || !isset($_POST['POSTER'])
+            !isset( $_POST['TITLE']) ||
+            !isset( $_POST['DIRECTOR']) ||
+            !isset( $_POST['ACTORS']) ||
+            !isset( $_POST['GENRE']) ||
+            !isset( $_POST['STORY']) ||
+            !isset( $_POST['DURATION']) ||
+            !isset( $_POST['OPENING_DAY']) ||
+            !isset( $_POST['CLOSING_DAY']) ||
+            !isset( $_POST['POSTER']) ||
+            !isset( $_POST['TRAILER']) 
         ) {
             die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
         }
 
-        $TITLE = $_POST['TITLE'];
-        $GENRE = $_POST['GENRE'];
-        $DURATION = $_POST['DURATION'];
-        $RATING = $_POST['RATING'];
-        $STORY = $_POST['STORY'];
-        $POSTER = $_POST['POSTER'];
 
-        echo $this->model->add($TITLE, $GENRE, $DURATION, $RATING, $STORY, $POSTER, $RATING);
+        $TITLE =   $_POST['TITLE'];
+        $DIRECTOR =   $_POST['DIRECTOR'];
+        $ACTORS =   $_POST['ACTORS'];
+        $GENRE =   $_POST['GENRE'];
+        $STORY =   $_POST['STORY'];
+        $DURATION =   $_POST['DURATION'];
+        $OPENING_DAY =   $_POST['OPENING_DAY'];
+        $CLOSING_DAY =   $_POST['CLOSING_DAY'];
+        $POSTER =   $_POST['POSTER'];
+        $TRAILER =   $_POST['TRAILER'];
+        echo $this->model->add($TITLE,$DIRECTOR,$ACTORS,$GENRE,$STORY,$DURATION,$OPENING_DAY,$CLOSING_DAY,$POSTER,$TRAILER);
     }
 
     public function delete()
@@ -49,21 +61,35 @@ class MovieController extends AdminController
     {
         $this->isAuthenticated();
         if (
-            !isset($_POST['TITLE']) || !isset($_POST['GENRE']) || !isset($_POST['DURATION'])
-            || !isset($_POST['RATING']) || !isset($_POST['STORY']) || !isset($_POST['POSTER'])
-            || !isset($_POST['RATING']) || !isset($_POST['IMAGE'])
+
+            !isset( $_POST['TITLE']) ||            
+            !isset( $_POST['ID']) ||
+            !isset( $_POST['DIRECTOR']) ||
+            !isset( $_POST['ACTORS']) ||
+            !isset( $_POST['GENRE']) ||
+            !isset( $_POST['STORY']) ||
+            !isset( $_POST['DURATION']) ||
+            !isset( $_POST['OPENING_DAY']) ||
+            !isset( $_POST['CLOSING_DAY']) ||
+            !isset( $_POST['POSTER']) ||
+            !isset( $_POST['TRAILER']) 
         ) {
             die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
         }
         $ID = $_POST['ID'];
-        $TITLE = $_POST['TITLE'];
-        $GENRE = $_POST['GENRE'];
-        $DURATION = $_POST['DURATION'];
-        $RATING = $_POST['RATING'];
-        $STORY = $_POST['STORY'];
-        $POSTER = $_POST['POSTER'];
+     
+        $TITLE =   $_POST['TITLE'];
+        $DIRECTOR =   $_POST['DIRECTOR'];
+        $ACTORS =   $_POST['ACTORS'];
+        $GENRE =   $_POST['GENRE'];
+        $STORY =   $_POST['STORY'];
+        $DURATION =   $_POST['DURATION'];
+        $OPENING_DAY =   $_POST['OPENING_DAY'];
+        $CLOSING_DAY =   $_POST['CLOSING_DAY'];
+        $POSTER =   $_POST['POSTER'];
+        $TRAILER =   $_POST['TRAILER'];
 
-        echo $this->model->update($TITLE, $GENRE, $DURATION, $RATING, $STORY, $POSTER, $RATING, $ID);
+        echo $this->model->update($TITLE,$DIRECTOR,$ACTORS,$GENRE,$STORY,$DURATION,$OPENING_DAY,$CLOSING_DAY,$POSTER,$TRAILER,$ID);
     }
     public function getByID()
     {

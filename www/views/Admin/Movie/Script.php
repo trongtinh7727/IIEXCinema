@@ -51,7 +51,8 @@
 
         // đọc dữ liệu ngay khi tải trang xong
         var pageNumber = 1;
-        var entriesPerPage = 10;
+        // var entriesPerPage = 10;
+        var entriesPerPage = 5;
         var totalPage = Math.ceil(jsonArrayObj.length / entriesPerPage);
 
 
@@ -215,12 +216,16 @@
                 let ID = $("#action").val();
                 $.post("./?api/movie/update", {
                     TITLE,
+                    DIRECTOR,
+                    ACTORS,
                     GENRE,
-                    DURATION,
-                    RATING,
                     STORY,
+                    DURATION,
+                    OPENING_DAY,
+                    CLOSING_DAY,
                     POSTER,
-                    ID,
+                    TRAILER,
+                    ID
                 }, function (data, status) {
                     console.log(data)
                     if (data.status) {
