@@ -35,13 +35,13 @@
 
     <!-- Offcanvas body -->
     <div class="offcanvas-body">
-        <a href="./?admin/staff" id="employees_manager" class="btn btn-lg btn-dark my-1 w-100">
+        <a href="./?admin/staff" id="Staff" class="btn btn-lg  my-1 w-100">
             Employees Manager
         </a>
-        <a href="/?admin/cinema" id="cinema_manager" class="btn btn-lg my-1 w-100">
+        <a href="/?admin/cinema" id="Cinema" class="btn btn-lg my-1 w-100">
             Cinema Manager
         </a>
-        <a href="/?admin/movie" id="movie_manager" class="btn btn-lg my-1 w-100">
+        <a href="/?admin/movie" id="Movie" class="btn btn-lg my-1 w-100">
             Movie Manager
         </a>
         <!-- <a href="/?admin/supplies" id="supplies_manager" class="btn btn-lg my-1 w-100">

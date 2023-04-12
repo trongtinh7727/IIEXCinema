@@ -6,3 +6,9 @@
 
 <!-- JS -->
 <script language="JavaScript" type="text/javascript" src="./script.js"></script>
+<script>
+    $(function() {
+        console.log("run")
+        $(<?php echo $_SESSION['path']?>).addClass("btn-dark")
+    })
+</script>
