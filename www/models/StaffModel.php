@@ -21,13 +21,13 @@ class StaffModel
         return json_encode(array('status' => true, 'data' => $data));
     }
 
-    public function add($USERNAME, $PASSWORD, $NAME, $CODE, $PHONE, $ADDRESS, $SALARY)
+    public function add($USERNAME, $PASSWORD, $FIRSTNAME,$LASTNAME, $SEX,$BIRTHDAY,$PHONE, $ADDRESS, $SALARY,$ROLE)
     {
-        $sql = 'INSERT INTO staff(USERNAME, PASSWORD, NAME, CODE, PHONE, ADDRESS, SALARY) VALUES(?,?,?,?,?,?,?)';
+        $sql = 'INSERT INTO staff(USERNAME, PASSWORD, FIRSTNAME,LASTNAME, SEX,BIRTHDAY,PHONE, ADDRESS, SALARY,ROLE) VALUES(?,?,?,?,?,?,?,?,?,?)';
 
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($USERNAME, $PASSWORD, $NAME, $CODE, $PHONE, $ADDRESS, $SALARY));
+            $stmt->execute(array($USERNAME, $PASSWORD, $FIRSTNAME,$LASTNAME, $SEX,$BIRTHDAY,$PHONE, $ADDRESS, $SALARY,$ROLE));
 
             return json_encode(array('status' => true, 'data' => 'Thêm nhân viên thành công'));
         } catch (PDOException $ex) {
@@ -56,16 +56,15 @@ class StaffModel
         }
     }
 
-    public function update($USERNAME, $PASSWORD, $NAME, $CODE, $PHONE, $ADDRESS, $SALARY, $ID)
+    public function update($USERNAME, $FIRSTNAME,$LASTNAME, $SEX,$BIRTHDAY,$PHONE, $ADDRESS, $SALARY,$ROLE,$ID)
     {
 
 
-        $sql = 'UPDATE `staff` SET `USERNAME` = ?, `PASSWORD` = ?, `NAME` = ?,
-                `CODE` = ?, `PHONE` = ?, `ADDRESS` = ?, `SALARY` = ? WHERE `staff`.`ID` = ?';
+        $sql = 'UPDATE `staff` SET `USERNAME` = ?, `FIRSTNAME` = ?, `LASTNAME` = ?,`SEX` = ?,`BIRTHDAY` = ?, `PHONE` = ?, `ADDRESS` = ?, `SALARY` = ?, `ROLE` = ? WHERE `staff`.`ID` = ?';
 
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($USERNAME, $PASSWORD, $NAME, $CODE, $PHONE, $ADDRESS, $SALARY, $ID));
+            $stmt->execute(array($USERNAME,$FIRSTNAME,$LASTNAME,$SEX,$BIRTHDAY,$PHONE, $ADDRESS,$SALARY,$ROLE,$ID));
             $count = $stmt->rowCount();
 
             if ($count == 1) {
