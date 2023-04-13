@@ -53,6 +53,11 @@
 
 /* ============================= */
 
+#employeeManagerDataTable tbody td:last-child {
+    display: flex;
+    justify-content: space-around;
+}
+
 /* Button log out */
 #btn-logout {
     background: rgb(228, 58, 21);

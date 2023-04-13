@@ -27,6 +27,12 @@
     <!-- Datatables -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
 
+    <!-- Datatables Responsive -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css">
+    
+    <!-- Datatables Responsive Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap5.min.css">
+
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
 
@@ -224,80 +230,33 @@
             <!-- Main -->
             <div class="container">
                 <!-- Table -->
-                <table id="employeeManagerDataTable" class="table table-striped" style="width:100%">
+                <table id="employeeManagerDataTable" class="table table-striped dt-responsive nowrap" style="width:100%">
                     <thead>
                         <tr>
-                            <th class="text-center">ID</th>
-                            <th class="text-center">Email</th>
-                            <th class="text-center">Username</th>
-                            <th class="text-center">Tên</th>
-                            <th class="text-center">Họ</th>
-                            <th class="text-center">Code</th>
-                            <th class="text-center">Số điện thoại</th>
-                            <th class="text-center">Địa chỉ</th>
-                            <th class="text-center">Lương</th>
-                            <th class="text-center">Hành động</th>
+                            <th>ID</th>
+                            <th>Email</th>
+                            <th>Username</th>
+                            <th>Tên</th>
+                            <th>Họ</th>
+                            <th>Code</th>
+                            <th>Số điện thoại</th>
+                            <th>Địa chỉ</th>
+                            <th>Lương</th>
+                            <th>Hành động</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td class="text-center">1</td>
-                            <td class="text-center">phule@gmail.com</td>
-                            <td class="text-center">phulene</td>
-                            <td class="text-center">Phu</td>
-                            <td class="text-center">Le</td>
-                            <td class="text-center">CEO001</td>
-                            <td class="text-center">01812</td>
-                            <td class="text-center">Tây Ninh</td>
-                            <td class="text-center">9999999</td>
-                            <td class="text-center">
-                                <button name="btn-edit-employee" class="btn btn-outline-secondary">Sửa</button>
-                                <button name="btn-delete-employee" class="btn btn-outline-danger">Xóa</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">2</td>
-                            <td class="text-center">gemgaga@gmail.com</td>
-                            <td class="text-center">gemga</td>
-                            <td class="text-center">Gam</td>
-                            <td class="text-center">Nguyen</td>
-                            <td class="text-center">BA001</td>
-                            <td class="text-center">0127592745</td>
-                            <td class="text-center">Long An</td>
-                            <td class="text-center">1000000</td>
-                            <td class="text-center">
-                                <button name="btn-edit-employee" class="btn btn-outline-secondary">Sửa</button>
-                                <button name="btn-delete-employee" class="btn btn-outline-danger">Xóa</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">3</td>
-                            <td class="text-center">emduc@gmail.com</td>
-                            <td class="text-center">duccop</td>
-                            <td class="text-center">Duc</td>
-                            <td class="text-center">Cong</td>
-                            <td class="text-center">LB001</td>
-                            <td class="text-center">2726553</td>
-                            <td class="text-center">Tiểu vương quốc Long An</td>
-                            <td class="text-center">1000</td>
-                            <td class="text-center">
-                                <button name="btn-edit-employee" class="btn btn-outline-secondary">Sửa</button>
-                                <button name="btn-delete-employee" class="btn btn-outline-danger">Xóa</button>
-                            </td>
-                        </tr>
-                    </tbody>
                     <tfoot>
                         <tr>
-                            <th class="text-center">ID</th>
-                            <th class="text-center">Email</th>
-                            <th class="text-center">Username</th>
-                            <th class="text-center">Tên</th>
-                            <th class="text-center">Họ</th>
-                            <th class="text-center">Code</th>
-                            <th class="text-center">Số điện thoại</th>
-                            <th class="text-center">Địa chỉ</th>
-                            <th class="text-center">Lương</th>
-                            <th class="text-center">Hành động</th>
+                            <th>ID</th>
+                            <th>Email</th>
+                            <th>Username</th>
+                            <th>Tên</th>
+                            <th>Họ</th>
+                            <th>Code</th>
+                            <th>Số điện thoại</th>
+                            <th>Địa chỉ</th>
+                            <th>Lương</th>
+                            <th>Hành động</th>
                         </tr>
                     </tfoot>
                 </table>
@@ -318,8 +277,14 @@
     <!-- Datatables -->
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 
-    <!-- Datatable Bootstrap -->
+    <!-- Datatables Bootstrap -->
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+
+    <!-- Datatables Responsive -->
+    <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+
+    <!-- Datatables Responsive Bootstrap -->
+    <script src="https://cdn.datatables.net/responsive/2.4.1/js/responsive.bootstrap5.min.js"></script>
 
     <!-- JS -->
     <script language="JavaScript" type="text/javascript" src="script.js"></script>
