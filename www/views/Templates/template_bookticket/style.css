@@ -1,0 +1,87 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.text-yellow {
+    color: #FFBA08 !important;
+}
+
+.bg-yellow {
+    background-color: #FFBA08 !important;
+}
+
+.text-green {
+    color: #CCF381 !important;
+}
+
+.hover-green:hover {
+    transition: 0.5s;
+    cursor: pointer !important;
+    color: #CCF381 !important;
+}
+
+.hover-bg-green:hover {
+    color: #000000 !important;
+    transition: 0.5s !important;
+    cursor: pointer !important;
+    background-color: #CCF381 !important;
+}
+
+.hover-yellow:hover {
+    transition: 0.5s;
+    cursor: pointer !important;
+    color: #FFBA08 !important;
+}
+
+.hover-bg-yellow:hover {
+    color: #000000 !important;
+    transition: 0.5s !important;
+    cursor: pointer !important;
+    background-color: #FFBA08 !important;
+}
+
+.custom-active::after {
+    content: "";
+    position: absolute;
+    background-color: #FFBA08;
+    height: 1px;
+    width: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+}
+
+#wrapper {
+    min-height: 100vh;
+    background-color: #000218;
+}
+
+/* ============================= */
+
+/* Step indicator */
+#bookticket-stepindicator {
+    height: 76px;
+}
+
+#bookticket-stepindicator-ticket {
+    height: 100px;
+    width: 100px;
+}
+
+#bookticket-stepindicator-seat {
+    height: 100px;
+    width: 100px;
+}
+
+#bookticket-stepindicator-food {
+    height: 100px;
+    width: 100px;
+}
+
+#bookticket-stepindicator-confirm {
+    height: 100px;
+    width: 100px;
+}
