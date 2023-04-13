@@ -7,6 +7,11 @@ class TheaterController extends AdminController
     {
     }
 
+    public function getByCinema(){
+        if (isset($_GET['cinema_id'])) {
+            echo $this->model->getByCinema($_GET['cinema_id']);
+        }
+    }
 
     public function getAll()
     {
