@@ -7,26 +7,35 @@ class ScheduleController extends AdminController
     {
     }
 
-    public function getAll()
+    public function getByTheater()
     {
-        echo $this->model->getAll();
+        if (isset($_GET['theater_id'])) {
+            echo $this->model->getByTheater($_GET['theater_id']);
+        }
+    }
+
+    public function getByID()
+    {
+        if (isset($_POST['ID'])) {
+            echo $this->model->getByID($_POST['ID']);
+        }
     }
 
     public function add()
     {
         $this->isAuthenticated();
         if (
-            !isset($_POST['CIN_ID']) ||
+            !isset($_POST['THEA_ID']) ||
             !isset($_POST['MOV_ID']) || !isset($_POST['STARTTIME']) || !isset($_POST['ENDTIME'])
         ) {
             die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
         }
 
-        $CIN_ID = $_POST['CIN_ID'];
+        $THEA_ID = $_POST['THEA_ID'];
         $MOV_ID = $_POST['MOV_ID'];
         $STARTTIME = $_POST['STARTTIME'];
         $ENDTIME = $_POST['ENDTIME'];
-        echo $this->model->add($CIN_ID, $MOV_ID, $STARTTIME, $ENDTIME);
+        echo $this->model->add($THEA_ID, $MOV_ID, $STARTTIME, $ENDTIME);
     }
 
     public function delete()
@@ -46,7 +55,7 @@ class ScheduleController extends AdminController
     {
         $this->isAuthenticated();
         if (
-            !isset($_POST['CIN_ID']) ||
+            !isset($_POST['THEA_ID']) ||
             !isset($_POST['MOV_ID']) || !isset($_POST['STARTTIME']) || !isset($_POST['ENDTIME'])
             || !isset($_POST['ID'])
         ) {
@@ -54,10 +63,10 @@ class ScheduleController extends AdminController
         }
 
         $ID = $_POST['ID'];
-        $CIN_ID = $_POST['CIN_ID'];
+        $THEA_ID = $_POST['THEA_ID'];
         $MOV_ID = $_POST['MOV_ID'];
         $STARTTIME = $_POST['STARTTIME'];
         $ENDTIME = $_POST['ENDTIME'];
-        echo $this->model->update($CIN_ID, $MOV_ID, $STARTTIME, $ENDTIME, $ID);
+        echo $this->model->update($THEA_ID, $MOV_ID, $STARTTIME, $ENDTIME, $ID);
     }
 }

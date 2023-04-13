@@ -39,6 +39,12 @@ class AdminController extends AuthController
         $_SESSION['path'] = 'Movie';
         require_once('views/Admin/dashboard.php');
     }
+    public function scheduleAction()
+    {
+        $this->isAuthenticated();
+        $_SESSION['path'] = 'Schedule';
+        require_once('views/Admin/dashboard.php');
+    }
     public function suppliesAction()
     {
         $this->isAuthenticated();

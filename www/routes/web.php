@@ -22,6 +22,7 @@ Route::add("/?logout", "AuthController@logout");
 Route::add("/?admin/staff", "AdminController@staffAction");
 Route::add("/?admin/cinema", "AdminController@cinemaAction");
 Route::add("/?admin/movie", "AdminController@movieAction");
+Route::add("/?admin/schedule", "AdminController@scheduleAction");
 Route::add("/?admin/supplies", "AdminController@suppliesAction");
 
 // API
@@ -62,10 +63,18 @@ Route::add("/?api/seat/update", "SeatController@update");
 Route::add("/?api/seat/delete", "SeatController@delete");
 
 // Theater
+Route::add("/?api/theater/getByCinema", "TheaterController@getByCinema");
 Route::add("/?api/theater/getall", "TheaterController@getAll");
 Route::add("/?api/theater/add", "TheaterController@add");
 Route::add("/?api/theater/update", "TheaterController@update");
 Route::add("/?api/theater/delete", "TheaterController@delete");
+
+// Schedule
+Route::add("/?api/schedule/getByTheater", "ScheduleController@getByTheater");
+Route::add("/?api/schedule/getbyid", "ScheduleController@getByID");
+Route::add("/?api/schedule/add", "ScheduleController@add");
+Route::add("/?api/schedule/update", "ScheduleController@update");
+Route::add("/?api/schedule/delete", "ScheduleController@delete");
 
 
 $route = Route::run();

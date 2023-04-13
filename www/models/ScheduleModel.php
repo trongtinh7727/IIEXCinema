@@ -4,14 +4,14 @@ class ScheduleModel
 {
     public $db;
 
-    public function getAll()
+    public function getByTheater($theater_id)
     {
-        $sql = 'SELECT * FROM schedule';
+        $sql = "CALL `get_schedule_by_theater`(?)";
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute();
+            $stmt->execute(array($theater_id));
         } catch (PDOException $ex) {
-            die(json_encode(array('status' => false, 'data' => $ex->getMessage())));
+            return (json_encode(array('status' => false, 'data' => $ex->getMessage())));
         }
         $data = array();
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -21,17 +21,49 @@ class ScheduleModel
         return json_encode(array('status' => true, 'data' => $data));
     }
 
-    public function add($CIN_ID, $MOV_ID, $STARTTIME, $ENDTIME)
+    private function isValidSchedule($STARTTIME, $THEA_ID)
     {
-        $sql = 'INSERT INTO schedule(CIN_ID, MOV_ID, STARTTIME, ENDTIME) VALUES(?,?,?,?)';
+        $sql = 'CALL `isValidSchedule`(?, ?)';
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(array($STARTTIME, $THEA_ID));
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            return (json_encode(array('status' => false, 'data' => "Trùng lịch chiếu!")));
+        }
+        return 1;
+    }
 
+    public function getByID($ID)
+    {
+        $sql = "SELECT * FROM schedule where ID = '$ID'";
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($CIN_ID, $MOV_ID, $STARTTIME, $ENDTIME));
-
-            return json_encode(array('status' => true, 'data' => 'Thêm schedule thành công'));
+            $stmt->execute();
         } catch (PDOException $ex) {
-            die(json_encode(array('status' => false, 'data' => $ex->getMessage())));
+            return (json_encode(array('status' => false, 'data' => $ex->getMessage())));
+        }
+        $data = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $data[] = $row;
+        }
+
+        return json_encode(array('status' => true, 'data' => $data));
+    }
+
+    public function add($THEA_ID, $MOV_ID, $STARTTIME, $ENDTIME)
+    {
+        $isValid = $this->isValidSchedule($STARTTIME, $THEA_ID);
+        if ($isValid == 1) {
+            $sql = 'INSERT INTO schedule(THEA_ID, MOV_ID, STARTTIME, ENDTIME) VALUES(?,?,?,?)';
+            try {
+                $stmt = $this->db->prepare($sql);
+                $stmt->execute(array($THEA_ID, $MOV_ID, $STARTTIME, $ENDTIME));
+
+                return json_encode(array('status' => true, 'data' => 'Thêm lịch chiếu thành công'));
+            } catch (PDOException $ex) {
+                return (json_encode(array('status' => false, 'data' => $ex->getMessage())));
+            }
+        } else {
+            return  $isValid;
         }
     }
 
@@ -47,34 +79,37 @@ class ScheduleModel
             $count = $stmt->rowCount();
 
             if ($count == 1) {
-                echo json_encode(array('status' => true, 'data' => 'Xóa sinh viên thành công'));
+                echo json_encode(array('status' => true, 'data' => 'Xóa lịch chiếu thành công'));
             } else {
-                die(json_encode(array('status' => false, 'data' => 'Mã sinh viên không hợp lệ')));
+                return (json_encode(array('status' => false, 'data' => 'Mã lịch chiếu không hợp lệ')));
             }
         } catch (PDOException $ex) {
-            die(json_encode(array('status' => false, 'data' => $ex->getMessage())));
+            return (json_encode(array('status' => false, 'data' => $ex->getMessage())));
         }
     }
 
-    public function update($CIN_ID, $MOV_ID, $STARTTIME, $ENDTIME, $ID)
+    public function update($THEA_ID, $MOV_ID, $STARTTIME, $ENDTIME, $ID)
     {
-
-
-        $sql = 'UPDATE `schedule` SET  `CIN_ID` = ?,
+        $isValid = $this->isValidSchedule($STARTTIME, $THEA_ID);
+        if ($isValid == 1) {
+            $sql = 'UPDATE `schedule` SET  `THEA_ID` = ?,
                 `MOV_ID` = ?, `STARTTIME` = ?, `ENDTIME` = ? WHERE `schedule`.`ID` = ?';
 
-        try {
-            $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($CIN_ID, $MOV_ID, $STARTTIME, $ENDTIME, $ID));
-            $count = $stmt->rowCount();
+            try {
+                $stmt = $this->db->prepare($sql);
+                $stmt->execute(array($THEA_ID, $MOV_ID, $STARTTIME, $ENDTIME, $ID));
+                $count = $stmt->rowCount();
 
-            if ($count == 1) {
-                echo json_encode(array('status' => true, 'data' => 'Cập nhật schedule thành công'));
-            } else {
-                die(json_encode(array('status' => false, 'data' => 'Không có schedule nào được cập nhật')));
+                if ($count == 1) {
+                    echo json_encode(array('status' => true, 'data' => 'Cập nhật lịch thành công'));
+                } else {
+                    return (json_encode(array('status' => false, 'data' => 'Không có lịch nào được cập nhật')));
+                }
+            } catch (PDOException $ex) {
+                return (json_encode(array('status' => false, 'data' => $ex->getMessage())));
             }
-        } catch (PDOException $ex) {
-            die(json_encode(array('status' => false, 'data' => $ex->getMessage())));
+        } else {
+            return  $isValid;
         }
     }
 }
