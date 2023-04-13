@@ -2,16 +2,19 @@
 
     <!-- Title + Button -->
     <div class="card-header bg-white rounded-top-4">
-        <span class="fs-4">Quản lý rạp phim</span>
+        <span class="fs-4">Quản lý phòng chiếu phim</span>
         <br>
-        <span>Kiểm tra và quản lý các rạp phim</span>
+        <span>Kiểm tra và quản lý phòng chiếu của từng rạp. Đối với các phòng chiếu, 1/3 số ghế cuối cùng là loại COUPLE, phần còn lại là Standard</span>
     </div>
     <div class="container my-4">
         <div class="d-flex flex-wrap justify-content-between">
 
             <!-- New Employee Button -->
             <button id="btn_add_employee" type="button" name="btn_add_employee" class="btn text-white shadow border-0 btn_custom" data-bs-toggle="modal" data-bs-target="#addEmployeeModal"><i class="fa-solid fa-plus me-1"></i>Thêm mới!</button>
+            <select id="cinemaBox" class="form-select w-25" aria-label="Default select example">
+                <option value="-1">Chọn rạp phim</option>
 
+            </select>
             <!-- Search bar -->
             <input id="searchBarInput" type="text" placeholder="&#xf002; Search..." class="form-control shadow w-25">
         </div>
@@ -39,18 +42,14 @@
                     <tr>
                         <th scope="col" class="text-center">ID</th>
                         <!-- <th scope="col" class="text-center">Email</th> -->
-                        <th scope="col" class="text-center">Tên rạp</th>
-                        <th scope="col" class="text-center">Số điện thoại</th>
-                        <!-- <th scope="col" class="text-center">Last name</th> -->
-                        <th scope="col" class="text-center">Địa chỉ</th>
+                        <th scope="col" class="text-center">Mã phòng chiếu</th>
+                        <th scope="col" class="text-center">Số lượng các ghế</th>
                         <th scope="col" class="text-center">Action</th>
                     </tr>
                 </thead>
                 <tbody id="myTable" style="font-size: 14px;">
-
                 </tbody>
             </table>
-
         </div>
 
         <!-- Pagination -->

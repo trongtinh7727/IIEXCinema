@@ -7,10 +7,10 @@
 
         $.post("./?api/movie/getbyid", {
             ID
-        }, function (data, status) {
+        }, function(data, status) {
             var table = $('#table');
             console.log(data)
-            data.data.forEach(function (object) {
+            data.data.forEach(function(object) {
                 $('#TITLE').val(object.TITLE)
                 $('#DIRECTOR').val(object.DIRECTOR)
                 $('#ACTORS').val(object.ACTORS)
@@ -24,7 +24,7 @@
             });
         }, "json");
     }
-    $(document).ready(function () {
+    $(document).ready(function() {
         function deleteRow() {
             var table = document.querySelector("table");
             var rowCount = table.rows.length;
@@ -35,6 +35,7 @@
             }
         }
         let jsonArrayObj = [{}];
+
         function load_data() {
             fetch('./?api/movie/getall')
                 .then(response => response.json())
@@ -57,7 +58,7 @@
 
 
         // Data from json
-        $.fn.dataTable = function () {
+        $.fn.dataTable = function() {
             var start_index = (pageNumber - 1) * entriesPerPage;
             var end_index = start_index + (entriesPerPage - 1);
             end_index = (end_index >= jsonArrayObj.length) ? jsonArrayObj.length - 1 : end_index;
@@ -102,7 +103,7 @@
             $.fn.dataTable();
         }, 100);
 
-        $.fn.nextPage = function () {
+        $.fn.nextPage = function() {
             if (pageNumber != totalPage) {
                 pageNumber++;
                 $.fn.dataTable();
@@ -110,7 +111,7 @@
         }
 
         // Previous page
-        $.fn.prevPage = function () {
+        $.fn.prevPage = function() {
             if (pageNumber > 1) {
                 pageNumber--;
                 $.fn.dataTable();
@@ -118,13 +119,13 @@
         }
 
         // Index page
-        $.fn.indexPage = function (index) {
+        $.fn.indexPage = function(index) {
             pageNumber = parseInt(index)
             $.fn.dataTable();
         }
 
         // Data size change
-        $("#data_size").change(function () {
+        $("#data_size").change(function() {
             var tab_size = $(this).val();
             pageNumber = 1;
             entriesPerPage = parseInt(tab_size);
@@ -136,7 +137,7 @@
         $.fn.dataTable();
 
         // Pagination button
-        $.fn.paginationButtons = function () {
+        $.fn.paginationButtons = function() {
             var buttons_text = `<li class="page-item"><a class="page-link" onClick="javascript:$.fn.prevPage();" href="#">Previous</a></li>`;
             var active = "";
             for (var i = 1; i <= totalPage; i++) {
@@ -154,21 +155,14 @@
 
         $.fn.paginationButtons();
 
-        $("#searchBarInput").on("keyup", function () {
+        $("#searchBarInput").on("keyup", function() {
             var value = $(this).val().toLowerCase();
-            $("#myTable tr").filter(function () {
+            $("#myTable tr").filter(function() {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
 
-        $("#add").click(function () {
-            // let TITLE = $('#TITLE').val()
-            // let GENRE = $('#GENRE').val()
-            // let DURATION = $('#DURATION').val()
-            // let RATING = $('#RATING').val()
-            // let STORY = $('#STORY').val()
-            // let POSTER = $('#POSTER').val()
-
+        $("#add").click(function() {
             let TITLE = $('#TITLE').val()
             let DIRECTOR = $('#DIRECTOR').val()
             let ACTORS = $('#ACTORS').val()
@@ -195,7 +189,7 @@
                     CLOSING_DAY,
                     POSTER,
                     TRAILER
-                }, function (data, status) {
+                }, function(data, status) {
                     console.log(data)
                     if (data.status) {
                         console.log("Okee")
@@ -226,7 +220,7 @@
                     POSTER,
                     TRAILER,
                     ID
-                }, function (data, status) {
+                }, function(data, status) {
                     console.log(data)
                     if (data.status) {
                         console.log("Okee")
@@ -249,11 +243,11 @@
         });
 
 
-        $("#delete-button").on('click', function () {
+        $("#delete-button").on('click', function() {
             let uid = $('#delete-button').attr('uid');
             $.post("./?api/movie/delete", {
                 id: uid
-            }, function (data, status) {
+            }, function(data, status) {
                 console.log(data)
                 if (data.status) {
                     load_data();
@@ -276,6 +270,9 @@
 
 
     });
+    $('#addEmployeeModal').on('hidden.bs.modal', function() {
+        clearForm()
+    })
 
     // hiện dialog xác nhận khi xóa
     function confirmRemoval(btn) {
@@ -288,8 +285,15 @@
     }
 
     function clearForm() {
-        $('#name').val("");
-        $("#email").val("");
-        $("#phone").val("");
+        $('#TITLE').val("")
+        $('#DIRECTOR').val("")
+        $('#ACTORS').val("")
+        $('#GENRE').val("")
+        $('#STORY').val("")
+        $('#DURATION').val("")
+        $('#OPENING_DAY').val("")
+        $('#CLOSING_DAY').val("")
+        $('#POSTER').val("")
+        $('#TRAILER').val("")
     }
 </script>

@@ -23,36 +23,29 @@ class TicketModel
         return json_encode(array('status' => true, 'data' => $data));
     }
 
-    public function add($ID, $SCH_ID, $BOO_ID, $SEAT_ID, $price)
+    public function add($price)
     {
-        $sql = 'INSERT INTO ticket(ID, SCH_ID, BOO_ID, SEAT_ID, price) VALUE(?,?,?,?,?)';
-
+        $sql = 'INSERT INTO ticket( price) VALUE(?)';
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($ID, $SCH_ID, $BOO_ID, $SEAT_ID, $price));
-
-            return json_encode(array('status' => true, 'data' => 'Thêm ticket thành công'));
+            $stmt->execute(array($price));
+            $ticket_id = $this->db->lastInsertId();
+            return json_encode(array('status' => true, 'data' => array('ticket_id' => $ticket_id)));
         } catch (PDOException $ex) {
             die(json_encode(array('status' => false, 'data' => $ex->getMessage())));
         }
     }
 
-    public function delete($ID)
+    public function addTicketSeatSchedule($SEAT_ID, $SCHEDULE_ID, $TICKET_ID)
     {
-        $sql = 'DELETE FROM ticket WHERE ID = ?';
-
-        try{
+        $sql = 'INSERT INTO `ticket_seat_schedule` (`SEAT_ID`, `SCHEDULE_ID`, `TICKET_ID`, `BOOKED`) VALUES (?, ?, ?, ?)';
+        try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($ID));
-
-            $count = $stmt->rowCount();
-            if($count == 1){
-                echo json_encode(array('status'=>true, 'data' => 'Xóa ticket thành công'));
-            } else {
-                die(json_encode(array('status'=>false, 'data'=> 'Mã không hợp lệ')));
-            }
-        } catch (PDOException $ex){
-            die(json_encode(array('status'=>false, 'data'=>$ex -> getMessage())));
+            $stmt->execute(array($SEAT_ID, $SCHEDULE_ID, $TICKET_ID, 0));
+            $ticket_id = $this->db->lastInsertId();
+            return json_encode(array('status' => true, 'data' => array('ticket_id' => $ticket_id)));
+        } catch (PDOException $ex) {
+            die(json_encode(array('status' => false, 'data' => $ex->getMessage())));
         }
     }
 
@@ -65,13 +58,13 @@ class TicketModel
             $stmt->execute(array($ID, $SCH_ID, $BOO_ID, $SEAT_ID, $price));
 
             $count = $stmt->rowCount();
-            if($count == 1){
-                echo json_encode(array('status'=>true, 'data' => 'Cập nhật ticket thành công'));
+            if ($count == 1) {
+                echo json_encode(array('status' => true, 'data' => 'Cập nhật ticket thành công'));
             } else {
-                die(json_encode(array('status'=>false, 'status'=>'Mã ticket không hợp lệ')));
+                die(json_encode(array('status' => false, 'status' => 'Mã ticket không hợp lệ')));
             }
-        } catch(PDOException $ex) {
-            die(json_encode(array('status'=>false, 'data'=>$ex->getMessage())));
+        } catch (PDOException $ex) {
+            die(json_encode(array('status' => false, 'data' => $ex->getMessage())));
         }
     }
 }

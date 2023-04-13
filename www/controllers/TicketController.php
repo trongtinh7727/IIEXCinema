@@ -1,6 +1,6 @@
 <?php
 class TicketController extends AdminController
-{ 
+{
     public $model;
 
     function __construct()
@@ -15,49 +15,28 @@ class TicketController extends AdminController
 
     public function add()
     {
-        if ( !isset($_POST['SCH_ID'])
-          ||  !isset($_POST['BOO_ID']) || !isset($_POST['SEAT_ID']) || !isset($_POST['PRICE'])
-        ) {
+        $this->isAuthenticated();
+        if (!isset($_POST['PRICE'])) {
             die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
         }
-
-        $SCH_ID = $_POST['SCH_ID'];
-        $BOO_ID = $_POST['BOO_ID'];
-        $SEAT_ID = $_POST['SEAT_ID'];
         $Price = $_POST['PRICE'];
-        echo $this->model->add($SCH_ID, $BOO_ID, $SEAT_ID,$Price);
+        echo $this->model->add($Price);
     }
-
-    public function delete()
+    public function addTicketSeatSchedule()
     {
-        if (!isset($_POST['id'])) {
+        $this->isAuthenticated();
+        if (!isset($_POST['SEAT_ID']) || !isset($_POST['SCHEDULE_ID']) || !isset($_POST['TICKET_ID'])) {
             die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
         }
-
-        $id = $_POST['id'];
-
-        echo $this->model->delete($id);
-    }
-
-
-    public function update()
-    {
-        if( !isset($_POST['SCH_ID'])
-        ||  !isset($_POST['BOO_ID']) || !isset($_POST['SEAT_ID']) || !isset($_POST['PRICE']) || !isset($_POST['ID']))
-        {
-            die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
-        }
-        $ID = $_POST['ID'];
-        $SCH_ID = $_POST['SCH_ID'];
-        $BOO_ID = $_POST['BOO_ID'];
         $SEAT_ID = $_POST['SEAT_ID'];
-        $Price = $_POST['PRICE'];
-        echo $this->model->update($ID,$SCH_ID, $BOO_ID, $SEAT_ID,$Price);
+        $SCHEDULE_ID = $_POST['SCHEDULE_ID'];
+        $TICKET_ID = $_POST['TICKET_ID'];
+        echo $this->model->add($SEAT_ID, $SCHEDULE_ID, $TICKET_ID);
     }
 
     public function getByID()
     {
-        if(isset($_POST['ID'])){
+        if (isset($_POST['ID'])) {
             echo $this->model->getByID($_POST['ID']);
         }
     }
