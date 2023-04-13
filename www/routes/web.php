@@ -33,6 +33,7 @@ Route::add("/?api/staff/update", "StaffController@update");
 Route::add("/?api/staff/delete", "StaffController@delete");
 
 // Movie
+Route::add("/?api/movie/getbyid", "MovieController@getByID");
 Route::add("/?api/movie/getall", "MovieController@getAll");
 Route::add("/?api/movie/add", "MovieController@add");
 Route::add("/?api/movie/update", "MovieController@update");

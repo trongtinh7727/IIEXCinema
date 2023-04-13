@@ -10,7 +10,7 @@
         <div class="d-flex flex-wrap justify-content-between">
 
             <!-- New Employee Button -->
-            <button id="btn_add_employee" type="button" name="btn_add_employee" class="btn text-white shadow border-0 btn_custom" data-bs-toggle="modal" data-bs-target="#addEmployeeModal"><i class="fa-solid fa-plus me-1"></i>New Employee</button>
+            <button id="btn_add_employee" type="button" name="btn_add_employee" class="btn text-white shadow border-0 btn_custom" data-bs-toggle="modal" data-bs-target="#addEmployeeModal"><i class="fa-solid fa-plus me-1"></i>Thêm mới!</button>
 
             <!-- Search bar -->
             <input id="searchBarInput" type="text" placeholder="&#xf002; Search..." class="form-control shadow w-25">

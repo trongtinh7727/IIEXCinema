@@ -65,13 +65,13 @@ class MovieModel
         return json_encode(array('status' => true, 'data' => $data));
     }
 
-    public function add($TITLE, $GENRE, $DURATION, $RATING, $STORY, $POSTER)
+    public function add($TITLE,$DIRECTOR,$ACTORS,$GENRE,$STORY,$DURATION,$OPENING_DAY,$CLOSING_DAY,$POSTER,$TRAILER)
     {
-        $sql = 'INSERT INTO `movie` (`TITLE`, `GENRE`, `DURATION`, `RATING`, `STORY`, `POSTER`) VALUES(?,?,?,?,?,?)';
+        $sql = 'INSERT INTO `movie` (`TITLE`,`DIRECTOR`,`ACTORS`,`GENRE`,`STORY`,`DURATION`,`OPENING_DAY`,`CLOSING_DAY`,`POSTER`,`TRAILER`) VALUES(?,?,?,?,?,?,?,?,?,?)';
 
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($TITLE, $GENRE, $DURATION, $RATING, $STORY, $POSTER));
+            $stmt->execute(array($TITLE,$DIRECTOR,$ACTORS,$GENRE,$STORY,$DURATION,$OPENING_DAY,$CLOSING_DAY,$POSTER,$TRAILER));
 
             return json_encode(array('status' => true, 'data' => 'Thêm phim thành công'));
         } catch (PDOException $ex) {
@@ -91,32 +91,47 @@ class MovieModel
             $count = $stmt->rowCount();
 
             if ($count == 1) {
-                echo json_encode(array('status' => true, 'data' => 'Xóa sinh viên thành công'));
+                echo json_encode(array('status' => true, 'data' => 'Xóa phim thành công'));
             } else {
-                die(json_encode(array('status' => false, 'data' => 'Mã sinh viên không hợp lệ')));
+                die(json_encode(array('status' => false, 'data' => 'Mã phim không hợp lệ')));
             }
         } catch (PDOException $ex) {
             die(json_encode(array('status' => false, 'data' => $ex->getMessage())));
         }
     }
 
-    public function update($NAME, $INFO, $DATE, $START, $END, $CATEGORY, $RATING, $IMAGE, $ID)
+    public function update($TITLE,$DIRECTOR,$ACTORS,$GENRE,$STORY,$DURATION,$OPENING_DAY,$CLOSING_DAY,$POSTER,$TRAILER, $ID)
     {
-        $sql = 'UPDATE `movie` SET `NAME` = ?, `INFO` = ?, `DATE` = ?,
-                `START` = ?, `END` = ?, `CATEGORY` = ?, `RATING` = ? ,`IMAGE`= ? WHERE `movie`.`ID` = ?';
+        $sql = 'UPDATE `movie` SET `TITLE` = ?,`DIRECTOR` = ?,`ACTORS` = ?,`GENRE` = ?,`STORY` = ?,`DURATION` = ?,`OPENING_DAY` = ?,`CLOSING_DAY` = ?,`POSTER` = ?,`TRAILER` = ? WHERE `movie`.`ID` = ?';
 
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($NAME, $INFO, $DATE, $START, $END, $CATEGORY, $RATING, $IMAGE, $ID));
+            $stmt->execute(array($TITLE,$DIRECTOR,$ACTORS,$GENRE,$STORY,$DURATION,$OPENING_DAY,$CLOSING_DAY,$POSTER,$TRAILER, $ID));
             $count = $stmt->rowCount();
 
             if ($count == 1) {
-                echo json_encode(array('status' => true, 'data' => 'Cập nhật nhân viên thành công'));
+                echo json_encode(array('status' => true, 'data' => 'Cập nhật phim thành công'));
             } else {
-                die(json_encode(array('status' => false, 'data' => 'Không có nhân viên nào được cập nhật')));
+                die(json_encode(array('status' => false, 'data' => 'Không có phim nào được cập nhật')));
             }
         } catch (PDOException $ex) {
             die(json_encode(array('status' => false, 'data' => $ex->getMessage())));
         }
+    }
+    public function getByID($ID)
+    {
+        $sql = "SELECT * FROM movie where ID = '$ID'";
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+        } catch (PDOException $ex) {
+            return(json_encode(array('status' => false, 'data' => $ex->getMessage())));
+        }
+        $data = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $data[] = $row;
+        }
+
+        return json_encode(array('status' => true, 'data' => $data));
     }
 }
