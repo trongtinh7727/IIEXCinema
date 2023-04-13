@@ -1,28 +1,37 @@
 <script>
-    function fillEditForm(btn) {
-        $("#addEmployeeModalLabel").val("Update Staff");
-        let tds = $(btn).closest('tr').find('td')
-        let ID = tds[0].innerHTML;
-        $("#action").val(ID);
-        $.post("./?api/staff/getbyid", {
-            ID
-        }, function(data, status) {
-            var table = $('#table');
-            console.log(data)
-            data.data.forEach(function(object) {
-                $('#USERNAME').val(object.USERNAME)
-                $('.pass').hide();
-                $('#FNAME').val(object.FIRSTNAME)
-                $('#LNAME').val(object.LASTNAME)
-                $('#BIRTHDAY').val(object.BIRTHDAY)
-                $('#PHONE').val(object.PHONE)
-                $('#ADDRESS').val(object.ADDRESS)
-                $('#SALARY').val(object.SALARY)
-            });
+    $('#addEmployeeModal').on('hidden.bs.modal', function() {
+        clearForm()
+    })
 
-        }, "json");
-    }
     $(document).ready(function() {
+        function load_cinema() {
+            $.get("./?api/cinema/getall", function(data, status) {
+                var table = $('#table');
+                console.log(data)
+                data.data.forEach(function(object) {
+                    var option = document.createElement('option');
+                    option.value = object.ID;
+                    option.innerText = object.NAME;
+                    $('#cinemaBox').append(option);
+                });
+            }, "json");
+        }
+        load_cinema();
+        let jsonArrayObj = [{}];
+
+        function load_theater(cinema_id) {
+            $.get("./?api/theater/getByCinema&cinema_id=" + cinema_id, function(data, status) {
+                console.log(data)
+                jsonArrayObj = data.data;
+                $.fn.dataTable();
+                console.log(jsonArrayObj);
+            }, "json");
+        }
+
+        $('#cinemaBox').change(function() {
+            load_theater($('#cinemaBox').val());
+        })
+
         function deleteRow() {
             var table = document.querySelector("myTable");
             var rowCount = table.rows.length;
@@ -32,22 +41,13 @@
                 }
             }
         }
-        let jsonArrayObj = [{}];
+
 
         function load_data() {
-            fetch('./?api/staff/getall')
-                .then(response => response.json())
-                .then(data => {
-                    jsonArrayObj = data.data;
-                    $.fn.dataTable();
-                    console.log(jsonArrayObj);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+            load_theater($('#cinemaBox').val());
         }
-        var pageNumber = 1;
         load_data();
+        var pageNumber = 1;
         var entriesPerPage = 10;
         var totalPage = Math.ceil(jsonArrayObj.length / entriesPerPage);
 
@@ -65,17 +65,12 @@
                 tr.innerHTML = `
                     <tr>
                         <td class="align-middle text-center" name="data_id"> ${jsonArrayObj[i].ID}</td>
-                        <td class="align-middle text-center" name="data_username"> ${jsonArrayObj[i].USERNAME}</td>
-                        <td class="align-middle text-center" name="data_firstname"> ${jsonArrayObj[i].FIRSTNAME + ` ` + jsonArrayObj[i].LASTNAME}</td>
-                        <td class="align-middle text-center" name="data_phone"> ${jsonArrayObj[i].PHONE}</td>
-                        <td class="align-middle text-center" name="data_address"> ${jsonArrayObj[i].ADDRESS}</td>
-                        <td class="align-middle text-center" name="data_salary"> ${jsonArrayObj[i].SALARY}</td>
+                        <td class="align-middle text-center" name="data_username"> Phòng số ${jsonArrayObj[i].THEATERNUM}</td>
+                        <td class="align-middle text-center" name="data_firstname"> ${jsonArrayObj[i].SEATCOUNT}</td>
                         <td class="align-middle text-center" name="data_action">
                             <button name="btn_delete_employee" class="btn btn-outline-danger"
                                 onclick="confirmRemoval(this)"> Delete
                             </button>
-                            <button name="btn_edit_employee" class="btn btn-outline-secondary" onclick="fillEditForm(this)"
-                                data-bs-toggle="modal" data-bs-target="#addEmployeeModal"> Edit </button>
                         </td>
                     </tr>
                 `;
@@ -130,90 +125,37 @@
         $.fn.dataTable();
 
         $("#addStaff").click(function() {
-            // let PASSWORD = $('#PASSWORD').val().trim()
-            // let PASS_CONFIRM = $('#PASS-CONFIRM').val().trim()
-            // if (PASSWORD != PASS_CONFIRM) {
-            //     console.assert("Mật khẩu không trùng khớp !");
-            //     return;
-            // }
-            // let PASSWORD = 'Admin@123';
-            let USERNAME = $('#USERNAME').val()
-            let FIRSTNAME = $('#FNAME').val()
-            let LASTNAME = $('#LNAME').val()
-            let SEX = $("#SEX").val() === "M" ? "nam" : "nữ"
-            let BIRTHDAY = $("#BIRTHDAY").val()
-            let PHONE = $('#PHONE').val()
-            let ADDRESS = $('#ADDRESS').val()
-            let SALARY = $('#SALARY').val()
-            let ROLE = $("#ROLE").val()
-            let action = $("#action").val();
-            console.log(action);
-            if (action == "Add") {
-                $.post("./?api/staff/add", {
-                    USERNAME,
-                    FIRSTNAME,
-                    LASTNAME,
-                    SEX,
-                    BIRTHDAY,
-                    PHONE,
-                    ADDRESS,
-                    SALARY,
-                    ROLE
-                }, function(data, status) {
-                    console.log(data)
-                    if (data.status) {
-                        load_data();
-                        $.fn.dataTable();
-                        let msg = data.data;
-                        console.log(msg)
-                        $("#msg-success").css('display', 'flex').text(msg)
-                        $("#msg-failed").css('display', 'none')
-                    } else {
-                        let msg = data.data;
-                        console.log(msg)
-                        $("#msg-failed").css('display', 'flex').text("Có lỗi xảy ra! Vui lòng thử lại sau: " + msg)
-                        $("#msg-success").css('display', 'none')
-                    }
-                }, "json")
-            } else {
-                let ID = $("#action").val();
-                $.post("./?api/staff/update", {
-                    USERNAME,
-                    PASSWORD,
-                    FIRSTNAME,
-                    LASTNAME,
-                    SEX,
-                    BIRTHDAY,
-                    PHONE,
-                    ADDRESS,
-                    SALARY,
-                    ROLE,
-                    ID
-                }, function(data, status) {
-                    console.log(data)
-                    if (data.status) {
-                        console.log("Okee")
-                        load_data();
-                        $.fn.dataTable();
-                        let msg = data.data;
-                        console.log(msg)
-                        $("#msg-success").css('display', 'flex').text(msg)
-                        $("#msg-failed").css('display', 'none')
-                    } else {
-                        let msg = data.data;
-                        console.log(msg)
-                        $("#msg-failed").css('display', 'flex').text("Có lỗi xảy ra! Vui lòng thử lại sau: " + msg)
-                        $("#msg-success").css('display', 'none')
-                    }
-                }, "json")
-                $("#action").val("Add");
-            }
+
+            let CIN_ID = $('#cinemaBox').val();
+            let THEATERNUM = $('#THEATERNUM').val();
+            let SEATCOUNT = $('#SEATCOUNT').val();
+
+            $.post("./?api/theater/add", {
+                CIN_ID,
+                THEATERNUM,
+                SEATCOUNT
+            }, function(data, status) {
+                console.log(data)
+                if (data.status) {
+                    load_data();
+                    $.fn.dataTable();
+                    let msg = data.data;
+                    console.log(msg)
+                    $("#msg-success").css('display', 'flex').text(msg)
+                    $("#msg-failed").css('display', 'none')
+                } else {
+                    let msg = data.data;
+                    console.log(msg)
+                    $("#msg-failed").css('display', 'flex').text("Có lỗi xảy ra! Vui lòng thử lại sau: " + msg)
+                    $("#msg-success").css('display', 'none')
+                }
+            }, "json")
             clearForm()
         });
 
         $("#delete-button").on('click', function() {
             let uid = $('#delete-button').attr('uid');
-            $.post("./?api/staff/delete", {
+            $.post("./?api/theater/delete", {
                 id: uid
             }, function(data, status) {
                 console.log(data)
@@ -269,7 +211,8 @@
     // hiện dialog xác nhận khi xóa
     function confirmRemoval(btn) {
         let tds = $(btn).closest('tr').find('td')
-        document.getElementById("student_name").innerHTML = tds[2].innerText;
+        let msg = `Lịch chiếu của phim ${tds[1].innerText} (ID = ${tds[0].innerText})`;
+        document.getElementById("student_name").innerHTML = msg;
         console.log(tds[2].innerText)
         $('#delete-button').attr('uid', tds[0].innerHTML)
         var myModal = new bootstrap.Modal(document.getElementById("confirm-removal-modal"), {});
@@ -280,13 +223,8 @@
     })
 
     function clearForm() {
-        $('#USERNAME').val("")
-        $('#FNAME').val("")
-        $('#LNAME').val("")
-        $('#BIRTHDAY').val("")
-        $('#PHONE').val("")
-        $('#ADDRESS').val("")
-        $('#SALARY').val("")
+        $('#THEATERNUM').val("")
+        $('#SEATCOUNT').val("")
     }
     $(document).ready(function() {});
 </script>

@@ -4,7 +4,6 @@
         let tds = $(btn).closest('tr').find('td');
         let ID = tds[0].innerHTML;
         $("#action").val(ID);
-
         $.post("./?api/cinema/getbyid", {
             ID
         }, function(data, status) {
@@ -12,8 +11,8 @@
             console.log(data)
             data.data.forEach(function(object) {
                 $('#NAME').val(object.NAME)
-                $('#ADDRESS').val(object.ADDRESS)
                 $('#PHONE').val(object.PHONE)
+                $('#ADDRESS').val(object.ADDRESS)
             });
         }, "json");
     }
@@ -26,62 +25,158 @@
                     table.deleteRow(index - 1);
                 }
             }
-
         }
+        let jsonArrayObj = [{}];
+        $('#addEmployeeModal').on('hidden.bs.modal', function() {
+            clearForm()
+        })
 
-        function load_studen() {
-            deleteRow()
-            $.get("./?api/cinema/getall", function(data, status) {
-                var table = $('#table');
-                console.log(data)
-                data.data.forEach(function(object) {
-                    var tr = document.createElement('tr');
-                    tr.innerHTML =
-                        `
-                        <tr >
-                            <td>${object.ID}</td>
-                            <td>${object.NAME}</td>
-                            <td>${object.PHONE}</td>
-                            <td>${object.ADDRESS}</td>
-                            <td>
-                                <button name="btn_delete_employee" class="btn btn-outline-danger" onclick="confirmRemoval(this)">Delete</button>
-                                <button name="btn_edit_employee" class="btn btn-outline-secondary" onclick="fillEditForm(this)" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">Edit</button>
-                            </td>
-                        </tr>
-                        `;
-                    tr.id = `trv${object.ID}`
-                    table.append(tr);
+        function load_data() {
+            fetch('./?api/cinema/getall')
+                .then(response => response.json())
+                .then(data => {
+                    jsonArrayObj = data.data;
+                    $.fn.dataTable();
+                    console.log(jsonArrayObj);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
                 });
-
-            }, "json");
         }
-        load_studen();
+        load_data();
 
         // đọc dữ liệu ngay khi tải trang xong
+        var pageNumber = 1;
+        // var entriesPerPage = 10;
+        var entriesPerPage = 5;
+        var totalPage = Math.ceil(jsonArrayObj.length / entriesPerPage);
 
 
-        $("#addCinema").click(function() {
+        // Data from json
+        $.fn.dataTable = function() {
+            var start_index = (pageNumber - 1) * entriesPerPage;
+            var end_index = start_index + (entriesPerPage - 1);
+            end_index = (end_index >= jsonArrayObj.length) ? jsonArrayObj.length - 1 : end_index;
+            $("table tbody tr").remove();
+            for (var i = start_index; i <= end_index; i++) {
+                id = `trv${jsonArrayObj[i].ID}`;
+                var tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <tr>
+                    <td class="align-middle text-center" name="data_id"> ${jsonArrayObj[i].ID}</td>
+                        <td class="align-middle text-center" name="data_username"> ${jsonArrayObj[i].NAME}</td>
+                        <td class="align-middle text-center" name="data_firstname"> ${jsonArrayObj[i].PHONE}</td>
+                        <td class="align-middle text-center" name="data_phone"> ${jsonArrayObj[i].ADDRESS}</td>
+                        <td class="align-middle text-center" name="data_action">
+                            <button name="btn_delete_employee" class="btn btn-outline-danger"
+                                onclick="confirmRemoval(this)"> Delete
+                            </button>
+                            <button name="btn_edit_employee" class="btn btn-outline-secondary" onclick="fillEditForm(this)"
+                                data-bs-toggle="modal" data-bs-target="#addEmployeeModal"> Edit </button>
+                        </td>
+                    </tr>
+                `;
+                tr.id = `${id}`;
+                $("table tbody").append(tr);
+            }
+            $(".page_index").removeClass("active");
+            $("#page_index" + pageNumber).addClass("active");
+            $(".data_size_details").text(`Showing ` + (start_index + 1) + ` to ` + (end_index + 1) + ` of ` + jsonArrayObj.length + ` entries`);
+        }
+
+        setTimeout(() => {
+            var tab_size = 10;
+            pageNumber = 1;
+            entriesPerPage = parseInt(tab_size);
+            totalPage = Math.ceil(jsonArrayObj.length / entriesPerPage);
+            $.fn.paginationButtons();
+            $.fn.dataTable();
+        }, 100);
+
+        $.fn.nextPage = function() {
+            if (pageNumber != totalPage) {
+                pageNumber++;
+                $.fn.dataTable();
+            }
+        }
+
+        // Previous page
+        $.fn.prevPage = function() {
+            if (pageNumber > 1) {
+                pageNumber--;
+                $.fn.dataTable();
+            }
+        }
+
+        // Index page
+        $.fn.indexPage = function(index) {
+            pageNumber = parseInt(index)
+            $.fn.dataTable();
+        }
+
+        // Data size change
+        $("#data_size").change(function() {
+            var tab_size = $(this).val();
+            pageNumber = 1;
+            entriesPerPage = parseInt(tab_size);
+            totalPage = Math.ceil(jsonArrayObj.length / entriesPerPage);
+            $.fn.paginationButtons();
+            $.fn.dataTable();
+        });
+
+        $.fn.dataTable();
+
+        // Pagination button
+        $.fn.paginationButtons = function() {
+            var buttons_text = `<li class="page-item"><a class="page-link" onClick="javascript:$.fn.prevPage();" href="#">Previous</a></li>`;
+            var active = "";
+            for (var i = 1; i <= totalPage; i++) {
+                if (i == 1) {
+                    active = "active";
+                } else {
+                    active = "";
+                }
+                buttons_text = buttons_text + `<li class="page-item"><a id="page_index` + i + `" onClick="javascript:$.fn.indexPage(` + i + `);" class="page-link page_index ` + active + `" href="#">` + i + `</a></li>`;
+            }
+            buttons_text = buttons_text + `<li><a class="page-link" href="#" onClick="javascript:$.fn.nextPage();">Next</a></li>`;
+            $(".pagination-buttons").text("");
+            $(".pagination-buttons").append(buttons_text);
+        }
+
+        $.fn.paginationButtons();
+
+        $("#searchBarInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        $("#add").click(function() {
             let NAME = $('#NAME').val()
             let PHONE = $('#PHONE').val()
             let ADDRESS = $('#ADDRESS').val()
-
             let action = $("#action").val();
 
             if (action == "Add") {
                 $.post("./?api/cinema/add", {
                     NAME,
                     PHONE,
-                    ADDRESS,
+                    ADDRESS
                 }, function(data, status) {
                     console.log(data)
                     if (data.status) {
                         console.log("Okee")
-                        load_studen();
-                        $("#msg-success").css('display', 'flex').text("Add student success")
+                        load_data();
+                        $.fn.dataTable();
+                        let msg = data.data;
+                        console.log(msg)
+                        $("#msg-success").css('display', 'flex').text(msg)
                         $("#msg-failed").css('display', 'none')
                     } else {
-                        console.log("Nooo")
-                        $("#msg-failed").css('display', 'flex').text("An unknown error occured. Please try again later")
+                        let msg = data.data;
+                        console.log(msg)
+                        $("#msg-failed").css('display', 'flex').text("Có lỗi xảy ra! Vui lòng thử lại sau: " + msg)
                         $("#msg-success").css('display', 'none')
                     }
                 }, "json")
@@ -91,17 +186,21 @@
                     NAME,
                     PHONE,
                     ADDRESS,
-                    ID,
+                    ID
                 }, function(data, status) {
                     console.log(data)
                     if (data.status) {
                         console.log("Okee")
-                        load_studen();
-                        $("#msg-success").css('display', 'flex').text("Update student success")
+                        load_data();
+                        $.fn.dataTable();
+                        let msg = data.data;
+                        console.log(msg)
+                        $("#msg-success").css('display', 'flex').text(msg)
                         $("#msg-failed").css('display', 'none')
                     } else {
-                        console.log("Nooo")
-                        $("#msg-failed").css('display', 'flex').text("An unknown error occured. Please try again later")
+                        let msg = data.data;
+                        console.log(msg)
+                        $("#msg-failed").css('display', 'flex').text("Có lỗi xảy ra! Vui lòng thử lại sau: " + msg)
                         $("#msg-success").css('display', 'none')
                     }
                 }, "json")
@@ -110,16 +209,6 @@
             clearForm()
         });
 
-        //update
-        // $("#updateCinema").click(function() {
-        //     let NAME = $('#NAME').val()
-        //     let PHONE = $('#PHONE').val()
-        //     let ADDRESS = $('#ADDRESS').val()
-
-        //     clearForm();
-        //     $("#updateCinema").attr("id","addCinema");
-
-        // });
 
         $("#delete-button").on('click', function() {
             let uid = $('#delete-button').attr('uid');
@@ -128,11 +217,16 @@
             }, function(data, status) {
                 console.log(data)
                 if (data.status) {
-                    $(`#trv${uid}`).remove()
-                    $("#msg-success").css('display', 'flex')
+                    load_data();
+                    $.fn.dataTable();
+                    let msg = data.data;
+                    console.log(msg)
+                    $("#msg-success").css('display', 'flex').text(msg)
                     $("#msg-failed").css('display', 'none')
                 } else {
-                    $("#msg-failed").css('display', 'flex')
+                    let msg = data.data;
+                    console.log(msg)
+                    $("#msg-failed").css('display', 'flex').text("Có lỗi xảy ra! Vui lòng thử lại sau: " + msg)
                     $("#msg-success").css('display', 'none')
                     $('#confirm-removal-modal').modal({
                         show: false
@@ -155,8 +249,8 @@
     }
 
     function clearForm() {
-        $('#name').val("");
-        $("#email").val("");
-        $("#phone").val("");
+        $('#NAME').val("");
+        $("#PHONE").val("");
+        $("#ADDRESS").val("");
     }
 </script>

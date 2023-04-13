@@ -7,7 +7,8 @@ class TheaterController extends AdminController
     {
     }
 
-    public function getByCinema(){
+    public function getByCinema()
+    {
         if (isset($_GET['cinema_id'])) {
             echo $this->model->getByCinema($_GET['cinema_id']);
         }
@@ -25,7 +26,6 @@ class TheaterController extends AdminController
             !isset($_POST['CIN_ID']) ||
             !isset($_POST['THEATERNUM'])
             || !isset($_POST['SEATCOUNT'])
-            || !isset($_POST['ISSHOWING'])
         ) {
             die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
         }
@@ -33,8 +33,7 @@ class TheaterController extends AdminController
         $CIN_ID = $_POST['CIN_ID'];
         $THEATERNUM = $_POST['THEATERNUM'];
         $SEATCOUNT = $_POST['SEATCOUNT'];
-        $ISSHOWING = $_POST['ISSHOWING'];
-        echo $this->model->add($CIN_ID, $THEATERNUM, $SEATCOUNT, $ISSHOWING);
+        echo $this->model->add($CIN_ID, $THEATERNUM, $SEATCOUNT);
     }
 
     public function delete()
@@ -47,26 +46,5 @@ class TheaterController extends AdminController
         $id = $_POST['id'];
 
         echo $this->model->delete($id);
-    }
-
-
-    public function update()
-    {
-        $this->isAuthenticated();
-        if (
-            !isset($_POST['CIN_ID']) ||
-            !isset($_POST['THEATERNUM']) || !isset($_POST['SEATCOUNT'])
-            || !isset($_POST['ID'])
-            || !isset($_POST['ISSHOWING'])
-        ) {
-            die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
-        }
-
-        $ID = $_POST['ID'];
-        $CIN_ID = $_POST['CIN_ID'];
-        $THEATERNUM = $_POST['THEATERNUM'];
-        $ISSHOWING = $_POST['ISSHOWING'];
-        $SEATCOUNT = $_POST['SEATCOUNT'];
-        echo $this->model->update($CIN_ID, $THEATERNUM, $SEATCOUNT, $ISSHOWING, $ID);
     }
 }

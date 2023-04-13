@@ -25,7 +25,7 @@ class ScheduleController extends AdminController
     {
         $this->isAuthenticated();
         if (
-            !isset($_POST['THEA_ID']) ||
+            !isset($_POST['THEA_ID']) || !isset($_POST['PRICE']) ||
             !isset($_POST['MOV_ID']) || !isset($_POST['STARTTIME']) || !isset($_POST['ENDTIME'])
         ) {
             die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
@@ -35,7 +35,8 @@ class ScheduleController extends AdminController
         $MOV_ID = $_POST['MOV_ID'];
         $STARTTIME = $_POST['STARTTIME'];
         $ENDTIME = $_POST['ENDTIME'];
-        echo $this->model->add($THEA_ID, $MOV_ID, $STARTTIME, $ENDTIME);
+        $PRICE = $_POST['PRICE'];
+        echo $this->model->add($THEA_ID, $MOV_ID, $STARTTIME, $ENDTIME, $PRICE);
     }
 
     public function delete()

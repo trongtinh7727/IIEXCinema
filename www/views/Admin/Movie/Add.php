@@ -19,7 +19,7 @@
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="">Diễn viên</span>
-                        <input id="ACTORS" type="text" class="form-control" >
+                        <input id="ACTORS" type="text" class="form-control">
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="">Thể loại</span>
@@ -31,23 +31,23 @@
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="">Thời lượng</span>
-                        <input id="DURATION" type="text" class="form-control" >
+                        <input id="DURATION" type="text" class="form-control">
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="">Ngày khởi chiếu</span>
-                        <input id="OPENING_DAY" type="text" class="form-control" >
+                        <input id="OPENING_DAY" type="date" class="form-control">
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="">Ngày kết thúc</span>
-                        <input id="CLOSING_DAY" type="text" class="form-control" >
+                        <input id="CLOSING_DAY" type="date" class="form-control">
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="">Poster</span>
-                        <input id="POSTER" type="text" class="form-control" >
+                        <input id="POSTER" type="text" class="form-control">
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="">Trailer</span>
-                        <input id="TRAILER" type="text" class="form-control" >
+                        <input id="TRAILER" type="text" class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer">

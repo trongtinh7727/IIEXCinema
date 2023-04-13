@@ -49,16 +49,16 @@ class ScheduleModel
         return json_encode(array('status' => true, 'data' => $data));
     }
 
-    public function add($THEA_ID, $MOV_ID, $STARTTIME, $ENDTIME)
+    public function add($THEA_ID, $MOV_ID, $STARTTIME, $ENDTIME, $PRICE)
     {
         $isValid = $this->isValidSchedule($STARTTIME, $THEA_ID);
         if ($isValid == 1) {
-            $sql = 'INSERT INTO schedule(THEA_ID, MOV_ID, STARTTIME, ENDTIME) VALUES(?,?,?,?)';
+            $sql = 'CALL `create_schedule`(?, ?, ?, ?, ?);';
             try {
                 $stmt = $this->db->prepare($sql);
-                $stmt->execute(array($THEA_ID, $MOV_ID, $STARTTIME, $ENDTIME));
-
-                return json_encode(array('status' => true, 'data' => 'Thêm lịch chiếu thành công'));
+                $stmt->execute(array($THEA_ID, $MOV_ID, $STARTTIME, $ENDTIME, $PRICE));
+                $schedule_id = $this->db->lastInsertId();
+                return json_encode(array('status' => true, 'data' => array('schedule_id' => $schedule_id, 'message' => 'Thêm lịch chiếu thành công')));
             } catch (PDOException $ex) {
                 return (json_encode(array('status' => false, 'data' => $ex->getMessage())));
             }

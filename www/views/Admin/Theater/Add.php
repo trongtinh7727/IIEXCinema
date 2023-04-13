@@ -8,18 +8,12 @@
             </div>
             <form method="POST">
                 <div class="mb-3">
-                    <label for="role" class="form-label">Chọn phim:</label>
-                    <select id="movieBox" class="form-select">
-                        <option value="-1"> Chọn phim</option>
-                    </select>
+                    <label for="birthday" class="form-label">Mã phòng chiếu :</label>
+                    <input type="number" class="form-control" id="THEATERNUM" name="birthday">
                 </div>
                 <div class="mb-3">
-                    <label for="birthday" class="form-label">Thời gian bắt đầu :</label>
-                    <input type="datetime-local" class="form-control" id="startTimne" name="birthday">
-                </div>
-                <div class="mb-3">
-                    <label for="birthday" class="form-label">Giá vé</label>
-                    <input type="number" class="form-control" id="price" name="birthday">
+                    <label for="birthday" class="form-label">Số lượng ghế :</label>
+                    <input type="number" class="form-control" id="SEATCOUNT" name="birthday">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

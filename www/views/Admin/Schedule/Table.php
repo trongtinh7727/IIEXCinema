@@ -10,7 +10,9 @@
         <div class="d-flex flex-wrap justify-content-between">
 
             <!-- New Employee Button -->
-            <button id="btn_add_employee" type="button" name="btn_add_employee" class="btn text-white shadow border-0 btn_custom" data-bs-toggle="modal" data-bs-target="#addEmployeeModal"><i class="fa-solid fa-plus me-1"></i>Thêm mới!</button>
+            <button id="btn_add_employee" type="button" name="btn_add_employee" class="btn text-white shadow border-0 btn_custom" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
+                <i class="fa-solid fa-plus me-1"></i>Thêm mới!
+            </button>
             <select id="cinemaBox" class="form-select w-25" aria-label="Default select example">
                 <option value="-1">Chọn rạp phim</option>
 
@@ -52,6 +54,7 @@
                         <th scope="col" class="text-center">Thời gian bắt đầu</th>
                         <!-- <th scope="col" class="text-center">Last name</th> -->
                         <th scope="col" class="text-center">Thời gian kết thúc</th>
+                        <th scope="col" class="text-center">Trạng thái đặt vé (empty/total) </th>
                         <th scope="col" class="text-center">Action</th>
                     </tr>
                 </thead>
