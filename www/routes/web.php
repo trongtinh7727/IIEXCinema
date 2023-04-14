@@ -11,7 +11,7 @@ Route::add("/?admin/logout", "AdminController@logout");
 
 // Client
 Route::add("/?", "HomeController@indexAction");
-Route::add("/?", "HomeController@indexAction");
+Route::add("/?moviedetail", "HomeController@movieDetail");
 
 // Auth
 Route::add("/?admin/login", "AuthController@login");
@@ -74,6 +74,7 @@ Route::add("/?api/theater/delete", "TheaterController@delete");
 
 // Schedule
 Route::add("/?api/schedule/getByTheater", "ScheduleController@getByTheater");
+Route::add("/?api/schedule/getByMovie", "ScheduleController@getByMovie");
 Route::add("/?api/schedule/getbyid", "ScheduleController@getByID");
 Route::add("/?api/schedule/add", "ScheduleController@add");
 Route::add("/?api/schedule/update", "ScheduleController@update");

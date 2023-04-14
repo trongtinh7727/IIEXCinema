@@ -19,17 +19,18 @@ class AuthController
             $tb = $_POST['tb'];
             $check =  $this->model->CheckUserLogin($username, $password, $tb);
             if ($check == 1) {
+                $_SESSION['userLogin']['username'] = $username;
                 if ($tb == 'staff') {
-                    $_SESSION['userLogin'] = 1;
+                    $_SESSION['userLogin']['role'] = 1;
                     header("Location: /?admin/");
                 } else {
-                    $_SESSION['userLogin'] = 2;
+                    $_SESSION['userLogin']['role'] = 2;
                     header("Location: /?");
                 }
             }
         }
         if (isset($_SESSION['userLogin'])) {
-            if ($_SESSION['userLogin'] == 1) {
+            if ($_SESSION['userLogin']['role'] == 1) {
                 header("Location: /?admin/");
             } else {
                 header("Location: /?");

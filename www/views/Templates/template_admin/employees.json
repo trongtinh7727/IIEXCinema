@@ -1,0 +1,40 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "email": "phule@gmail.com",
+            "username": "phule",
+            "name": "phu",
+            "familyname": "le",
+            "code": "CEO001",
+            "phone": "01948191",
+            "address": "Tây Ninh",
+            "salary": 99999999,
+            "html": "<td class=\"text-center\"><button name=\"btn-edit-employee\" class=\"btn btn-outline-secondary\" aria-label=\"Edit\">Sửa</button><button name=\"btn-delete-employee\" class=\"btn btn-outline-danger\" aria-label=\"Edit\">Xóa</button></td>"
+        },
+        {
+            "id": 2,
+            "email": "duccong@gmail.com",
+            "username": "duccop",
+            "name": "duc",
+            "familyname": "nguyen",
+            "code": "GA001",
+            "phone": "214124",
+            "address": "Tiểu vương quốc Long An",
+            "salary": 1000,
+            "html": "<td class=\"text-center\"><button name=\"btn-edit-employee\" class=\"btn btn-outline-secondary\">Sửa</button><button name=\"btn-delete-employee\" class=\"btn btn-outline-danger\">Xóa</button></td>"
+        },
+        {
+            "id": 3,
+            "email": "tinga@gmail.com",
+            "username": "tincui",
+            "name": "tin",
+            "familyname": "vo",
+            "code": "PM001",
+            "phone": "39561",
+            "address": "Đồng Nai",
+            "salary": 2000000,
+            "html": "<td class=\"text-center\"><button name=\"btn-edit-employee\" class=\"btn btn-outline-secondary\">Sửa</button><button name=\"btn-delete-employee\" class=\"btn btn-outline-danger\">Xóa</button></td>"
+        }
+    ]
+}
