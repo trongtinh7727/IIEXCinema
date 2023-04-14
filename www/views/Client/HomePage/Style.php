@@ -1,0 +1,91 @@
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .text-yellow {
+        color: #FFBA08 !important;
+    }
+
+    .bg-yellow {
+        background-color: #FFBA08 !important;
+    }
+
+    .text-green {
+        color: #CCF381 !important;
+    }
+
+    .hover-green:hover {
+        transition: 0.5s;
+        cursor: pointer !important;
+        color: #CCF381 !important;
+    }
+
+    .hover-yellow:hover {
+        transition: 0.5s;
+        cursor: pointer !important;
+        color: #FFBA08 !important;
+    }
+
+    .custom-active::after {
+        content: "";
+        position: absolute;
+        background-color: #FFBA08;
+        height: 1px;
+        width: 80%;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 0;
+    }
+
+    .movie-image {
+        max-height: 1029px;
+        /*width: 728px; */
+    }
+
+    /* ============================= */
+
+    /* Top part*/
+    #toppart {
+        margin: 0;
+        height: 1000px;
+        background: url(../assets/img/homepage/movie-area.png);
+        background-size: cover;
+    }
+
+    /* Main content */
+    #maincontent {
+        height: 1000px;
+        background-color: antiquewhite;
+    }
+
+    #content-toggler .row::after,
+    #trailer-separator .container::after {
+        content: "";
+        position: absolute;
+        background-color: #ffffff;
+        height: 1px;
+        width: 100%;
+        bottom: -10px;
+    }
+
+    /* Trailer */
+    #carousel-trailer iframe {
+        width: 75%;
+        aspect-ratio: 16/9;
+    }
+
+    .carousel-control-prev-icon {
+        color: #FFBA08;
+    }
+
+    @media screen and (max-width: 992px) {
+        #icon-camera {
+            display: flex;
+            justify-content: center;
+        }
+    }
+</style>

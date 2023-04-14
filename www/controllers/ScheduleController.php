@@ -13,6 +13,12 @@ class ScheduleController extends AdminController
             echo $this->model->getByTheater($_GET['theater_id']);
         }
     }
+    public function getByMovie()
+    {
+        if (isset($_GET['movie_id'])) {
+            echo $this->model->getByMovie($_GET['movie_id']);
+        }
+    }
 
     public function getByID()
     {
