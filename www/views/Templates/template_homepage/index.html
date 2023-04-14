@@ -36,8 +36,9 @@
 
 <body>
     <div id="wrapper" style="background-color: #000218;">
+        
         <!-- Top part -->
-        <div id="toppart">
+        <div id="toppart" class="pb-5">
             <!-- Navigation bar -->
             <nav class="navbar navbar-expand-lg bg-transparent" aria-label="Thirteenth navbar example"
                 style="background: transparent;">
@@ -79,19 +80,20 @@
             </nav>
 
             <!-- Swiper -->
-            <div id="toppartSwiper" class="swiper container w-100 py-5 mt-4">
+            <div id="toppartSwiper" class="swiper w-100 py-5 mt-4">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide w-50 rounded-4">
-                        <div class="swiper-slide-inner row px-lg-4">
-                            <div class="swiper-slide-inner-left col-12 col-lg-5 position-relative">
+                    <!-- Swiper Slide -->
+                    <div class="swiper-slide rounded-4">
+                        <div class="swiper-slide-inner row px-lg-5">
+                            <div class="swiper-slide-inner-left col-12 col-xl-5 position-relative px-0">
                                 <!-- DATAFILL Poster -->
                                 <img class="align-self-center position-absolute"
                                     src="../assets/img/homepage/swiper/gay.png" alt="Swiper Photo">
                             </div>
-                            <div class="swiper-slide-inner-right col-lg-7 text-white">
+                            <div class="swiper-slide-inner-right col-12 col-xl-7 text-white">
                                 <div class="swiper-slide-inner-right-main ms-4 py-3">
                                     <!-- DATAFILL Title -->
-                                    <h3 name="swiper-movie-title">Cô ba sài gòn</h3>
+                                    <h3 name="swiper-slide-inner-movie-title">Cô ba sài gòn</h3>
                                     <!-- DATAFILL Rating -->
                                     <div class="swiper-movie-rating text-green my-2">
                                         <i class="fa-solid fa-star fa-xl"></i>
@@ -101,40 +103,256 @@
                                         <i class="fa-solid fa-star fa-xl"></i>
                                     </div>
                                     <!-- DATAFILL Description -->
-                                    <p class="swiper-movie-desc my-2">
+                                    <p class="swiper-slide-inner-movie-desc my-2">
                                         Cô Ba Sài Gòn mở đầu bằng một đoạn phim tư liệu lấy cột mốc Sài Gòn năm 1969 và
                                         đó dường như là “cảnh ngoại” duy nhất của cột mốc này. (Xem thêm)
                                     </p>
                                     <!-- DATAFILL Actors -->
-                                    <div class="swiper-movie-actors my-2">
+                                    <div class="swiper-slide-inner-movie-actors my-2">
                                         <h3>Diễn viên</h3>
-                                        <div class="swiper-movie-actors-img d-flex">
+                                        <div class="swiper-slide-inner-movie-actors-img d-flex">
                                             <!-- DATAFILL Actors Img -->
-                                            <img class="rounded-5 me-3" src="../assets/img/homepage/swiper/actor.png" alt="Actor"
-                                                style="width: 44px; height: 44px;">
+                                            <img class="rounded-5 me-3" src="../assets/img/homepage/swiper/actor.png"
+                                                alt="Actor" style="width: 44px; height: 44px;">
                                             <!-- DATAFILL Actors Img -->
-                                            <img class="rounded-5 me-3" src="../assets/img/homepage/swiper/actor.png" alt="Actor"
-                                                style="width: 44px; height: 44px;">
+                                            <img class="rounded-5 me-3" src="../assets/img/homepage/swiper/actor.png"
+                                                alt="Actor" style="width: 44px; height: 44px;">
                                             <!-- DATAFILL Actors Img -->
-                                            <img class="rounded-5 me-3" src="../assets/img/homepage/swiper/actor.png" alt="Actor"
-                                                style="width: 44px; height: 44px;">
+                                            <img class="rounded-5 me-3" src="../assets/img/homepage/swiper/actor.png"
+                                                alt="Actor" style="width: 44px; height: 44px;">
                                             <!-- DATAFILL Actors Img -->
-                                            <img class="rounded-5 me-3" src="../assets/img/homepage/swiper/actor.png" alt="Actor"
-                                                style="width: 44px; height: 44px;">
+                                            <img class="rounded-5 me-3" src="../assets/img/homepage/swiper/actor.png"
+                                                alt="Actor" style="width: 44px; height: 44px;">
                                         </div>
                                     </div>
                                     <!-- Trailer -->
-                                    <div class="swiper-movie-trailer">
-
+                                    <div class="swiper-slide-inner-movie-trailer">
+                                        <!-- Button trigger trailer modal -->
+                                        <!-- <button id="swiper-slide-inner-movie-trailer-modal-trigger" type="button"
+                                            class="btn mt-3 px-3 hover-bg-yellow" data-bs-toggle="modal"
+                                            data-bs-target="#swiper-slide-inner-movie-trailer-modal">
+                                            <i class="fa-solid fa-play me-2"></i>
+                                            Trailer
+                                        </button> -->
+                                        <button id="swiper-slide-inner-movie-trailer-modal-trigger" type="button"
+                                            class="btn mt-3 px-3 bg-green hover-bg-yellow" data-bs-toggle="modal"
+                                            data-bs-target="#swiper-slide-inner-movie-trailer-modal">
+                                            <i class="fa-solid fa-play me-2"></i>
+                                            Trailer
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Swiper Slide -->
+                    <div class="swiper-slide rounded-4">
+                        <div class="swiper-slide-inner row px-lg-5">
+                            <div class="swiper-slide-inner-left col-12 col-lg-5 position-relative px-0">
+                                <!-- DATAFILL Poster -->
+                                <img class="align-self-center position-absolute"
+                                    src="../assets/img/homepage/swiper/gay.png" alt="Swiper Photo">
+                            </div>
+                            <div class="swiper-slide-inner-right col-lg-7 text-white">
+                                <div class="swiper-slide-inner-right-main ms-4 py-3">
+                                    <!-- DATAFILL Title -->
+                                    <h3 name="swiper-slide-inner-movie-title">Cô ba sài gòn</h3>
+                                    <!-- DATAFILL Rating -->
+                                    <div class="swiper-movie-rating text-green my-2">
+                                        <i class="fa-solid fa-star fa-xl"></i>
+                                        <i class="fa-solid fa-star fa-xl"></i>
+                                        <i class="fa-solid fa-star fa-xl"></i>
+                                        <i class="fa-solid fa-star fa-xl"></i>
+                                        <i class="fa-solid fa-star fa-xl"></i>
+                                    </div>
+                                    <!-- DATAFILL Description -->
+                                    <p class="swiper-slide-inner-movie-desc my-2">
+                                        Cô Ba Sài Gòn mở đầu bằng một đoạn phim tư liệu lấy cột mốc Sài Gòn năm 1969 và
+                                        đó dường như là “cảnh ngoại” duy nhất của cột mốc này. (Xem thêm)
+                                    </p>
+                                    <!-- DATAFILL Actors -->
+                                    <div class="swiper-slide-inner-movie-actors my-2">
+                                        <h3>Diễn viên</h3>
+                                        <div class="swiper-slide-inner-movie-actors-img d-flex">
+                                            <!-- DATAFILL Actors Img -->
+                                            <img class="rounded-5 me-3" src="../assets/img/homepage/swiper/actor.png"
+                                                alt="Actor" style="width: 44px; height: 44px;">
+                                            <!-- DATAFILL Actors Img -->
+                                            <img class="rounded-5 me-3" src="../assets/img/homepage/swiper/actor.png"
+                                                alt="Actor" style="width: 44px; height: 44px;">
+                                            <!-- DATAFILL Actors Img -->
+                                            <img class="rounded-5 me-3" src="../assets/img/homepage/swiper/actor.png"
+                                                alt="Actor" style="width: 44px; height: 44px;">
+                                            <!-- DATAFILL Actors Img -->
+                                            <img class="rounded-5 me-3" src="../assets/img/homepage/swiper/actor.png"
+                                                alt="Actor" style="width: 44px; height: 44px;">
+                                        </div>
+                                    </div>
+                                    <!-- Trailer -->
+                                    <div class="swiper-slide-inner-movie-trailer">
+                                        <!-- Button trigger trailer modal -->
+                                        <!-- <button id="swiper-slide-inner-movie-trailer-modal-trigger" type="button"
+                                            class="btn mt-3 px-3 hover-bg-yellow" data-bs-toggle="modal"
+                                            data-bs-target="#swiper-slide-inner-movie-trailer-modal">
+                                            <i class="fa-solid fa-play me-2"></i>
+                                            Trailer
+                                        </button> -->
+                                        <button id="swiper-slide-inner-movie-trailer-modal-trigger" type="button"
+                                            class="btn mt-3 px-3 bg-green hover-bg-yellow" data-bs-toggle="modal"
+                                            data-bs-target="#swiper-slide-inner-movie-trailer-modal">
+                                            <i class="fa-solid fa-play me-2"></i>
+                                            Trailer
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Swiper Slide -->
+                    <div class="swiper-slide rounded-4">
+                        <div class="swiper-slide-inner row px-lg-5">
+                            <div class="swiper-slide-inner-left col-12 col-lg-5 position-relative px-0">
+                                <!-- DATAFILL Poster -->
+                                <img class="align-self-center position-absolute"
+                                    src="../assets/img/homepage/swiper/gay.png" alt="Swiper Photo">
+                            </div>
+                            <div class="swiper-slide-inner-right col-lg-7 text-white">
+                                <div class="swiper-slide-inner-right-main ms-4 py-3">
+                                    <!-- DATAFILL Title -->
+                                    <h3 name="swiper-slide-inner-movie-title">Cô ba sài gòn</h3>
+                                    <!-- DATAFILL Rating -->
+                                    <div class="swiper-movie-rating text-green my-2">
+                                        <i class="fa-solid fa-star fa-xl"></i>
+                                        <i class="fa-solid fa-star fa-xl"></i>
+                                        <i class="fa-solid fa-star fa-xl"></i>
+                                        <i class="fa-solid fa-star fa-xl"></i>
+                                        <i class="fa-solid fa-star fa-xl"></i>
+                                    </div>
+                                    <!-- DATAFILL Description -->
+                                    <p class="swiper-slide-inner-movie-desc my-2">
+                                        Cô Ba Sài Gòn mở đầu bằng một đoạn phim tư liệu lấy cột mốc Sài Gòn năm 1969 và
+                                        đó dường như là “cảnh ngoại” duy nhất của cột mốc này. (Xem thêm)
+                                    </p>
+                                    <!-- DATAFILL Actors -->
+                                    <div class="swiper-slide-inner-movie-actors my-2">
+                                        <h3>Diễn viên</h3>
+                                        <div class="swiper-slide-inner-movie-actors-img d-flex">
+                                            <!-- DATAFILL Actors Img -->
+                                            <img class="rounded-5 me-3" src="../assets/img/homepage/swiper/actor.png"
+                                                alt="Actor" style="width: 44px; height: 44px;">
+                                            <!-- DATAFILL Actors Img -->
+                                            <img class="rounded-5 me-3" src="../assets/img/homepage/swiper/actor.png"
+                                                alt="Actor" style="width: 44px; height: 44px;">
+                                            <!-- DATAFILL Actors Img -->
+                                            <img class="rounded-5 me-3" src="../assets/img/homepage/swiper/actor.png"
+                                                alt="Actor" style="width: 44px; height: 44px;">
+                                            <!-- DATAFILL Actors Img -->
+                                            <img class="rounded-5 me-3" src="../assets/img/homepage/swiper/actor.png"
+                                                alt="Actor" style="width: 44px; height: 44px;">
+                                        </div>
+                                    </div>
+                                    <!-- Trailer -->
+                                    <div class="swiper-slide-inner-movie-trailer">
+                                        <!-- Button trigger trailer modal -->
+                                        <!-- <button id="swiper-slide-inner-movie-trailer-modal-trigger" type="button"
+                                            class="btn mt-3 px-3 hover-bg-yellow" data-bs-toggle="modal"
+                                            data-bs-target="#swiper-slide-inner-movie-trailer-modal">
+                                            <i class="fa-solid fa-play me-2"></i>
+                                            Trailer
+                                        </button> -->
+                                        <button id="swiper-slide-inner-movie-trailer-modal-trigger" type="button"
+                                            class="btn mt-3 px-3 bg-green hover-bg-yellow" data-bs-toggle="modal"
+                                            data-bs-target="#swiper-slide-inner-movie-trailer-modal">
+                                            <i class="fa-solid fa-play me-2"></i>
+                                            Trailer
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Swiper Slide -->
+                    <div class="swiper-slide rounded-4">
+                        <div class="swiper-slide-inner row px-lg-5">
+                            <div class="swiper-slide-inner-left col-12 col-lg-5 position-relative px-0">
+                                <!-- DATAFILL Poster -->
+                                <img class="align-self-center position-absolute"
+                                    src="../assets/img/homepage/swiper/gay.png" alt="Swiper Photo">
+                            </div>
+                            <div class="swiper-slide-inner-right col-lg-7 text-white">
+                                <div class="swiper-slide-inner-right-main ms-4 py-3">
+                                    <!-- DATAFILL Title -->
+                                    <h3 name="swiper-slide-inner-movie-title">Cô ba sài gòn</h3>
+                                    <!-- DATAFILL Rating -->
+                                    <div class="swiper-movie-rating text-green my-2">
+                                        <i class="fa-solid fa-star fa-xl"></i>
+                                        <i class="fa-solid fa-star fa-xl"></i>
+                                        <i class="fa-solid fa-star fa-xl"></i>
+                                        <i class="fa-solid fa-star fa-xl"></i>
+                                        <i class="fa-solid fa-star fa-xl"></i>
+                                    </div>
+                                    <!-- DATAFILL Description -->
+                                    <p class="swiper-slide-inner-movie-desc my-2">
+                                        Cô Ba Sài Gòn mở đầu bằng một đoạn phim tư liệu lấy cột mốc Sài Gòn năm 1969 và
+                                        đó dường như là “cảnh ngoại” duy nhất của cột mốc này. (Xem thêm)
+                                    </p>
+                                    <!-- DATAFILL Actors -->
+                                    <div class="swiper-slide-inner-movie-actors my-2">
+                                        <h3>Diễn viên</h3>
+                                        <div class="swiper-slide-inner-movie-actors-img d-flex">
+                                            <!-- DATAFILL Actors Img -->
+                                            <img class="rounded-5 me-3" src="../assets/img/homepage/swiper/actor.png"
+                                                alt="Actor" style="width: 44px; height: 44px;">
+                                            <!-- DATAFILL Actors Img -->
+                                            <img class="rounded-5 me-3" src="../assets/img/homepage/swiper/actor.png"
+                                                alt="Actor" style="width: 44px; height: 44px;">
+                                            <!-- DATAFILL Actors Img -->
+                                            <img class="rounded-5 me-3" src="../assets/img/homepage/swiper/actor.png"
+                                                alt="Actor" style="width: 44px; height: 44px;">
+                                            <!-- DATAFILL Actors Img -->
+                                            <img class="rounded-5 me-3" src="../assets/img/homepage/swiper/actor.png"
+                                                alt="Actor" style="width: 44px; height: 44px;">
+                                        </div>
+                                    </div>
+                                    <!-- Trailer -->
+                                    <div class="swiper-slide-inner-movie-trailer">
+                                        <!-- Button trigger trailer modal -->
+                                        <!-- <button id="swiper-slide-inner-movie-trailer-modal-trigger" type="button"
+                                            class="btn mt-3 px-3 hover-bg-yellow" data-bs-toggle="modal"
+                                            data-bs-target="#swiper-slide-inner-movie-trailer-modal">
+                                            <i class="fa-solid fa-play me-2"></i>
+                                            Trailer
+                                        </button> -->
+                                        <button id="swiper-slide-inner-movie-trailer-modal-trigger" type="button"
+                                            class="btn mt-3 px-3 bg-green hover-bg-yellow" data-bs-toggle="modal"
+                                            data-bs-target="#swiper-slide-inner-movie-trailer-modal">
+                                            <i class="fa-solid fa-play me-2"></i>
+                                            Trailer
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- If we need navigation buttons -->
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
+                <!-- Navigation buttons -->
+                <div class="swiper-button-prev text-yellow hover-green"></div>
+                <div class="swiper-button-next text-yellow hover-green"></div>
+            </div>
+        </div>
+
+        <!-- Swiper Trailer Modal -->
+        <div class="modal fade" id="swiper-slide-inner-movie-trailer-modal" tabindex="-1"
+            aria-labelledby="swiper-slide-inner-movie-trailer-modal-Label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+                <div class="modal-content" style="background-color: transparent;">
+                    <div align="center">
+                        <iframe class="swiper-trailer-video" src="https://www.youtube.com/embed/gorb-Yhu2Wc?start=0"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen></iframe>
+                    </div>
+                </div>
             </div>
         </div>
 

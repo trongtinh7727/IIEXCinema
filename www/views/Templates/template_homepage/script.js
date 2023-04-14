@@ -16,6 +16,9 @@ $(document).ready(function () {
             prevEl: ".swiper-button-prev",
         }
     });
+    $("#swiper-slide-inner-movie-trailer-modal").on("hidden.bs.modal", function () {
+        $('.swiper-trailer-video').attr('src', $('.trailer-video').attr('src'));
+    });
     $('#toggler-ongoing-movies').click(function (e) {
         $('#content-ongoing-movies').removeClass('d-none');
         $('#content-upcoming-movies').addClass('d-none');
