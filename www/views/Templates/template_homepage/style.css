@@ -17,6 +17,10 @@
     color: #CCF381 !important;
 }
 
+.bg-green {
+    background-color: #CCF381 !important;
+}
+
 .hover-green:hover {
     transition: 0.5s;
     cursor: pointer !important;
@@ -62,6 +66,20 @@
     height: 1000px;
     background: url(../assets/img/homepage/movie-area.png);
     background-size: cover;
+}
+
+/* Swiper */
+.swiper-slide {
+    background-color: rgba(219, 227, 255, 0.25);
+}
+
+.swiper-slide-inner-left img {
+    top: -40px;
+}
+
+.swiper-slide img {
+    display: block;
+    width: 100%;
 }
 
 /* Main content */
