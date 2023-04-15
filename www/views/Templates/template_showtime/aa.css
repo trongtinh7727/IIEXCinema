@@ -110,21 +110,61 @@
 }
 
 /* Showtime */
+.showtime-item {
+    height: 305px;
+    max-width: 1304px;
+}
+
 .showtime-item-info {
-    background: url(../assets/img/showtime/galaxy-bg.png) no-repeat;
-    background-size: cover;
+    width: 467px;
+    height: 305px;
+    margin-left: 20px;
+    background: url(../assets/img/galaxy-bg.png) no-repeat;
+}
+
+.showtime-item-info-poster {
+    transform: translateX(-20px);
+}
+
+.showtime-item-info-content-rating {
+    color: yellow;
+}
+
+.showtime-item-time {
+    height: 124px;
+    width: 818px;
+    background-color: rgb(255, 255, 255, 0.15);
+}
+
+.showtime-item-time-date {
+    width: 150px;
+    height: 130px;
+    transform: translateY(-3px);
 }
 
 .showtime-item-time-date-cut1 {
+    width: 98px;
+    height: 130px;
     background-color: #ABAE09;
 }
 
 .showtime-item-time-date-cut2 {
-    border-left: 50px solid #ABAE09;
-    border-bottom: 120px solid rgb(255, 255, 255, 0);
+    width: 52px;
+    height: 130px;
+    border-left: 52px solid #ABAE09;
+    border-bottom: 130px solid rgb(255, 255, 255, 0);
+}
+
+.showtime-item-time-date-date {
+    left: 15%;
 }
 
 .showtime-item-time-tagntime-time-slot {
-    background-color: #55BDCB;
     width: 80px;
+    height: 44px;
+    background-color: #55BDCB;
+}
+
+.showtime-item-time-tagntime-time-slot h4 {
+    line-height: 44px;
 }
