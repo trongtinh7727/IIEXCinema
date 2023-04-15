@@ -115,16 +115,24 @@
     background-size: cover;
 }
 
-.showtime-item-time-date-cut1 {
-    background-color: #ABAE09;
+.showtime-item-time-date-date {
+    z-index: 2;
+    width: 120px;
+    height: 120px;
+    clip-path: polygon(0 0, 100% 0, 70% 100%, 0% 100%);
 }
 
-.showtime-item-time-date-cut2 {
-    border-left: 50px solid #ABAE09;
-    border-bottom: 120px solid rgb(255, 255, 255, 0);
+.showtime-item-time-tagntime {
+    margin-left: -50px;
+    padding-left: 50px;
+    background-color: rgba(255, 255, 255, 0.25);
 }
 
 .showtime-item-time-tagntime-time-slot {
     background-color: #55BDCB;
-    width: 80px;
+}
+
+.showtime-item-time-tagntime-time-slot-inner span:hover{
+    transition: 0.5s;
+    color: #000000;
 }
