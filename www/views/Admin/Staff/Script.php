@@ -6,10 +6,10 @@
         $("#action").val(ID);
         $.post("./?api/staff/getbyid", {
             ID
-        }, function (data, status) {
+        }, function(data, status) {
             var table = $('#table');
             console.log(data)
-            data.data.forEach(function (object) {
+            data.data.forEach(function(object) {
                 $('#USERNAME').val(object.USERNAME)
                 $('.pass').hide();
                 $('#FNAME').val(object.FIRSTNAME)
@@ -22,120 +22,44 @@
 
         }, "json");
     }
-    $(document).ready(function () {
-        function deleteRow() {
-            var table = document.querySelector("myTable");
-            var rowCount = table.rows.length;
-            for (let index = rowCount; index > 1; index--) {
-                if (rowCount > 1) {
-                    table.deleteRow(index - 1);
+    $(document).ready(function() {
+
+        var table = $('#dataTable').DataTable({
+            ajax: "./?api/staff/getall",
+            columns: [{
+                    data: "ID"
+                },
+                {
+                    data: "USERNAME"
+                },
+                {
+                    data: null,
+                    render: function(data, type, row) {
+                        return data.FIRSTNAME + ' ' + data.LASTNAME;
+                    }
+                },
+                {
+                    data: "PHONE"
+                },
+                {
+                    data: "ADDRESS"
+                },
+                {
+                    data: "SALARY",
+                    render: $.fn.dataTable.render.number(',', '.', 0, '$')
+                },
+                {
+                    data: null,
+                    render: function(data, type, row) {
+                        return '<button name="btn_delete_employee" class="btn btn-outline-danger" onclick="confirmRemoval(this)" > Delete </button> <button name="btn_edit_employee" class="btn btn-outline-secondary" onclick="fillEditForm(this)" data-bs-toggle="modal" data-bs-target="#addEmployeeModal" > Edit </button>';
+                    }
                 }
-            }
-        }
-        let jsonArrayObj = [{}];
-        function load_data() {
-            fetch('./?api/staff/getall')
-                .then(response => response.json())
-                .then(data => {
-                    jsonArrayObj = data.data;
-                    $.fn.dataTable();
-                    console.log(jsonArrayObj);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }
-        var pageNumber = 1;
-        load_data();
-        var entriesPerPage = 10;
-        var totalPage = Math.ceil(jsonArrayObj.length / entriesPerPage);
-
-
-        // Data from json
-        $.fn.dataTable = function () {
-            var start_index = (pageNumber - 1) * entriesPerPage;
-            var end_index = start_index + (entriesPerPage - 1);
-            end_index = (end_index >= jsonArrayObj.length) ? jsonArrayObj.length - 1 : end_index;
-
-            $("table tbody tr").remove();
-            for (var i = start_index; i <= end_index; i++) {
-                id = `trv${jsonArrayObj[i].ID}`;
-                var tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <tr>
-                        <td class="align-middle text-center" name="data_id"> ${jsonArrayObj[i].ID}</td>
-                        <td class="align-middle text-center" name="data_username"> ${jsonArrayObj[i].USERNAME}</td>
-                        <td class="align-middle text-center" name="data_firstname"> ${jsonArrayObj[i].FIRSTNAME + ` ` + jsonArrayObj[i].LASTNAME}</td>
-                        <td class="align-middle text-center" name="data_phone"> ${jsonArrayObj[i].PHONE}</td>
-                        <td class="align-middle text-center" name="data_address"> ${jsonArrayObj[i].ADDRESS}</td>
-                        <td class="align-middle text-center" name="data_salary"> ${jsonArrayObj[i].SALARY}</td>
-                        <td class="align-middle text-center" name="data_action">
-                            <button name="btn_delete_employee" class="btn btn-outline-danger"
-                                onclick="confirmRemoval(this)"> Delete
-                            </button>
-                            <button name="btn_edit_employee" class="btn btn-outline-secondary" onclick="fillEditForm(this)"
-                                data-bs-toggle="modal" data-bs-target="#addEmployeeModal"> Edit </button>
-                        </td>
-                    </tr>
-                `;
-                tr.id = `${id}`;
-                $("table tbody").append(tr);
-            }
-            $(".page_index").removeClass("active");
-            $("#page_index" + pageNumber).addClass("active");
-            $(".data_size_details").text(`Showing ` + (start_index + 1) + ` to ` + (end_index + 1) + ` of ` + jsonArrayObj.length + ` entries`);
-        }
-
-        setTimeout(() => {
-            var tab_size = 10;
-            pageNumber = 1;
-            entriesPerPage = parseInt(tab_size);
-            totalPage = Math.ceil(jsonArrayObj.length / entriesPerPage);
-            $.fn.paginationButtons();
-            $.fn.dataTable();
-        }, 100);
-
-        $.fn.nextPage = function () {
-            if (pageNumber != totalPage) {
-                pageNumber++;
-                $.fn.dataTable();
-            }
-        }
-
-        // Previous page
-        $.fn.prevPage = function () {
-            if (pageNumber > 1) {
-                pageNumber--;
-                $.fn.dataTable();
-            }
-        }
-
-        // Index page
-        $.fn.indexPage = function (index) {
-            pageNumber = parseInt(index)
-            $.fn.dataTable();
-        }
-
-        // Data size change
-        $("#data_size").change(function () {
-            var tab_size = $(this).val();
-            pageNumber = 1;
-            entriesPerPage = parseInt(tab_size);
-            totalPage = Math.ceil(jsonArrayObj.length / entriesPerPage);
-            $.fn.paginationButtons();
-            $.fn.dataTable();
+            ]
         });
 
-        $.fn.dataTable();
 
-        $("#addStaff").click(function () {
-            // let PASSWORD = $('#PASSWORD').val().trim()
-            // let PASS_CONFIRM = $('#PASS-CONFIRM').val().trim()
-            // if (PASSWORD != PASS_CONFIRM) {
-            //     console.assert("Mật khẩu không trùng khớp !");
-            //     return;
-            // }
-            // let PASSWORD = 'Admin@123';
+
+        $("#addStaff").click(function() {
             let USERNAME = $('#USERNAME').val()
             let FIRSTNAME = $('#FNAME').val()
             let LASTNAME = $('#LNAME').val()
@@ -158,11 +82,11 @@
                     ADDRESS,
                     SALARY,
                     ROLE
-                }, function (data, status) {
+                }, function(data, status) {
                     console.log(data)
                     if (data.status) {
-                        load_data();
-                        $.fn.dataTable();
+                        table.ajax.reload();
+
                         let msg = data.data;
                         console.log(msg)
                         $("#msg-success").css('display', 'flex').text(msg)
@@ -178,7 +102,6 @@
                 let ID = $("#action").val();
                 $.post("./?api/staff/update", {
                     USERNAME,
-                    PASSWORD,
                     FIRSTNAME,
                     LASTNAME,
                     SEX,
@@ -188,12 +111,11 @@
                     SALARY,
                     ROLE,
                     ID
-                }, function (data, status) {
+                }, function(data, status) {
                     console.log(data)
                     if (data.status) {
                         console.log("Okee")
-                        load_data();
-                        $.fn.dataTable();
+                        table.ajax.reload();
                         let msg = data.data;
                         console.log(msg)
                         $("#msg-success").css('display', 'flex').text(msg)
@@ -210,15 +132,14 @@
             clearForm()
         });
 
-        $("#delete-button").on('click', function () {
+        $("#delete-button").on('click', function() {
             let uid = $('#delete-button').attr('uid');
             $.post("./?api/staff/delete", {
                 id: uid
-            }, function (data, status) {
+            }, function(data, status) {
                 console.log(data)
                 if (data.status) {
-                    load_data();
-                    $.fn.dataTable();
+                    table.ajax.reload();
                     let msg = data.data;
                     console.log(msg)
                     $("#msg-success").css('display', 'flex').text(msg)
@@ -234,34 +155,6 @@
                 }
             }, "json")
         })
-
-
-        $("#searchBarInput").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#myTable tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-
-        // Pagination button
-        $.fn.paginationButtons = function () {
-            var buttons_text = `<li class="page-item"><a class="page-link" onClick="javascript:$.fn.prevPage();" href="#">Previous</a></li>`;
-            var active = "";
-            for (var i = 1; i <= totalPage; i++) {
-                if (i == 1) {
-                    active = "active";
-                } else {
-                    active = "";
-                }
-                buttons_text = buttons_text + `<li class="page-item"><a id="page_index` + i + `" onClick="javascript:$.fn.indexPage(` + i + `);" class="page-link page_index ` + active + `" href="#">` + i + `</a></li>`;
-            }
-            buttons_text = buttons_text + `<li><a class="page-link" href="#" onClick="javascript:$.fn.nextPage();">Next</a></li>`;
-            $(".pagination-buttons").text("");
-            $(".pagination-buttons").append(buttons_text);
-        }
-
-        $.fn.paginationButtons();
-
     });
 
 
@@ -274,12 +167,18 @@
         var myModal = new bootstrap.Modal(document.getElementById("confirm-removal-modal"), {});
         myModal.show();
     }
+    $('#addEmployeeModal').on('hidden.bs.modal', function() {
+        clearForm()
+    })
 
     function clearForm() {
-        $('#name').val("");
-        $("#email").val("");
-        $("#phone").val("");
+        $('#USERNAME').val("")
+        $('#FNAME').val("")
+        $('#LNAME').val("")
+        $('#BIRTHDAY').val("")
+        $('#PHONE').val("")
+        $('#ADDRESS').val("")
+        $('#SALARY').val("")
     }
-    $(document).ready(function () {
-    });
+    $(document).ready(function() {});
 </script>

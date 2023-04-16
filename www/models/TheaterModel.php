@@ -54,13 +54,13 @@ class TheaterModel
         }
     }
 
-    public function update($theater_id, $THEATERNUM)
+    public function update($THEATERNUM, $THEATER_ID)
     {
-        $sql = "UPDATE `theater` SET `THEATERNUM` = '?' WHERE `theater`.`ID` = ?";
+        $sql = "UPDATE `theater` SET `THEATERNUM` = ? WHERE `theater`.`ID` = ? ";
 
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($THEATERNUM, $theater_id));
+            $stmt->execute(array($THEATERNUM, $THEATER_ID));
             return json_encode(array('status' => true, 'data' => 'Sửa phòng chiếu thành công'));
         } catch (PDOException $ex) {
             die(json_encode(array('status' => false, 'data' => $ex->getMessage())));

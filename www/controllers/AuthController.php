@@ -43,6 +43,16 @@ class AuthController
             }
         }
     }
+
+    function register()
+    {
+        if (
+            !isset($_POST['username'])
+            ||  !isset($_POST['password']) || !isset($_POST['name']) || !isset($_POST['phone'])
+        ) {
+        }
+    }
+
     function logout()
     {
         unset($_SESSION['userLogin']);

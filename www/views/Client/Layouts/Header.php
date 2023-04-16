@@ -7,8 +7,8 @@
 
 <!-- Bootstrap 5.3 -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-
-
+<!-- Swiper -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
 <style>
     * {
         margin: 0;
@@ -29,16 +29,34 @@
         color: #CCF381 !important;
     }
 
+    .bg-green {
+        background-color: #CCF381 !important;
+    }
+
     .hover-green:hover {
         transition: 0.5s;
         cursor: pointer !important;
         color: #CCF381 !important;
     }
 
+    .hover-bg-green:hover {
+        color: #000000 !important;
+        transition: 0.5s !important;
+        cursor: pointer !important;
+        background-color: #CCF381 !important;
+    }
+
     .hover-yellow:hover {
         transition: 0.5s;
         cursor: pointer !important;
         color: #FFBA08 !important;
+    }
+
+    .hover-bg-yellow:hover {
+        color: #000000 !important;
+        transition: 0.5s !important;
+        cursor: pointer !important;
+        background-color: #FFBA08 !important;
     }
 
     .custom-active::after {
@@ -52,27 +70,42 @@
         bottom: 0;
     }
 
-    .movie-image {
-        max-height: 1029px;
-        /*width: 728px; */
-    }
-
     /* ============================= */
 
     /* Top part*/
     #toppart {
         margin: 0;
-        height: 1000px;
         background: url(../assets/img/homepage/movie-area.png);
         background-size: cover;
     }
 
-    /* Main content */
-    #maincontent {
-        height: 1000px;
-        background-color: antiquewhite;
+    /* Swiper */
+    .swiper-slide {
+        background-color: rgba(219, 227, 255, 0.25);
+        width: 35%;
     }
 
+    .swiper-slide-inner-left img {
+        top: -40px;
+    }
+
+    .swiper-slide img {
+        display: block;
+        width: 100%;
+    }
+
+    #swiper-slide-inner-movie-trailer-modal iframe {
+        width: 100%;
+        aspect-ratio: 16/9;
+    }
+
+    /* Swiper Nagivation Button */
+    .swiper-button-prev,
+    .swiper-button-next {
+        width: 44px;
+    }
+
+    /* Main content */
     #content-toggler .row::after,
     #trailer-separator .container::after {
         content: "";
@@ -97,6 +130,31 @@
         #icon-camera {
             display: flex;
             justify-content: center;
+        }
+
+        .custom-active::after {
+            content: "";
+            position: absolute;
+            background-color: #FFBA08;
+            height: 1px;
+            width: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 0;
+        }
+    }
+
+    @media screen and (max-width: 1200px) {
+        .swiper-slide {
+            background-color: transparent;
+        }
+
+        .swiper-slide-inner-right {
+            display: none;
+        }
+
+        .swiper-slide-inner-left {
+            height: 300px;
         }
     }
 </style>
