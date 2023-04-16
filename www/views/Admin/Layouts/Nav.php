@@ -38,9 +38,6 @@
         <a href="./?admin/staff" id="Staff" class="btn btn-lg  my-1 w-100">
             Quản lý nhân viên
         </a>
-        <a href="/?admin/cinema" id="Cinema" class="btn btn-lg my-1 w-100">
-            Quản lý rạp chiếu phim
-        </a>
         <a href="/?admin/theater" id="theater" class="btn btn-lg my-1 w-100">
             Quản lý phòng chiếu phim
         </a>
