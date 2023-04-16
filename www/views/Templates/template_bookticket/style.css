@@ -17,6 +17,10 @@
     color: #CCF381 !important;
 }
 
+.bg-cyan {
+    background-color: #00FFE5 !important;
+}
+
 .hover-green:hover {
     transition: 0.5s;
     cursor: pointer !important;
@@ -67,21 +71,53 @@
 }
 
 #bookticket-stepindicator-ticket {
-    height: 100px;
-    width: 100px;
+
 }
 
 #bookticket-stepindicator-seat {
-    height: 100px;
-    width: 100px;
+
 }
 
 #bookticket-stepindicator-food {
-    height: 100px;
-    width: 100px;
+
 }
 
 #bookticket-stepindicator-confirm {
-    height: 100px;
-    width: 100px;
+
+}
+
+/* Pointer */
+.pointer {
+    width: 200px;
+    height: 40px;
+    clip-path: polygon(90% 0, 100% 50%, 90% 100%, 0% 100%, 10% 50%, 0% 0%);
+}
+
+/* Pointer first */
+.pointer-first {
+    width: 200px;
+    height: 40px;
+    clip-path: polygon(90% 0, 100% 50%, 90% 100%, 10% 100%, 10% 50%, 10% 0%);
+}
+
+/* Pointer last */
+.pointer-last {
+    width: 200px;
+    height: 40px;
+    clip-path: polygon(90% 0, 90% 50%, 90% 100%, 0% 100%, 10% 50%, 0% 0%);
+}
+
+/* Main */
+#bookticket-ticket-main-info,
+#bookticket-ticket-main-number,
+#bookticket-ticket-main-cart {
+    background-color: rgba(217, 217, 217, 0.25);
+}
+
+#bookticket-ticket-main-info img {
+    width: 400px;
+    height: 600px;
+    object-fit: cover;
+    border: 4px #FFBA08 solid;
+    border-bottom: 0px;
 }
