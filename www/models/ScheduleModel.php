@@ -32,9 +32,26 @@ class ScheduleModel
         return 1;
     }
 
+    public function getScheduleToday()
+    {
+        $sql = "CALL `get_schedule_today`()";
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+        } catch (PDOException $ex) {
+            return (json_encode(array('status' => false, 'data' => $ex->getMessage())));
+        }
+        $data = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $tmp = array("ID" => $row['ID'], "TITLE" => $row['TITLE'], "MID" => $row['MID'], "POSTER" => $row['POSTER'], "STORY" => $row['STORY'], "TIME" =>   explode(',', $row['TIME']), "DAY" => $row['DAY']);
+            $data[] = $tmp;
+        }
+        return $data;
+    }
+
     public function getByMovie($ID)
     {
-        $sql = "SELECT * FROM schedule where MOV_ID = '$ID'";
+        $sql = "SELECT * FROM schedule where MOV_ID = '$ID' order by STARTTIME";
         try {
             $stmt = $this->db->prepare($sql);
             $stmt->execute();

@@ -41,14 +41,27 @@ class TheaterModel
         return json_encode(array('status' => true, 'data' => $data));
     }
 
-    public function add($CIN_ID, $THEATERNUM, $SEATCOUNT)
+    public function add($THEATERNUM, $SEATCOUNT)
     {
-        $sql = ' CALL `create_theater`(?,?,?)';
+        $sql = ' CALL `create_theater`(?,?)';
 
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($CIN_ID, $THEATERNUM, $SEATCOUNT));
+            $stmt->execute(array($THEATERNUM, $SEATCOUNT));
             return json_encode(array('status' => true, 'data' => 'Thêm phòng chiếu thành công'));
+        } catch (PDOException $ex) {
+            die(json_encode(array('status' => false, 'data' => $ex->getMessage())));
+        }
+    }
+
+    public function update($theater_id, $THEATERNUM)
+    {
+        $sql = "UPDATE `theater` SET `THEATERNUM` = '?' WHERE `theater`.`ID` = ?";
+
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute(array($THEATERNUM, $theater_id));
+            return json_encode(array('status' => true, 'data' => 'Sửa phòng chiếu thành công'));
         } catch (PDOException $ex) {
             die(json_encode(array('status' => false, 'data' => $ex->getMessage())));
         }
