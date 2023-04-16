@@ -23,17 +23,30 @@ class TheaterController extends AdminController
     {
         $this->isAuthenticated();
         if (
-            !isset($_POST['CIN_ID']) ||
+
             !isset($_POST['THEATERNUM'])
             || !isset($_POST['SEATCOUNT'])
         ) {
             die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
         }
 
-        $CIN_ID = $_POST['CIN_ID'];
         $THEATERNUM = $_POST['THEATERNUM'];
         $SEATCOUNT = $_POST['SEATCOUNT'];
-        echo $this->model->add($CIN_ID, $THEATERNUM, $SEATCOUNT);
+        echo $this->model->add($THEATERNUM, $SEATCOUNT);
+    }
+    public function update()
+    {
+        $this->isAuthenticated();
+        if (
+            !isset($_POST['THEATER_ID']) ||
+            !isset($_POST['THEATERNUM'])
+        ) {
+            die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
+        }
+
+        $THEATER_ID = $_POST['THEATER_ID'];
+        $THEATERNUM = $_POST['THEATERNUM'];
+        echo $this->model->update($THEATERNUM, $THEATER_ID);
     }
 
     public function delete()

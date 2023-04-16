@@ -10,3 +10,14 @@
         bottom: 0;
     }
 }
+@media screen and (max-width: 1200px) {
+    .swiper-slide {
+        background-color: transparent;
+    }
+    .swiper-slide-inner-right {
+        display: none;
+    }
+    .swiper-slide-inner-left {
+        height: 300px;
+    }
+}

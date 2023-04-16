@@ -21,27 +21,13 @@
     })
 
     $(document).ready(function() {
-        function load_cinema() {
-            $.get("./?api/cinema/getall", function(data, status) {
-                var table = $('#table');
-                console.log(data)
-                data.data.forEach(function(object) {
-                    var option = document.createElement('option');
-                    option.value = object.ID;
-                    option.innerText = object.NAME;
-                    $('#cinemaBox').append(option);
-                });
-            }, "json");
-        }
-        load_cinema();
-
-        function load_theater(cinema_id) {
+        function load_theater() {
             $('#theaterBox').empty()
             var option = document.createElement('option');
             option.value = -1;
             option.innerText = "Chọn phòng chiếu";
             $('#theaterBox').append(option);
-            $.get("./?api/theater/getByCinema&cinema_id=" + cinema_id, function(data, status) {
+            $.get("./?api/theater/getall", function(data, status) {
                 var table = $('#table');
                 console.log(data)
                 data.data.forEach(function(object) {
@@ -52,6 +38,7 @@
                 });
             }, "json");
         }
+        load_theater()
 
         function load_ongoing_movie() {
             $.get("./?api/movie/ongoing", function(data, status) {
@@ -69,9 +56,6 @@
         }
         load_ongoing_movie();
 
-        $('#cinemaBox').change(function() {
-            load_theater($('#cinemaBox').val());
-        })
         let jsonArrayObj = [{}];
         $('#theaterBox').change(function() {
             let theater_id = $('#theaterBox').val();

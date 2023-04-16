@@ -17,6 +17,10 @@
     color: #CCF381 !important;
 }
 
+.bg-green {
+    background-color: #CCF381 !important;
+}
+
 .hover-green:hover {
     transition: 0.5s;
     cursor: pointer !important;
@@ -60,12 +64,38 @@
 }
 
 /* ============================= */
-/* Top part */
+
+/* Top part*/
 #toppart {
     margin: 0;
-    height: 1000px;
     background: url(../assets/img/homepage/movie-area.png);
     background-size: cover;
+}
+
+/* Swiper */
+.swiper-slide {
+    background-color: rgba(219, 227, 255, 0.25);
+    width: 35%;
+}
+
+.swiper-slide-inner-left img {
+    top: -40px;
+}
+
+.swiper-slide img {
+    display: block;
+    width: 100%;
+}
+
+#swiper-slide-inner-movie-trailer-modal iframe {
+    width: 100%;
+    aspect-ratio: 16/9;
+}
+
+/* Swiper Nagivation Button */
+.swiper-button-prev,
+.swiper-button-next {
+    width: 44px;
 }
 
 /* Separator */

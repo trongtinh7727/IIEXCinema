@@ -12,6 +12,7 @@ Route::add("/?admin/logout", "AdminController@logout");
 // Client
 Route::add("/?", "HomeController@indexAction");
 Route::add("/?moviedetail", "HomeController@movieDetail");
+Route::add("/?showtime", "HomeController@showtime");
 
 // Auth
 Route::add("/?admin/login", "AuthController@login");
