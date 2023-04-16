@@ -9,22 +9,22 @@
     <title>IIEX Cinema - Homepage</title>
 
     <?php include_once(__DIR__ . "/Layouts/Header.php"); ?>
+    <?php include_once(__DIR__ . "/" . $_SESSION['path'] . "/Style.php"); ?>
+
 </head>
 
-<body>
+<body cz-shortcut-listen="true">
     <div id="wrapper" style="background-color: #000218;">
         <!-- Top part -->
-        <div id="toppart">
-            <!-- Navigation bar -->
-            <?php include_once(__DIR__ . "/Layouts/Nav.php"); ?>
-            <!-- Slider -->
-        </div>
+        <?php include_once(__DIR__ . "/Layouts/Nav.php"); ?>
 
         <!-- Content -->
+        <?php include_once(__DIR__ . "/" . $_SESSION['path'] . "/Content.php"); ?>
 
-        <!-- Footer -->
         <?php include_once(__DIR__ . "/Layouts/Footer.php"); ?>
     </div>
+    <?php include_once(__DIR__ . "/Layouts/Script.php"); ?>
+    <?php include_once(__DIR__ . "/" . $_SESSION['path'] . "/Script.php"); ?>
 </body>
 
 </html>

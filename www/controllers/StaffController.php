@@ -16,8 +16,8 @@ class StaffController extends AdminController
     public function add()
     {
         if (
-            !isset($_POST['USERNAME']) || !isset($_POST['FIRSTNAME']) 
-            || !isset($_POST['LASTNAME']) || !isset($_POST['SEX']) || !isset($_POST['BIRTHDAY']) 
+            !isset($_POST['USERNAME']) || !isset($_POST['FIRSTNAME'])
+            || !isset($_POST['LASTNAME']) || !isset($_POST['SEX']) || !isset($_POST['BIRTHDAY'])
             || !isset($_POST['PHONE']) || !isset($_POST['ADDRESS'])
             || !isset($_POST['SALARY']) || !isset($_POST['ROLE'])
         ) {
@@ -33,7 +33,7 @@ class StaffController extends AdminController
         $ADDRESS = $_POST['ADDRESS'];
         $SALARY = $_POST['SALARY'];
         $ROLE = $_POST['ROLE'];
-        echo $this->model->add($USERNAME, $FIRSTNAME,$LASTNAME, $SEX,$BIRTHDAY,$PHONE, $ADDRESS, $SALARY,$ROLE);
+        echo $this->model->add($USERNAME, $FIRSTNAME, $LASTNAME, $SEX, $BIRTHDAY, $PHONE, $ADDRESS, $SALARY, $ROLE);
     }
     public function delete()
     {
@@ -48,8 +48,8 @@ class StaffController extends AdminController
     public function update()
     {
         if (
-            !isset($_POST['USERNAME'])  || !isset($_POST['FIRSTNAME']) 
-            || !isset($_POST['LASTNAME']) || !isset($_POST['SEX']) || !isset($_POST['BIRTHDAY']) 
+            !isset($_POST['USERNAME'])  || !isset($_POST['FIRSTNAME'])
+            || !isset($_POST['LASTNAME']) || !isset($_POST['SEX']) || !isset($_POST['BIRTHDAY'])
             || !isset($_POST['PHONE']) || !isset($_POST['ADDRESS'])
             || !isset($_POST['SALARY']) || !isset($_POST['ROLE']) || !isset($_POST['ID'])
         ) {
@@ -67,7 +67,7 @@ class StaffController extends AdminController
         $SALARY = $_POST['SALARY'];
         $ROLE = $_POST['ROLE'];
 
-        echo $this->model->update($USERNAME,$FIRSTNAME,$LASTNAME,$SEX,$BIRTHDAY,$PHONE, $ADDRESS,$SALARY,$ROLE,$ID);
+        echo $this->model->update($USERNAME, $FIRSTNAME, $LASTNAME, $SEX, $BIRTHDAY, $PHONE, $ADDRESS, $SALARY, $ROLE, $ID);
     }
     public function getByID()
     {

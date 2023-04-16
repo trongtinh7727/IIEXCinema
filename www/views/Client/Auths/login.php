@@ -157,7 +157,7 @@
 </head>
 
 <body>
-    <div id="wrapper" class="vh-100 d-flex justify-content-around align-items-center">
+    <div id="wrapper" class="vh-200 d-flex justify-content-around align-items-center">
         <!-- Logo and photo -->
         <div class="d-flex flex-column justify-content-center">
             <img src="../assets/img/signin-signup/Logo.png" class="align-self-center" alt="Logo">
@@ -203,31 +203,42 @@
 
                     <!-- Sign up -->
                     <div class="sign-up-html">
-
-                        <!-- Input -->
-                        <!-- Sign up username -->
-                        <div class="group mt-5">
-                            <label for="user" class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Username</label>
-                            <input id="sign-up-user" placeholder="Username123" type="text" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
-                        </div>
-                        <!-- Sign up email -->
-                        <div class="group mt-5">
-                            <label for="user" class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Email</label>
-                            <input id="sign-up-email" placeholder="abc123@xyz.com.vn" type="email" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
-                        </div>
-                        <!-- Sign up password -->
-                        <div class="group mt-5">
-                            <label for="user" class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Mật khẩu</label>
-                            <input id="sign-up-password" placeholder="p@sSword" type="password" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
-                        </div>
-                        <!-- Sign up confirm password -->
-                        <div class="group mt-5">
-                            <label for="user" class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Xác nhận mật khẩu</label>
-                            <input id="sign-up-cfpassword" placeholder="p@sSword" type="password" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
-                        </div>
-                        <div class="group mt-5">
-                            <input type="submit" class="button rounded-5 w-100 d-block text-black fw-semibold bg-yellow fs-4" value="Đăng ký">
-                        </div>
+                        <form action="./?register" method="post">
+                            <!-- Input -->
+                            <!-- Sign up username -->
+                            <div class="group mt-5">
+                                <label for="user" class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Username</label>
+                                <input id="sign-up-user" name="username" placeholder="Username123" type="text" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
+                            </div>
+                            <!-- Sign up name -->
+                            <div class="group mt-5">
+                                <label for="user" class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Họ và tên</label>
+                                <input id="sign-up-name" name="name" placeholder="abc123@xyz.com.vn" type="text" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
+                            </div>
+                            <!-- Sign up phone -->
+                            <div class="group mt-5">
+                                <label for="user" class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Số điện thoại</label>
+                                <input id="sign-up-phone" name="phone" placeholder="08432...." type="tel" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
+                            </div>
+                            <!-- Sign up address -->
+                            <div class="group mt-5">
+                                <label for="user" class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Địa chỉ</label>
+                                <input id="sign-up-address" name="address" placeholder="Quận 7,..." type="text" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
+                            </div>
+                            <!-- Sign up password -->
+                            <div class="group mt-5">
+                                <label for="user" class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Mật khẩu</label>
+                                <input id="sign-up-password" name="password" placeholder="p@sSword" type="password" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
+                            </div>
+                            <!-- Sign up confirm password -->
+                            <div class="group mt-5">
+                                <label for="user" class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Xác nhận mật khẩu</label>
+                                <input id="sign-up-cfpassword" placeholder="p@sSword" type="password" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
+                            </div>
+                            <div class="group mt-5">
+                                <input type="submit" class="button rounded-5 w-100 d-block text-black fw-semibold bg-yellow fs-4" value="Đăng ký">
+                            </div>
+                        </form>
                         <hr style="height: 2px; background-color: rgb(0, 0, 0, 0.5);">
                     </div>
                 </div>
@@ -254,7 +265,7 @@
             });
             $('#tab-2').click(function(e) {
                 $('.login-wrap').css({
-                    "height": "740px",
+                    "height": "1000px",
                     "transition": ".3s"
                 });
                 $('#tab-1-label').removeClass('text-yellow')

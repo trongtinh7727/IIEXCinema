@@ -1,16 +1,26 @@
 <?php
 class HomeController extends AuthController
 {
+    public $ongoing;
 
+    public function __construct()
+    {
+        $db = Connection::$connection;
+        $model = new MovieModel();
+        $model->db = $db;
+        $this->ongoing = $model->ongoing();
+        $this->ongoing = json_decode($this->ongoing)->data;
+    }
     public function indexAction()
     {
-        // $this->isAuthenticated();
+        $ongoing = $this->ongoing;
         $_SESSION['path'] = "HomePage";
         require_once('views/Client/index.php');
     }
 
     public function movieDetail()
     {
+        $ongoing = $this->ongoing;
         $movie_id = $_GET['id'];
         $_SESSION['path'] = "MovieDetail";
         require_once('views/Client/index.php');
@@ -22,13 +32,7 @@ class HomeController extends AuthController
         $model = new ScheduleModel();
         $model->db = $db;
         $showtimes = $model->getScheduleToday();
-        // foreach ($showtimes as $key) {
-        //     print_r($key['ID']);
-        //     print_r($key['TITLE']);
-        //     print_r($key['MID']);
-        //     print_r($key['POSTER']);
-        // }
-        // print_r($showtimes);
+        $ongoing = $this->ongoing;
         $_SESSION['path'] = "Showtime";
         require_once('views/Client/index.php');
     }

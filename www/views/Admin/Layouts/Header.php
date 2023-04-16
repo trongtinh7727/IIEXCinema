@@ -11,8 +11,16 @@
 
 <link rel="stylesheet" href="../assets/style.css">
 <style>
-    .poster{
+    .poster {
         width: 100px;
         height: 120px;
+    }
+
+    .dataTables_filter {
+        float: right;
+    }
+
+    .dataTables_paginate {
+        float: right;
     }
 </style>

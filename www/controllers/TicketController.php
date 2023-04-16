@@ -17,7 +17,7 @@ class TicketController extends AdminController
     {
         $this->isAuthenticated();
         if (!isset($_POST['PRICE'])) {
-            die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
+            return (json_encode(array('status' => false, 'data' => 'Parameters not valid')));
         }
         $Price = $_POST['PRICE'];
         echo $this->model->add($Price);
@@ -26,7 +26,7 @@ class TicketController extends AdminController
     {
         $this->isAuthenticated();
         if (!isset($_POST['SEAT_ID']) || !isset($_POST['SCHEDULE_ID']) || !isset($_POST['TICKET_ID'])) {
-            die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
+            return (json_encode(array('status' => false, 'data' => 'Parameters not valid')));
         }
         $SEAT_ID = $_POST['SEAT_ID'];
         $SCHEDULE_ID = $_POST['SCHEDULE_ID'];

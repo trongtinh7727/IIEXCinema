@@ -18,6 +18,7 @@ Route::add("/?showtime", "HomeController@showtime");
 Route::add("/?admin/login", "AuthController@login");
 Route::add("/?login", "AuthController@login");
 Route::add("/?logout", "AuthController@logout");
+Route::add("/?register", "AuthController@register");
 
 // manager
 Route::add("/?admin/staff", "AdminController@staffAction");

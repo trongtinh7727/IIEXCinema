@@ -33,6 +33,7 @@
 
     $(document).ready(function() {
         var table = $('#dataTable').DataTable({
+            ajax: "./?api/theater/getall",
             columns: [{
                     data: 'ID'
                 },
@@ -51,54 +52,51 @@
             ]
         });
 
-        function load_theater() {
-            $.get("./?api/theater/getall", function(data, status) {
-                table.clear();
-                table.rows.add(data.data);
-                table.draw();
-            }, "json");
-        }
-
-
-        function deleteRow() {
-            var table = document.querySelector("myTable");
-            var rowCount = table.rows.length;
-            for (let index = rowCount; index > 1; index--) {
-                if (rowCount > 1) {
-                    table.deleteRow(index - 1);
-                }
-            }
-        }
-
-        function load_data() {
-            load_theater();
-        }
-        load_data();
-
 
         $("#addStaff").click(function() {
             let THEATERNUM = $('#THEATERNUM').val();
             let SEATCOUNT = $('#SEATCOUNT').val();
-            $.post("./?api/theater/add", {
-                THEATERNUM,
-                SEATCOUNT
-            }, function(data, status) {
-                console.log(data)
-                if (data.status) {
-                    load_data();
-                    $.fn.dataTable();
-                    let msg = data.data;
-                    console.log(msg)
-                    $("#msg-success").css('display', 'flex').text(msg)
-                    $("#msg-failed").css('display', 'none')
-                } else {
-                    let msg = data.data;
-                    console.log(msg)
-                    $("#msg-failed").css('display', 'flex').text("Có lỗi xảy ra! Vui lòng thử lại sau: " + msg)
-                    $("#msg-success").css('display', 'none')
-                }
-            }, "json")
-            clearForm()
+
+            if (action == "Add") {
+                $.post("./?api/theater/add", {
+                    THEATERNUM,
+                    SEATCOUNT
+                }, function(data, status) {
+                    console.log(data)
+                    if (data.status) {
+                        table.ajax.reload();
+                        let msg = data.data;
+                        console.log(msg)
+                        $("#msg-success").css('display', 'flex').text(msg)
+                        $("#msg-failed").css('display', 'none')
+                    } else {
+                        let msg = data.data;
+                        console.log(msg)
+                        $("#msg-failed").css('display', 'flex').text("Có lỗi xảy ra! Vui lòng thử lại sau: " + msg)
+                        $("#msg-success").css('display', 'none')
+                    }
+                }, "json")
+            } else {
+                let ID = $("#action").val();
+                $.post("./?api/theater/update", {
+                    THEATER_ID: ID,
+                    THEATERNUM
+                }, function(data, status) {
+                    console.log(data)
+                    if (data.status) {
+                        table.ajax.reload();
+                        let msg = data.data;
+                        console.log(msg)
+                        $("#msg-success").css('display', 'flex').text(msg)
+                        $("#msg-failed").css('display', 'none')
+                    } else {
+                        let msg = data.data;
+                        console.log(msg)
+                        $("#msg-failed").css('display', 'flex').text("Có lỗi xảy ra! Vui lòng thử lại sau: " + msg)
+                        $("#msg-success").css('display', 'none')
+                    }
+                }, "json")
+            }
         });
 
         $("#delete-button").on('click', function() {
@@ -108,8 +106,7 @@
             }, function(data, status) {
                 console.log(data)
                 if (data.status) {
-                    load_data();
-                    $.fn.dataTable();
+                    table.ajax.reload();
                     let msg = data.data;
                     console.log(msg)
                     $("#msg-success").css('display', 'flex').text(msg)
