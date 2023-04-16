@@ -70,21 +70,13 @@
     height: 76px;
 }
 
-#bookticket-stepindicator-ticket {
+#bookticket-stepindicator-ticket {}
 
-}
+#bookticket-stepindicator-seat {}
 
-#bookticket-stepindicator-seat {
+#bookticket-stepindicator-food {}
 
-}
-
-#bookticket-stepindicator-food {
-
-}
-
-#bookticket-stepindicator-confirm {
-
-}
+#bookticket-stepindicator-confirm {}
 
 /* Pointer */
 .pointer {
@@ -115,9 +107,13 @@
 }
 
 #bookticket-ticket-main-info img {
-    width: 400px;
-    height: 600px;
+    width: 300px;
+    aspect-ratio: 2/3;
     object-fit: cover;
     border: 4px #FFBA08 solid;
     border-bottom: 0px;
+}
+
+thead tr {
+    border-bottom: 12px solid #000218;
 }
