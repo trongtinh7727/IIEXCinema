@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- DATAFILL -->
+    <title>IIEX Cinema - Mua vé</title>
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- Font awesome 5 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Bootstrap 5.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Responsive -->
+    <link rel="stylesheet" href="confirmResponsive.css">
+</head>
+
+<body>
+    <div id="wrapper">
+        <!-- Navigation bar -->
+        <nav class="navbar navbar-expand-lg bg-transparent" aria-label="Thirteenth navbar example"
+            style="background: transparent;">
+            <div class="container-fluid">
+                <!-- Navbar toggler for mobile -->
+                <button class="navbar-toggler collapsed bg-yellow" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#bookticketNavBar" aria-controls="bookticketNavBar" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-collapse d-lg-flex collapse mt-3 mt-lg-0 clearfix" id="bookticketNavBar">
+                    <a class="navbar-brand col-lg-3 me-0" href="#">
+                        <img src="../assets/img/bookticket/Logo.png" alt="Logo" style="height: 4rem;">
+                    </a>
+                    <ul class="navbar-nav col-lg-6 justify-content-lg-center">
+                        <li class="nav-item">
+                            <a class="nav-link mx-4 text-white hover-green fs-5 fw-semibold"
+                                href="../template_homepage/index.html">Trang chủ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-4 text-white hover-green fs-5 fw-semibold" href="#">Phim</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-4 text-white hover-green fs-5 fw-semibold"
+                                href="../template_showtime/index.html">Lịch chiếu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-4 text-white hover-green fs-5 fw-semibold"
+                                href="../template_promotion/index.html">Khuyến mãi</a>
+                        </li>
+                    </ul>
+                    <div id="btn-signin" class="d-lg-flex col-lg-3 justify-content-end mt-3 mt-lg-0 float-end">
+                        <a href="../template_signin-signup/index.html"
+                            class="btn text-green text-decoration-none hover-yellow">Đăng nhập</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main -->
+        <div class="container my-5">
+            <!-- Step indicator -->
+            <div id="bookticket-confirm-stepindicator" class="d-flex flex-wrap justify-content-center">
+                <div id="bookticket-confirm-stepindicator-ticket"
+                    class="pointer-first bg-yellow my-2 fs-4 fw-semibold d-flex align-items-center justify-content-center">
+                    Chọn vé
+                </div>
+                <div id="bookticket-confirm-stepindicator-seat"
+                    class="pointer bg-yellow my-2 fs-4 fw-semibold d-flex align-items-center justify-content-center">
+                    Chọn ghế
+                </div>
+                <div id="bookticket-confirm-stepindicator-food"
+                    class="pointer bg-yellow my-2 fs-4 fw-semibold d-flex align-items-center justify-content-center">
+                    Thức ăn
+                </div>
+                <div id="bookticket-confirm-stepindicator-confirm"
+                    class="pointer-last bg-cyan my-2 fs-4 fw-semibold d-flex align-items-center justify-content-center">
+                    Xác nhận
+                </div>
+            </div>
+
+            <!-- Main -->
+            <div id="bookticket-confirm-main" class="rounded-4 text-white my-5 px-4 py-3">
+                <h3 class="text-yellow text-center fw-semibold">Giỏ hàng của bạn</h3>
+                <!-- Movie info -->
+                <div id="bookticket-confirm-main-movieinfo" class="fs-5 d-flex">
+                    <!-- Title -->
+                    <div id="bookticket-confirm-main-movieinfo-title">
+                        <div id="bookticket-confirm-main-movieinfo-title-title" class="my-3 me-4 text-end">Tên phim:
+                        </div>
+                        <div id="bookticket-confirm-main-movieinfo-title-date" class="my-3 me-4 text-end">Ngày chiếu:
+                        </div>
+                        <div id="bookticket-confirm-main-movieinfo-title-showtime" class="my-3 me-4 text-end">Suất
+                            chiếu:</div>
+                        <div id="bookticket-confirm-main-movieinfo-title-room" class="my-3 me-4 text-end">Rạp:</div>
+                        <div id="bookticket-confirm-main-movieinfo-title-seat" class="my-3 me-4 text-end">Ghế:</div>
+                    </div>
+                    <!-- DATAFILL VALUE -->
+                    <div id="bookticket-confirm-main-movieinfo-value">
+                        <div id="bookticket-confirm-main-movieinfo-value-title" class="my-3">Sự trả thù của ambatukam
+                        </div>
+                        <div id="bookticket-confirm-main-movieinfo-value-date" class="my-3">30/02/2182</div>
+                        <div id="bookticket-confirm-main-movieinfo-value-showtime" class="my-3">17:30</div>
+                        <div id="bookticket-confirm-main-movieinfo-value-room" class="my-3">Rạp 69</div>
+                        <div id="bookticket-confirm-main-movieinfo-value-seat" class="my-3">C4, B52</div>
+                    </div>
+                </div>
+                <!-- Cart info -->
+                <div id="bookticket-confirm-main-cartinfo">
+                    <table class="w-100 text-center">
+                        <thead class="text-yellow fs-4">
+                            <tr>
+                                <td class="px-2">Mục</td>
+                                <td class="px-2">Giá</td>
+                                <td class="px-2">Số lượng</td>
+                                <td class="px-2">Tổng</td>
+                            </tr>
+                        </thead>
+                        <!-- DATAFILL -->
+                        <tbody>
+                            <tr>
+                                <td class="bookticket-confirm-main-cartinfo-category px-2">Vé thường</td>
+                                <td class="bookticket-confirm-main-cartinfo-price px-2">90,000</td>
+                                <td class="bookticket-confirm-main-cartinfo-quantity px-2">3</td>
+                                <td class="bookticket-confirm-main-cartinfo-total px-2">0</td>
+                            </tr>
+                            <tr>
+                                <td class="bookticket-confirm-main-cartinfo-category px-2">Vé đôi</td>
+                                <td class="bookticket-confirm-main-cartinfo-price px-2">120,000</td>
+                                <td class="bookticket-confirm-main-cartinfo-quantity px-2">2</td>
+                                <td class="bookticket-confirm-main-cartinfo-total px-2">0</td>
+                            </tr>
+                            <tr>
+                                <td class="bookticket-confirm-main-cartinfo-category px-2">Không ăn gì hết</td>
+                                <td class="bookticket-confirm-main-cartinfo-price px-2">70,000</td>
+                                <td class="bookticket-confirm-main-cartinfo-quantity px-2">1</td>
+                                <td class="bookticket-confirm-main-cartinfo-total px-2">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div id="bookticket-confirm-main-cartinfo-totalall" class="text-end mt-3 fs-3">
+                        Tổng cộng:
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payments -->
+            <div id="bookticket-confirm-payments" class="my-5">
+                <h3 class="text-yellow fw-semibold">Phương thức thanh toán</h3>
+                <!-- DATAFILL -->
+                <!-- Zalo -->
+                <div id="bookticket-confirm-payments-zalo" class="fs-5 fw-semibold my-3">
+                    <input name="paymentsMethod" type="radio" id="zalo" value="zalo" class="form-check-input mx-3">
+                    <label for="zalo" style="color: #2b66f6;">ZaloPay</label>
+                </div>
+                <!-- Momo -->
+                <div id="bookticket-confirm-payments-momo" class="fs-5 fw-semibold my-3">
+                    <input name="paymentsMethod" type="radio" id="momo" value="momo" class="form-check-input mx-3">
+                    <label for="momo" style="color: #a13371;">Momo</label>
+                </div>
+            </div>
+
+            <!-- Payments modal -->
+            <div id="bookticket-confirm-paymodal" class="my-5 text-yellow">
+                <!-- Zalo -->
+                <div id="bookticket-confirm-paymodal-zalo" class="w-100 d-none">
+                    <h3>Vui lòng quét mã để thanh toán</h3>
+                    <h3>Zalo</h3>
+                    <img class="align-self-center w-25" src="../assets/img/bookticket/confirm/img-QR.png" alt="QR Code">
+                </div>
+                <!-- Momo -->
+                <div id="bookticket-confirm-paymodal-momo" class="w-100 d-none">
+                    <h3>Vui lòng quét mã để thanh toán</h3>
+                    <h3>Momo</h3>
+                    <img class="align-self-center w-25" src="../assets/img/bookticket/confirm/img-QR.png" alt="QR Code">
+                </div>
+            </div>
+
+            <!-- Warning -->
+            <div id="bookticket-confirm-warning" class="my-5">
+                <div class="text-white text-end">Quý khách vui lòng kiểm tra thông tin trước khi thanh toán</div>
+                <div class="text-danger text-end">Sau khi thanh toán sẽ không được đổi trả</div>
+            </div>
+
+            <!-- Nagivation button -->
+            <div id="bookticket-nagivation" class="d-flex justify-content-between">
+                <a id="bookticket-next"
+                    class="btn btn-lg btn-sm bg-secondary text-white fs-4 fw-semibold hover-bg-green" href="combo.html"
+                    role="button" style="height: 44px; width: 160px;">Trở lại</a>
+                <a id="bookticket-next" class="btn btn-lg btn-sm bg-yellow text-dark fs-4 fw-semibold hover-bg-green"
+                    href="success.html" role="button" style="height: 44px; width: 160px;">Tiếp
+                    theo</a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div id="footer" class="container-fluid" style="background-color: rgba(0, 19, 55, 0.48);">
+            <div class="container">
+                <footer class="d-flex flex-wrap justify-content-between align-items-center py-5 text-white">
+                    <!-- Logo -->
+                    <a class="col-12 navbar-brand col-lg-4 me-0 border-end" href="#">
+                        <img src="../assets/img/homepage/Logo.png" alt="Logo" style="height: 4rem;">
+                    </a>
+                    <!-- Link -->
+                    <div class="col-12 col-lg-4 d-flex justify-content-center flex-column my-2">
+                        <div class="row ms-5 my-1">
+                            <div class="col-12 col-md-4 ps-0 py-2">
+                                <a href="#" class="text-white hover-yellow text-decoration-none">Trang chủ</a>
+                            </div>
+                            <div class="col-12 col-md-4 ps-0 py-2">
+                                <a href="#" class="text-white hover-yellow text-decoration-none">Hỗ trợ</a>
+                            </div>
+                            <div class="col-12 col-md-4 ps-0 py-2">
+                                <a href="#" class="text-white hover-yellow text-decoration-none">Liên hệ</a>
+                            </div>
+                        </div>
+                        <div class="ms-5 my-1">
+                            <p class="mb-0">Copyright © 2023, IIEX Cinema</p>
+                        </div>
+                    </div>
+                    <!-- Brand -->
+                    <ul class="col-12 col-lg-4 nav justify-content-end">
+                        <li class="nav-item"><a href="#" class="nav-link px-2 text-white hover-yellow"><i
+                                    class="fa-brands fa-facebook fa-2xl"></i></a></li>
+                        <li class="nav-item"><a href="#" class="nav-link px-2 text-white hover-yellow"><i
+                                    class="fa-brands fa-instagram fa-2xl"></i></a></li>
+                        <li class="nav-item"><a href="#" class="nav-link px-2 text-white hover-yellow"><i
+                                    class="fa-brands fa-twitter fa-2xl"></i></a></li>
+                    </ul>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Bootstrap 5.3 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+
+    <!-- JQuery -->
+    <script language="JavaScript" type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+
+    <!-- JS -->
+    <script language="JavaScript" type="text/javascript" src="confirm.js"></script>
+</body>
+
+</html>

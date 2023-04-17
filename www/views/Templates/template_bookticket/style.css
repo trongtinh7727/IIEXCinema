@@ -100,7 +100,8 @@
 #bookticket-seat-main-number,
 #bookticket-seat-main-cart,
 #bookticket-combo-main-combo,
-#bookticket-combo-main-cart {
+#bookticket-combo-main-cart,
+#bookticket-confirm-main {
     background-color: rgba(217, 217, 217, 0.25);
 }
 
