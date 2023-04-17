@@ -4,6 +4,11 @@ class SeatModel
 {
     public $db;
 
+    public function setDB($db)
+    {
+        $this->db = $db;
+    }
+
     public function getByTheater($theater_id)
     {
         $sql = "select * from seat where THE_ID = ?";

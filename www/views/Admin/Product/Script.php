@@ -5,55 +5,44 @@
         let ID = tds[0].innerHTML;
         $("#action").val(ID);
 
-        $.post("./?api/movie/getbyid", {
+        $.post("./?api/product/getbyid", {
             ID
         }, function(data, status) {
             var table = $('#table');
             console.log(data)
             data.data.forEach(function(object) {
-                $('#TITLE').val(object.TITLE)
-                $('#DIRECTOR').val(object.DIRECTOR)
-                $('#ACTORS').val(object.ACTORS)
-                $('#GENRE').val(object.GENRE)
+                $('#NAME').val(object.NAME)
+                $('#TYPE').val(object.TYPE)
+                $('#PRICE').val(object.PRICE)
+                $('#QUANTITY').val(object.QUANTITY)
                 $('#STORY').val(object.STORY)
-                $('#DURATION').val(object.DURATION)
-                $('#OPENING_DAY').val(object.OPENING_DAY)
-                $('#CLOSING_DAY').val(object.CLOSING_DAY)
-                $('#POSTER').val(object.POSTER)
-                $('#TRAILER').val(object.TRAILER)
+                $('#Expiry_Date').val(object.Expiry_Date)
+
             });
         }, "json");
     }
     $(document).ready(function() {
 
         var table = $('#dataTable').DataTable({
-            'processing': true,
-            'serverSide': true,
-            'serverMethod': 'post',
-            ajax: "./?api/movie/getall",
+            ajax: "./?api/product/getall",
             columns: [{
                     data: 'ID'
                 },
                 {
-                    data: 'TITLE'
+                    data: 'NAME'
                 },
                 {
-                    data: 'DIRECTOR'
+                    data: 'TYPE'
                 },
                 {
-                    data: 'ACTORS'
+                    data: 'PRICE',
+                    render: $.fn.dataTable.render.number(',', '.', 0, '$')
                 },
                 {
-                    data: 'GENRE'
+                    data: 'QUANTITY'
                 },
                 {
-                    data: 'DURATION'
-                },
-                {
-                    data: 'OPENING_DAY'
-                },
-                {
-                    data: 'CLOSING_DAY'
+                    data: 'Expiry_Date'
                 },
                 {
                     data: null,
@@ -66,31 +55,23 @@
 
 
         $("#add").click(function() {
-            let TITLE = $('#TITLE').val()
-            let DIRECTOR = $('#DIRECTOR').val()
-            let ACTORS = $('#ACTORS').val()
-            let GENRE = $('#GENRE').val()
-            let STORY = $('#STORY').val()
-            let DURATION = $('#DURATION').val()
-            let OPENING_DAY = $('#OPENING_DAY').val()
-            let CLOSING_DAY = $('#CLOSING_DAY').val()
-            let POSTER = $('#POSTER').val()
-            let TRAILER = $('#TRAILER').val()
+            let NAME = $('#NAME').val()
+            let TYPE = $('#TYPE').val()
+            let PRICE = $('#PRICE').val()
+            let QUANTITY = $('#QUANTITY').val()
+
+            let Expiry_Date = $('#Expiry_Date').val()
+
 
             let action = $("#action").val();
 
             if (action == "Add") {
-                $.post("./?api/movie/add", {
-                    TITLE,
-                    DIRECTOR,
-                    ACTORS,
-                    GENRE,
-                    STORY,
-                    DURATION,
-                    OPENING_DAY,
-                    CLOSING_DAY,
-                    POSTER,
-                    TRAILER
+                $.post("./?api/product/add", {
+                    NAME,
+                    TYPE,
+                    PRICE,
+                    QUANTITY,
+                    Expiry_Date
                 }, function(data, status) {
                     console.log(data)
                     if (data.status) {
@@ -109,17 +90,12 @@
                 }, "json")
             } else {
                 let ID = $("#action").val();
-                $.post("./?api/movie/update", {
-                    TITLE,
-                    DIRECTOR,
-                    ACTORS,
-                    GENRE,
-                    STORY,
-                    DURATION,
-                    OPENING_DAY,
-                    CLOSING_DAY,
-                    POSTER,
-                    TRAILER,
+                $.post("./?api/product/update", {
+                    NAME,
+                    TYPE,
+                    PRICE,
+                    QUANTITY,
+                    Expiry_Date,
                     ID
                 }, function(data, status) {
                     console.log(data)
@@ -145,7 +121,7 @@
 
         $("#delete-button").on('click', function() {
             let uid = $('#delete-button').attr('uid');
-            $.post("./?api/movie/delete", {
+            $.post("./?api/product/delete", {
                 id: uid
             }, function(data, status) {
                 console.log(data)
@@ -185,15 +161,10 @@
     }
 
     function clearForm() {
-        $('#TITLE').val("")
-        $('#DIRECTOR').val("")
-        $('#ACTORS').val("")
-        $('#GENRE').val("")
-        $('#STORY').val("")
-        $('#DURATION').val("")
-        $('#OPENING_DAY').val("")
-        $('#CLOSING_DAY').val("")
-        $('#POSTER').val("")
-        $('#TRAILER').val("")
+        $('#NAME').val("")
+        $('#TYPE').val("")
+        $('#PRICE').val("")
+        $('#QUANTITY').val("")
+        $('#Expiry_Date').val("")
     }
 </script>

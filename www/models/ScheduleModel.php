@@ -4,6 +4,11 @@ class ScheduleModel
 {
     public $db;
 
+    public function setDB($db)
+    {
+        $this->db = $db;
+    }
+
     public function getByTheater($theater_id)
     {
         $sql = "CALL `get_schedule_by_theater`(?)";

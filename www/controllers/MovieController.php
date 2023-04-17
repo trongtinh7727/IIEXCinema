@@ -2,46 +2,49 @@
 class MovieController extends AdminController
 {
     public $model;
-
-    function __construct()
+    public function setModel($model)
     {
+        $this->model = $model;
     }
 
     public function getAll()
     {
+        $draw = $_POST['draw'];
+        $row = $_POST['start'];
+        $rowperpage = $_POST['length']; // Số dòng mỗi trang
+        $columnIndex = $_POST['order'][0]['column']; // Cột đánh chỉ số
+        $columnName = $_POST['columns'][$columnIndex]['data']; // Cột tên
+        $columnSortOrder = $_POST['order'][0]['dir']; // Sắp xếp asc / desc
+        $searchValue = $_POST['search']['value']; // Từ khóa tìm kiếm
+
+        // print_r($row);
         echo $this->model->getAll();
     }
+
+
+
 
     public function add()
     {
         $this->isAuthenticated();
-        if (
-            !isset( $_POST['TITLE']) ||
-            !isset( $_POST['DIRECTOR']) ||
-            !isset( $_POST['ACTORS']) ||
-            !isset( $_POST['GENRE']) ||
-            !isset( $_POST['STORY']) ||
-            !isset( $_POST['DURATION']) ||
-            !isset( $_POST['OPENING_DAY']) ||
-            !isset( $_POST['CLOSING_DAY']) ||
-            !isset( $_POST['POSTER']) ||
-            !isset( $_POST['TRAILER']) 
-        ) {
-            die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
-        }
-
-
-        $TITLE =   $_POST['TITLE'];
-        $DIRECTOR =   $_POST['DIRECTOR'];
-        $ACTORS =   $_POST['ACTORS'];
-        $GENRE =   $_POST['GENRE'];
-        $STORY =   $_POST['STORY'];
-        $DURATION =   $_POST['DURATION'];
-        $OPENING_DAY =   $_POST['OPENING_DAY'];
-        $CLOSING_DAY =   $_POST['CLOSING_DAY'];
-        $POSTER =   $_POST['POSTER'];
-        $TRAILER =   $_POST['TRAILER'];
-        echo $this->model->add($TITLE,$DIRECTOR,$ACTORS,$GENRE,$STORY,$DURATION,$OPENING_DAY,$CLOSING_DAY,$POSTER,$TRAILER);
+        $params = array(
+            'TITLE', 'DIRECTOR',
+            'ACTORS', 'GENRE', 'STORY', 'DURATION',
+            'OPENING_DAY', 'CLOSING_DAY', 'POSTER', 'TRAILER'
+        );
+        $data = $this->validateParams($params);
+        echo $this->model->add(
+            $data['TITLE'],
+            $data['DIRECTOR'],
+            $data['ACTORS'],
+            $data['GENRE'],
+            $data['STORY'],
+            $data['DURATION'],
+            $data['OPENING_DAY'],
+            $data['CLOSING_DAY'],
+            $data['POSTER'],
+            $data['TRAILER']
+        );
     }
 
     public function delete()
@@ -60,36 +63,26 @@ class MovieController extends AdminController
     public function update()
     {
         $this->isAuthenticated();
-        if (
-
-            !isset( $_POST['TITLE']) ||            
-            !isset( $_POST['ID']) ||
-            !isset( $_POST['DIRECTOR']) ||
-            !isset( $_POST['ACTORS']) ||
-            !isset( $_POST['GENRE']) ||
-            !isset( $_POST['STORY']) ||
-            !isset( $_POST['DURATION']) ||
-            !isset( $_POST['OPENING_DAY']) ||
-            !isset( $_POST['CLOSING_DAY']) ||
-            !isset( $_POST['POSTER']) ||
-            !isset( $_POST['TRAILER']) 
-        ) {
-            die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
-        }
-        $ID = $_POST['ID'];
-     
-        $TITLE =   $_POST['TITLE'];
-        $DIRECTOR =   $_POST['DIRECTOR'];
-        $ACTORS =   $_POST['ACTORS'];
-        $GENRE =   $_POST['GENRE'];
-        $STORY =   $_POST['STORY'];
-        $DURATION =   $_POST['DURATION'];
-        $OPENING_DAY =   $_POST['OPENING_DAY'];
-        $CLOSING_DAY =   $_POST['CLOSING_DAY'];
-        $POSTER =   $_POST['POSTER'];
-        $TRAILER =   $_POST['TRAILER'];
-
-        echo $this->model->update($TITLE,$DIRECTOR,$ACTORS,$GENRE,$STORY,$DURATION,$OPENING_DAY,$CLOSING_DAY,$POSTER,$TRAILER,$ID);
+        $this->isAuthenticated();
+        $params = array(
+            'ID', 'TITLE', 'DIRECTOR',
+            'ACTORS', 'GENRE', 'STORY', 'DURATION',
+            'OPENING_DAY', 'CLOSING_DAY', 'POSTER', 'TRAILER'
+        );
+        $data = $this->validateParams($params);
+        echo $this->model->update(
+            $data['TITLE'],
+            $data['DIRECTOR'],
+            $data['ACTORS'],
+            $data['GENRE'],
+            $data['STORY'],
+            $data['DURATION'],
+            $data['OPENING_DAY'],
+            $data['CLOSING_DAY'],
+            $data['POSTER'],
+            $data['TRAILER'],
+            $data['ID']
+        );
     }
     public function getByID()
     {

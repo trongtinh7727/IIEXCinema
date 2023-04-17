@@ -1,5 +1,5 @@
 <?php
-class StaffController extends AdminController
+class ClientController extends AdminController
 {
     public $model;
 

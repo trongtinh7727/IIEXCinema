@@ -3,6 +3,22 @@ class AdminController extends AuthController
 {
     public $model;
 
+    public function setModel($model)
+    {
+        $this->model = $model;
+    }
+
+    // validate if the params is null
+    function validateParams($params)
+    {
+        foreach ($params as $param) {
+            if (!isset($_POST[$param]) || strlen($_POST[$param]) < 1) {
+                die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
+            }
+        }
+        return array_map('trim', $_POST);
+    }
+
     function isAuthenticated()
     {
         if (!isset($_SESSION['userLogin'])) {
@@ -51,10 +67,10 @@ class AdminController extends AuthController
         $_SESSION['path'] = 'theater';
         require_once('views/Admin/dashboard.php');
     }
-    public function suppliesAction()
+    public function productAction()
     {
         $this->isAuthenticated();
-        $_SESSION['path'] = 'Supplies';
+        $_SESSION['path'] = 'Product';
         require_once('views/Admin/dashboard.php');
     }
 }

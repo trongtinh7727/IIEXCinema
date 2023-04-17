@@ -3,6 +3,8 @@
 class Connection
 {
     public static $connection = false;
+
+
     private function __construct()
     {
     }
@@ -16,7 +18,6 @@ class Connection
                     DB_PASS,
                     [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]
                 );
-                // $con = new  mysqli(DB_HOST, DB_USER, DB_PASS, DB_SCHEMA);
                 self::$connection = $con;
                 return self::$connection;
             }
