@@ -21,7 +21,7 @@ class ClientController extends AdminController
     public function add()
     {
         $params = array(
-            'USERNAME', 'FIRSTNAME', 'LASTNAME', 'SEX', 'BIRTHDAY', 'PHONE', 'ADDRESS', 'SALARY', 'ROLE'
+            'USERNAME', 'FIRSTNAME', 'LASTNAME', 'SEX', 'BIRTHDAY', 'PHONE', 'ADDRESS'
         );
         $data = $this->validateParams($params);
         echo $this->model->add(
@@ -31,9 +31,7 @@ class ClientController extends AdminController
             $data['SEX'],
             $data['BIRTHDAY'],
             $data['PHONE'],
-            $data['ADDRESS'],
-            $data['SALARY'],
-            $data['ROLE'],
+            $data['ADDRESS']
         );
     }
     public function delete()
@@ -49,10 +47,10 @@ class ClientController extends AdminController
     public function update()
     {
         $params = array(
-            'USERNAME', 'FIRSTNAME', 'LASTNAME', 'SEX', 'BIRTHDAY', 'PHONE', 'ADDRESS', 'SALARY', 'ROLE', 'ID'
+            'USERNAME', 'FIRSTNAME', 'LASTNAME', 'SEX', 'BIRTHDAY', 'PHONE', 'ADDRESS', 'ID'
         );
         $data = $this->validateParams($params);
-        echo $this->model->add(
+        echo $this->model->update(
             $data['USERNAME'],
             $data['FIRSTNAME'],
             $data['LASTNAME'],
@@ -60,8 +58,6 @@ class ClientController extends AdminController
             $data['BIRTHDAY'],
             $data['PHONE'],
             $data['ADDRESS'],
-            $data['SALARY'],
-            $data['ROLE'],
             $data['ID']
         );
     }

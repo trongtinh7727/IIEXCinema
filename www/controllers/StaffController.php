@@ -52,7 +52,7 @@ class StaffController extends AdminController
             'USERNAME', 'FIRSTNAME', 'LASTNAME', 'SEX', 'BIRTHDAY', 'PHONE', 'ADDRESS', 'SALARY', 'ROLE', 'ID'
         );
         $data = $this->validateParams($params);
-        echo $this->model->add(
+        echo $this->model->update(
             $data['USERNAME'],
             $data['FIRSTNAME'],
             $data['LASTNAME'],

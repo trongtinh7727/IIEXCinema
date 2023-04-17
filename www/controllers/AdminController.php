@@ -33,44 +33,57 @@ class AdminController extends AuthController
     public function indexAction()
     {
         $this->isAuthenticated();
-        $_SESSION['path'] = 'Staff';
+        $path = 'Staff';
         require_once('views/Admin/dashboard.php');
     }
 
     public function staffAction()
     {
         $this->isAuthenticated();
-        $_SESSION['path'] = 'Staff';
+        $path = 'Staff';
+        require_once('views/Admin/dashboard.php');
+    }
+    public function clientAction()
+    {
+        $this->isAuthenticated();
+        $path = 'Client';
         require_once('views/Admin/dashboard.php');
     }
     public function cinemaAction()
     {
         $this->isAuthenticated();
-        $_SESSION['path'] = 'Cinema';
+        $path = 'Cinema';
         require_once('views/Admin/dashboard.php');
     }
     public function movieAction()
     {
         $this->isAuthenticated();
-        $_SESSION['path'] = 'Movie';
+        $path = 'Movie';
         require_once('views/Admin/dashboard.php');
     }
     public function scheduleAction()
     {
         $this->isAuthenticated();
-        $_SESSION['path'] = 'Schedule';
+        $path = 'Schedule';
         require_once('views/Admin/dashboard.php');
     }
     public function theaterAction()
     {
         $this->isAuthenticated();
-        $_SESSION['path'] = 'theater';
+        $path = 'theater';
         require_once('views/Admin/dashboard.php');
     }
     public function productAction()
     {
         $this->isAuthenticated();
-        $_SESSION['path'] = 'Product';
+        $path = 'Product';
+        require_once('views/Admin/dashboard.php');
+    }
+
+    public function transactionAction()
+    {
+        $this->isAuthenticated();
+        $path = 'Transaction';
         require_once('views/Admin/dashboard.php');
     }
 }

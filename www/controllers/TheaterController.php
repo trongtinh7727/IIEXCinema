@@ -39,7 +39,7 @@ class TheaterController extends AdminController
             'THEATERNUM', 'THEATER_ID'
         );
         $data = $this->validateParams($params);
-        echo $this->model->add(
+        echo $this->model->update(
             $data['THEATERNUM'],
             $data['THEATER_ID']
         );

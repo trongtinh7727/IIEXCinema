@@ -11,7 +11,7 @@ class ClientModel
 
     public function getAll()
     {
-        $sql = 'SELECT ID, USERNAME, FIRSTNAME , LASTNAME, SEX, BIRTHDAY, PHONE, ADDRESS, SALARY FROM staff';
+        $sql = 'SELECT ID, USERNAME, FIRSTNAME , LASTNAME, SEX, BIRTHDAY, PHONE, ADDRESS FROM client';
         try {
             $stmt = $this->db->prepare($sql);
             $stmt->execute();
@@ -24,18 +24,18 @@ class ClientModel
         }
         return json_encode(array('status' => true, 'data' => $data));
     }
-    public function add($USERNAME, $FIRSTNAME, $LASTNAME, $SEX, $BIRTHDAY, $PHONE, $ADDRESS, $SALARY, $ROLE)
+    public function add($USERNAME, $FIRSTNAME, $LASTNAME, $SEX, $BIRTHDAY, $PHONE, $ADDRESS)
     {
-        $PASSWORD = 'Admin@123';
+        $PASSWORD = 'Demo@123';
         if ($this->isExists($USERNAME)) {
             return (json_encode(array('status' => false, 'data' => "username đã tồn tại")));
         }
-        $sql = 'INSERT INTO staff(USERNAME, PASSWORD, FIRSTNAME,LASTNAME, SEX,BIRTHDAY,PHONE, ADDRESS, SALARY,ROLE) VALUES(?,?,?,?,?,?,?,?,?,?)';
+        $sql = 'INSERT INTO client(USERNAME, PASSWORD, FIRSTNAME,LASTNAME, SEX,BIRTHDAY,PHONE, ADDRESS) VALUES(?,?,?,?,?,?,?,?)';
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($USERNAME, $PASSWORD, $FIRSTNAME, $LASTNAME, $SEX, $BIRTHDAY, $PHONE, $ADDRESS, $SALARY, $ROLE));
+            $stmt->execute(array($USERNAME, $PASSWORD, $FIRSTNAME, $LASTNAME, $SEX, $BIRTHDAY, $PHONE, $ADDRESS));
 
-            return json_encode(array('status' => true, 'data' => 'Thêm nhân viên thành công'));
+            return json_encode(array('status' => true, 'data' => 'Thêm khách hàng thành công'));
         } catch (PDOException $ex) {
             return (json_encode(array('status' => false, 'data' => $ex->getMessage())));
         }
@@ -43,7 +43,7 @@ class ClientModel
 
     private function isExists($USERNAME)
     {
-        $sql = 'SELECT * FROM staff where username = ?';
+        $sql = 'SELECT * FROM client where username = ?';
         $stmt = $this->db->prepare($sql);
         $stmt->execute(array($USERNAME));
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -55,7 +55,7 @@ class ClientModel
     public function delete($id)
     {
 
-        $sql = 'DELETE FROM staff where id = ?';
+        $sql = 'DELETE FROM client where id = ?';
 
         try {
             $stmt = $this->db->prepare($sql);
@@ -73,15 +73,15 @@ class ClientModel
         }
     }
 
-    public function update($USERNAME, $FIRSTNAME, $LASTNAME, $SEX, $BIRTHDAY, $PHONE, $ADDRESS, $SALARY, $ROLE, $ID)
+    public function update($USERNAME, $FIRSTNAME, $LASTNAME, $SEX, $BIRTHDAY, $PHONE, $ADDRESS, $ID)
     {
 
 
-        $sql = 'UPDATE `staff` SET `USERNAME` = ?, `FIRSTNAME` = ?, `LASTNAME` = ?,`SEX` = ?,`BIRTHDAY` = ?, `PHONE` = ?, `ADDRESS` = ?, `SALARY` = ?, `ROLE` = ? WHERE `staff`.`ID` = ?';
+        $sql = 'UPDATE `client` SET `USERNAME` = ?, `FIRSTNAME` = ?, `LASTNAME` = ?,`SEX` = ?,`BIRTHDAY` = ?, `PHONE` = ?, `ADDRESS` = ? WHERE `client`.`ID` = ?';
 
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($USERNAME, $FIRSTNAME, $LASTNAME, $SEX, $BIRTHDAY, $PHONE, $ADDRESS, $SALARY, $ROLE, $ID));
+            $stmt->execute(array($USERNAME, $FIRSTNAME, $LASTNAME, $SEX, $BIRTHDAY, $PHONE, $ADDRESS, $ID));
             $count = $stmt->rowCount();
 
             if ($count == 1) {
@@ -96,7 +96,7 @@ class ClientModel
 
     public function getByID($ID)
     {
-        $sql = "SELECT * FROM staff where ID = '$ID'";
+        $sql = "SELECT * FROM client where ID = '$ID'";
         try {
             $stmt = $this->db->prepare($sql);
             $stmt->execute();

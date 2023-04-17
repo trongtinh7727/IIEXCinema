@@ -13,6 +13,7 @@ class ScheduleController extends AdminController
             echo $this->model->getByTheater($_GET['theater_id']);
         }
     }
+
     public function getByMovie()
     {
         if (isset($_GET['movie_id'])) {
@@ -63,7 +64,7 @@ class ScheduleController extends AdminController
             'THEA_ID', 'ID', 'MOV_ID', 'STARTTIME', 'ENDTIME'
         );
         $data = $this->validateParams($params);
-        echo $this->model->add(
+        echo $this->model->update(
             $data['THEA_ID'],
             $data['MOV_ID'],
             $data['STARTTIME'],

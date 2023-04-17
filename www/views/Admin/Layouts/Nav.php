@@ -38,6 +38,9 @@
         <a href="./?admin/staff" id="Staff" class="btn btn-lg  my-1 w-100">
             Quản lý nhân viên
         </a>
+        <a href="./?admin/client" id="Client" class="btn btn-lg  my-1 w-100">
+            Quản lý khách hàng
+        </a>
         <a href="/?admin/theater" id="theater" class="btn btn-lg my-1 w-100">
             Quản lý phòng chiếu phim
         </a>
@@ -49,6 +52,9 @@
         </a>
         <a href="/?admin/product" id="Product" class="btn btn-lg my-1 w-100">
             Quản lý sản phẩm
+        </a>
+        <a href="/?admin/transaction" id="Transaction" class="btn btn-lg my-1 w-100">
+            Quản lý lịch sử đặt vé
         </a>
     </div>
 

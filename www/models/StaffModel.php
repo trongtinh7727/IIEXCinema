@@ -26,7 +26,7 @@ class StaffModel
     }
     public function add($USERNAME, $FIRSTNAME, $LASTNAME, $SEX, $BIRTHDAY, $PHONE, $ADDRESS, $SALARY, $ROLE)
     {
-        $PASSWORD = 'Admin@123';
+        $PASSWORD = 'Demo@123';
         if ($this->isExists($USERNAME)) {
             return (json_encode(array('status' => false, 'data' => "username đã tồn tại")));
         }

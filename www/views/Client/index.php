@@ -9,7 +9,7 @@
     <title>IIEX Cinema - Homepage</title>
 
     <?php include_once(__DIR__ . "/Layouts/Header.php"); ?>
-    <?php include_once(__DIR__ . "/" . $_SESSION['path'] . "/Style.php"); ?>
+    <?php include_once(__DIR__ . "/" . $path . "/Style.php"); ?>
 
 </head>
 
@@ -19,12 +19,12 @@
         <?php include_once(__DIR__ . "/Layouts/Nav.php"); ?>
 
         <!-- Content -->
-        <?php include_once(__DIR__ . "/" . $_SESSION['path'] . "/Content.php"); ?>
+        <?php include_once(__DIR__ . "/" . $path . "/Content.php"); ?>
 
         <?php include_once(__DIR__ . "/Layouts/Footer.php"); ?>
     </div>
     <?php include_once(__DIR__ . "/Layouts/Script.php"); ?>
-    <?php include_once(__DIR__ . "/" . $_SESSION['path'] . "/Script.php"); ?>
+    <?php include_once(__DIR__ . "/" . $path . "/Script.php"); ?>
 </body>
 
 </html>

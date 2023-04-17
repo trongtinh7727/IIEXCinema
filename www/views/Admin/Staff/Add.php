@@ -30,7 +30,7 @@
                 <div class="mb-3">
                     <label for="sex" class="form-label">Giới tính :</label>
                     <select class="form-select" id="SEX" name="sex">
-                        <option value="M">name</option>
+                        <option value="M">nam</option>
                         <option value="F">nữ</option>
                     </select>
                 </div>

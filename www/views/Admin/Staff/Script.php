@@ -167,7 +167,7 @@
     // hiện dialog xác nhận khi xóa
     function confirmRemoval(btn) {
         let tds = $(btn).closest('tr').find('td')
-        document.getElementById("student_name").innerHTML = tds[2].innerText;
+        document.getElementById("student_name").innerHTML = tds[3].innerText;
         console.log(tds[2].innerText)
         $('#delete-button').attr('uid', tds[0].innerHTML)
         var myModal = new bootstrap.Modal(document.getElementById("confirm-removal-modal"), {});

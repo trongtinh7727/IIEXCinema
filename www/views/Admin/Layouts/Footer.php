@@ -15,7 +15,7 @@
     <script>
         $(function() {
             console.log("run")
-            $(<?php echo $_SESSION['path'] ?>).addClass("btn-dark")
+            $(<?php echo $path ?>).addClass("btn-dark")
         })
     </script>
     <!-- Log out modal -->

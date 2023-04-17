@@ -24,15 +24,15 @@
         <div class="container">
             <!-- Modal -->
             <?php
-            include_once(__DIR__ . "/" . $_SESSION['path'] . "/Add.php");
-            include_once(__DIR__ . "/" . $_SESSION['path'] . "/Remove.php");
+            include_once(__DIR__ . "/" . $path . "/Add.php");
+            include_once(__DIR__ . "/" . $path . "/Remove.php");
 
             ?>
-            <?php include_once(__DIR__ . "/" . $_SESSION['path'] . "/Table.php"); ?>
+            <?php include_once(__DIR__ . "/" . $path . "/Table.php"); ?>
         </div>
     </div>
     <?php include_once(__DIR__ . "/Layouts/Footer.php"); ?>
-    <?php include_once(__DIR__ . "/" . $_SESSION['path'] . "/Script.php"); ?>
+    <?php include_once(__DIR__ . "/" . $path . "/Script.php"); ?>
 </body>
 
 </html>
