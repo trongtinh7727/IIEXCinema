@@ -26,7 +26,7 @@ Route::add("/?admin/cinema", "AdminController@cinemaAction");
 Route::add("/?admin/movie", "AdminController@movieAction");
 Route::add("/?admin/schedule", "AdminController@scheduleAction");
 Route::add("/?admin/theater", "AdminController@theaterAction");
-Route::add("/?admin/supplies", "AdminController@suppliesAction");
+Route::add("/?admin/product", "AdminController@productAction");
 
 
 // API
@@ -36,6 +36,13 @@ Route::add("/?api/staff/getall", "StaffController@getAll");
 Route::add("/?api/staff/add", "StaffController@add");
 Route::add("/?api/staff/update", "StaffController@update");
 Route::add("/?api/staff/delete", "StaffController@delete");
+
+// Client
+Route::add("/?api/client/getbyid", "ClientController@getByID");
+Route::add("/?api/client/getall", "ClientController@getAll");
+Route::add("/?api/client/add", "ClientController@add");
+Route::add("/?api/client/update", "ClientController@update");
+Route::add("/?api/client/delete", "ClientController@delete");
 
 // Movie
 Route::add("/?api/movie/getbyid", "MovieController@getByID");
@@ -82,5 +89,11 @@ Route::add("/?api/schedule/add", "ScheduleController@add");
 Route::add("/?api/schedule/update", "ScheduleController@update");
 Route::add("/?api/schedule/delete", "ScheduleController@delete");
 
+// Product
+Route::add("/?api/product/getbyid", "ProductController@getByID");
+Route::add("/?api/product/getall", "ProductController@getAll");
+Route::add("/?api/product/add", "ProductController@add");
+Route::add("/?api/product/update", "ProductController@update");
+Route::add("/?api/product/delete", "ProductController@delete");
 
 $route = Route::run();

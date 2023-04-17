@@ -4,6 +4,11 @@ class TicketModel
 {
     public $db;
 
+    public function setDB($db)
+    {
+        $this->db = $db;
+    }
+
     public function getAll()
     {
         $sql = 'SELECT * FROM ticket';

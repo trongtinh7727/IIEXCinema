@@ -4,6 +4,11 @@ class TheaterModel
 {
     public $db;
 
+    public function setDB($db)
+    {
+        $this->db = $db;
+    }
+
     public function getByCinema($cinema_id)
     {
         $sql = "SELECT * FROM theater where cin_id = ? order by theaternum asc";

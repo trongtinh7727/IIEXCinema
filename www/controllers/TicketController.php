@@ -3,6 +3,11 @@ class TicketController extends AdminController
 {
     public $model;
 
+    public function setModel($model)
+    {
+        $this->model = $model;
+    }
+
     function __construct()
     {
         $this->isAuthenticated();
@@ -16,22 +21,26 @@ class TicketController extends AdminController
     public function add()
     {
         $this->isAuthenticated();
-        if (!isset($_POST['PRICE'])) {
-            return (json_encode(array('status' => false, 'data' => 'Parameters not valid')));
-        }
-        $Price = $_POST['PRICE'];
-        echo $this->model->add($Price);
+        $params = array(
+            'PRICE'
+        );
+        $data = $this->validateParams($params);
+        echo $this->model->add(
+            $data['PRICE'],
+        );
     }
     public function addTicketSeatSchedule()
     {
         $this->isAuthenticated();
-        if (!isset($_POST['SEAT_ID']) || !isset($_POST['SCHEDULE_ID']) || !isset($_POST['TICKET_ID'])) {
-            return (json_encode(array('status' => false, 'data' => 'Parameters not valid')));
-        }
-        $SEAT_ID = $_POST['SEAT_ID'];
-        $SCHEDULE_ID = $_POST['SCHEDULE_ID'];
-        $TICKET_ID = $_POST['TICKET_ID'];
-        echo $this->model->add($SEAT_ID, $SCHEDULE_ID, $TICKET_ID);
+        $params = array(
+            'SEAT_ID', 'SCHEDULE_ID', 'TICKET_ID'
+        );
+        $data = $this->validateParams($params);
+        echo $this->model->add(
+            $data['SEAT_ID'],
+            $data['SCHEDULE_ID'],
+            $data['TICKET_ID']
+        );
     }
 
     public function getByID()

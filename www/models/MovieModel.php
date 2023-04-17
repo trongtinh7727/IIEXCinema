@@ -2,6 +2,12 @@
 class MovieModel
 {
     public $db;
+
+    public function setDB($db)
+    {
+        $this->db = $db;
+    }
+
     public function getAll()
     {
         $sql = 'SELECT * FROM Movie';
@@ -65,13 +71,13 @@ class MovieModel
         return json_encode(array('status' => true, 'data' => $data));
     }
 
-    public function add($TITLE,$DIRECTOR,$ACTORS,$GENRE,$STORY,$DURATION,$OPENING_DAY,$CLOSING_DAY,$POSTER,$TRAILER)
+    public function add($TITLE, $DIRECTOR, $ACTORS, $GENRE, $STORY, $DURATION, $OPENING_DAY, $CLOSING_DAY, $POSTER, $TRAILER)
     {
         $sql = 'INSERT INTO `movie` (`TITLE`,`DIRECTOR`,`ACTORS`,`GENRE`,`STORY`,`DURATION`,`OPENING_DAY`,`CLOSING_DAY`,`POSTER`,`TRAILER`) VALUES(?,?,?,?,?,?,?,?,?,?)';
 
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($TITLE,$DIRECTOR,$ACTORS,$GENRE,$STORY,$DURATION,$OPENING_DAY,$CLOSING_DAY,$POSTER,$TRAILER));
+            $stmt->execute(array($TITLE, $DIRECTOR, $ACTORS, $GENRE, $STORY, $DURATION, $OPENING_DAY, $CLOSING_DAY, $POSTER, $TRAILER));
 
             return json_encode(array('status' => true, 'data' => 'Thêm phim thành công'));
         } catch (PDOException $ex) {
@@ -100,13 +106,13 @@ class MovieModel
         }
     }
 
-    public function update($TITLE,$DIRECTOR,$ACTORS,$GENRE,$STORY,$DURATION,$OPENING_DAY,$CLOSING_DAY,$POSTER,$TRAILER, $ID)
+    public function update($TITLE, $DIRECTOR, $ACTORS, $GENRE, $STORY, $DURATION, $OPENING_DAY, $CLOSING_DAY, $POSTER, $TRAILER, $ID)
     {
         $sql = 'UPDATE `movie` SET `TITLE` = ?,`DIRECTOR` = ?,`ACTORS` = ?,`GENRE` = ?,`STORY` = ?,`DURATION` = ?,`OPENING_DAY` = ?,`CLOSING_DAY` = ?,`POSTER` = ?,`TRAILER` = ? WHERE `movie`.`ID` = ?';
 
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($TITLE,$DIRECTOR,$ACTORS,$GENRE,$STORY,$DURATION,$OPENING_DAY,$CLOSING_DAY,$POSTER,$TRAILER, $ID));
+            $stmt->execute(array($TITLE, $DIRECTOR, $ACTORS, $GENRE, $STORY, $DURATION, $OPENING_DAY, $CLOSING_DAY, $POSTER, $TRAILER, $ID));
             $count = $stmt->rowCount();
 
             if ($count == 1) {
@@ -125,7 +131,7 @@ class MovieModel
             $stmt = $this->db->prepare($sql);
             $stmt->execute();
         } catch (PDOException $ex) {
-            return(json_encode(array('status' => false, 'data' => $ex->getMessage())));
+            return (json_encode(array('status' => false, 'data' => $ex->getMessage())));
         }
         $data = array();
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {

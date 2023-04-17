@@ -87,13 +87,17 @@
                                     </div>
                                 </div>
                                 <!-- Trailer -->
-                                <div class="swiper-slide-inner-movie-trailer">
-                                    <button id="swiper-slide-inner-movie-trailer-modal-trigger" type="button" class="btn mt-3 px-3 bg-green hover-bg-yellow" data-bs-toggle="modal" data-bs-target="#swiper-slide-inner-movie-trailer-modal">
+                                <div class="swiper-slide-inner-movie-trailer" id="trailer-btn">
+                                    <button onclick="changeTrailer(this)" id="swiper-slide-inner-movie-trailer-modal-trigger" type="button" class="btn mt-3 px-3 bg-green hover-bg-yellow" data-bs-toggle="modal" data-bs-target="#swiper-slide-inner-movie-trailer-modal">
                                         <i class="fa-solid fa-play me-2"></i>
                                         Trailer
                                     </button>
+                                    <input type="hidden" value="<?php echo $movie->TRAILER ?>">
                                 </div>
                             </div>
+                            <script>
+
+                            </script>
                         </div>
                     </div>
                 </div>
@@ -112,7 +116,7 @@
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content" style="background-color: transparent;">
             <div align="center">
-                <iframe class="swiper-trailer-video" src="https://www.youtube.com/embed/gorb-Yhu2Wc?start=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <iframe id="trailerswiper" class="swiper-trailer-video" src="https://www.youtube.com/embed/xy8RznX_uyM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
         </div>
     </div>

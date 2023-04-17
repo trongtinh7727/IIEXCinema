@@ -2,6 +2,13 @@
 class AdminModel
 {
     public $db;
+
+    public function setDB($db)
+    {
+        $this->db = $db;
+    }
+
+
     public function CheckUserLogin($username, $password)
     {
         $sql = 'SELECT * FROM staff where username = ? 

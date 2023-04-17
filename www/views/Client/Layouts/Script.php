@@ -13,7 +13,7 @@
 
 <script>
     $(document).ready(function() {
-        $swiper = new Swiper("#toppartSwiper", {
+        const swiper = new Swiper("#toppartSwiper", {
             effect: "coverflow",
             grabCursor: true,
             centeredSlides: true,
@@ -30,6 +30,12 @@
                 prevEl: ".swiper-button-prev",
             }
         });
+
+        swiper.on('transitionEnd', function() {
+            var newSrc = $('.swiper-slide-active .swiper-slide-inner-right-main input[type="hidden"]').val();
+            $('#trailerswiper').attr('src', newSrc);
+        });
+
         $("#swiper-slide-inner-movie-trailer-modal").on("hidden.bs.modal", function() {
             $('.swiper-trailer-video').attr('src', $('.trailer-video').attr('src'));
         });

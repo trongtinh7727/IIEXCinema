@@ -3,10 +3,10 @@ class ScheduleController extends AdminController
 {
     public $model;
 
-    function __construct()
+    public function setModel($model)
     {
+        $this->model = $model;
     }
-
     public function getByTheater()
     {
         if (isset($_GET['theater_id'])) {
@@ -30,19 +30,17 @@ class ScheduleController extends AdminController
     public function add()
     {
         $this->isAuthenticated();
-        if (
-            !isset($_POST['THEA_ID']) || !isset($_POST['PRICE']) ||
-            !isset($_POST['MOV_ID']) || !isset($_POST['STARTTIME']) || !isset($_POST['ENDTIME'])
-        ) {
-            die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
-        }
-
-        $THEA_ID = $_POST['THEA_ID'];
-        $MOV_ID = $_POST['MOV_ID'];
-        $STARTTIME = $_POST['STARTTIME'];
-        $ENDTIME = $_POST['ENDTIME'];
-        $PRICE = $_POST['PRICE'];
-        echo $this->model->add($THEA_ID, $MOV_ID, $STARTTIME, $ENDTIME, $PRICE);
+        $params = array(
+            'THEA_ID', 'PRICE', 'MOV_ID', 'STARTTIME', 'ENDTIME'
+        );
+        $data = $this->validateParams($params);
+        echo $this->model->add(
+            $data['THEA_ID'],
+            $data['MOV_ID'],
+            $data['STARTTIME'],
+            $data['ENDTIME'],
+            $data['PRICE']
+        );
     }
 
     public function delete()
@@ -61,19 +59,16 @@ class ScheduleController extends AdminController
     public function update()
     {
         $this->isAuthenticated();
-        if (
-            !isset($_POST['THEA_ID']) ||
-            !isset($_POST['MOV_ID']) || !isset($_POST['STARTTIME']) || !isset($_POST['ENDTIME'])
-            || !isset($_POST['ID'])
-        ) {
-            die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
-        }
-
-        $ID = $_POST['ID'];
-        $THEA_ID = $_POST['THEA_ID'];
-        $MOV_ID = $_POST['MOV_ID'];
-        $STARTTIME = $_POST['STARTTIME'];
-        $ENDTIME = $_POST['ENDTIME'];
-        echo $this->model->update($THEA_ID, $MOV_ID, $STARTTIME, $ENDTIME, $ID);
+        $params = array(
+            'THEA_ID', 'ID', 'MOV_ID', 'STARTTIME', 'ENDTIME'
+        );
+        $data = $this->validateParams($params);
+        echo $this->model->add(
+            $data['THEA_ID'],
+            $data['MOV_ID'],
+            $data['STARTTIME'],
+            $data['ENDTIME'],
+            $data['ID']
+        );
     }
 }
