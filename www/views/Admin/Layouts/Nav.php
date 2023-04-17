@@ -47,9 +47,9 @@
         <a href="/?admin/schedule" id="Schedule" class="btn btn-lg my-1 w-100">
             Quản lý lịch chiếu phim
         </a>
-        <!-- <a href="/?admin/supplies" id="supplies_manager" class="btn btn-lg my-1 w-100">
-            Supplies Manager
-        </a> -->
+        <a href="/?admin/product" id="Product" class="btn btn-lg my-1 w-100">
+            Quản lý sản phẩm
+        </a>
     </div>
 
     <!-- Offcanvas footer -->

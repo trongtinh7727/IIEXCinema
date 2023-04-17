@@ -1,0 +1,10 @@
+@media screen and (max-width: 992px) {
+    #bookticket-confirm-paymodal img{
+        width: 50% !important;
+    }
+}
+@media screen and (max-width: 576px) {
+    #bookticket-confirm-paymodal img{
+        width: 100% !important;
+    }
+}

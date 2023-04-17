@@ -1,5 +1,5 @@
 <?php
-class StaffController extends AdminController
+class ProductController extends AdminController
 {
     public $model;
 
@@ -21,19 +21,15 @@ class StaffController extends AdminController
     public function add()
     {
         $params = array(
-            'USERNAME', 'FIRSTNAME', 'LASTNAME', 'SEX', 'BIRTHDAY', 'PHONE', 'ADDRESS', 'SALARY', 'ROLE'
+            'NAME', 'TYPE', 'PRICE', 'QUANTITY', 'Expiry_Date'
         );
         $data = $this->validateParams($params);
         echo $this->model->add(
-            $data['USERNAME'],
-            $data['FIRSTNAME'],
-            $data['LASTNAME'],
-            $data['SEX'],
-            $data['BIRTHDAY'],
-            $data['PHONE'],
-            $data['ADDRESS'],
-            $data['SALARY'],
-            $data['ROLE'],
+            $data['NAME'],
+            $data['TYPE'],
+            $data['PRICE'],
+            $data['QUANTITY'],
+            $data['Expiry_Date']
         );
     }
     public function delete()
@@ -49,19 +45,15 @@ class StaffController extends AdminController
     public function update()
     {
         $params = array(
-            'USERNAME', 'FIRSTNAME', 'LASTNAME', 'SEX', 'BIRTHDAY', 'PHONE', 'ADDRESS', 'SALARY', 'ROLE', 'ID'
+            'NAME', 'TYPE', 'PRICE', 'QUANTITY', 'Expiry_Date', 'ID'
         );
         $data = $this->validateParams($params);
         echo $this->model->add(
-            $data['USERNAME'],
-            $data['FIRSTNAME'],
-            $data['LASTNAME'],
-            $data['SEX'],
-            $data['BIRTHDAY'],
-            $data['PHONE'],
-            $data['ADDRESS'],
-            $data['SALARY'],
-            $data['ROLE'],
+            $data['NAME'],
+            $data['TYPE'],
+            $data['PRICE'],
+            $data['QUANTITY'],
+            $data['Expiry_Date'],
             $data['ID']
         );
     }

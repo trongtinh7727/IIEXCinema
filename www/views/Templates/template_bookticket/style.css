@@ -98,7 +98,10 @@
 #bookticket-ticket-main-cart,
 #bookticket-seat-main-info,
 #bookticket-seat-main-number,
-#bookticket-seat-main-cart {
+#bookticket-seat-main-cart,
+#bookticket-combo-main-combo,
+#bookticket-combo-main-cart,
+#bookticket-confirm-main {
     background-color: rgba(217, 217, 217, 0.25);
 }
 
@@ -112,12 +115,14 @@
 }
 
 #bookticket-ticket-main-cart-total,
-#bookticket-seat-main-cart-total {
+#bookticket-seat-main-cart-total,
+#bookticket-combo-main-cart-total {
     border-top: 4px solid #000218;
 }
 
 #bookticket-ticket-main-cart h3,
-#bookticket-seat-main-cart h3 {
+#bookticket-seat-main-cart h3,
+#bookticket-combo-main-cart h3 {
     border-bottom: 4px solid #000218;
 }
 

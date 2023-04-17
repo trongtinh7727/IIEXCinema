@@ -3,8 +3,9 @@ class FoodComboController extends AdminController
 {
     public $model;
 
-    function __construct()
+    public function setModel($model)
     {
+        $this->model = $model;
     }
 
     public function getAll()

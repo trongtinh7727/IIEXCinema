@@ -3,6 +3,11 @@ class AuthController
 {
     public $model;
 
+    public function setModel($model)
+    {
+        $this->model = $model;
+    }
+
     function isAuthenticated()
     {
         if (!isset($_SESSION['userLogin'])) {
@@ -22,7 +27,7 @@ class AuthController
                 $_SESSION['userLogin']['username'] = $username;
                 if ($tb == 'staff') {
                     $_SESSION['userLogin']['role'] = 1;
-                    header("Location: /?admin/");
+                    header("Location: /?admin/staff");
                 } else {
                     $_SESSION['userLogin']['role'] = 2;
                     header("Location: /?");
@@ -31,7 +36,7 @@ class AuthController
         }
         if (isset($_SESSION['userLogin'])) {
             if ($_SESSION['userLogin']['role'] == 1) {
-                header("Location: /?admin/");
+                header("Location: /?admin/staff");
             } else {
                 header("Location: /?");
             }

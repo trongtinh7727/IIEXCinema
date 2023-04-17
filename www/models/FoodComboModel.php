@@ -3,7 +3,10 @@
 class FoodComboModel
 {
     public $db;
-
+    public function setDB($db)
+    {
+        $this->db = $db;
+    }
     public function getAll()
     {
         $sql = 'SELECT * FROM foodcombo';
@@ -47,9 +50,9 @@ class FoodComboModel
             $count = $stmt->rowCount();
 
             if ($count == 1) {
-                echo json_encode(array('status' => true, 'data' => 'Xóa sinh viên thành công'));
+                echo json_encode(array('status' => true, 'data' => 'Xóa foodcombo thành công'));
             } else {
-                die(json_encode(array('status' => false, 'data' => 'Mã sinh viên không hợp lệ')));
+                die(json_encode(array('status' => false, 'data' => 'Mã foodcombo không hợp lệ')));
             }
         } catch (PDOException $ex) {
             die(json_encode(array('status' => false, 'data' => $ex->getMessage())));

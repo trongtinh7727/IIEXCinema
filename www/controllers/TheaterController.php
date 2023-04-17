@@ -3,8 +3,9 @@ class TheaterController extends AdminController
 {
     public $model;
 
-    function __construct()
+    public function setModel($model)
     {
+        $this->model = $model;
     }
 
     public function getByCinema()
@@ -22,31 +23,26 @@ class TheaterController extends AdminController
     public function add()
     {
         $this->isAuthenticated();
-        if (
-
-            !isset($_POST['THEATERNUM'])
-            || !isset($_POST['SEATCOUNT'])
-        ) {
-            die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
-        }
-
-        $THEATERNUM = $_POST['THEATERNUM'];
-        $SEATCOUNT = $_POST['SEATCOUNT'];
-        echo $this->model->add($THEATERNUM, $SEATCOUNT);
+        $params = array(
+            'THEATERNUM', 'SEATCOUNT'
+        );
+        $data = $this->validateParams($params);
+        echo $this->model->add(
+            $data['THEATERNUM'],
+            $data['SEATCOUNT']
+        );
     }
     public function update()
     {
         $this->isAuthenticated();
-        if (
-            !isset($_POST['THEATER_ID']) ||
-            !isset($_POST['THEATERNUM'])
-        ) {
-            die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
-        }
-
-        $THEATER_ID = $_POST['THEATER_ID'];
-        $THEATERNUM = $_POST['THEATERNUM'];
-        echo $this->model->update($THEATERNUM, $THEATER_ID);
+        $params = array(
+            'THEATERNUM', 'THEATER_ID'
+        );
+        $data = $this->validateParams($params);
+        echo $this->model->add(
+            $data['THEATERNUM'],
+            $data['THEATER_ID']
+        );
     }
 
     public function delete()
