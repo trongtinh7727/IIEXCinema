@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 14, 2023 at 11:38 AM
+-- Generation Time: Apr 18, 2023 at 11:04 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -73,17 +73,19 @@ Select THEATER.SEATCOUNT Into @seatCount from THEATER where ID =  p_theaterID;
 	END WHILE;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `create_theater` (IN `cin_id` INT, IN `theater_num` INT, IN `seat_count` INT)   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `create_theater` (IN `theater_num` INT, IN `seat_count` INT)   BEGIN
   -- Tạo rạp chiếu phim mới
-  INSERT INTO `theater` (`CIN_ID`, `THEATERNUM`, `SEATCOUNT`, `ISSHOWING`)
-  VALUES (cin_id, theater_num, seat_count, 0);
+  INSERT INTO `theater` (`THEATERNUM`, `SEATCOUNT`, `ISSHOWING`)
+  VALUES (theater_num, seat_count, 0);
 
   -- Lấy ID của rạp chiếu phim mới
   SET @theater_id = LAST_INSERT_ID();
 
   -- Tạo các ghế Standard trong rạp chiếu phim
+  SET @Standard_count = FLOOR(seat_count / 3);
+  SET @Standard_count = @Standard_count + @Standard_count;
   SET @seat_num = 1;
-  WHILE @seat_num <= seat_count DO
+  WHILE @seat_num <= @Standard_count DO
     INSERT INTO `seat` (`THE_ID`, `SEATNUMBER`, `SEATTYPE`)
     VALUES (@theater_id, @seat_num, 'Standard');
     SET @seat_num = @seat_num + 1;
@@ -99,6 +101,52 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `create_theater` (IN `cin_id` INT, I
   END WHILE;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_foodcombo` ()   SELECT
+    `iiex_cinema`.`foodcombo`.`ID` AS `ID`,
+    `iiex_cinema`.`foodcombo`.`NAME` AS `NAME`,
+    MAX(
+        CASE WHEN `iiex_cinema`.`product`.`TYPE` = 'Đồ ăn' THEN `iiex_cinema`.`product`.`NAME` ELSE NULL
+    END
+) AS `TenDoAn`,
+GROUP_CONCAT(
+    CASE WHEN `iiex_cinema`.`product`.`TYPE` = 'Đồ ăn' THEN `iiex_cinema`.`product_fcb`.`QUANTITY` ELSE NULL
+END SEPARATOR ','
+) AS `QuantityDoAn`,
+MAX(
+    CASE WHEN `iiex_cinema`.`product`.`TYPE` = 'Đồ uống' THEN `iiex_cinema`.`product`.`NAME` ELSE NULL
+END
+) AS `TenDoUong`,
+GROUP_CONCAT(
+    CASE WHEN `iiex_cinema`.`product`.`TYPE` = 'Đồ uống' THEN `iiex_cinema`.`product_fcb`.`QUANTITY` ELSE NULL
+END SEPARATOR ','
+) AS `QuantityDoUong`,
+`iiex_cinema`.`foodcombo`.`PRICE` AS `PRICE`
+FROM
+    (
+        (
+            `iiex_cinema`.`foodcombo`
+        JOIN `iiex_cinema`.`product_fcb` ON
+            (
+                `iiex_cinema`.`foodcombo`.`ID` = `iiex_cinema`.`product_fcb`.`FCB_ID`
+            )
+        )
+    JOIN `iiex_cinema`.`product` ON
+        (
+            `iiex_cinema`.`product`.`ID` = `iiex_cinema`.`product_fcb`.`PRODUCT_ID`
+        )
+    )
+GROUP BY
+    `iiex_cinema`.`foodcombo`.`NAME`$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_schedule_by_id` (IN `schedule_id` INT)   SELECT movie.TITLE,movie.POSTER,movie.TRAILER, schedule.STARTTIME, theater.THEATERNUM, ticket.price
+FROM movie, schedule, theater, ticket, ticket_seat_schedule
+WHERE movie.ID = schedule.MOV_ID
+AND schedule.THEA_ID = theater.ID
+AND ticket.ID = ticket_seat_schedule.TICKET_ID
+AND schedule.ID = ticket_seat_schedule.SCHEDULE_ID
+AND schedule.ID = schedule_id
+GROUP BY schedule.ID$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_schedule_by_theater` (IN `theater_id` INT)   SELECT movie.TITLE, movie.DURATION,schedule.* ,  theater.SEATCOUNT, COUNT(ticket_seat_schedule.TICKET_ID) AS EMPTYSEAT
 FROM schedule, theater, ticket_seat_schedule, movie
 WHERE schedule.THEA_ID = theater.ID
@@ -108,7 +156,20 @@ AND ticket_seat_schedule.BOOKED  = 0
 AND theater.ID = theater_id
 GROUP BY schedule.ID$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_schedule_today` ()   SELECT schedule.ID,movie.ID as MID, movie.TITLE, movie.POSTER, movie.STORY, GROUP_CONCAT(TIME(schedule.STARTTIME)) AS TIME, DATE(schedule.STARTTIME) as DAY FROM schedule JOIN movie ON movie.ID = schedule.MOV_ID WHERE now()< schedule.STARTTIME AND DATE(now()) = DATE(schedule.STARTTIME) GROUP BY MID$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_trailers` ()   SELECT id, trailer FROM movie WHERE LENGTH(trailer) > 1 LIMIT 10$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_transactions` ()   SELECT client.USERNAME, client.FIRSTNAME, client.LASTNAME, client.PHONE, client.ADDRESS,movie.TITLE,schedule.STARTTIME, schedule.ENDTIME, GROUP_CONCAT(seat.SEATNUMBER) as Seats, SUM(ticket.price) AS ticketPrice, foodcombo.NAME as Food, foodcombo.PRICE, SUM(ticket.price) + foodcombo.PRICE as Total FROM `booking`, client, ticket, ticket_seat_schedule, schedule, seat, movie, food_booking, foodcombo 
+WHERE client.ID = booking.CLIENT_ID 
+AND ticket.BOO_ID = booking.ID 
+AND ticket_seat_schedule.TICKET_ID = ticket.ID 
+AND schedule.ID = ticket_seat_schedule.SCHEDULE_ID 
+AND seat.ID = ticket_seat_schedule.SEAT_ID 
+AND movie.ID = schedule.MOV_ID 
+AND food_booking.FOOD_ID = foodcombo.ID 
+AND booking.ID = food_booking.BOOKING_ID
+GROUP BY booking.ID$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `isValidSchedule` (IN `stime` DATETIME, IN `theater_num` INT)   SELECT * FROM `schedule` 
 WHERE stime BETWEEN STARTTIME AND ENDTIME 
@@ -140,30 +201,7 @@ CREATE TABLE `booking` (
 --
 
 INSERT INTO `booking` (`ID`, `STAFF_ID`, `CLIENT_ID`, `CREATED_AT`) VALUES
-(1, 1, 1, '2023-04-04 15:23:50');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cinema`
---
-
-CREATE TABLE `cinema` (
-  `ID` int(11) NOT NULL,
-  `NAME` varchar(50) DEFAULT NULL,
-  `ADDRESS` varchar(50) DEFAULT NULL,
-  `PHONE` char(15) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `cinema`
---
-
-INSERT INTO `cinema` (`ID`, `NAME`, `ADDRESS`, `PHONE`) VALUES
-(1, 'Lotte Cinema Q7', 'Q7, Thành phố Hồ Chí minh', '0843206397'),
-(2, 'Cineplex', '123 Main St', '555-1234'),
-(3, 'AMC Theaters', '456 Elm St', '555-5678'),
-(4, 'Regal Cinemas', '789 Oak', '0843206396');
+(2, 1, 1, '2023-04-17 16:37:42');
 
 -- --------------------------------------------------------
 
@@ -175,20 +213,37 @@ CREATE TABLE `client` (
   `ID` int(11) NOT NULL,
   `USERNAME` varchar(50) DEFAULT NULL,
   `PASSWORD` varchar(50) DEFAULT NULL,
-  `NAME` varchar(50) DEFAULT NULL,
+  `FIRSTNAME` varchar(50) DEFAULT NULL,
+  `LASTNAME` varchar(20) DEFAULT NULL,
+  `SEX` varchar(5) DEFAULT NULL,
+  `BIRTHDAY` date DEFAULT NULL,
   `PHONE` char(15) DEFAULT NULL,
-  `ADDRESS` varchar(50) DEFAULT NULL
+  `ADDRESS` varchar(50) DEFAULT NULL,
+  `ROLE` int(11) DEFAULT 2
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `client`
 --
 
-INSERT INTO `client` (`ID`, `USERNAME`, `PASSWORD`, `NAME`, `PHONE`, `ADDRESS`) VALUES
-(1, 'user', '123456', 'Lê Hoàng', '0843201578', NULL),
-(2, 'johndoe', 'password', 'John Doe', '555-1234', '123 Main St'),
-(3, 'janedoe', 'password', 'Jane Doe', '555-5678', '456 Elm St'),
-(4, 'bobsmith', 'password', 'Bob Smith', '555-9012', '789 Oak St');
+INSERT INTO `client` (`ID`, `USERNAME`, `PASSWORD`, `FIRSTNAME`, `LASTNAME`, `SEX`, `BIRTHDAY`, `PHONE`, `ADDRESS`, `ROLE`) VALUES
+(1, 'user', '123456', 'Võ', 'Trọng Tình', 'nam', '2004-04-09', '0843206397', 'Q7, Thành phố Hồ Chí minh', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `fcb_detail`
+-- (See below for the actual view)
+--
+CREATE TABLE `fcb_detail` (
+`ID` int(11)
+,`NAME` varchar(50)
+,`TenDoAn` varchar(50)
+,`QuantityDoAn` mediumtext
+,`TenDoUong` varchar(50)
+,`QuantityDoUong` mediumtext
+,`PRICE` float
+);
 
 -- --------------------------------------------------------
 
@@ -199,18 +254,16 @@ INSERT INTO `client` (`ID`, `USERNAME`, `PASSWORD`, `NAME`, `PHONE`, `ADDRESS`) 
 CREATE TABLE `foodcombo` (
   `ID` int(11) NOT NULL,
   `NAME` varchar(50) DEFAULT NULL,
-  `PRICE` float DEFAULT NULL
+  `PRICE` float DEFAULT NULL,
+  `Image` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `foodcombo`
 --
 
-INSERT INTO `foodcombo` (`ID`, `NAME`, `PRICE`) VALUES
-(1, '1 Bắp + 2 nước', 100000),
-(2, 'Small Popcorn and Drink', 5.99),
-(3, 'Medium Popcorn and Drink', 7.99),
-(4, 'Large Popcorn and Drink', 9.99);
+INSERT INTO `foodcombo` (`ID`, `NAME`, `PRICE`, `Image`) VALUES
+(6, '2 Bắp 2 Nước', 145000, 'https://www.cgv.vn/media/concession/web/63aaa2d81b6bf_1672127192.png');
 
 -- --------------------------------------------------------
 
@@ -228,7 +281,7 @@ CREATE TABLE `food_booking` (
 --
 
 INSERT INTO `food_booking` (`FOOD_ID`, `BOOKING_ID`) VALUES
-(1, 1);
+(6, 2);
 
 -- --------------------------------------------------------
 
@@ -246,7 +299,7 @@ CREATE TABLE `movie` (
   `RATING` float DEFAULT NULL,
   `STORY` text DEFAULT NULL,
   `POSTER` text DEFAULT NULL,
-  `TRAILER` longtext DEFAULT NULL,
+  `TRAILER` longtext DEFAULT 'https://www.youtube.com/embed/S2kymv60ndQ',
   `OPENING_DAY` date DEFAULT NULL,
   `CLOSING_DAY` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -256,30 +309,29 @@ CREATE TABLE `movie` (
 --
 
 INSERT INTO `movie` (`ID`, `TITLE`, `DIRECTOR`, `ACTORS`, `GENRE`, `DURATION`, `RATING`, `STORY`, `POSTER`, `TRAILER`, `OPENING_DAY`, `CLOSING_DAY`) VALUES
-(37, 'NGƯỜI GIỮ THỜI GIAN : TRI ÂM ', 'MỸ TÂM', 'Ca sĩ Mỹ Tâm', 'Musical', 106, 5, 'Mỹ Tâm sẽ phác họa chân thực toàn bộ những diễn biến tâm lý và cảm xúc thăng trầm cùng những thăng hoa trong suốt quá trình thực hiện Liveshow \"Tri Âm\" lịch sử bằng những thước phim quý giá được quay lại trong 2 năm...', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002663?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', 'https://www.youtube.com/embed/8BdO_M8bUZo', '2023-04-08', '2023-06-20'),
-(38, 'MARRY MY DEAD BODY ', 'Wei Hao Cheng', 'Greg Han Hsu, Gingle Wang', 'Drama', 130, 5, 'Ming-Han, một sĩ quan cảnh sát nhiệt huyết, trong quá trình truy bắt tội phạm đã tìm thấy một phong bì cưới màu đỏ và chủ nhân của nó là hồn ma Mao-Mao với nguyện vọng phải được kết hôn với một sĩ quan cảnh sát trước khi tái sinh...', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002654?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', '', '2023-04-07', '2023-06-20'),
+(38, 'MARRY MY DEAD ', 'Wei Hao Cheng', 'Greg Han Hsu, Gingle Wang', 'Drama', 130, 5, 'Ming-Han, một sĩ quan cảnh sát nhiệt huyết, trong quá trình truy bắt tội phạm đã tìm thấy một phong bì cưới màu đỏ và chủ nhân của nó là hồn ma Mao-Mao với nguyện vọng phải được kết hôn với một sĩ quan cảnh sát trước khi tái sinh...', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002654?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', 'https://www.youtube.com/embed/S2kymv60ndQ', '2023-04-07', '2023-06-20'),
 (39, 'ASSASSIN CLUB', 'Camille Delamarre', 'Henry Golding, Noomi Repace', 'Action', 109, 5, 'Bảy tên sát thủ vô tình bị thiết lập trong một trò chơi sống còn. Morgan Gaines- một sát thủ chuyên nghiệp có nhiệm vụ phải giết bảy người,Morgan phát hiện ra bảy \"mục tiêu\" cũng là bảy sát thủ nặng ký. Lối thoát duy nhất cho Morgan là tìm ra kẻ chủ mưu..', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002661?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', 'https://www.youtube.com/embed/usYcScx3yMk', '2023-04-07', '2023-06-20'),
 (40, 'THE SUPER MARIO BROS. MOVIE', 'Aaron Horvath', 'Chris Pratt, Anya Taylor-Joy', 'Animation', 93, 5, 'Theo chân anh chàng thợ sửa ống nước tên Mario cùng công chúa Peach của Vương quốc Nấm trong cuộc phiêu lưu giải cứu anh trai Luigi đang bị bắt cóc và ngăn chặn tên độc tài Bowser, kẻ đang âm mưu thôn tính thế giới', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002631?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', 'https://www.youtube.com/embed/wODah30-agA', '2023-04-07', '2023-06-20'),
-(41, 'YOU & ME & ME ', 'Waew Waewwan Hongvivatana', 'Baipor Thitiya Jirapornsilp, Tony Anthony Buisseret', 'Drama', 121, 5, 'Hai chị em sinh đôi \"You\" và \"Me\"có ngoại hình và sở thích giống hệt nhau,thân thiết đến mức họ có thể chia sẻ mọi khía cạnh trong cuộc sống,cho đến khi một cậu bé - \"mối tình đầu\" của họ xuất hiện và đặt ra những thử thách khó khăn cho mối quan hệ của họ', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002669?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', '', '2023-04-07', '2023-06-20'),
-(42, 'PULAU ', 'Eu  Ho', 'Amelia Henderson, Alif Satar', 'Horror', 112, 5, 'Kỳ nghỉ của nhóm bạn trẻ biến thành cơn ác mộng kinh hoàng sau khi họ thua một cuộc cá cược,họ buộc phải qua đêm tại một đảo hoang, khi tình cờ đến một ngôi làng bị bỏ hoang bí ẩn ở đó, họ đã phá vỡ câu thần chú cũ được đặt để kiềm chế một linh hồn tàn ác', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002673?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', '', '2023-03-31', '2023-06-20'),
+(41, 'YOU & ME & ME ', 'Waew Waewwan Hongvivatana', 'Baipor Thitiya Jirapornsilp, Tony Anthony Buisseret', 'Drama', 121, 5, 'Hai chị em sinh đôi \"You\" và \"Me\"có ngoại hình và sở thích giống hệt nhau,thân thiết đến mức họ có thể chia sẻ mọi khía cạnh trong cuộc sống,cho đến khi một cậu bé - \"mối tình đầu\" của họ xuất hiện và đặt ra những thử thách khó khăn cho mối quan hệ của họ', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002669?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', 'https://www.youtube.com/embed/S2kymv60ndQ', '2023-04-07', '2023-06-20'),
+(42, 'PULAU ', 'Eu  Ho', 'Amelia Henderson, Alif Satar', 'Horror', 112, 5, 'Kỳ nghỉ của nhóm bạn trẻ biến thành cơn ác mộng kinh hoàng sau khi họ thua một cuộc cá cược,họ buộc phải qua đêm tại một đảo hoang, khi tình cờ đến một ngôi làng bị bỏ hoang bí ẩn ở đó, họ đã phá vỡ câu thần chú cũ được đặt để kiềm chế một linh hồn tàn ác', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002673?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', 'https://www.youtube.com/embed/S2kymv60ndQ', '2023-03-31', '2023-06-20'),
 (43, 'BIỆT ĐỘI RẤT ỔN', 'Tạ Nguyên Hiệp', 'Võ Tấn Phát, Hoàng  Oanh', 'Comedy', 104, 5, 'Xoay quanh bộ đôi Khuê và Phong. Sau lần chạm trán tình cờ, bộ đôi lôi kéo gia đình Bảy Cục tham gia vào phi vụ đặc biệt: Đánh tráo chiếc vòng đính hôn bằng kim cương quí giá và lật tẩy bộ mặt thật của Tuấn-chồng cũ của Khuê...', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002633?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', 'https://www.youtube.com/embed/6qZbBiL65cI', '2023-03-31', '2023-06-20'),
-(44, 'THE ONE', 'Dmitriy Suvorov', 'Nadezhda Kaleganova, Viktor Dobronravov', 'Drama', 96, 5, 'Cặp vợ chồng mới cưới Larisa và Vladimir trở về nhà từ tuần trăng mật ở Blagoveshchensk và bị va chạm máy bay, Larisa phải vật lộn với cái đói cái lạnh và động vật hoang dã săn mồi. Liệu Larisa có tìm được vị hôn phu và cùng sống sót trở về ?', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002580?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', '', '2023-03-31', '2023-06-20'),
+(44, 'THE ONE', 'Dmitriy Suvorov', 'Nadezhda Kaleganova, Viktor Dobronravov', 'Drama', 96, 5, 'Cặp vợ chồng mới cưới Larisa và Vladimir trở về nhà từ tuần trăng mật ở Blagoveshchensk và bị va chạm máy bay, Larisa phải vật lộn với cái đói cái lạnh và động vật hoang dã săn mồi. Liệu Larisa có tìm được vị hôn phu và cùng sống sót trở về ?', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002580?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', 'https://www.youtube.com/embed/S2kymv60ndQ', '2023-03-31', '2023-06-20'),
 (45, 'SOULMATE', 'Young-Keun Min', 'Kim Da-Mi, Woo-Seok Byeon', 'Drama', 124, 5, 'Mi So và Ha Eun trong một mối quan hệ chồng chéo chất chứa những hạnh phúc, rung động và biệt ly. Từ giây phút gặp nhau , hai cô gái đã hình thành sợi dây liên kết đặc biệt nhưng mối quan hệ của họ rạn nứt khi một chàng trai xuất hiện...', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002611?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', 'https://www.youtube.com/embed/pGAFcV97dpw', '2023-03-24', '2023-06-20'),
-(46, 'NHỮNG ĐỨA TRẺ TRONG SƯƠNG', 'Hà Lệ Diễm', 'Má Thị Di', 'Documentary', 93, 5, 'Di, một cô gái trẻ nhiệt huyết đến từ cộng đồng người Mông bị mắc kẹt giữa truyền thống \"kéo vợ\" và mong muốn được tiếp tục sống thời thơ ấu và đến trường đi học , liệu với trái tim trong sáng ấy , Di sẽ đối diện với xã hội ấy như thế nào...?\r\n', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002676?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', '', '2023-03-17', '2023-06-20'),
+(46, 'NHỮNG ĐỨA TRẺ TRONG SƯƠNG', 'Hà Lệ Diễm', 'Má Thị Di', 'Documentary', 93, 5, 'Di, một cô gái trẻ nhiệt huyết đến từ cộng đồng người Mông bị mắc kẹt giữa truyền thống \"kéo vợ\" và mong muốn được tiếp tục sống thời thơ ấu và đến trường đi học , liệu với trái tim trong sáng ấy , Di sẽ đối diện với xã hội ấy như thế nào...?\r\n', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002676?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', 'https://www.youtube.com/embed/S2kymv60ndQ', '2023-03-17', '2023-06-20'),
 (47, 'SIÊU LỪA GẶP SIÊU LẦY', 'Võ Thanh Hòa', 'Mạc Văn Khoa, Anh Tú', 'Comedy', 112, 5, 'Khoa, một tên lừa đảo tới Phú Quốc với mục tiêu đổi đời. Không ngờ đây là sân nhà của Tú, một tên lừa đảo chuyên nghiệp, cả hai bắt tay cùng thực hiện một phi vụ siêu lớn và mục tiêu là các quý bà giàu có và đam mê sự nổi tiếng', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002593?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', 'https://www.youtube.com/embed/xy8RznX_uyM', '2023-03-03', '2023-06-20'),
-(48, 'AIR', 'Ben  Affleck', 'Viola Davis', 'Drama', 112, 5, 'Bí mật trong mối quan hệ hợp tác lịch sử giữa Nike và một vận động viên bóng rổ vĩ đại.Cả hai đã cho ra mắt thương hiệu Air Jordan đình đám và theo chân Sonny Vaccaro- saleman của Nike trong hành trình tiếp cận và đánh cược cả sự nghiệp vào Michael Jordan', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002670?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', '', '2023-04-14', '2023-06-20'),
+(48, 'AIR', 'Ben  Affleck', 'Viola Davis', 'Drama', 112, 5, 'Bí mật trong mối quan hệ hợp tác lịch sử giữa Nike và một vận động viên bóng rổ vĩ đại.Cả hai đã cho ra mắt thương hiệu Air Jordan đình đám và theo chân Sonny Vaccaro- saleman của Nike trong hành trình tiếp cận và đánh cược cả sự nghiệp vào Michael Jordan', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002670?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', 'https://www.youtube.com/embed/S2kymv60ndQ', '2023-04-14', '2023-06-20'),
 (49, 'CHUYỆN XÓM TUI : CON NHÓT MÓT CHỒNG', 'Vũ  Ngọc Đãng', 'Thái Hòa, Thu  Trang', '', 100, 5, 'Là câu chuyện của Nhót - Người phụ nữ \"chưa kịp già\" đã sắp bị mãn kinh, vội vàng đi tìm chồng. Nhưng sâu thẳm trong cô là khao khát muốn có một đứa con và luôn muốn hàn gắn với người cha suốt ngày say xỉn của mình', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002650?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', 'https://www.youtube.com/embed/qehxOMR-rFQ', '2023-04-28', '2023-06-20'),
 (50, 'DUNGEONS & DRAGONS: HONOR AMONG THIEVES ', 'John Francis Daley', 'Chris Pine, Michelle Rodriguez', 'Adventure', 134, 5, 'Theo chân một tên trộm quyến rũ và một nhóm những kẻ bịp bợm nghiệp dư thực hiện vụ trộm sử thi nhằm lấy lại một di vật đã mất, nhưng mọi thứ trở nên nguy hiểm khó lường hơn bao giờ hết khi họ đã chạm trám nhầm người...', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002629?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', 'https://www.youtube.com/embed/iTZJ-uwIZxg', '2023-04-21', '2023-06-20'),
 (51, 'ELEMENTAL', 'Peter Sohn', 'Leah Lewis, Mamoudou Athie', 'Animation', 93, 5, 'Ember, một cô nàng cá tính, thông minh, mạnh mẽ và đầy sức hút. Tuy nhiên mối quan hệ của cô với Wade- một anh chàng hài hước, luôn thuận thế đẩy dòng - khiến Ember cảm thấy ngờ vực với thế giới này...', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002677?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', 'https://www.youtube.com/embed/K19bf6ButD4', '2023-06-16', '2023-06-20'),
 (53, 'GUARDIANS OF THE GALAXY 3', 'James  Gunn', 'Chris  Pratt, Zoe Saldana', 'Adventure', 119, 5, 'Cho dù vũ trụ này có bao la đến đâu, các Vệ Binh của chúng ta cũng không thể trốn chạy mãi mãi...', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002647?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', 'https://www.youtube.com/watch?v=Pp6reH8bpZ8', '2023-05-03', '2023-06-20'),
 (54, 'LẬT MẶT 6', 'Lý  Hải', 'Duy Khánh, Quốc Cường', 'Action', 132, 5, 'Nhóm bạn thân lâu năm bất ngờ nhận được cơ hội đổi đời khi biết tấm vé của cả nhóm trúng giải độc đắc 136.8 tỷ. Đột nhiên An,người giữ tấm vé bất ngờ qua đời, liệu trong hành trình tìm kiếm và chia chác món tiền trong mơ béo bở này sẽ đưa cả nhóm đến đâu?', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002653?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', 'https://www.youtube.com/watch?v=tpjjd7usfnA', '2023-04-28', '2023-06-20'),
-(55, 'MY BEAUTIFUL MAN MOVIE: SPECIAL EDITION', '', 'Riku Hagiwara, Yusei Yagi', 'Drama', 98, 5, 'Hira, 17 tuổi, cố gắng ẩn mình ở trường, không bao giờ muốn phơi bày tật nói lắp của mình với các bạn cùng lớp. Anh ấy nhìn thế giới qua ống kính máy ảnh của mình, cho đến một ngày Kiyoi Sou bước qua cửa lớp...', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002651?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', '', '2023-04-14', '2023-06-20'),
+(55, 'MY BEAUTIFUL MAN MOVIE: SPECIAL EDITION', '', 'Riku Hagiwara, Yusei Yagi', 'Drama', 98, 5, 'Hira, 17 tuổi, cố gắng ẩn mình ở trường, không bao giờ muốn phơi bày tật nói lắp của mình với các bạn cùng lớp. Anh ấy nhìn thế giới qua ống kính máy ảnh của mình, cho đến một ngày Kiyoi Sou bước qua cửa lớp...', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002651?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', 'https://www.youtube.com/embed/S2kymv60ndQ', '2023-04-14', '2023-06-20'),
 (56, 'RENFIELD', 'Chris McKay', 'Nicolas  Cage, Nicholas Hoult', 'Horror', 95, 5, 'Renfield bị buộc phải bắt con mồi về cho chủ nhân và thực hiện mọi mệnh lệnh, kể cả những việc nhục nhã. Nhưng giờ đây, sau nhiều thế kỷ làm nô lệ, Renfield đã sẵn sàng để khám phá cuộc sống bên ngoài cái bóng của Hoàng Tử Bóng Đêm...', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002656?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', 'https://www.youtube.com/watch?v=_hO0vGwqClM', '2023-04-14', '2023-06-20'),
-(57, 'SOUND OF SILENCE', 'Alessandro Antonaci', 'Daniel Lascar', 'Horror', 93, 5, 'Trở về nhà sau mất mát của cha mẹ, Emma vô tình giải phóng những linh hồn quá khứ mắc kẹt trong chiếc radio cổ. Vô số câu chuyện bí ẩn lần lượt được vạch trần, liệu Emma sẽ tỉnh táo đối mặt hay cô sẽ bị nhấn chìm bởi quỹ dữ ?', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002666?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', '', '2023-04-21', '2023-06-20'),
+(57, 'SOUND OF SILENCE', 'Alessandro Antonaci', 'Daniel Lascar', 'Horror', 93, 5, 'Trở về nhà sau mất mát của cha mẹ, Emma vô tình giải phóng những linh hồn quá khứ mắc kẹt trong chiếc radio cổ. Vô số câu chuyện bí ẩn lần lượt được vạch trần, liệu Emma sẽ tỉnh táo đối mặt hay cô sẽ bị nhấn chìm bởi quỹ dữ ?', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002666?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', 'https://www.youtube.com/embed/S2kymv60ndQ', '2023-04-21', '2023-06-20'),
 (59, 'THE FLASH ', 'Andy  Muschietti', 'Ben  Affleck, Michael Shannon', 'Action', 120, 5, 'Mùa hè này, đa thế giới sẽ va chạm khốc liệt với những bước chạy của FLASH', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002648?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', 'https://www.youtube.com/watch?v=uXhf8LJq55Q', '2023-06-16', '2023-06-20'),
 (60, 'THE GHOST WITHIN', 'Lawrence Fowler', 'Michaela Longden, Rebecca Phillipson', 'Horror', 103, 5, 'Bí ẩn về cái chết của em gái Evie 20 năm trước, vào lúc 09:09 hằng đêm, hàng loạt cuộc chạm trán kinh hoàng xảy ra. Liệu Margot có biết được sự thật ai là kẻ giết em gái mình?\r\n', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002674?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', 'https://www.youtube.com/watch?v=p_Ppe-2_Vh8', '2023-04-14', '2023-06-20'),
 (61, 'TRANSFORMERS: RISE OF THE BEASTS', 'Steven Caple Jr.', 'Michelle Yeoh, Dominique Fishback', 'Action', 112, 5, 'Bộ phim dựa trên sự kiện Beast Wars trong loạt phim hoạt hình \"Transformers\", nơi mà các robot có khả năng biến thành động vật khổng lồ cùng chiến đấu chống lại một mối đe dọa tiềm tàng', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002678?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', 'https://www.youtube.com/watch?v=gR2pkm9XVAY', '2023-06-09', '2023-06-20'),
-(62, 'THE POPES EXORCIST', 'Julius Avery', 'Russell Crowe, Daniel Zovatto', 'Horror', 104, 5, 'Từ những hồ sơ có thật của Cha Gabriele Amorth, Trưởng Trừ Tà của Vatican, \"The Popes Exorcist\" theo chân Amorth trong cuộc điều tra về vụ quỷ ám kinh hoàng của một cậu bé và dần khám phá ra những bí mật hàng thế kỉ mà Vatican đã cố giấu kín...', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002665?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', '', '2023-04-14', '2023-06-20'),
+(62, 'THE POPES EXORCIST', 'Julius Avery', 'Russell Crowe, Daniel Zovatto', 'Horror', 104, 5, 'Từ những hồ sơ có thật của Cha Gabriele Amorth, Trưởng Trừ Tà của Vatican, \"The Popes Exorcist\" theo chân Amorth trong cuộc điều tra về vụ quỷ ám kinh hoàng của một cậu bé và dần khám phá ra những bí mật hàng thế kỉ mà Vatican đã cố giấu kín...', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002665?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', 'https://www.youtube.com/embed/S2kymv60ndQ', '2023-04-14', '2023-06-20'),
 (63, 'NGƯỜI GIỮ THỜI GIAN : TRI ÂM ', 'MỸ TÂM', 'Ca sĩ Mỹ Tâm', 'Musical', 106, NULL, 'Mỹ Tâm sẽ phác họa chân thực toàn bộ những diễn biến tâm lý và cảm xúc thăng trầm cùng những thăng hoa trong suốt quá trình thực hiện Liveshow \"Tri Âm\" lịch sử bằng những thước phim quý giá được quay lại trong 2 năm...', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002663?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', 'https://www.youtube.com/embed/8BdO_M8bUZo', '2023-04-08', '2023-06-20');
 
 -- --------------------------------------------------------
@@ -290,9 +342,8 @@ INSERT INTO `movie` (`ID`, `TITLE`, `DIRECTOR`, `ACTORS`, `GENRE`, `DURATION`, `
 
 CREATE TABLE `product` (
   `ID` int(11) NOT NULL,
-  `NAME` varchar(50) CHARACTER SET armscii8 COLLATE armscii8_general_ci DEFAULT NULL,
-  `TYPE` varchar(20) CHARACTER SET armscii8 COLLATE armscii8_general_ci DEFAULT NULL,
-  `PRICE` float DEFAULT NULL,
+  `NAME` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `TYPE` varchar(20) DEFAULT NULL,
   `QUANTITY` int(11) DEFAULT NULL,
   `Expiry_Date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -301,10 +352,9 @@ CREATE TABLE `product` (
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`ID`, `NAME`, `TYPE`, `PRICE`, `QUANTITY`, `Expiry_Date`) VALUES
-(1, 'Coke', 'Beverage', 2.99, 100, '2024-04-10'),
-(2, 'Popcorn', 'Snack', 4.99, 50, '2023-08-31'),
-(3, 'Sour Patch Kids', 'Candy', 1.99, 75, '2023-12-31');
+INSERT INTO `product` (`ID`, `NAME`, `TYPE`, `QUANTITY`, `Expiry_Date`) VALUES
+(6, 'Bắp rang bơ L1', 'Đồ ăn', 1000, '2023-04-30'),
+(8, 'Coca cola', 'Đồ uống', 1000, '2023-04-30');
 
 -- --------------------------------------------------------
 
@@ -314,8 +364,17 @@ INSERT INTO `product` (`ID`, `NAME`, `TYPE`, `PRICE`, `QUANTITY`, `Expiry_Date`)
 
 CREATE TABLE `product_fcb` (
   `PRODUCT_ID` int(11) NOT NULL,
-  `FCB_ID` int(11) NOT NULL
+  `FCB_ID` int(11) NOT NULL,
+  `QUANTITY` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product_fcb`
+--
+
+INSERT INTO `product_fcb` (`PRODUCT_ID`, `FCB_ID`, `QUANTITY`) VALUES
+(6, 6, 2),
+(8, 6, 2);
 
 -- --------------------------------------------------------
 
@@ -337,15 +396,16 @@ CREATE TABLE `schedule` (
 
 INSERT INTO `schedule` (`ID`, `MOV_ID`, `STARTTIME`, `ENDTIME`, `THEA_ID`) VALUES
 (1, 43, '2023-04-15 17:03:00', '2023-04-15 19:02:00', 1),
-(2, 47, '2023-04-13 20:00:00', '2023-04-13 22:07:00', 2),
-(3, 47, '2023-04-14 08:00:00', '2023-04-14 10:07:00', 2),
+(2, 47, '2023-04-15 16:00:00', '2023-04-15 18:07:00', 2),
+(3, 47, '2023-04-15 08:00:00', '2023-04-15 10:07:00', 2),
 (4, 43, '2023-04-14 10:30:00', '2023-04-14 12:29:00', 2),
 (5, 39, '2023-04-14 13:30:00', '2023-04-14 15:34:00', 2),
 (6, 39, '2023-04-14 13:30:00', '2023-04-14 15:34:00', 1),
-(7, 37, '2023-04-14 10:30:00', '2023-04-14 12:31:00', 1),
 (8, 46, '2023-04-14 20:30:00', '2023-04-14 22:18:00', 3),
-(9, 46, '2023-04-14 20:30:00', '2023-04-14 22:18:00', 6),
-(10, 47, '2023-04-14 17:01:00', '2023-04-14 19:08:00', 2);
+(10, 47, '2023-04-14 17:01:00', '2023-04-14 19:08:00', 2),
+(11, 60, '2023-04-14 16:02:00', '2023-04-14 18:00:00', 1),
+(12, 43, '2023-04-16 15:45:00', '2023-04-16 17:44:00', 1),
+(13, 47, '2023-04-17 21:00:00', '2023-04-17 23:07:00', 2);
 
 -- --------------------------------------------------------
 
@@ -717,299 +777,97 @@ INSERT INTO `seat` (`ID`, `THE_ID`, `SEATNUMBER`, `SEATTYPE`) VALUES
 (350, 4, 48, 'Couple'),
 (351, 4, 49, 'Couple'),
 (352, 4, 50, 'Couple'),
-(353, 5, 1, 'Standard'),
-(354, 5, 2, 'Standard'),
-(355, 5, 3, 'Standard'),
-(356, 5, 4, 'Standard'),
-(357, 5, 5, 'Standard'),
-(358, 5, 6, 'Standard'),
-(359, 5, 7, 'Standard'),
-(360, 5, 8, 'Standard'),
-(361, 5, 9, 'Standard'),
-(362, 5, 10, 'Standard'),
-(363, 5, 11, 'Standard'),
-(364, 5, 12, 'Standard'),
-(365, 5, 13, 'Standard'),
-(366, 5, 14, 'Standard'),
-(367, 5, 15, 'Standard'),
-(368, 5, 16, 'Standard'),
-(369, 5, 17, 'Standard'),
-(370, 5, 18, 'Standard'),
-(371, 5, 19, 'Standard'),
-(372, 5, 20, 'Standard'),
-(373, 5, 21, 'Standard'),
-(374, 5, 22, 'Standard'),
-(375, 5, 23, 'Standard'),
-(376, 5, 24, 'Standard'),
-(377, 5, 25, 'Standard'),
-(378, 5, 26, 'Standard'),
-(379, 5, 27, 'Standard'),
-(380, 5, 28, 'Standard'),
-(381, 5, 29, 'Standard'),
-(382, 5, 30, 'Standard'),
-(383, 5, 31, 'Standard'),
-(384, 5, 32, 'Standard'),
-(385, 5, 33, 'Standard'),
-(386, 5, 34, 'Standard'),
-(387, 5, 35, 'Standard'),
-(388, 5, 36, 'Standard'),
-(389, 5, 37, 'Standard'),
-(390, 5, 38, 'Standard'),
-(391, 5, 39, 'Standard'),
-(392, 5, 40, 'Standard'),
-(393, 5, 41, 'Standard'),
-(394, 5, 42, 'Standard'),
-(395, 5, 43, 'Standard'),
-(396, 5, 44, 'Standard'),
-(397, 5, 45, 'Standard'),
-(398, 5, 46, 'Standard'),
-(399, 5, 47, 'Standard'),
-(400, 5, 48, 'Standard'),
-(401, 5, 49, 'Standard'),
-(402, 5, 50, 'Standard'),
-(403, 5, 51, 'Standard'),
-(404, 5, 52, 'Standard'),
-(405, 5, 53, 'Standard'),
-(406, 5, 54, 'Standard'),
-(407, 5, 55, 'Standard'),
-(408, 5, 56, 'Standard'),
-(409, 5, 57, 'Standard'),
-(410, 5, 58, 'Standard'),
-(411, 5, 59, 'Standard'),
-(412, 5, 60, 'Standard'),
-(413, 5, 61, 'Standard'),
-(414, 5, 62, 'Standard'),
-(415, 5, 63, 'Standard'),
-(416, 5, 64, 'Standard'),
-(417, 5, 65, 'Standard'),
-(418, 5, 66, 'Standard'),
-(419, 5, 67, 'Standard'),
-(420, 5, 68, 'Standard'),
-(421, 5, 69, 'Standard'),
-(422, 5, 70, 'Standard'),
-(423, 5, 71, 'Standard'),
-(424, 5, 72, 'Standard'),
-(425, 5, 73, 'Standard'),
-(426, 5, 74, 'Standard'),
-(427, 5, 75, 'Standard'),
-(428, 5, 76, 'Standard'),
-(429, 5, 77, 'Standard'),
-(430, 5, 78, 'Standard'),
-(431, 5, 79, 'Standard'),
-(432, 5, 80, 'Standard'),
-(433, 5, 81, 'Standard'),
-(434, 5, 82, 'Standard'),
-(435, 5, 83, 'Standard'),
-(436, 5, 84, 'Standard'),
-(437, 5, 85, 'Standard'),
-(438, 5, 86, 'Standard'),
-(439, 5, 87, 'Standard'),
-(440, 5, 88, 'Standard'),
-(441, 5, 89, 'Standard'),
-(442, 5, 90, 'Standard'),
-(443, 5, 91, 'Standard'),
-(444, 5, 92, 'Standard'),
-(445, 5, 93, 'Standard'),
-(446, 5, 94, 'Standard'),
-(447, 5, 95, 'Standard'),
-(448, 5, 96, 'Standard'),
-(449, 5, 97, 'Standard'),
-(450, 5, 98, 'Standard'),
-(451, 5, 99, 'Standard'),
-(452, 5, 100, 'Standard'),
-(453, 5, 101, 'Standard'),
-(454, 5, 102, 'Standard'),
-(455, 5, 103, 'Standard'),
-(456, 5, 104, 'Standard'),
-(457, 5, 105, 'Standard'),
-(458, 5, 106, 'Standard'),
-(459, 5, 107, 'Standard'),
-(460, 5, 108, 'Standard'),
-(461, 5, 109, 'Standard'),
-(462, 5, 110, 'Standard'),
-(463, 5, 111, 'Standard'),
-(464, 5, 112, 'Standard'),
-(465, 5, 113, 'Standard'),
-(466, 5, 114, 'Standard'),
-(467, 5, 115, 'Standard'),
-(468, 5, 116, 'Standard'),
-(469, 5, 117, 'Standard'),
-(470, 5, 118, 'Standard'),
-(471, 5, 119, 'Standard'),
-(472, 5, 120, 'Standard'),
-(473, 5, 81, 'Couple'),
-(474, 5, 82, 'Couple'),
-(475, 5, 83, 'Couple'),
-(476, 5, 84, 'Couple'),
-(477, 5, 85, 'Couple'),
-(478, 5, 86, 'Couple'),
-(479, 5, 87, 'Couple'),
-(480, 5, 88, 'Couple'),
-(481, 5, 89, 'Couple'),
-(482, 5, 90, 'Couple'),
-(483, 5, 91, 'Couple'),
-(484, 5, 92, 'Couple'),
-(485, 5, 93, 'Couple'),
-(486, 5, 94, 'Couple'),
-(487, 5, 95, 'Couple'),
-(488, 5, 96, 'Couple'),
-(489, 5, 97, 'Couple'),
-(490, 5, 98, 'Couple'),
-(491, 5, 99, 'Couple'),
-(492, 5, 100, 'Couple'),
-(493, 5, 101, 'Couple'),
-(494, 5, 102, 'Couple'),
-(495, 5, 103, 'Couple'),
-(496, 5, 104, 'Couple'),
-(497, 5, 105, 'Couple'),
-(498, 5, 106, 'Couple'),
-(499, 5, 107, 'Couple'),
-(500, 5, 108, 'Couple'),
-(501, 5, 109, 'Couple'),
-(502, 5, 110, 'Couple'),
-(503, 5, 111, 'Couple'),
-(504, 5, 112, 'Couple'),
-(505, 5, 113, 'Couple'),
-(506, 5, 114, 'Couple'),
-(507, 5, 115, 'Couple'),
-(508, 5, 116, 'Couple'),
-(509, 5, 117, 'Couple'),
-(510, 5, 118, 'Couple'),
-(511, 5, 119, 'Couple'),
-(512, 5, 120, 'Couple'),
-(513, 6, 1, 'Standard'),
-(514, 6, 2, 'Standard'),
-(515, 6, 3, 'Standard'),
-(516, 6, 4, 'Standard'),
-(517, 6, 5, 'Standard'),
-(518, 6, 6, 'Standard'),
-(519, 6, 7, 'Standard'),
-(520, 6, 8, 'Standard'),
-(521, 6, 9, 'Standard'),
-(522, 6, 10, 'Standard'),
-(523, 6, 11, 'Standard'),
-(524, 6, 12, 'Standard'),
-(525, 6, 13, 'Standard'),
-(526, 6, 14, 'Standard'),
-(527, 6, 15, 'Standard'),
-(528, 6, 16, 'Standard'),
-(529, 6, 17, 'Standard'),
-(530, 6, 18, 'Standard'),
-(531, 6, 19, 'Standard'),
-(532, 6, 20, 'Standard'),
-(533, 6, 21, 'Standard'),
-(534, 6, 22, 'Standard'),
-(535, 6, 23, 'Standard'),
-(536, 6, 24, 'Standard'),
-(537, 6, 25, 'Standard'),
-(538, 6, 26, 'Standard'),
-(539, 6, 27, 'Standard'),
-(540, 6, 28, 'Standard'),
-(541, 6, 29, 'Standard'),
-(542, 6, 30, 'Standard'),
-(543, 6, 31, 'Standard'),
-(544, 6, 32, 'Standard'),
-(545, 6, 33, 'Standard'),
-(546, 6, 34, 'Standard'),
-(547, 6, 35, 'Standard'),
-(548, 6, 36, 'Standard'),
-(549, 6, 37, 'Standard'),
-(550, 6, 38, 'Standard'),
-(551, 6, 39, 'Standard'),
-(552, 6, 40, 'Standard'),
-(553, 6, 41, 'Standard'),
-(554, 6, 42, 'Standard'),
-(555, 6, 43, 'Standard'),
-(556, 6, 44, 'Standard'),
-(557, 6, 45, 'Standard'),
-(558, 6, 46, 'Standard'),
-(559, 6, 47, 'Standard'),
-(560, 6, 48, 'Standard'),
-(561, 6, 49, 'Standard'),
-(562, 6, 50, 'Standard'),
-(563, 6, 51, 'Standard'),
-(564, 6, 52, 'Standard'),
-(565, 6, 53, 'Standard'),
-(566, 6, 54, 'Standard'),
-(567, 6, 55, 'Standard'),
-(568, 6, 56, 'Standard'),
-(569, 6, 57, 'Standard'),
-(570, 6, 58, 'Standard'),
-(571, 6, 59, 'Standard'),
-(572, 6, 60, 'Standard'),
-(573, 6, 61, 'Standard'),
-(574, 6, 62, 'Standard'),
-(575, 6, 63, 'Standard'),
-(576, 6, 64, 'Standard'),
-(577, 6, 65, 'Standard'),
-(578, 6, 66, 'Standard'),
-(579, 6, 67, 'Standard'),
-(580, 6, 68, 'Standard'),
-(581, 6, 69, 'Standard'),
-(582, 6, 70, 'Standard'),
-(583, 6, 71, 'Standard'),
-(584, 6, 72, 'Standard'),
-(585, 6, 73, 'Standard'),
-(586, 6, 74, 'Standard'),
-(587, 6, 75, 'Standard'),
-(588, 6, 76, 'Standard'),
-(589, 6, 77, 'Standard'),
-(590, 6, 78, 'Standard'),
-(591, 6, 79, 'Standard'),
-(592, 6, 80, 'Standard'),
-(593, 6, 81, 'Standard'),
-(594, 6, 82, 'Standard'),
-(595, 6, 83, 'Standard'),
-(596, 6, 84, 'Standard'),
-(597, 6, 85, 'Standard'),
-(598, 6, 86, 'Standard'),
-(599, 6, 87, 'Standard'),
-(600, 6, 88, 'Standard'),
-(601, 6, 89, 'Standard'),
-(602, 6, 90, 'Standard'),
-(603, 6, 91, 'Standard'),
-(604, 6, 92, 'Standard'),
-(605, 6, 93, 'Standard'),
-(606, 6, 94, 'Standard'),
-(607, 6, 95, 'Standard'),
-(608, 6, 96, 'Standard'),
-(609, 6, 97, 'Standard'),
-(610, 6, 98, 'Standard'),
-(611, 6, 99, 'Standard'),
-(612, 6, 100, 'Standard'),
-(613, 6, 68, 'Couple'),
-(614, 6, 69, 'Couple'),
-(615, 6, 70, 'Couple'),
-(616, 6, 71, 'Couple'),
-(617, 6, 72, 'Couple'),
-(618, 6, 73, 'Couple'),
-(619, 6, 74, 'Couple'),
-(620, 6, 75, 'Couple'),
-(621, 6, 76, 'Couple'),
-(622, 6, 77, 'Couple'),
-(623, 6, 78, 'Couple'),
-(624, 6, 79, 'Couple'),
-(625, 6, 80, 'Couple'),
-(626, 6, 81, 'Couple'),
-(627, 6, 82, 'Couple'),
-(628, 6, 83, 'Couple'),
-(629, 6, 84, 'Couple'),
-(630, 6, 85, 'Couple'),
-(631, 6, 86, 'Couple'),
-(632, 6, 87, 'Couple'),
-(633, 6, 88, 'Couple'),
-(634, 6, 89, 'Couple'),
-(635, 6, 90, 'Couple'),
-(636, 6, 91, 'Couple'),
-(637, 6, 92, 'Couple'),
-(638, 6, 93, 'Couple'),
-(639, 6, 94, 'Couple'),
-(640, 6, 95, 'Couple'),
-(641, 6, 96, 'Couple'),
-(642, 6, 97, 'Couple'),
-(643, 6, 98, 'Couple'),
-(644, 6, 99, 'Couple'),
-(645, 6, 100, 'Couple');
+(646, 7, 1, 'Standard'),
+(647, 7, 2, 'Standard'),
+(648, 7, 3, 'Standard'),
+(649, 7, 4, 'Standard'),
+(650, 7, 5, 'Standard'),
+(651, 7, 6, 'Standard'),
+(652, 7, 7, 'Standard'),
+(653, 7, 8, 'Standard'),
+(654, 7, 9, 'Standard'),
+(655, 7, 10, 'Standard'),
+(656, 7, 11, 'Standard'),
+(657, 7, 12, 'Standard'),
+(658, 7, 13, 'Standard'),
+(659, 7, 14, 'Standard'),
+(660, 7, 15, 'Standard'),
+(661, 7, 16, 'Standard'),
+(662, 7, 17, 'Standard'),
+(663, 7, 18, 'Standard'),
+(664, 7, 19, 'Standard'),
+(665, 7, 20, 'Standard'),
+(666, 7, 21, 'Standard'),
+(667, 7, 22, 'Standard'),
+(668, 7, 23, 'Standard'),
+(669, 7, 24, 'Standard'),
+(670, 7, 25, 'Standard'),
+(671, 7, 26, 'Standard'),
+(672, 7, 27, 'Standard'),
+(673, 7, 28, 'Standard'),
+(674, 7, 29, 'Standard'),
+(675, 7, 30, 'Standard'),
+(676, 7, 31, 'Standard'),
+(677, 7, 32, 'Standard'),
+(678, 7, 33, 'Standard'),
+(679, 7, 34, 'Standard'),
+(680, 7, 35, 'Standard'),
+(681, 7, 36, 'Standard'),
+(682, 7, 37, 'Standard'),
+(683, 7, 38, 'Standard'),
+(684, 7, 39, 'Standard'),
+(685, 7, 40, 'Standard'),
+(686, 7, 41, 'Standard'),
+(687, 7, 42, 'Standard'),
+(688, 7, 43, 'Standard'),
+(689, 7, 44, 'Standard'),
+(690, 7, 45, 'Standard'),
+(691, 7, 46, 'Standard'),
+(692, 7, 47, 'Standard'),
+(693, 7, 48, 'Standard'),
+(694, 7, 49, 'Standard'),
+(695, 7, 50, 'Standard'),
+(696, 7, 35, 'Couple'),
+(697, 7, 36, 'Couple'),
+(698, 7, 37, 'Couple'),
+(699, 7, 38, 'Couple'),
+(700, 7, 39, 'Couple'),
+(701, 7, 40, 'Couple'),
+(702, 7, 41, 'Couple'),
+(703, 7, 42, 'Couple'),
+(704, 7, 43, 'Couple'),
+(705, 7, 44, 'Couple'),
+(706, 7, 45, 'Couple'),
+(707, 7, 46, 'Couple'),
+(708, 7, 47, 'Couple'),
+(709, 7, 48, 'Couple'),
+(710, 7, 49, 'Couple'),
+(711, 7, 50, 'Couple'),
+(712, 8, 1, 'Standard'),
+(713, 8, 2, 'Standard'),
+(714, 8, 3, 'Standard'),
+(715, 8, 4, 'Standard'),
+(716, 8, 5, 'Standard'),
+(717, 8, 6, 'Standard'),
+(718, 8, 7, 'Standard'),
+(719, 8, 8, 'Standard'),
+(720, 8, 9, 'Standard'),
+(721, 8, 10, 'Standard'),
+(722, 8, 11, 'Standard'),
+(723, 8, 12, 'Standard'),
+(724, 8, 13, 'Standard'),
+(725, 8, 14, 'Standard'),
+(726, 8, 15, 'Standard'),
+(727, 8, 16, 'Standard'),
+(728, 8, 17, 'Standard'),
+(729, 8, 18, 'Standard'),
+(730, 8, 19, 'Standard'),
+(731, 8, 14, 'Couple'),
+(732, 8, 15, 'Couple'),
+(733, 8, 16, 'Couple'),
+(734, 8, 17, 'Couple'),
+(735, 8, 18, 'Couple'),
+(736, 8, 19, 'Couple');
 
 -- --------------------------------------------------------
 
@@ -1047,7 +905,6 @@ INSERT INTO `staff` (`ID`, `USERNAME`, `PASSWORD`, `FIRSTNAME`, `LASTNAME`, `SEX
 
 CREATE TABLE `theater` (
   `ID` int(11) NOT NULL,
-  `CIN_ID` int(11) NOT NULL,
   `THEATERNUM` int(11) UNSIGNED DEFAULT NULL,
   `SEATCOUNT` int(11) DEFAULT NULL,
   `ISSHOWING` int(11) DEFAULT NULL
@@ -1057,13 +914,13 @@ CREATE TABLE `theater` (
 -- Dumping data for table `theater`
 --
 
-INSERT INTO `theater` (`ID`, `CIN_ID`, `THEATERNUM`, `SEATCOUNT`, `ISSHOWING`) VALUES
-(1, 1, 1, 60, 0),
-(2, 1, 2, 60, 0),
-(3, 2, 1, 95, 0),
-(4, 2, 2, 50, 0),
-(5, 3, 1, 120, 0),
-(6, 4, 1, 100, 0);
+INSERT INTO `theater` (`ID`, `THEATERNUM`, `SEATCOUNT`, `ISSHOWING`) VALUES
+(1, 1, 60, 0),
+(2, 2, 60, 0),
+(3, 3, 95, 0),
+(4, 4, 50, 0),
+(7, 5, 50, 0),
+(8, 8, 19, 0);
 
 -- --------------------------------------------------------
 
@@ -1082,10 +939,10 @@ CREATE TABLE `ticket` (
 --
 
 INSERT INTO `ticket` (`ID`, `BOO_ID`, `price`) VALUES
-(1, NULL, 60000),
-(2, NULL, 60000),
+(1, 2, 60000),
+(2, 2, 60000),
 (3, NULL, 60000),
-(4, NULL, 60000),
+(4, 2, 60000),
 (5, NULL, 60000),
 (6, NULL, 60000),
 (7, NULL, 60000),
@@ -1756,7 +1613,187 @@ INSERT INTO `ticket` (`ID`, `BOO_ID`, `price`) VALUES
 (672, NULL, 0),
 (673, NULL, 0),
 (674, NULL, 0),
-(675, NULL, 0);
+(675, NULL, 0),
+(676, NULL, 60000),
+(677, NULL, 60000),
+(678, NULL, 60000),
+(679, NULL, 60000),
+(680, NULL, 60000),
+(681, NULL, 60000),
+(682, NULL, 60000),
+(683, NULL, 60000),
+(684, NULL, 60000),
+(685, NULL, 60000),
+(686, NULL, 60000),
+(687, NULL, 60000),
+(688, NULL, 60000),
+(689, NULL, 60000),
+(690, NULL, 60000),
+(691, NULL, 60000),
+(692, NULL, 60000),
+(693, NULL, 60000),
+(694, NULL, 60000),
+(695, NULL, 60000),
+(696, NULL, 60000),
+(697, NULL, 60000),
+(698, NULL, 60000),
+(699, NULL, 60000),
+(700, NULL, 60000),
+(701, NULL, 60000),
+(702, NULL, 60000),
+(703, NULL, 60000),
+(704, NULL, 60000),
+(705, NULL, 60000),
+(706, NULL, 60000),
+(707, NULL, 60000),
+(708, NULL, 60000),
+(709, NULL, 60000),
+(710, NULL, 60000),
+(711, NULL, 60000),
+(712, NULL, 60000),
+(713, NULL, 60000),
+(714, NULL, 60000),
+(715, NULL, 60000),
+(716, NULL, 60000),
+(717, NULL, 60000),
+(718, NULL, 60000),
+(719, NULL, 60000),
+(720, NULL, 60000),
+(721, NULL, 60000),
+(722, NULL, 60000),
+(723, NULL, 60000),
+(724, NULL, 60000),
+(725, NULL, 60000),
+(726, NULL, 60000),
+(727, NULL, 60000),
+(728, NULL, 60000),
+(729, NULL, 60000),
+(730, NULL, 60000),
+(731, NULL, 60000),
+(732, NULL, 60000),
+(733, NULL, 60000),
+(734, NULL, 60000),
+(735, NULL, 60000),
+(736, NULL, 12),
+(737, NULL, 12),
+(738, NULL, 12),
+(739, NULL, 12),
+(740, NULL, 12),
+(741, NULL, 12),
+(742, NULL, 12),
+(743, NULL, 12),
+(744, NULL, 12),
+(745, NULL, 12),
+(746, NULL, 12),
+(747, NULL, 12),
+(748, NULL, 12),
+(749, NULL, 12),
+(750, NULL, 12),
+(751, NULL, 12),
+(752, NULL, 12),
+(753, NULL, 12),
+(754, NULL, 12),
+(755, NULL, 12),
+(756, NULL, 12),
+(757, NULL, 12),
+(758, NULL, 12),
+(759, NULL, 12),
+(760, NULL, 12),
+(761, NULL, 12),
+(762, NULL, 12),
+(763, NULL, 12),
+(764, NULL, 12),
+(765, NULL, 12),
+(766, NULL, 12),
+(767, NULL, 12),
+(768, NULL, 12),
+(769, NULL, 12),
+(770, NULL, 12),
+(771, NULL, 12),
+(772, NULL, 12),
+(773, NULL, 12),
+(774, NULL, 12),
+(775, NULL, 12),
+(776, NULL, 12),
+(777, NULL, 12),
+(778, NULL, 12),
+(779, NULL, 12),
+(780, NULL, 12),
+(781, NULL, 12),
+(782, NULL, 12),
+(783, NULL, 12),
+(784, NULL, 12),
+(785, NULL, 12),
+(786, NULL, 12),
+(787, NULL, 12),
+(788, NULL, 12),
+(789, NULL, 12),
+(790, NULL, 12),
+(791, NULL, 12),
+(792, NULL, 12),
+(793, NULL, 12),
+(794, NULL, 12),
+(795, NULL, 12),
+(796, NULL, 2),
+(797, NULL, 2),
+(798, NULL, 2),
+(799, NULL, 2),
+(800, NULL, 2),
+(801, NULL, 2),
+(802, NULL, 2),
+(803, NULL, 2),
+(804, NULL, 2),
+(805, NULL, 2),
+(806, NULL, 2),
+(807, NULL, 2),
+(808, NULL, 2),
+(809, NULL, 2),
+(810, NULL, 2),
+(811, NULL, 2),
+(812, NULL, 2),
+(813, NULL, 2),
+(814, NULL, 2),
+(815, NULL, 2),
+(816, NULL, 2),
+(817, NULL, 2),
+(818, NULL, 2),
+(819, NULL, 2),
+(820, NULL, 2),
+(821, NULL, 2),
+(822, NULL, 2),
+(823, NULL, 2),
+(824, NULL, 2),
+(825, NULL, 2),
+(826, NULL, 2),
+(827, NULL, 2),
+(828, NULL, 2),
+(829, NULL, 2),
+(830, NULL, 2),
+(831, NULL, 2),
+(832, NULL, 2),
+(833, NULL, 2),
+(834, NULL, 2),
+(835, NULL, 2),
+(836, NULL, 2),
+(837, NULL, 2),
+(838, NULL, 2),
+(839, NULL, 2),
+(840, NULL, 2),
+(841, NULL, 2),
+(842, NULL, 2),
+(843, NULL, 2),
+(844, NULL, 2),
+(845, NULL, 2),
+(846, NULL, 2),
+(847, NULL, 2),
+(848, NULL, 2),
+(849, NULL, 2),
+(850, NULL, 2),
+(851, NULL, 2),
+(852, NULL, 2),
+(853, NULL, 2),
+(854, NULL, 2),
+(855, NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -1778,484 +1815,604 @@ CREATE TABLE `ticket_seat_schedule` (
 INSERT INTO `ticket_seat_schedule` (`SEAT_ID`, `SCHEDULE_ID`, `TICKET_ID`, `BOOKED`) VALUES
 (1, 1, 1, 0),
 (1, 6, 301, 0),
-(1, 7, 361, 0),
+(1, 11, 676, 0),
+(1, 12, 736, 0),
 (2, 1, 2, 0),
 (2, 6, 302, 0),
-(2, 7, 362, 0),
+(2, 11, 677, 0),
+(2, 12, 737, 0),
 (3, 1, 3, 0),
 (3, 6, 303, 0),
-(3, 7, 363, 0),
+(3, 11, 678, 0),
+(3, 12, 738, 0),
 (4, 1, 4, 0),
 (4, 6, 304, 0),
-(4, 7, 364, 0),
+(4, 11, 679, 0),
+(4, 12, 739, 0),
 (5, 1, 5, 0),
 (5, 6, 305, 0),
-(5, 7, 365, 0),
+(5, 11, 680, 0),
+(5, 12, 740, 0),
 (6, 1, 6, 0),
 (6, 6, 306, 0),
-(6, 7, 366, 0),
+(6, 11, 681, 0),
+(6, 12, 741, 0),
 (7, 1, 7, 0),
 (7, 6, 307, 0),
-(7, 7, 367, 0),
+(7, 11, 682, 0),
+(7, 12, 742, 0),
 (8, 1, 8, 0),
 (8, 6, 308, 0),
-(8, 7, 368, 0),
+(8, 11, 683, 0),
+(8, 12, 743, 0),
 (9, 1, 9, 0),
 (9, 6, 309, 0),
-(9, 7, 369, 0),
+(9, 11, 684, 0),
+(9, 12, 744, 0),
 (10, 1, 10, 0),
 (10, 6, 310, 0),
-(10, 7, 370, 0),
+(10, 11, 685, 0),
+(10, 12, 745, 0),
 (11, 1, 11, 0),
 (11, 6, 311, 0),
-(11, 7, 371, 0),
+(11, 11, 686, 0),
+(11, 12, 746, 0),
 (12, 1, 12, 0),
 (12, 6, 312, 0),
-(12, 7, 372, 0),
+(12, 11, 687, 0),
+(12, 12, 747, 0),
 (13, 1, 13, 0),
 (13, 6, 313, 0),
-(13, 7, 373, 0),
+(13, 11, 688, 0),
+(13, 12, 748, 0),
 (14, 1, 14, 0),
 (14, 6, 314, 0),
-(14, 7, 374, 0),
+(14, 11, 689, 0),
+(14, 12, 749, 0),
 (15, 1, 15, 0),
 (15, 6, 315, 0),
-(15, 7, 375, 0),
+(15, 11, 690, 0),
+(15, 12, 750, 0),
 (16, 1, 16, 0),
 (16, 6, 316, 0),
-(16, 7, 376, 0),
+(16, 11, 691, 0),
+(16, 12, 751, 0),
 (17, 1, 17, 0),
 (17, 6, 317, 0),
-(17, 7, 377, 0),
+(17, 11, 692, 0),
+(17, 12, 752, 0),
 (18, 1, 18, 0),
 (18, 6, 318, 0),
-(18, 7, 378, 0),
+(18, 11, 693, 0),
+(18, 12, 753, 0),
 (19, 1, 19, 0),
 (19, 6, 319, 0),
-(19, 7, 379, 0),
+(19, 11, 694, 0),
+(19, 12, 754, 0),
 (20, 1, 20, 0),
 (20, 6, 320, 0),
-(20, 7, 380, 0),
+(20, 11, 695, 0),
+(20, 12, 755, 0),
 (21, 1, 21, 0),
 (21, 6, 321, 0),
-(21, 7, 381, 0),
+(21, 11, 696, 0),
+(21, 12, 756, 0),
 (22, 1, 22, 0),
 (22, 6, 322, 0),
-(22, 7, 382, 0),
+(22, 11, 697, 0),
+(22, 12, 757, 0),
 (23, 1, 23, 0),
 (23, 6, 323, 0),
-(23, 7, 383, 0),
+(23, 11, 698, 0),
+(23, 12, 758, 0),
 (24, 1, 24, 0),
 (24, 6, 324, 0),
-(24, 7, 384, 0),
+(24, 11, 699, 0),
+(24, 12, 759, 0),
 (25, 1, 25, 0),
 (25, 6, 325, 0),
-(25, 7, 385, 0),
+(25, 11, 700, 0),
+(25, 12, 760, 0),
 (26, 1, 26, 0),
 (26, 6, 326, 0),
-(26, 7, 386, 0),
+(26, 11, 701, 0),
+(26, 12, 761, 0),
 (27, 1, 27, 0),
 (27, 6, 327, 0),
-(27, 7, 387, 0),
+(27, 11, 702, 0),
+(27, 12, 762, 0),
 (28, 1, 28, 0),
 (28, 6, 328, 0),
-(28, 7, 388, 0),
+(28, 11, 703, 0),
+(28, 12, 763, 0),
 (29, 1, 29, 0),
 (29, 6, 329, 0),
-(29, 7, 389, 0),
+(29, 11, 704, 0),
+(29, 12, 764, 0),
 (30, 1, 30, 0),
 (30, 6, 330, 0),
-(30, 7, 390, 0),
+(30, 11, 705, 0),
+(30, 12, 765, 0),
 (31, 1, 31, 0),
 (31, 6, 331, 0),
-(31, 7, 391, 0),
+(31, 11, 706, 0),
+(31, 12, 766, 0),
 (32, 1, 32, 0),
 (32, 6, 332, 0),
-(32, 7, 392, 0),
+(32, 11, 707, 0),
+(32, 12, 767, 0),
 (33, 1, 33, 0),
 (33, 6, 333, 0),
-(33, 7, 393, 0),
+(33, 11, 708, 0),
+(33, 12, 768, 0),
 (34, 1, 34, 0),
 (34, 6, 334, 0),
-(34, 7, 394, 0),
+(34, 11, 709, 0),
+(34, 12, 769, 0),
 (35, 1, 35, 0),
 (35, 6, 335, 0),
-(35, 7, 395, 0),
+(35, 11, 710, 0),
+(35, 12, 770, 0),
 (36, 1, 36, 0),
 (36, 6, 336, 0),
-(36, 7, 396, 0),
+(36, 11, 711, 0),
+(36, 12, 771, 0),
 (37, 1, 37, 0),
 (37, 6, 337, 0),
-(37, 7, 397, 0),
+(37, 11, 712, 0),
+(37, 12, 772, 0),
 (38, 1, 38, 0),
 (38, 6, 338, 0),
-(38, 7, 398, 0),
+(38, 11, 713, 0),
+(38, 12, 773, 0),
 (39, 1, 39, 0),
 (39, 6, 339, 0),
-(39, 7, 399, 0),
+(39, 11, 714, 0),
+(39, 12, 774, 0),
 (40, 1, 40, 0),
 (40, 6, 340, 0),
-(40, 7, 400, 0),
+(40, 11, 715, 0),
+(40, 12, 775, 0),
 (41, 1, 41, 0),
 (41, 6, 341, 0),
-(41, 7, 401, 0),
+(41, 11, 716, 0),
+(41, 12, 776, 0),
 (42, 1, 42, 0),
 (42, 6, 342, 0),
-(42, 7, 402, 0),
+(42, 11, 717, 0),
+(42, 12, 777, 0),
 (43, 1, 43, 0),
 (43, 6, 343, 0),
-(43, 7, 403, 0),
+(43, 11, 718, 0),
+(43, 12, 778, 0),
 (44, 1, 44, 0),
 (44, 6, 344, 0),
-(44, 7, 404, 0),
+(44, 11, 719, 0),
+(44, 12, 779, 0),
 (45, 1, 45, 0),
 (45, 6, 345, 0),
-(45, 7, 405, 0),
+(45, 11, 720, 0),
+(45, 12, 780, 0),
 (46, 1, 46, 0),
 (46, 6, 346, 0),
-(46, 7, 406, 0),
+(46, 11, 721, 0),
+(46, 12, 781, 0),
 (47, 1, 47, 0),
 (47, 6, 347, 0),
-(47, 7, 407, 0),
+(47, 11, 722, 0),
+(47, 12, 782, 0),
 (48, 1, 48, 0),
 (48, 6, 348, 0),
-(48, 7, 408, 0),
+(48, 11, 723, 0),
+(48, 12, 783, 0),
 (49, 1, 49, 0),
 (49, 6, 349, 0),
-(49, 7, 409, 0),
+(49, 11, 724, 0),
+(49, 12, 784, 0),
 (50, 1, 50, 0),
 (50, 6, 350, 0),
-(50, 7, 410, 0),
+(50, 11, 725, 0),
+(50, 12, 785, 0),
 (51, 1, 51, 0),
 (51, 6, 351, 0),
-(51, 7, 411, 0),
+(51, 11, 726, 0),
+(51, 12, 786, 0),
 (52, 1, 52, 0),
 (52, 6, 352, 0),
-(52, 7, 412, 0),
+(52, 11, 727, 0),
+(52, 12, 787, 0),
 (53, 1, 53, 0),
 (53, 6, 353, 0),
-(53, 7, 413, 0),
+(53, 11, 728, 0),
+(53, 12, 788, 0),
 (54, 1, 54, 0),
 (54, 6, 354, 0),
-(54, 7, 414, 0),
+(54, 11, 729, 0),
+(54, 12, 789, 0),
 (55, 1, 55, 0),
 (55, 6, 355, 0),
-(55, 7, 415, 0),
+(55, 11, 730, 0),
+(55, 12, 790, 0),
 (56, 1, 56, 0),
 (56, 6, 356, 0),
-(56, 7, 416, 0),
+(56, 11, 731, 0),
+(56, 12, 791, 0),
 (57, 1, 57, 0),
 (57, 6, 357, 0),
-(57, 7, 417, 0),
+(57, 11, 732, 0),
+(57, 12, 792, 0),
 (58, 1, 58, 0),
 (58, 6, 358, 0),
-(58, 7, 418, 0),
+(58, 11, 733, 0),
+(58, 12, 793, 0),
 (59, 1, 59, 0),
 (59, 6, 359, 0),
-(59, 7, 419, 0),
+(59, 11, 734, 0),
+(59, 12, 794, 0),
 (60, 1, 60, 0),
 (60, 6, 360, 0),
-(60, 7, 420, 0),
+(60, 11, 735, 0),
+(60, 12, 795, 0),
 (81, 2, 61, 0),
 (81, 3, 121, 0),
 (81, 4, 181, 0),
 (81, 5, 241, 0),
 (81, 10, 616, 0),
+(81, 13, 796, 0),
 (82, 2, 62, 0),
 (82, 3, 122, 0),
 (82, 4, 182, 0),
 (82, 5, 242, 0),
 (82, 10, 617, 0),
+(82, 13, 797, 0),
 (83, 2, 63, 0),
 (83, 3, 123, 0),
 (83, 4, 183, 0),
 (83, 5, 243, 0),
 (83, 10, 618, 0),
+(83, 13, 798, 0),
 (84, 2, 64, 0),
 (84, 3, 124, 0),
 (84, 4, 184, 0),
 (84, 5, 244, 0),
 (84, 10, 619, 0),
+(84, 13, 799, 0),
 (85, 2, 65, 0),
 (85, 3, 125, 0),
 (85, 4, 185, 0),
 (85, 5, 245, 0),
 (85, 10, 620, 0),
+(85, 13, 800, 0),
 (86, 2, 66, 0),
 (86, 3, 126, 0),
 (86, 4, 186, 0),
 (86, 5, 246, 0),
 (86, 10, 621, 0),
+(86, 13, 801, 0),
 (87, 2, 67, 0),
 (87, 3, 127, 0),
 (87, 4, 187, 0),
 (87, 5, 247, 0),
 (87, 10, 622, 0),
+(87, 13, 802, 0),
 (88, 2, 68, 0),
 (88, 3, 128, 0),
 (88, 4, 188, 0),
 (88, 5, 248, 0),
 (88, 10, 623, 0),
+(88, 13, 803, 0),
 (89, 2, 69, 0),
 (89, 3, 129, 0),
 (89, 4, 189, 0),
 (89, 5, 249, 0),
 (89, 10, 624, 0),
+(89, 13, 804, 0),
 (90, 2, 70, 0),
 (90, 3, 130, 0),
 (90, 4, 190, 0),
 (90, 5, 250, 0),
 (90, 10, 625, 0),
+(90, 13, 805, 0),
 (91, 2, 71, 0),
 (91, 3, 131, 0),
 (91, 4, 191, 0),
 (91, 5, 251, 0),
 (91, 10, 626, 0),
+(91, 13, 806, 0),
 (92, 2, 72, 0),
 (92, 3, 132, 0),
 (92, 4, 192, 0),
 (92, 5, 252, 0),
 (92, 10, 627, 0),
+(92, 13, 807, 0),
 (93, 2, 73, 0),
 (93, 3, 133, 0),
 (93, 4, 193, 0),
 (93, 5, 253, 0),
 (93, 10, 628, 0),
+(93, 13, 808, 0),
 (94, 2, 74, 0),
 (94, 3, 134, 0),
 (94, 4, 194, 0),
 (94, 5, 254, 0),
 (94, 10, 629, 0),
+(94, 13, 809, 0),
 (95, 2, 75, 0),
 (95, 3, 135, 0),
 (95, 4, 195, 0),
 (95, 5, 255, 0),
 (95, 10, 630, 0),
+(95, 13, 810, 0),
 (96, 2, 76, 0),
 (96, 3, 136, 0),
 (96, 4, 196, 0),
 (96, 5, 256, 0),
 (96, 10, 631, 0),
+(96, 13, 811, 0),
 (97, 2, 77, 0),
 (97, 3, 137, 0),
 (97, 4, 197, 0),
 (97, 5, 257, 0),
 (97, 10, 632, 0),
+(97, 13, 812, 0),
 (98, 2, 78, 0),
 (98, 3, 138, 0),
 (98, 4, 198, 0),
 (98, 5, 258, 0),
 (98, 10, 633, 0),
+(98, 13, 813, 0),
 (99, 2, 79, 0),
 (99, 3, 139, 0),
 (99, 4, 199, 0),
 (99, 5, 259, 0),
 (99, 10, 634, 0),
+(99, 13, 814, 0),
 (100, 2, 80, 0),
 (100, 3, 140, 0),
 (100, 4, 200, 0),
 (100, 5, 260, 0),
 (100, 10, 635, 0),
+(100, 13, 815, 0),
 (101, 2, 81, 0),
 (101, 3, 141, 0),
 (101, 4, 201, 0),
 (101, 5, 261, 0),
 (101, 10, 636, 0),
+(101, 13, 816, 0),
 (102, 2, 82, 0),
 (102, 3, 142, 0),
 (102, 4, 202, 0),
 (102, 5, 262, 0),
 (102, 10, 637, 0),
+(102, 13, 817, 0),
 (103, 2, 83, 0),
 (103, 3, 143, 0),
 (103, 4, 203, 0),
 (103, 5, 263, 0),
 (103, 10, 638, 0),
+(103, 13, 818, 0),
 (104, 2, 84, 0),
 (104, 3, 144, 0),
 (104, 4, 204, 0),
 (104, 5, 264, 0),
 (104, 10, 639, 0),
+(104, 13, 819, 0),
 (105, 2, 85, 0),
 (105, 3, 145, 0),
 (105, 4, 205, 0),
 (105, 5, 265, 0),
 (105, 10, 640, 0),
+(105, 13, 820, 0),
 (106, 2, 86, 0),
 (106, 3, 146, 0),
 (106, 4, 206, 0),
 (106, 5, 266, 0),
 (106, 10, 641, 0),
+(106, 13, 821, 0),
 (107, 2, 87, 0),
 (107, 3, 147, 0),
 (107, 4, 207, 0),
 (107, 5, 267, 0),
 (107, 10, 642, 0),
+(107, 13, 822, 0),
 (108, 2, 88, 0),
 (108, 3, 148, 0),
 (108, 4, 208, 0),
 (108, 5, 268, 0),
 (108, 10, 643, 0),
+(108, 13, 823, 0),
 (109, 2, 89, 0),
 (109, 3, 149, 0),
 (109, 4, 209, 0),
 (109, 5, 269, 0),
 (109, 10, 644, 0),
+(109, 13, 824, 0),
 (110, 2, 90, 0),
 (110, 3, 150, 0),
 (110, 4, 210, 0),
 (110, 5, 270, 0),
 (110, 10, 645, 0),
+(110, 13, 825, 0),
 (111, 2, 91, 0),
 (111, 3, 151, 0),
 (111, 4, 211, 0),
 (111, 5, 271, 0),
 (111, 10, 646, 0),
+(111, 13, 826, 0),
 (112, 2, 92, 0),
 (112, 3, 152, 0),
 (112, 4, 212, 0),
 (112, 5, 272, 0),
 (112, 10, 647, 0),
+(112, 13, 827, 0),
 (113, 2, 93, 0),
 (113, 3, 153, 0),
 (113, 4, 213, 0),
 (113, 5, 273, 0),
 (113, 10, 648, 0),
+(113, 13, 828, 0),
 (114, 2, 94, 0),
 (114, 3, 154, 0),
 (114, 4, 214, 0),
 (114, 5, 274, 0),
 (114, 10, 649, 0),
+(114, 13, 829, 0),
 (115, 2, 95, 0),
 (115, 3, 155, 0),
 (115, 4, 215, 0),
 (115, 5, 275, 0),
 (115, 10, 650, 0),
+(115, 13, 830, 0),
 (116, 2, 96, 0),
 (116, 3, 156, 0),
 (116, 4, 216, 0),
 (116, 5, 276, 0),
 (116, 10, 651, 0),
+(116, 13, 831, 0),
 (117, 2, 97, 0),
 (117, 3, 157, 0),
 (117, 4, 217, 0),
 (117, 5, 277, 0),
 (117, 10, 652, 0),
+(117, 13, 832, 0),
 (118, 2, 98, 0),
 (118, 3, 158, 0),
 (118, 4, 218, 0),
 (118, 5, 278, 0),
 (118, 10, 653, 0),
+(118, 13, 833, 0),
 (119, 2, 99, 0),
 (119, 3, 159, 0),
 (119, 4, 219, 0),
 (119, 5, 279, 0),
 (119, 10, 654, 0),
+(119, 13, 834, 0),
 (120, 2, 100, 0),
 (120, 3, 160, 0),
 (120, 4, 220, 0),
 (120, 5, 280, 0),
 (120, 10, 655, 0),
+(120, 13, 835, 0),
 (121, 2, 101, 0),
 (121, 3, 161, 0),
 (121, 4, 221, 0),
 (121, 5, 281, 0),
 (121, 10, 656, 0),
+(121, 13, 836, 0),
 (122, 2, 102, 0),
 (122, 3, 162, 0),
 (122, 4, 222, 0),
 (122, 5, 282, 0),
 (122, 10, 657, 0),
+(122, 13, 837, 0),
 (123, 2, 103, 0),
 (123, 3, 163, 0),
 (123, 4, 223, 0),
 (123, 5, 283, 0),
 (123, 10, 658, 0),
+(123, 13, 838, 0),
 (124, 2, 104, 0),
 (124, 3, 164, 0),
 (124, 4, 224, 0),
 (124, 5, 284, 0),
 (124, 10, 659, 0),
+(124, 13, 839, 0),
 (125, 2, 105, 0),
 (125, 3, 165, 0),
 (125, 4, 225, 0),
 (125, 5, 285, 0),
 (125, 10, 660, 0),
+(125, 13, 840, 0),
 (126, 2, 106, 0),
 (126, 3, 166, 0),
 (126, 4, 226, 0),
 (126, 5, 286, 0),
 (126, 10, 661, 0),
+(126, 13, 841, 0),
 (127, 2, 107, 0),
 (127, 3, 167, 0),
 (127, 4, 227, 0),
 (127, 5, 287, 0),
 (127, 10, 662, 0),
+(127, 13, 842, 0),
 (128, 2, 108, 0),
 (128, 3, 168, 0),
 (128, 4, 228, 0),
 (128, 5, 288, 0),
 (128, 10, 663, 0),
+(128, 13, 843, 0),
 (129, 2, 109, 0),
 (129, 3, 169, 0),
 (129, 4, 229, 0),
 (129, 5, 289, 0),
 (129, 10, 664, 0),
+(129, 13, 844, 0),
 (130, 2, 110, 0),
 (130, 3, 170, 0),
 (130, 4, 230, 0),
 (130, 5, 290, 0),
 (130, 10, 665, 0),
+(130, 13, 845, 0),
 (131, 2, 111, 0),
 (131, 3, 171, 0),
 (131, 4, 231, 0),
 (131, 5, 291, 0),
 (131, 10, 666, 0),
+(131, 13, 846, 0),
 (132, 2, 112, 0),
 (132, 3, 172, 0),
 (132, 4, 232, 0),
 (132, 5, 292, 0),
 (132, 10, 667, 0),
+(132, 13, 847, 0),
 (133, 2, 113, 0),
 (133, 3, 173, 0),
 (133, 4, 233, 0),
 (133, 5, 293, 0),
 (133, 10, 668, 0),
+(133, 13, 848, 0),
 (134, 2, 114, 0),
 (134, 3, 174, 0),
 (134, 4, 234, 0),
 (134, 5, 294, 0),
 (134, 10, 669, 0),
+(134, 13, 849, 0),
 (135, 2, 115, 0),
 (135, 3, 175, 0),
 (135, 4, 235, 0),
 (135, 5, 295, 0),
 (135, 10, 670, 0),
+(135, 13, 850, 0),
 (136, 2, 116, 0),
 (136, 3, 176, 0),
 (136, 4, 236, 0),
 (136, 5, 296, 0),
 (136, 10, 671, 0),
+(136, 13, 851, 0),
 (137, 2, 117, 0),
 (137, 3, 177, 0),
 (137, 4, 237, 0),
 (137, 5, 297, 0),
 (137, 10, 672, 0),
+(137, 13, 852, 0),
 (138, 2, 118, 0),
 (138, 3, 178, 0),
 (138, 4, 238, 0),
 (138, 5, 298, 0),
 (138, 10, 673, 0),
+(138, 13, 853, 0),
 (139, 2, 119, 0),
 (139, 3, 179, 0),
 (139, 4, 239, 0),
 (139, 5, 299, 0),
 (139, 10, 674, 0),
+(139, 13, 854, 0),
 (140, 2, 120, 0),
 (140, 3, 180, 0),
 (140, 4, 240, 0),
 (140, 5, 300, 0),
 (140, 10, 675, 0),
+(140, 13, 855, 0),
 (161, 8, 421, 0),
 (162, 8, 422, 0),
 (163, 8, 423, 0),
@@ -2350,107 +2507,34 @@ INSERT INTO `ticket_seat_schedule` (`SEAT_ID`, `SCHEDULE_ID`, `TICKET_ID`, `BOOK
 (252, 8, 512, 0),
 (253, 8, 513, 0),
 (254, 8, 514, 0),
-(255, 8, 515, 0),
-(513, 9, 516, 0),
-(514, 9, 517, 0),
-(515, 9, 518, 0),
-(516, 9, 519, 0),
-(517, 9, 520, 0),
-(518, 9, 521, 0),
-(519, 9, 522, 0),
-(520, 9, 523, 0),
-(521, 9, 524, 0),
-(522, 9, 525, 0),
-(523, 9, 526, 0),
-(524, 9, 527, 0),
-(525, 9, 528, 0),
-(526, 9, 529, 0),
-(527, 9, 530, 0),
-(528, 9, 531, 0),
-(529, 9, 532, 0),
-(530, 9, 533, 0),
-(531, 9, 534, 0),
-(532, 9, 535, 0),
-(533, 9, 536, 0),
-(534, 9, 537, 0),
-(535, 9, 538, 0),
-(536, 9, 539, 0),
-(537, 9, 540, 0),
-(538, 9, 541, 0),
-(539, 9, 542, 0),
-(540, 9, 543, 0),
-(541, 9, 544, 0),
-(542, 9, 545, 0),
-(543, 9, 546, 0),
-(544, 9, 547, 0),
-(545, 9, 548, 0),
-(546, 9, 549, 0),
-(547, 9, 550, 0),
-(548, 9, 551, 0),
-(549, 9, 552, 0),
-(550, 9, 553, 0),
-(551, 9, 554, 0),
-(552, 9, 555, 0),
-(553, 9, 556, 0),
-(554, 9, 557, 0),
-(555, 9, 558, 0),
-(556, 9, 559, 0),
-(557, 9, 560, 0),
-(558, 9, 561, 0),
-(559, 9, 562, 0),
-(560, 9, 563, 0),
-(561, 9, 564, 0),
-(562, 9, 565, 0),
-(563, 9, 566, 0),
-(564, 9, 567, 0),
-(565, 9, 568, 0),
-(566, 9, 569, 0),
-(567, 9, 570, 0),
-(568, 9, 571, 0),
-(569, 9, 572, 0),
-(570, 9, 573, 0),
-(571, 9, 574, 0),
-(572, 9, 575, 0),
-(573, 9, 576, 0),
-(574, 9, 577, 0),
-(575, 9, 578, 0),
-(576, 9, 579, 0),
-(577, 9, 580, 0),
-(578, 9, 581, 0),
-(579, 9, 582, 0),
-(580, 9, 583, 0),
-(581, 9, 584, 0),
-(582, 9, 585, 0),
-(583, 9, 586, 0),
-(584, 9, 587, 0),
-(585, 9, 588, 0),
-(586, 9, 589, 0),
-(587, 9, 590, 0),
-(588, 9, 591, 0),
-(589, 9, 592, 0),
-(590, 9, 593, 0),
-(591, 9, 594, 0),
-(592, 9, 595, 0),
-(593, 9, 596, 0),
-(594, 9, 597, 0),
-(595, 9, 598, 0),
-(596, 9, 599, 0),
-(597, 9, 600, 0),
-(598, 9, 601, 0),
-(599, 9, 602, 0),
-(600, 9, 603, 0),
-(601, 9, 604, 0),
-(602, 9, 605, 0),
-(603, 9, 606, 0),
-(604, 9, 607, 0),
-(605, 9, 608, 0),
-(606, 9, 609, 0),
-(607, 9, 610, 0),
-(608, 9, 611, 0),
-(609, 9, 612, 0),
-(610, 9, 613, 0),
-(611, 9, 614, 0),
-(612, 9, 615, 0);
+(255, 8, 515, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `transactions`
+-- (See below for the actual view)
+--
+CREATE TABLE `transactions` (
+);
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `fcb_detail`
+--
+DROP TABLE IF EXISTS `fcb_detail`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `fcb_detail`  AS SELECT `foodcombo`.`ID` AS `ID`, `foodcombo`.`NAME` AS `NAME`, max(case when `product`.`TYPE` = 'Đồ ăn' then `product`.`NAME` else NULL end) AS `TenDoAn`, group_concat(case when `product`.`TYPE` = 'Đồ ăn' then `product_fcb`.`QUANTITY` else NULL end separator ',') AS `QuantityDoAn`, max(case when `product`.`TYPE` = 'Đồ uống' then `product`.`NAME` else NULL end) AS `TenDoUong`, group_concat(case when `product`.`TYPE` = 'Đồ uống' then `product_fcb`.`QUANTITY` else NULL end separator ',') AS `QuantityDoUong`, `foodcombo`.`PRICE` AS `PRICE` FROM ((`foodcombo` join `product_fcb` on(`foodcombo`.`ID` = `product_fcb`.`FCB_ID`)) join `product` on(`product`.`ID` = `product_fcb`.`PRODUCT_ID`)) GROUP BY `foodcombo`.`NAME``NAME`  ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `transactions`
+--
+DROP TABLE IF EXISTS `transactions`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `transactions`  AS SELECT `booking`.`ID` AS `ID`, `client`.`NAME` AS `NAME`, `client`.`PHONE` AS `PHONE`, `client`.`ADDRESS` AS `ADDRESS`, `movie`.`TITLE` AS `TITLE`, `schedule`.`STARTTIME` AS `STARTTIME`, `schedule`.`ENDTIME` AS `ENDTIME`, group_concat(`seat`.`SEATNUMBER` separator ',') AS `Seats`, sum(`ticket`.`price`) AS `ticketPrice`, `foodcombo`.`NAME` AS `Food`, `foodcombo`.`PRICE` AS `PRICE`, sum(`ticket`.`price`) + `foodcombo`.`PRICE` AS `Total` FROM ((((((((`booking` join `client`) join `ticket`) join `ticket_seat_schedule`) join `schedule`) join `seat`) join `movie`) join `food_booking`) join `foodcombo`) WHERE `client`.`ID` = `booking`.`CLIENT_ID` AND `ticket`.`BOO_ID` = `booking`.`ID` AND `ticket_seat_schedule`.`TICKET_ID` = `ticket`.`ID` AND `schedule`.`ID` = `ticket_seat_schedule`.`SCHEDULE_ID` AND `seat`.`ID` = `ticket_seat_schedule`.`SEAT_ID` AND `movie`.`ID` = `schedule`.`MOV_ID` AND `food_booking`.`FOOD_ID` = `foodcombo`.`ID` AND `booking`.`ID` = `food_booking`.`BOOKING_ID` GROUP BY `booking`.`ID``ID`  ;
 
 --
 -- Indexes for dumped tables
@@ -2463,12 +2547,6 @@ ALTER TABLE `booking`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `FK_BOOKING_CLIENT` (`CLIENT_ID`),
   ADD KEY `FK_BOOKING_STAFF` (`STAFF_ID`);
-
---
--- Indexes for table `cinema`
---
-ALTER TABLE `cinema`
-  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `client`
@@ -2558,67 +2636,61 @@ ALTER TABLE `ticket_seat_schedule`
 -- AUTO_INCREMENT for table `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `cinema`
---
-ALTER TABLE `cinema`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `client`
 --
 ALTER TABLE `client`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `foodcombo`
 --
 ALTER TABLE `foodcombo`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `movie`
 --
 ALTER TABLE `movie`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `seat`
 --
 ALTER TABLE `seat`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=646;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=744;
 
 --
 -- AUTO_INCREMENT for table `staff`
 --
 ALTER TABLE `staff`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `theater`
 --
 ALTER TABLE `theater`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=676;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=856;
 
 --
 -- Constraints for dumped tables
