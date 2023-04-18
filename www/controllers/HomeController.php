@@ -63,12 +63,23 @@ class HomeController extends AuthController
         $path = "SeatBooking";
         require_once('views/Client/index.php');
     }
+    public function comboBooking()
+    {
+        $this->isAuthenticated();
+        $ongoing = $this->ongoing;
+        $model = new FoodComboModel();
+        $model->db = $this->db;
+        $foods = $model->getAll();
+        $foods = json_decode($foods)->data;;
+        $path = "ComboBooking";
+        require_once('views/Client/index.php');
+    }
 
     public function showtime()
     {
-        $db = Connection::$connection;
+       
         $model = new ScheduleModel();
-        $model->db = $db;
+        $model->db = $this->db;
         $showtimes = $model->getScheduleToday();
         $ongoing = $this->ongoing;
         $path = "Showtime";

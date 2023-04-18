@@ -23,20 +23,20 @@
                 <div id="bookticket-ticket-main-info" class="rounded-4">
                     <div class="row">
                         <div class="col-12 col-lg-5 text-center py-5">
-                            <img class="align-self-center" src="<?php echo $_SESSION['schedule'][0]->POSTER ?>" alt="Poster">
+                            <img class="align-self-center" src="<?php echo $_SESSION['booking']['schedule'][0]->POSTER ?>" alt="Poster">
                         </div>
                         <div class="col-12 col-lg-7 my-3">
-                            <h3 id="bookticket-ticket-main-info-title" class="text-yellow text-center text-uppercase my-3"><?php echo $_SESSION['schedule'][0]->TITLE ?></h3>
+                            <h3 id="bookticket-ticket-main-info-title" class="text-yellow text-center text-uppercase my-3"><?php echo $_SESSION['booking']['schedule'][0]->TITLE ?></h3>
                             <div id="bookticket-ticket-main-info-time" class="my-3 text-white">
                                 <h4 class="d-inline-block mx-2" style="min-width: 140px;">Thời gian:</h4>
-                                <h6 class="d-inline-block mx-2" id="bookticket-ticket-main-info-time-time"> <?php echo date("h:i", strtotime($_SESSION['schedule'][0]->STARTTIME)) ?>
+                                <h6 class="d-inline-block mx-2" id="bookticket-ticket-main-info-time-time"> <?php echo date("h:i", strtotime($_SESSION['booking']['schedule'][0]->STARTTIME)) ?>
                                 </h6>
                                 <h6 class="d-inline-block mx-2" id="bookticket-ticket-main-info-time-date">
-                                    <?php echo date("d/m/Y", strtotime($_SESSION['schedule'][0]->STARTTIME)) ?></h6>
+                                    <?php echo date("d/m/Y", strtotime($_SESSION['booking']['schedule'][0]->STARTTIME)) ?></h6>
                             </div>
                             <div id="bookticket-ticket-main-info-theater" class="my-3 text-white d-inline">
                                 <h4 class="d-inline-block mx-2" style="width: 140px;">Rạp:</h4>
-                                <h6 class="d-inline-block mx-2" id="bookticket-ticket-main-info-theater-room"><?php echo $_SESSION['schedule'][0]->THEATERNUM ?>
+                                <h6 class="d-inline-block mx-2" id="bookticket-ticket-main-info-theater-room"><?php echo $_SESSION['booking']['schedule'][0]->THEATERNUM ?>
                                 </h6>
                             </div>
                         </div>
@@ -134,20 +134,20 @@
                     <h3 class="text-yellow text-center pb-3">Giỏ hàng</h3>
                     <!-- Regular ticket -->
                     <div id="bookticket-seat-main-cart-regular" class="mx-3 d-flex justify-content-between">
-                        <h5>Vé thường x<span id="quantity_regular"><?php echo $_SESSION['quantity_regular'] ?></span></h5>
-                        <h5 id="bookticket-seat-main-cart-regular-total"><?php echo $_SESSION['total_regular'] ?></h5>
+                        <h5>Vé thường x<span id="quantity_regular"><?php echo $_SESSION['booking']['quantity_regular'] ?></span></h5>
+                        <h5 id="bookticket-seat-main-cart-regular-total"><?php echo $_SESSION['booking']['total_regular'] ?></h5>
                     </div>
                     <!-- Couple ticket -->
                     <div id="bookticket-seat-main-cart-couple" class="mx-3 d-flex justify-content-between">
-                        <h5>Vé đôi x<span id="quantity_couple"><?php echo $_SESSION['quantity_couple'] ?></span></h5>
-                        <h5 id="bookticket-seat-main-cart-couple-total"><?php echo $_SESSION['total_couple'] ?></h5>
+                        <h5>Vé đôi x<span id="quantity_couple"><?php echo $_SESSION['booking']['quantity_couple'] ?></span></h5>
+                        <h5 id="bookticket-seat-main-cart-couple-total"><?php echo $_SESSION['booking']['total_couple'] ?></h5>
                     </div>
                     <!-- Total -->
                     <div id="bookticket-seat-main-cart-total" class="px-3 mt-3 pt-3 d-flex justify-content-between">
                         <h4>Tổng cộng</h4>
                         <h4 id="bookticket-seat-main-cart-total-price"><?php
-                                                                        $a = intval(str_replace(',', '', $_SESSION['total_regular']));
-                                                                        $b = intval(str_replace(',', '', $_SESSION['total_couple']));
+                                                                        $a = intval(str_replace(',', '', $_SESSION['booking']['total_regular']));
+                                                                        $b = intval(str_replace(',', '', $_SESSION['booking']['total_couple']));
                                                                         $result = $a + $b;
                                                                         echo number_format($result);
                                                                         ?></h4>

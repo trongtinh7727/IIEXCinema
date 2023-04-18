@@ -1,5 +1,4 @@
 <script>
-    
     function drawSeatCols(start, end) {
         const seatCols = document.createElement('div');
         seatCols.classList.add('seatcol-big', 'd-flex');
@@ -19,7 +18,7 @@
             // Create the seat letter for this column
             const seatLetter = document.createElement('div');
             seatLetter.classList.add('seat-letter');
-            seatLetter.textContent = j ;
+            seatLetter.textContent = j;
             seatCol.appendChild(seatLetter);
 
             // Add the seat item column to the seatCols container
@@ -67,30 +66,55 @@
 
         // 10 cuple | 80 single
         const seats = [];
-        var ticket_quantity = parseInt($('#quantity_regular').text()) + parseInt($('#quantity_couple').text())
-
+        var regular_quantity = parseInt($('#quantity_regular').text())
+        var couple_quantity = parseInt($('#quantity_couple').text())
         $("#bookticket-seat-main-seat").find($(".seat-item")).click(function() {
-            
+
             if ($(this).hasClass("seat-choosing")) {
-                ticket_quantity += 1;
+
+                if ($(this).hasClass('seat-item-couple')) {
+                    couple_quantity += 1
+                } else {
+                    regular_quantity += 1;
+                }
                 const index = seats.indexOf($(this).data("seat"));
-                if (index > -1) { // only splice array when item is found
-                    seats.splice(index, 1); // 2nd parameter means remove one item only
+                if (index > -1) {
+                    seats.splice(index, 1);
                 }
                 console.log($(this).data("seat"));
                 console.log(seats)
                 $(this).removeClass("seat-choosing");
             } else {
-                if (ticket_quantity<=0) {
-                alert("Đã chọn đủ số vé! Vui lòng bấm vào 'Tiếp theo' để sang bước tiếp theo")
-                }else{
-                    ticket_quantity -=1;
-                seats.push($(this).data("seat"));
-                console.log(seats)
-                $(this).addClass("seat-choosing");
-                console.log($(this).data("seat"));
+
+                flag = true;
+                if ($(this).hasClass('seat-item-couple')) {
+                    if (couple_quantity <= 0) {
+                        alert("Đã chọn đủ số vé đôi!")
+                        flag = false;
+                    }
+                } else {
+                    if (regular_quantity <= 0) {
+                        alert("Đã chọn đủ số vé đơn!")
+                        flag = false;
+                    }
                 }
-               
+
+                if (couple_quantity <= 0 && regular_quantity <= 0) {
+                    alert("Đã chọn đủ số vé! Vui lòng bấm vào 'Tiếp theo' để sang bước tiếp theo")
+                    flag = false;
+                }
+                if (flag) {
+                    if ($(this).hasClass('seat-item-couple')) {
+                        couple_quantity -= 1
+                    } else {
+                        regular_quantity -= 1;
+                    }
+
+                    seats.push($(this).data("seat"));
+                    console.log(seats)
+                    $(this).addClass("seat-choosing");
+                    console.log($(this).data("seat"));
+                }
             }
         });
 
