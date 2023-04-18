@@ -24,7 +24,7 @@
                     <th>ID</th>
                     <th>Mã phòng chiếu</th>
                     <th>Số lượng các ghế</th>
-                    <th>Hành động</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tfoot>
@@ -32,7 +32,7 @@
                     <th>ID</th>
                     <th>Mã phòng chiếu</th>
                     <th>Số lượng các ghế</th>
-                    <th>Hành động</th>
+                    <th>Action</th>
                 </tr>
             </tfoot>
         </table>

@@ -54,6 +54,8 @@
                 timeSlot.classList.add('moviedetails-main-shift-item-time', 'bg-yellow', 'd-flex', 'align-items-center');
 
                 const timeSlotLink = document.createElement('a');
+                timeSlotLink.setAttribute('href', './?ticketbooking&schedule=' +
+                    shift.ID);
                 timeSlotLink.classList.add('moviedetails-main-shift-item-time-slot', 'ms-3', 'text-white', 'd-flex', 'align-items-center', 'justify-content-center', 'text-decoration-none', 'my-0', 'hover-bg-green');
 
                 const timeSlotText = document.createElement('div');

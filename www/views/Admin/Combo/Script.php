@@ -1,26 +1,4 @@
 <script>
-    function fillEditForm(btn) {
-        $("#addCinemaModalLabel").val("Update Cinema");
-        let tds = $(btn).closest('tr').find('td');
-        let ID = tds[0].innerHTML;
-        $("#action").val(ID);
-
-        $.post("./?api/product/getbyid", {
-            ID
-        }, function(data, status) {
-            var table = $('#table');
-            console.log(data)
-            data.data.forEach(function(object) {
-                $('#NAME').val(object.NAME)
-                $('#TYPE').val(object.TYPE)
-                $('#PRICE').val(object.PRICE)
-                $('#QUANTITY').val(object.QUANTITY)
-                $('#STORY').val(object.STORY)
-                $('#Expiry_Date').val(object.Expiry_Date)
-
-            });
-        }, "json");
-    }
     $(document).ready(function() {
 
         var table = $('#dataTable').DataTable({
@@ -52,7 +30,7 @@
                 {
                     data: null,
                     render: function(data, type, row) {
-                        return '<button name="btn_delete_employee" class="btn btn-outline-danger" onclick="confirmRemoval(this)" > Delete </button> <button name="btn_edit_employee" class="btn btn-outline-secondary" onclick="fillEditForm(this)" data-bs-toggle="modal" data-bs-target="#addEmployeeModal" > Edit </button>';
+                        return '<button name="btn_delete_employee" class="btn btn-outline-danger" onclick="confirmRemoval(this)" > Delete </button>';
                     }
                 }
             ]
@@ -121,32 +99,8 @@
                     }
                 }, "json")
             } else {
-                let ID = $("#action").val();
-                $.post("./?api/foodcombo/update", {
-                    NAME,
-                    FOOD,
-                    FOOD_QUANTITY,
-                    DRINK,
-                    DRINK_QUANTITY,
-                    PRICE,
-                    ID
-                }, function(data, status) {
-                    console.log(data)
-                    if (data.status) {
-                        console.log("Okee")
-                        table.ajax.reload();
-                        let msg = data.data;
-                        console.log(msg)
-                        $("#msg-success").css('display', 'flex').text(msg)
-                        $("#msg-failed").css('display', 'none')
-                    } else {
-                        let msg = data.data;
-                        console.log(msg)
-                        $("#msg-failed").css('display', 'flex').text("Có lỗi xảy ra! Vui lòng thử lại sau: " + msg)
-                        $("#msg-success").css('display', 'none')
-                    }
-                }, "json")
-                $("#action").val("Add");
+                alert("Tính năng không hỗ trợ")
+                console.log("Tính năng không hỗ trợ")
             }
             clearForm()
         });
