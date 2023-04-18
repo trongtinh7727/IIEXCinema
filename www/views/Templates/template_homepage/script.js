@@ -17,7 +17,7 @@ $(document).ready(function () {
         }
     });
     $("#swiper-slide-inner-movie-trailer-modal").on("hidden.bs.modal", function () {
-        $('.swiper-trailer-video').attr('src', $('.trailer-video').attr('src'));
+        $('.swiper-trailer-video').attr('src', $('.swiper-trailer-video').attr('src'));
     });
     $('#toggler-ongoing-movies').click(function (e) {
         $('#content-ongoing-movies').removeClass('d-none');
