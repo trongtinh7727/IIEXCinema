@@ -2,9 +2,9 @@
 
     <!-- Title + Button -->
     <div class="card-header bg-white rounded-top-4">
-        <span class="fs-4">Quản lý khách hàng</span>
+        <span class="fs-4">Lịch sử đặt vé</span>
         <br>
-        <span>Kiểm tra và quản lý khách hàng</span>
+        <span>Kiểm tra lịch sử đặt vé</span>
     </div>
     <div class="container my-4">
         <div class="d-flex flex-wrap justify-content-between">
@@ -24,27 +24,31 @@
                 <!-- Table Header -->
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Tên đăng nhập</th>
                         <th>Số điện thoại</th>
                         <th>Họ và tên</th>
-                        <th>Giới tính</th>
-                        <th>Ngày sinh</th>
-                        <th>Địa chỉ</th>
-                        <th>Action</th>
+                        <th>Tiêu đề phim</th>
+                        <th>Thời gian bắt đầu</th>
+                        <th>Các ghế</th>
+                        <th>Tổng giá vé</th>
+                        <th>Combo đồ ăn</th>
+                        <th>Giá commbo</th>
+                        <th>Thành tiền</th>
                     </tr>
                 </thead>
 
                 <tfoot>
                     <tr>
-                        <th>ID</th>
                         <th>Tên đăng nhập</th>
                         <th>Số điện thoại</th>
                         <th>Họ và tên</th>
-                        <th>Giới tính</th>
-                        <th>Ngày sinh</th>
-                        <th>Địa chỉ</th>
-                        <th>Action</th>
+                        <th>Tiêu đề phim</th>
+                        <th>Thời gian bắt đầu</th>
+                        <th>Các ghế</th>
+                        <th>Tổng giá vé</th>
+                        <th>Combo đồ ăn</th>
+                        <th>Giá commbo</th>
+                        <th>Thành tiền</th>
                     </tr>
                 </tfoot>
             </table>

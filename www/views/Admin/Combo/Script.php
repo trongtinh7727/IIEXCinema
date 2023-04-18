@@ -1,57 +1,52 @@
 <script>
     function fillEditForm(btn) {
-        $("#addEmployeeModalLabel").val("Update Staff");
-        let tds = $(btn).closest('tr').find('td')
+        $("#addCinemaModalLabel").val("Update Cinema");
+        let tds = $(btn).closest('tr').find('td');
         let ID = tds[0].innerHTML;
         $("#action").val(ID);
-        $.post("./?api/staff/getbyid", {
+
+        $.post("./?api/product/getbyid", {
             ID
         }, function(data, status) {
             var table = $('#table');
             console.log(data)
             data.data.forEach(function(object) {
-                $('#USERNAME').val(object.USERNAME)
-                $('.pass').hide();
-                $('#FNAME').val(object.FIRSTNAME)
-                $('#LNAME').val(object.LASTNAME)
-                $('#BIRTHDAY').val(object.BIRTHDAY)
-                $('#PHONE').val(object.PHONE)
-                $('#ADDRESS').val(object.ADDRESS)
-                $('#SALARY').val(object.SALARY)
-            });
+                $('#NAME').val(object.NAME)
+                $('#TYPE').val(object.TYPE)
+                $('#PRICE').val(object.PRICE)
+                $('#QUANTITY').val(object.QUANTITY)
+                $('#STORY').val(object.STORY)
+                $('#Expiry_Date').val(object.Expiry_Date)
 
+            });
         }, "json");
     }
     $(document).ready(function() {
 
         var table = $('#dataTable').DataTable({
-            ajax: "./?api/staff/getall",
+            ajax: "./?api/foodcombo/getall",
             columns: [{
-                    data: "ID"
+                    data: 'ID'
                 },
                 {
-                    data: "USERNAME"
+                    data: 'NAME'
                 },
                 {
-                    data: "PHONE"
+                    data: 'TenDoAn'
                 },
                 {
-                    data: null,
-                    render: function(data, type, row) {
-                        return data.FIRSTNAME + ' ' + data.LASTNAME;
-                    }
+                    data: 'QuantityDoAn'
+                },
+
+                {
+                    data: 'TenDoUong'
                 },
                 {
-                    data: "SEX"
+                    data: 'QuantityDoUong'
                 },
+
                 {
-                    data: "BIRTHDAY"
-                },
-                {
-                    data: "ADDRESS"
-                },
-                {
-                    data: "SALARY",
+                    data: 'PRICE',
                     render: $.fn.dataTable.render.number(',', '.', 0, '$')
                 },
                 {
@@ -63,36 +58,57 @@
             ]
         });
 
+        function loadFoods() {
+            $.get("./?api/foodcombo/getfoods", function(data, status) {
+                console.log(data)
+                data.data.forEach(function(object) {
+                    var option = document.createElement('option');
+                    option.value = object.ID;
+                    option.innerText = object.NAME;
+                    $('#FOOD').append(option);
+                });
+            }, "json");
+        }
+        loadFoods();
+
+        function loadDrinks() {
+            $.get("./?api/foodcombo/getdrinks", function(data, status) {
+                console.log(data)
+                data.data.forEach(function(object) {
+                    var option = document.createElement('option');
+                    option.value = object.ID;
+                    option.innerText = object.NAME;
+                    $('#DRINK').append(option);
+                });
+            }, "json");
+        }
+        loadDrinks();
 
 
-        $("#addStaff").click(function() {
-            let USERNAME = $('#USERNAME').val()
-            let FIRSTNAME = $('#FNAME').val()
-            let LASTNAME = $('#LNAME').val()
-            let SEX = $("#SEX").val() === "M" ? "nam" : "nữ"
-            let BIRTHDAY = $("#BIRTHDAY").val()
-            let PHONE = $('#PHONE').val()
-            let ADDRESS = $('#ADDRESS').val()
-            let SALARY = $('#SALARY').val()
-            let ROLE = $("#ROLE").val()
+        $("#add").click(function() {
+            let NAME = $('#NAME').val()
+            let FOOD = $('#FOOD').val()
+            let FOOD_QUANTITY = $('#FOOD_QUANTITY').val()
+            let DRINK = $('#DRINK').val()
+            let DRINK_QUANTITY = $('#DRINK_QUANTITY').val()
+            let PRICE = $('#PRICE').val()
+
+
             let action = $("#action").val();
-            console.log(action);
+
             if (action == "Add") {
-                $.post("./?api/staff/add", {
-                    USERNAME,
-                    FIRSTNAME,
-                    LASTNAME,
-                    SEX,
-                    BIRTHDAY,
-                    PHONE,
-                    ADDRESS,
-                    SALARY,
-                    ROLE
+                $.post("./?api/foodcombo/add", {
+                    NAME,
+                    FOOD,
+                    FOOD_QUANTITY,
+                    DRINK,
+                    DRINK_QUANTITY,
+                    PRICE
                 }, function(data, status) {
                     console.log(data)
                     if (data.status) {
+                        console.log("Okee")
                         table.ajax.reload();
-
                         let msg = data.data;
                         console.log(msg)
                         $("#msg-success").css('display', 'flex').text(msg)
@@ -106,16 +122,13 @@
                 }, "json")
             } else {
                 let ID = $("#action").val();
-                $.post("./?api/staff/update", {
-                    USERNAME,
-                    FIRSTNAME,
-                    LASTNAME,
-                    SEX,
-                    BIRTHDAY,
-                    PHONE,
-                    ADDRESS,
-                    SALARY,
-                    ROLE,
+                $.post("./?api/foodcombo/update", {
+                    NAME,
+                    FOOD,
+                    FOOD_QUANTITY,
+                    DRINK,
+                    DRINK_QUANTITY,
+                    PRICE,
                     ID
                 }, function(data, status) {
                     console.log(data)
@@ -138,9 +151,10 @@
             clearForm()
         });
 
+
         $("#delete-button").on('click', function() {
             let uid = $('#delete-button').attr('uid');
-            $.post("./?api/staff/delete", {
+            $.post("./?api/foodcombo/delete", {
                 id: uid
             }, function(data, status) {
                 console.log(data)
@@ -161,30 +175,29 @@
                 }
             }, "json")
         })
-    });
 
+
+    });
+    $('#addEmployeeModal').on('hidden.bs.modal', function() {
+        clearForm()
+        $("#action").val("Add");
+    })
 
     // hiện dialog xác nhận khi xóa
     function confirmRemoval(btn) {
         let tds = $(btn).closest('tr').find('td')
-        document.getElementById("student_name").innerHTML = tds[3].innerText;
+        document.getElementById("student_name").innerHTML = tds[1].innerText;
         console.log(tds[2].innerText)
         $('#delete-button').attr('uid', tds[0].innerHTML)
         var myModal = new bootstrap.Modal(document.getElementById("confirm-removal-modal"), {});
         myModal.show();
     }
-    $('#addEmployeeModal').on('hidden.bs.modal', function() {
-        clearForm()
-    })
 
     function clearForm() {
-        $('#USERNAME').val("")
-        $('#FNAME').val("")
-        $('#LNAME').val("")
-        $('#BIRTHDAY').val("")
-        $('#PHONE').val("")
-        $('#ADDRESS').val("")
-        $('#SALARY').val("")
+        $('#NAME').val("")
+        $('#TYPE').val("")
+        $('#PRICE').val("")
+        $('#QUANTITY').val("")
+        $('#Expiry_Date').val("")
     }
-    $(document).ready(function() {});
 </script>

@@ -58,6 +58,11 @@
     bottom: 0;
 }
 
+#wrapper {
+    min-height: 100vh;
+    background-color: #000218;
+}
+
 /* ============================= */
 
 /* Top part*/
@@ -104,12 +109,8 @@
     bottom: -10px;
 }
 
-/* Trailer */
-#carousel-trailer iframe {
-    width: 75%;
-    aspect-ratio: 16/9;
-}
-
-.carousel-control-prev-icon {
-    color: #FFBA08;
+/* Main content */
+.content-ongoing-movies-item-inner,
+.content-upcoming-movies-item-inner {
+    background-color: rgba(219, 227, 255, 0.25);
 }

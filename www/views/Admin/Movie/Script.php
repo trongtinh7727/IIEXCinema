@@ -27,9 +27,6 @@
     $(document).ready(function() {
 
         var table = $('#dataTable').DataTable({
-            'processing': true,
-            'serverSide': true,
-            'serverMethod': 'post',
             ajax: "./?api/movie/getall",
             columns: [{
                     data: 'ID'

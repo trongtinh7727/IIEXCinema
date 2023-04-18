@@ -36,7 +36,7 @@ class TicketController extends AdminController
             'SEAT_ID', 'SCHEDULE_ID', 'TICKET_ID'
         );
         $data = $this->validateParams($params);
-        echo $this->model->add(
+        echo $this->model->addTicketSeatSchedule(
             $data['SEAT_ID'],
             $data['SCHEDULE_ID'],
             $data['TICKET_ID']

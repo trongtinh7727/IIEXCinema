@@ -9,20 +9,9 @@ class MovieController extends AdminController
 
     public function getAll()
     {
-        $draw = $_POST['draw'];
-        $row = $_POST['start'];
-        $rowperpage = $_POST['length']; // Số dòng mỗi trang
-        $columnIndex = $_POST['order'][0]['column']; // Cột đánh chỉ số
-        $columnName = $_POST['columns'][$columnIndex]['data']; // Cột tên
-        $columnSortOrder = $_POST['order'][0]['dir']; // Sắp xếp asc / desc
-        $searchValue = $_POST['search']['value']; // Từ khóa tìm kiếm
 
-        // print_r($row);
         echo $this->model->getAll();
     }
-
-
-
 
     public function add()
     {

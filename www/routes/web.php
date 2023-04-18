@@ -27,6 +27,9 @@ Route::add("/?admin/movie", "AdminController@movieAction");
 Route::add("/?admin/schedule", "AdminController@scheduleAction");
 Route::add("/?admin/theater", "AdminController@theaterAction");
 Route::add("/?admin/product", "AdminController@productAction");
+Route::add("/?admin/client", "AdminController@clientAction");
+Route::add("/?admin/transaction", "AdminController@transactionAction");
+Route::add("/?admin/combo", "AdminController@comboAction");
 
 
 // API
@@ -55,6 +58,8 @@ Route::add("/?api/movie/upcoming", "MovieController@upcoming");
 Route::add("/?api/movie/gettrailer", "MovieController@gettrailer");
 
 // FoodCombo
+Route::add("/?api/foodcombo/getdrinks", "FoodComboController@getDrinks");
+Route::add("/?api/foodcombo/getfoods", "FoodComboController@getFoods");
 Route::add("/?api/foodcombo/getall", "FoodComboController@getAll");
 Route::add("/?api/foodcombo/add", "FoodComboController@add");
 Route::add("/?api/foodcombo/update", "FoodComboController@update");
@@ -69,6 +74,9 @@ Route::add("/?api/cinema/delete", "CinemaController@delete");
 
 // Seat
 Route::add("/?api/seat/getByTheater", "SeatController@getByTheater");
+
+// Transaction
+Route::add("/?api/transaction/getall", "TransactionController@getAll");
 
 // Ticket
 Route::add("/?api/ticket/add", "TicketController@add");

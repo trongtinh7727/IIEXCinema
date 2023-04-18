@@ -48,7 +48,7 @@ class ProductController extends AdminController
             'NAME', 'TYPE', 'PRICE', 'QUANTITY', 'Expiry_Date', 'ID'
         );
         $data = $this->validateParams($params);
-        echo $this->model->add(
+        echo $this->model->update(
             $data['NAME'],
             $data['TYPE'],
             $data['PRICE'],

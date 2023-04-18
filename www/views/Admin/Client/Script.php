@@ -4,7 +4,7 @@
         let tds = $(btn).closest('tr').find('td')
         let ID = tds[0].innerHTML;
         $("#action").val(ID);
-        $.post("./?api/staff/getbyid", {
+        $.post("./?api/client/getbyid", {
             ID
         }, function(data, status) {
             var table = $('#table');
@@ -17,7 +17,6 @@
                 $('#BIRTHDAY').val(object.BIRTHDAY)
                 $('#PHONE').val(object.PHONE)
                 $('#ADDRESS').val(object.ADDRESS)
-                $('#SALARY').val(object.SALARY)
             });
 
         }, "json");
@@ -25,7 +24,7 @@
     $(document).ready(function() {
 
         var table = $('#dataTable').DataTable({
-            ajax: "./?api/staff/getall",
+            ajax: "./?api/client/getall",
             columns: [{
                     data: "ID"
                 },
@@ -51,10 +50,6 @@
                     data: "ADDRESS"
                 },
                 {
-                    data: "SALARY",
-                    render: $.fn.dataTable.render.number(',', '.', 0, '$')
-                },
-                {
                     data: null,
                     render: function(data, type, row) {
                         return '<button name="btn_delete_employee" class="btn btn-outline-danger" onclick="confirmRemoval(this)" > Delete </button> <button name="btn_edit_employee" class="btn btn-outline-secondary" onclick="fillEditForm(this)" data-bs-toggle="modal" data-bs-target="#addEmployeeModal" > Edit </button>';
@@ -78,7 +73,7 @@
             let action = $("#action").val();
             console.log(action);
             if (action == "Add") {
-                $.post("./?api/staff/add", {
+                $.post("./?api/client/add", {
                     USERNAME,
                     FIRSTNAME,
                     LASTNAME,
@@ -86,7 +81,6 @@
                     BIRTHDAY,
                     PHONE,
                     ADDRESS,
-                    SALARY,
                     ROLE
                 }, function(data, status) {
                     console.log(data)
@@ -106,7 +100,7 @@
                 }, "json")
             } else {
                 let ID = $("#action").val();
-                $.post("./?api/staff/update", {
+                $.post("./?api/client/update", {
                     USERNAME,
                     FIRSTNAME,
                     LASTNAME,
@@ -114,7 +108,6 @@
                     BIRTHDAY,
                     PHONE,
                     ADDRESS,
-                    SALARY,
                     ROLE,
                     ID
                 }, function(data, status) {
@@ -140,7 +133,7 @@
 
         $("#delete-button").on('click', function() {
             let uid = $('#delete-button').attr('uid');
-            $.post("./?api/staff/delete", {
+            $.post("./?api/client/delete", {
                 id: uid
             }, function(data, status) {
                 console.log(data)
@@ -167,7 +160,7 @@
     // hiện dialog xác nhận khi xóa
     function confirmRemoval(btn) {
         let tds = $(btn).closest('tr').find('td')
-        document.getElementById("student_name").innerHTML = tds[2].innerText;
+        document.getElementById("student_name").innerHTML = tds[3].innerText;
         console.log(tds[2].innerText)
         $('#delete-button').attr('uid', tds[0].innerHTML)
         var myModal = new bootstrap.Modal(document.getElementById("confirm-removal-modal"), {});

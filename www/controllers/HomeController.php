@@ -14,7 +14,7 @@ class HomeController extends AuthController
     public function indexAction()
     {
         $ongoing = $this->ongoing;
-        $_SESSION['path'] = "HomePage";
+        $path = "HomePage";
         require_once('views/Client/index.php');
     }
 
@@ -22,7 +22,7 @@ class HomeController extends AuthController
     {
         $ongoing = $this->ongoing;
         $movie_id = $_GET['id'];
-        $_SESSION['path'] = "MovieDetail";
+        $path = "MovieDetail";
         require_once('views/Client/index.php');
     }
 
@@ -33,7 +33,7 @@ class HomeController extends AuthController
         $model->db = $db;
         $showtimes = $model->getScheduleToday();
         $ongoing = $this->ongoing;
-        $_SESSION['path'] = "Showtime";
+        $path = "Showtime";
         require_once('views/Client/index.php');
     }
 }
