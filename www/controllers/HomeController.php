@@ -35,16 +35,16 @@ class HomeController extends AuthController
             $model = new ScheduleModel();
             $model->db = $this->db;
             $schedule = $model->getByID($schedule_id);
-            $_SESSION['schedule'] = json_decode($schedule)->data;
+            $_SESSION['booking']['schedule'] = json_decode($schedule)->data;
         }
         if (
             isset($_POST['total_regular']) && isset($_POST['total_couple']) &&
             isset($_POST['quantity_regular']) && isset($_POST['quantity_couple'])
         ) {
-            $_SESSION['total_regular'] = $_POST['total_regular'];
-            $_SESSION['total_couple'] = $_POST['total_couple'];
-            $_SESSION['quantity_regular'] = $_POST['quantity_regular'];
-            $_SESSION['quantity_couple'] = $_POST['quantity_couple'];
+            $_SESSION['booking']['total_regular'] = $_POST['total_regular'];
+            $_SESSION['booking']['total_couple'] = $_POST['total_couple'];
+            $_SESSION['booking']['quantity_regular'] = $_POST['quantity_regular'];
+            $_SESSION['booking']['quantity_couple'] = $_POST['quantity_couple'];
             exit;
         }
         $path = "TicketBooking";
@@ -55,6 +55,11 @@ class HomeController extends AuthController
     {
         $this->isAuthenticated();
         $ongoing = $this->ongoing;
+
+        if (isset($_POST['seats'])) {
+            $_SESSION['booking']['seats'] = $_POST['seats'];
+        }
+
         $path = "SeatBooking";
         require_once('views/Client/index.php');
     }

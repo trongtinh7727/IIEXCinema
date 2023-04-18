@@ -1,17 +1,17 @@
 <div class="container my-5">
     <!-- Step indicator -->
     <div id="bookticket-ticket-stepindicator" class="d-flex flex-wrap justify-content-center">
-        <div id="bookticket-ticket-stepindicator-ticket" class="pointer-first bg-cyan my-2 fs-4 fw-semibold d-flex align-items-center justify-content-center">
+        <a href="/?ticketbooking" id="bookticket-ticket-stepindicator-ticket" class="pointer-first bg-cyan my-2 fs-4 fw-semibold d-flex align-items-center justify-content-center">
             Chọn vé
-        </div>
-        <div id="bookticket-ticket-stepindicator-seat" class="pointer bg-yellow my-2 fs-4 fw-semibold d-flex align-items-center justify-content-center">
+        </a>
+        <div href="/?seatbooking" id="bookticket-seat-stepindicator-seat" class="pointer bg-yellow  my-2 fs-4 fw-semibold d-flex align-items-center justify-content-center">
             Chọn ghế
         </div>
-        <div id="bookticket-ticket-stepindicator-food" class="pointer bg-yellow my-2 fs-4 fw-semibold d-flex align-items-center justify-content-center">
+        <div href="/?combobooking" id="bookticket-seat-stepindicator-food" class="pointer bg-yellow my-2 fs-4 fw-semibold d-flex align-items-center justify-content-center">
             Thức ăn
         </div>
-        <div id="bookticket-ticket-stepindicator-confirm" class="pointer-last bg-yellow my-2 fs-4 fw-semibold d-flex align-items-center justify-content-center">
-            Xác nhận
+        <div href="/?comfirmbooking" id="bookticket-seat-stepindicator-confirm" class="pointer-last bg-yellow my-2 fs-4 fw-semibold d-flex align-items-center justify-content-center">
+            Xác nhận 
         </div>
     </div>
 
@@ -24,20 +24,20 @@
                 <div id="bookticket-ticket-main-info" class="rounded-4">
                     <div class="row">
                         <div class="col-12 col-lg-5 text-center py-5">
-                            <img class="align-self-center" src="<?php echo $_SESSION['schedule'][0]->POSTER ?>" alt="Poster">
+                            <img class="align-self-center" src="<?php echo $_SESSION['booking']['schedule'][0]->POSTER ?>" alt="Poster">
                         </div>
                         <div class="col-12 col-lg-7 my-3">
-                            <h3 id="bookticket-ticket-main-info-title" class="text-yellow text-center text-uppercase my-3"><?php echo $_SESSION['schedule'][0]->TITLE ?></h3>
+                            <h3 id="bookticket-ticket-main-info-title" class="text-yellow text-center text-uppercase my-3"><?php echo $_SESSION['booking']['schedule'][0]->TITLE ?></h3>
                             <div id="bookticket-ticket-main-info-time" class="my-3 text-white">
                                 <h4 class="d-inline-block mx-2" style="min-width: 140px;">Thời gian:</h4>
-                                <h6 class="d-inline-block mx-2" id="bookticket-ticket-main-info-time-time"> <?php echo date("h:i", strtotime($_SESSION['schedule'][0]->STARTTIME)) ?>
+                                <h6 class="d-inline-block mx-2" id="bookticket-ticket-main-info-time-time"> <?php echo date("h:i", strtotime($_SESSION['booking']['schedule'][0]->STARTTIME)) ?>
                                 </h6>
                                 <h6 class="d-inline-block mx-2" id="bookticket-ticket-main-info-time-date">
-                                    <?php echo date("d/m/Y", strtotime($_SESSION['schedule'][0]->STARTTIME)) ?></h6>
+                                    <?php echo date("d/m/Y", strtotime($_SESSION['booking']['schedule'][0]->STARTTIME)) ?></h6>
                             </div>
                             <div id="bookticket-ticket-main-info-theater" class="my-3 text-white d-inline">
                                 <h4 class="d-inline-block mx-2" style="width: 140px;">Rạp:</h4>
-                                <h6 class="d-inline-block mx-2" id="bookticket-ticket-main-info-theater-room"><?php echo $_SESSION['schedule'][0]->THEATERNUM ?>
+                                <h6 class="d-inline-block mx-2" id="bookticket-ticket-main-info-theater-room"><?php echo $_SESSION['booking']['schedule'][0]->THEATERNUM ?>
                                 </h6>
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                         <tbody>
                             <tr id="bookticket-ticket-main-number-regular" class="fs-5">
                                 <td id="bookticket-ticket-main-number-regular-type" class="w-25">Vé thường</td>
-                                <td id="bookticket-ticket-main-number-regular-price" class="w-25"><?php echo $_SESSION['schedule'][0]->price ?></td>
+                                <td id="bookticket-ticket-main-number-regular-price" class="w-25"><?php echo $_SESSION['booking']['schedule'][0]->price ?></td>
                                 <td id="bookticket-ticket-main-number-regular-quantity" class="w-25">
                                     <input id="regular-quantity" type="number" min="0" max="20" step="1" value="0" style="min-width: 80px;min-height: 44px;" class="text-center my-2">
                                 </td>
@@ -65,7 +65,7 @@
                             </tr>
                             <tr id="bookticket-ticket-main-number-couple" class="fs-5">
                                 <td id="bookticket-ticket-main-number-couple-type" class="w-25">Vé đôi</td>
-                                <td id="bookticket-ticket-main-number-couple-price" class="w-25"><?php echo ($_SESSION['schedule'][0]->price + 30000) ?></td>
+                                <td id="bookticket-ticket-main-number-couple-price" class="w-25"><?php echo ($_SESSION['booking']['schedule'][0]->price + 30000) ?></td>
                                 <td id="bookticket-ticket-main-number-couple-quantity" class="w-25">
                                     <input id="couple-quantity" type="number" min="0" max="20" step="1" value="0" style="min-width: 80px;min-height: 44px;" class="text-center my-2">
                                 </td>

@@ -36,12 +36,10 @@
 
         $('#bookticket-next').click(
             function() {
-
                 var total_regular = $('#bookticket-ticket-main-cart-regular-total').text()
                 var total_couple = $('#bookticket-ticket-main-cart-couple-total').text()
                 var quantity_regular = $('#regular-quantity').val()
                 var quantity_couple = $('#couple-quantity').val()
-
                 $.post("./?ticketbooking", {
                     total_regular,
                     total_couple,

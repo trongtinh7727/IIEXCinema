@@ -20,4 +20,3 @@
 </div>
 <!-- Confirm Removel modal -->
 <br>
-<!-- Log out modal -->

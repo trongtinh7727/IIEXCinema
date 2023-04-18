@@ -55,12 +55,10 @@
 
         $("#addStaff").click(function() {
             let THEATERNUM = $('#THEATERNUM').val();
-            let SEATCOUNT = $('#SEATCOUNT').val();
-
+            let action = $("#action").val();
             if (action == "Add") {
                 $.post("./?api/theater/add", {
-                    THEATERNUM,
-                    SEATCOUNT
+                    THEATERNUM
                 }, function(data, status) {
                     console.log(data)
                     if (data.status) {

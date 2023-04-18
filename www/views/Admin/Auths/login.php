@@ -39,7 +39,7 @@
 
         body {
             margin: 0;
-            background: url(../assets/img/signin-signup/container-main.png);
+            background: url(https://livewallp.com/wp-content/uploads/2021/09/AION-4.0-Login-Screen-Blank.jpg?fbclid=IwAR0NfdUCuRoQK80c0pjD1SbwF9w3_Tae-hUjPIdkE8g9fhXHZWm5FbIbsNc);
             background-size: cover;
             font: 600 16px/18px 'Open Sans', sans-serif;
         }

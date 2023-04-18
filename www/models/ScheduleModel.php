@@ -90,7 +90,7 @@ class ScheduleModel
     {
         $isValid = $this->isValidSchedule($STARTTIME, $THEA_ID);
         if ($isValid == 1) {
-            $sql = 'CALL `create_schedule`(?, ?, ?, ?, ?);';
+            $sql = 'CALL `create_schedule`(?, ?, ?, ?, ?);'; 
             try {
                 $stmt = $this->db->prepare($sql);
                 $stmt->execute(array($THEA_ID, $MOV_ID, $STARTTIME, $ENDTIME, $PRICE));

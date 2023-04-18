@@ -11,10 +11,7 @@
                     <label for="birthday" class="form-label">Mã phòng chiếu :</label>
                     <input type="number" class="form-control" id="THEATERNUM" name="birthday">
                 </div>
-                <div class="mb-3">
-                    <label for="birthday" class="form-label">Số lượng ghế :</label>
-                    <input type="number" class="form-control" id="SEATCOUNT" name="birthday">
-                </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button id="addStaff" type="button" class="btn btn-primary" data-bs-dismiss="modal">Confirm</button>

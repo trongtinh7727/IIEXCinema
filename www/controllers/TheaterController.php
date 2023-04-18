@@ -24,12 +24,11 @@ class TheaterController extends AdminController
     {
         $this->isAuthenticated();
         $params = array(
-            'THEATERNUM', 'SEATCOUNT'
+            'THEATERNUM'
         );
         $data = $this->validateParams($params);
         echo $this->model->add(
-            $data['THEATERNUM'],
-            $data['SEATCOUNT']
+            $data['THEATERNUM']
         );
     }
     public function update()

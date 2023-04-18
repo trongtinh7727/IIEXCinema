@@ -15,6 +15,7 @@ Route::add("/?moviedetail", "HomeController@movieDetail");
 Route::add("/?showtime", "HomeController@showtime");
 Route::add("/?ticketbooking", "HomeController@ticketBooking");
 Route::add("/?seatbooking", "HomeController@seatBooking");
+Route::add("/?combobooking", "HomeController@comboBooking");
 
 // Auth
 Route::add("/?admin/login", "AuthController@login");
