@@ -1,6 +1,6 @@
 <script>
     function fillEditForm(btn) {
-        $("#addModalLabel").val("Update");
+        $("#addModalLabel").text = "Update";
         let tds = $(btn).closest('tr').find('td')
         let ID = tds[0].innerHTML;
         $("#action").val(ID);
@@ -95,9 +95,6 @@
         })
 
 
-
-
-
         $("#addStaff").click(function() {
 
             let THEA_ID = $('#theaterBox').val();
@@ -125,8 +122,8 @@
                     }, function(data, status) {
                         console.log(data)
                         if (data.status) {
-                            load_data();
-                            $.fn.dataTable();
+                            table.ajax.reload();
+
                             let msg = data.data;
                             schedule_id = msg.schedule_id;
                             console.log(schedule_id)
@@ -145,14 +142,15 @@
                         THEA_ID,
                         MOV_ID,
                         STARTTIME,
+
                         ENDTIME,
                         ID
                     }, function(data, status) {
                         console.log(data)
                         if (data.status) {
                             console.log("Okee")
-                            load_data();
-                            $.fn.dataTable();
+                            table.ajax.reload();
+
                             let msg = data.data;
                             console.log(msg)
                             $("#msg-success").css('display', 'flex').text(msg)
@@ -177,8 +175,7 @@
             }, function(data, status) {
                 console.log(data)
                 if (data.status) {
-                    load_data();
-                    $.fn.dataTable();
+                    table.ajax.reload();
                     let msg = data.data;
                     console.log(msg)
                     $("#msg-success").css('display', 'flex').text(msg)
@@ -194,34 +191,6 @@
                 }
             }, "json")
         })
-
-
-        $("#searchBarInput").on("keyup", function() {
-            var value = $(this).val().toLowerCase();
-            $("#myTable tr").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-
-        // Pagination button
-        $.fn.paginationButtons = function() {
-            var buttons_text = `<li class="page-item"><a class="page-link" onClick="javascript:$.fn.prevPage();" href="#">Previous</a></li>`;
-            var active = "";
-            for (var i = 1; i <= totalPage; i++) {
-                if (i == 1) {
-                    active = "active";
-                } else {
-                    active = "";
-                }
-                buttons_text = buttons_text + `<li class="page-item"><a id="page_index` + i + `" onClick="javascript:$.fn.indexPage(` + i + `);" class="page-link page_index ` + active + `" href="#">` + i + `</a></li>`;
-            }
-            buttons_text = buttons_text + `<li><a class="page-link" href="#" onClick="javascript:$.fn.nextPage();">Next</a></li>`;
-            $(".pagination-buttons").text("");
-            $(".pagination-buttons").append(buttons_text);
-        }
-
-        $.fn.paginationButtons();
-
     });
 
 

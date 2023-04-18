@@ -40,5 +40,5 @@
             $('.swiper-trailer-video').attr('src', $('.trailer-video').attr('src'));
         });
     })
-    $('#<?php echo  $_SESSION['path'] ?>').addClass('active').addClass('custom-active').removeClass('text-white').addClass('text-yellow')
+    $('#<?php echo  $path ?>').addClass('active').addClass('custom-active').removeClass('text-white').addClass('text-yellow')
 </script>

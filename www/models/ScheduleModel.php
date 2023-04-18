@@ -72,10 +72,10 @@ class ScheduleModel
     }
     public function getByID($ID)
     {
-        $sql = "SELECT * FROM schedule where ID = '$ID'";
+        $sql = "CALL `get_schedule_by_id`(?)";
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute();
+            $stmt->execute(array($ID));
         } catch (PDOException $ex) {
             return (json_encode(array('status' => false, 'data' => $ex->getMessage())));
         }
@@ -83,7 +83,6 @@ class ScheduleModel
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $data[] = $row;
         }
-
         return json_encode(array('status' => true, 'data' => $data));
     }
 

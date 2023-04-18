@@ -41,7 +41,7 @@ class FoodComboModel
     }
     public function getAll()
     {
-        $sql = 'SELECT * FROM `fcb_detail`';
+        $sql = 'CALL `get_foodcombo`()';
         try {
             $stmt = $this->db->prepare($sql);
             $stmt->execute();
@@ -54,6 +54,17 @@ class FoodComboModel
         }
 
         return json_encode(array('status' => true, 'data' => $data));
+    }
+
+    private function isExists($foodcombo_id)
+    {
+        $sql = 'SELECT * FROM food_booking where FOOD_ID = ?';
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(array($foodcombo_id));
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            return true;
+        }
+        return false;
     }
 
     public function add($NAME, $FOOD, $FOOD_QUANTITY, $DRINK, $DRINK_QUANTITY, $PRICE)
@@ -94,6 +105,9 @@ class FoodComboModel
 
     public function delete($id)
     {
+        if ($this->isExists($id)) {
+            return (json_encode(array('status' => false, 'data' => "Combo đã tồn tại trong lịch sử giao dịch")));
+        }
 
         $sql = 'DELETE FROM foodcombo where id = ?';
 

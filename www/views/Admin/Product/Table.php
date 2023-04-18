@@ -23,10 +23,9 @@
                     <th>ID</th>
                     <th>Tên sản phẩm</th>
                     <th>Loại</th>
-                    <th>Giá</th>
                     <th>Tồn kho</th>
                     <th>Ngày hết hạn</th>
-                    <th>Chức năng</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tfoot>
@@ -34,10 +33,9 @@
                     <th>ID</th>
                     <th>Tên sản phẩm</th>
                     <th>Loại</th>
-                    <th>Giá</th>
                     <th>Tồn kho</th>
                     <th>Ngày hết hạn</th>
-                    <th>Chức năng</th>
+                    <th>Action</th>
                 </tr>
             </tfoot>
         </table>

@@ -35,10 +35,6 @@
                     data: 'TYPE'
                 },
                 {
-                    data: 'PRICE',
-                    render: $.fn.dataTable.render.number(',', '.', 0, '$')
-                },
-                {
                     data: 'QUANTITY'
                 },
                 {

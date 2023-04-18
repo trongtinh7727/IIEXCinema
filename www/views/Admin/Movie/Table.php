@@ -28,7 +28,7 @@
                     <th>Thời lượng</th>
                     <th>Ngày khởi chiếu</th>
                     <th>Ngày kết thúc</th>
-                    <th>Hành động</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tfoot>
@@ -41,7 +41,7 @@
                     <th>Thời lượng</th>
                     <th>Ngày khởi chiếu</th>
                     <th>Ngày kết thúc</th>
-                    <th>Hành động</th>
+                    <th>Action</th>
                 </tr>
             </tfoot>
         </table>

@@ -9,10 +9,12 @@ Route::add("/?admin/home", "AdminController@indexAction");
 
 Route::add("/?admin/logout", "AdminController@logout");
 
-// Client
+// Home
 Route::add("/?", "HomeController@indexAction");
 Route::add("/?moviedetail", "HomeController@movieDetail");
 Route::add("/?showtime", "HomeController@showtime");
+Route::add("/?ticketbooking", "HomeController@ticketBooking");
+Route::add("/?seatbooking", "HomeController@seatBooking");
 
 // Auth
 Route::add("/?admin/login", "AuthController@login");
@@ -29,7 +31,7 @@ Route::add("/?admin/theater", "AdminController@theaterAction");
 Route::add("/?admin/product", "AdminController@productAction");
 Route::add("/?admin/client", "AdminController@clientAction");
 Route::add("/?admin/transaction", "AdminController@transactionAction");
-Route::add("/?admin/combo", "AdminController@comboAction");
+Route::add("/?admin/foodcombo", "AdminController@comboAction");
 
 
 // API

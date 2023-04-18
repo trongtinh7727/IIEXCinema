@@ -27,7 +27,7 @@
                     <th>Tên đồ uống</th>
                     <th>Giá đồ uống</th>
                     <th>Tổng</th>
-                    <th>Chức năng</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tfoot>
@@ -39,7 +39,7 @@
                     <th>Tên đồ uống</th>
                     <th>Giá đồ uống</th>
                     <th>Tổng</th>
-                    <th>Chức năng</th>
+                    <th>Action</th>
                 </tr>
             </tfoot>
         </table>
