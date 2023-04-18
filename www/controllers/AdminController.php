@@ -86,4 +86,10 @@ class AdminController extends AuthController
         $path = 'Transaction';
         require_once('views/Admin/dashboard.php');
     }
+    public function comboAction()
+    {
+        $this->isAuthenticated();
+        $path = 'Combo';
+        require_once('views/Admin/dashboard.php');
+    }
 }

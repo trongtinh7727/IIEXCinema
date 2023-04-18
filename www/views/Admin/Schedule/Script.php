@@ -76,10 +76,9 @@
 
         function load_ongoing_movie() {
             $.get("./?api/movie/ongoing", function(data, status) {
-                var table = $('#table');
+
                 console.log(data)
                 data.data.forEach(function(object) {
-                    var option = document.createElement('option');
                     var option = document.createElement('option');
                     option.value = object.ID;
                     option.dataset.duration = object.DURATION;

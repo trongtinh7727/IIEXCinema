@@ -8,6 +8,14 @@ class FoodComboController extends AdminController
         $this->model = $model;
     }
 
+    public function getDrinks()
+    {
+        echo $this->model->getDrinks();
+    }
+    public function getFoods()
+    {
+        echo $this->model->getFoods();
+    }
     public function getAll()
     {
         echo $this->model->getAll();
@@ -16,18 +24,18 @@ class FoodComboController extends AdminController
     public function add()
     {
         $this->isAuthenticated();
-        if (
-            !isset($_POST['NAME'])
-            ||  !isset($_POST['PRICE']) || !isset($_POST['TYPE']) || !isset($_POST['QUANTITY'])
-        ) {
-            die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
-        }
-
-        $NAME = $_POST['NAME'];
-        $PRICE = $_POST['PRICE'];
-        $TYPE = $_POST['TYPE'];
-        $QUANTITY = $_POST['QUANTITY'];
-        echo $this->model->add($NAME, $PRICE, $TYPE, $QUANTITY);
+        $params = array(
+            'NAME', 'FOOD', 'FOOD_QUANTITY', 'DRINK', 'DRINK_QUANTITY', 'PRICE'
+        );
+        $data = $this->validateParams($params);
+        echo $this->model->add(
+            $data['NAME'],
+            $data['FOOD'],
+            $data['FOOD_QUANTITY'],
+            $data['DRINK'],
+            $data['DRINK_QUANTITY'],
+            $data['PRICE'],
+        );
     }
 
     public function delete()
@@ -46,19 +54,19 @@ class FoodComboController extends AdminController
     public function update()
     {
         $this->isAuthenticated();
-        if (
-            !isset($_POST['NAME'])
-            || !isset($_POST['PRICE']) || !isset($_POST['TYPE']) || !isset($_POST['QUANTITY'])
-            || !isset($_POST['ID'])
-        ) {
-            die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
-        }
+        $params = array(
+            'NAME', 'FOOD', 'FOOD_QUANTITY', 'DRINK', 'DRINK_QUANTITY', 'PRICE', 'ID'
+        );
+        $data = $this->validateParams($params);
 
-        $ID = $_POST['ID'];
-        $NAME = $_POST['NAME'];
-        $PRICE = $_POST['PRICE'];
-        $TYPE = $_POST['TYPE'];
-        $QUANTITY = $_POST['QUANTITY'];
-        echo $this->model->update($NAME, $PRICE, $TYPE, $QUANTITY, $ID);
+        echo $this->model->update(
+            $data['NAME'],
+            $data['FOOD'],
+            $data['FOOD_QUANTITY'],
+            $data['DRINK'],
+            $data['DRINK_QUANTITY'],
+            $data['PRICE'],
+            $data['ID']
+        );
     }
 }

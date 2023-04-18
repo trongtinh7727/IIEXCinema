@@ -53,6 +53,9 @@
         <a href="/?admin/product" id="Product" class="btn btn-lg my-1 w-100">
             Quản lý sản phẩm
         </a>
+        <a href="/?admin/foodcombo" id="Combo" class="btn btn-lg my-1 w-100">
+            Quản lý Combo
+        </a>
         <a href="/?admin/transaction" id="Transaction" class="btn btn-lg my-1 w-100">
             Quản lý lịch sử đặt vé
         </a>
