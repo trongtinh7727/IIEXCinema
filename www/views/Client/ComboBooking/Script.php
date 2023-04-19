@@ -17,24 +17,23 @@
             if (index > -1) {
                 foods.splice(index, 1);
             }
-            
+
             foods.push(food)
             console.log(foods)
-
 
         })
 
         $('#bookticket-prev').click(
             function() {
-                $(location).attr('href', '/?ticketbooking');
+                $(location).attr('href', '/?seatbooking');
             }
         )
         $('#bookticket-next').click(
             function() {
-                $.post("./?seatbooking", {
-                    seats
+                $.post("./?combobooking", {
+                    foods
                 }, function(data, status) {}, "json");
-                $(location).attr('href', '/?combobooking');
+                $(location).attr('href', '/?confirmbooking');
             }
         )
     })

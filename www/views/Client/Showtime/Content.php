@@ -23,7 +23,11 @@
                 <!-- Content -->
                 <div class="showtime-item-info-content text-white col-12 col-lg-6 my-3">
                     <!-- DATAFILL MOVIE TITLE -->
-                    <h4 class="showtime-item-info-content-title text-capitalize"><?php echo $showtime['TITLE'] ?></h4>
+                    <h4 class="showtime-item-info-content-title text-capitalize">
+                        <a href="./?moviedetail&id=<?php echo $showtime['MID'] ?>">
+                            <?php echo $showtime['TITLE'] ?>
+                        </a>
+                    </h4>
                     <!-- DATAFILL MOVIE DESCRIPTION -->
                     <p class="showtime-item-info-content-content"><?php echo $showtime['STORY'] ?> </p>
                     <!-- DATAFILL RATING -->

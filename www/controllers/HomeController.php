@@ -3,6 +3,12 @@ class HomeController extends AuthController
 {
     public $ongoing;
     public $db;
+    public $model;
+
+    public function setModel($model)
+    {
+        $this->model = $model;
+    }
 
     public function __construct()
     {
@@ -12,10 +18,22 @@ class HomeController extends AuthController
         $this->ongoing = $model->ongoing();
         $this->ongoing = json_decode($this->ongoing)->data;
     }
+    public function profile()
+    {
+        $profile = $this->model->getProfile($_SESSION['userLogin']['ID']);
+        $path = "Proflie";
+        require_once('views/Client/Profile/Content.php');
+    }
     public function indexAction()
     {
         $ongoing = $this->ongoing;
         $path = "HomePage";
+        require_once('views/Client/index.php');
+    }
+    public function movie()
+    {
+        $ongoing = $this->ongoing;
+        $path = "Movie";
         require_once('views/Client/index.php');
     }
 
@@ -36,6 +54,7 @@ class HomeController extends AuthController
             $model->db = $this->db;
             $schedule = $model->getByID($schedule_id);
             $_SESSION['booking']['schedule'] = json_decode($schedule)->data;
+            $_SESSION['booking']['schedule_id'] = $schedule_id;
         }
         if (
             isset($_POST['total_regular']) && isset($_POST['total_couple']) &&
@@ -65,6 +84,9 @@ class HomeController extends AuthController
     }
     public function comboBooking()
     {
+        if (isset($_POST['foods'])) {
+            $_SESSION['booking']['foods'] = $_POST['foods'];
+        }
         $this->isAuthenticated();
         $ongoing = $this->ongoing;
         $model = new FoodComboModel();
@@ -74,10 +96,41 @@ class HomeController extends AuthController
         $path = "ComboBooking";
         require_once('views/Client/index.php');
     }
+    public function confirmBooking()
+    {
+
+        $this->isAuthenticated();
+        $ongoing = $this->ongoing;
+        $path = "ConfirmBooking";
+        require_once('views/Client/index.php');
+    }
+    public function successBooking()
+    {
+
+        $this->isAuthenticated();
+        $ongoing = $this->ongoing;
+        if (isset($_SESSION['booking'])) {
+            if (!isset($_SESSION['booking']['foods'])) {
+                $_SESSION['booking']['foods'] = false;
+            }
+            $this->model->saveTransaction(
+                $_SESSION['userLogin']['ID'],
+                $_SESSION['booking']['schedule_id'],
+                $_SESSION['booking']['seats'],
+                $_SESSION['booking']['foods']
+            );
+            unset($_SESSION['booking']);
+        } else {
+            header('Location: ./');
+        }
+
+        $path = "SuccessBooking";
+        require_once('views/Client/index.php');
+    }
 
     public function showtime()
     {
-       
+
         $model = new ScheduleModel();
         $model->db = $this->db;
         $showtimes = $model->getScheduleToday();

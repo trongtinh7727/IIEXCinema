@@ -21,6 +21,12 @@ class ScheduleController extends AdminController
         }
     }
 
+    public function getBookedSeat()
+    {
+        if (isset($_POST['schedule_id'])) {
+            echo $this->model->getBookedSeat($_POST['schedule_id']);
+        }
+    }
     public function getByID()
     {
         if (isset($_POST['ID'])) {

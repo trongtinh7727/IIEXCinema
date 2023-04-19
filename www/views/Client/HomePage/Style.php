@@ -6,6 +6,8 @@
         font-family: 'Poppins', sans-serif;
     }
 
+
+
     .text-yellow {
         color: #FFBA08 !important;
     }

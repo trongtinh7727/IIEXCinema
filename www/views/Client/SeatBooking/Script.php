@@ -11,7 +11,7 @@
             for (let k = 0; k < 8; k++) {
                 const seatItem = document.createElement('div');
                 seatItem.classList.add('seat-item');
-                seatItem.dataset.seat = String.fromCharCode(65 + k) + (j);
+                seatItem.id = String.fromCharCode(65 + k) + (j);
                 seatCol.appendChild(seatItem);
             }
 
@@ -64,6 +64,22 @@
         }
         dawSingle()
 
+        function loadBooked() {
+            var schedule_id = <?php echo $_SESSION['booking']['schedule_id'] ?>;
+            $.post("./?api/schedule/getbookedseat", {
+                    schedule_id
+                },
+                function(data, status) {
+                    console.log(data)
+                    data.data.forEach(function(object) {
+                        var seatnumber = object.SEATNUMBER;
+                        $(`#${seatnumber}`).addClass('seat-sold')
+
+                    });
+                }, "json");
+        }
+        loadBooked()
+
         // 10 cuple | 80 single
         const seats = [];
         var regular_quantity = parseInt($('#quantity_regular').text())
@@ -77,15 +93,14 @@
                 } else {
                     regular_quantity += 1;
                 }
-                const index = seats.indexOf($(this).data("seat"));
+                const index = seats.indexOf($(this).attr("id"));
                 if (index > -1) {
                     seats.splice(index, 1);
                 }
-                console.log($(this).data("seat"));
+                console.log($(this).attr("id"));
                 console.log(seats)
                 $(this).removeClass("seat-choosing");
             } else {
-
                 flag = true;
                 if ($(this).hasClass('seat-item-couple')) {
                     if (couple_quantity <= 0) {
@@ -103,17 +118,19 @@
                     alert("Đã chọn đủ số vé! Vui lòng bấm vào 'Tiếp theo' để sang bước tiếp theo")
                     flag = false;
                 }
+                if ($(this).hasClass('seat-sold')) {
+                    flag = false;
+                }
                 if (flag) {
                     if ($(this).hasClass('seat-item-couple')) {
                         couple_quantity -= 1
                     } else {
                         regular_quantity -= 1;
                     }
-
-                    seats.push($(this).data("seat"));
+                    seats.push($(this).attr("id"));
                     console.log(seats)
                     $(this).addClass("seat-choosing");
-                    console.log($(this).data("seat"));
+                    console.log($(this).attr("id"));
                 }
             }
         });

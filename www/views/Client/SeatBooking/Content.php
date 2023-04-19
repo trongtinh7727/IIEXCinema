@@ -11,7 +11,7 @@
             Thức ăn
         </div>
         <div href="/?comfirmbooking" id="bookticket-seat-stepindicator-confirm" class="pointer-last bg-yellow my-2 fs-4 fw-semibold d-flex align-items-center justify-content-center">
-            Xác nhận 
+            Xác nhận
         </div>
     </div>
     <!-- Main -->
@@ -85,8 +85,8 @@
                         <!-- Seat col 1 2 -->
                         <div class="seatcol-big d-flex">
                             <div class="seatcol">
-                                <div class="seat-item seat-item-couple" data-seat="I1"></div>
-                                <div class="seat-item seat-item-couple" data-seat="J1"></div>
+                                <div class="seat-item seat-item-couple" id="I1"></div>
+                                <div class="seat-item seat-item-couple" id="J1"></div>
                                 <div class="seat-letter seat-item-couple">1</div>
                             </div>
                         </div>
@@ -94,28 +94,28 @@
                         <div class="seatcol-big d-flex">
                             <!-- Seat col 3 4 -->
                             <div class="seatcol">
-                                <div class="seat-item seat-item-couple" data-seat="I2"></div>
-                                <div class="seat-item seat-item-couple" data-seat="J2"></div>
+                                <div class="seat-item seat-item-couple" id="I2"></div>
+                                <div class="seat-item seat-item-couple" id="J2"></div>
                                 <div class="seat-letter seat-item-couple">2</div>
                             </div>
                             <!-- Seat col 5 6 -->
                             <div class="seatcol">
-                                <div class="seat-item seat-item-couple" data-seat="I3"></div>
-                                <div class="seat-item seat-item-couple" data-seat="J3"></div>
+                                <div class="seat-item seat-item-couple" id="I3"></div>
+                                <div class="seat-item seat-item-couple" id="J3"></div>
                                 <div class="seat-letter seat-item-couple">3</div>
                             </div>
                             <!-- Seat col 7 8 -->
                             <div class="seatcol">
-                                <div class="seat-item seat-item-couple" data-seat="I4"></div>
-                                <div class="seat-item seat-item-couple" data-seat="J4"></div>
+                                <div class="seat-item seat-item-couple" id="I4"></div>
+                                <div class="seat-item seat-item-couple" id="J4"></div>
                                 <div class="seat-letter seat-item-couple">4</div>
                             </div>
                         </div>
                         <!-- Seat col 9 10 -->
                         <div class="seatcol-big d-flex">
                             <div class="seatcol">
-                                <div class="seat-item seat-item-couple" data-seat="I5"></div>
-                                <div class="seat-item seat-item-couple" data-seat="J5"></div>
+                                <div class="seat-item seat-item-couple" id="I5"></div>
+                                <div class="seat-item seat-item-couple" id="J5"></div>
                                 <div class="seat-letter seat-item-couple">5</div>
                             </div>
                         </div>
@@ -159,8 +159,8 @@
 
     <!-- Nagivation button -->
     <div id="bookticket-nagivation" class="d-flex justify-content-between">
-        <button id="bookticket-prev" class="btn btn-lg btn-sm bg-secondary text-white fs-4 fw-semibold hover-bg-green"  role="button" style="height: 44px; width: 160px;">Trở lại</button>
-        <button id="bookticket-next" class="btn btn-lg btn-sm bg-yellow text-dark fs-4 fw-semibold hover-bg-green"  role="button" style="height: 44px; width: 160px;">Tiếp
+        <button id="bookticket-prev" class="btn btn-lg btn-sm bg-secondary text-white fs-4 fw-semibold hover-bg-green" role="button" style="height: 44px; width: 160px;">Trở lại</button>
+        <button id="bookticket-next" class="btn btn-lg btn-sm bg-yellow text-dark fs-4 fw-semibold hover-bg-green" role="button" style="height: 44px; width: 160px;">Tiếp
             theo</button>
     </div>
 </div>

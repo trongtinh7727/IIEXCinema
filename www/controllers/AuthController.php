@@ -23,8 +23,10 @@ class AuthController
             $password = $_POST['password'];
             $tb = $_POST['tb'];
             $check =  $this->model->CheckUserLogin($username, $password, $tb);
-            if ($check == 1) {
+            if ($check != null) {
                 $_SESSION['userLogin']['username'] = $username;
+                $_SESSION['userLogin']['name'] = $check['FIRSTNAME'] . " " . $check['LASTNAME'];
+                $_SESSION['userLogin']['ID'] = $check['ID'];
                 if ($tb == 'staff') {
                     $_SESSION['userLogin']['role'] = 1;
                     header("Location: /?admin/staff");
@@ -45,6 +47,28 @@ class AuthController
                 require_once('views/Admin/Auths/login.php');
             } else {
                 require_once('views/Client/Auths/login.php');
+            }
+        }
+    }
+
+    public function changePassword()
+    {
+        if (isset($_POST['username']) && isset($_POST['password'])) {
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+            $tb = $_POST['tb'];
+            $check =  $this->model->CheckUserLogin($username, $password, $tb);
+            if ($check != null) {
+                $_SESSION['userLogin']['username'] = $username;
+                $_SESSION['userLogin']['name'] = $check['FIRSTNAME'] . " " . $check['LASTNAME'];
+                $_SESSION['userLogin']['ID'] = $check['ID'];
+                if ($tb == 'staff') {
+                    $_SESSION['userLogin']['role'] = 1;
+                    header("Location: /?admin/staff");
+                } else {
+                    $_SESSION['userLogin']['role'] = 2;
+                    header("Location: /?");
+                }
             }
         }
     }
