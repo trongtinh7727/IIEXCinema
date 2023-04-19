@@ -12,6 +12,12 @@ class HomeController extends AuthController
 
     public function __construct()
     {
+        if (isset($_SESSION['userLogin'])) {
+            if ($_SESSION['userLogin']['role'] == 1) {
+                header("Location: /?admin");
+                exit;
+            }
+        }
         $this->db = Connection::$connection;
         $model = new MovieModel();
         $model->db = $this->db;
@@ -28,6 +34,12 @@ class HomeController extends AuthController
     {
         $ongoing = $this->ongoing;
         $path = "HomePage";
+        require_once('views/Client/index.php');
+    }
+    public function promotion()
+    {
+        $ongoing = $this->ongoing;
+        $path = "Promotion";
         require_once('views/Client/index.php');
     }
     public function movie()

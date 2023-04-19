@@ -67,16 +67,16 @@ class FoodComboModel
         return false;
     }
 
-    public function add($NAME, $FOOD, $FOOD_QUANTITY, $DRINK, $DRINK_QUANTITY, $PRICE)
+    public function add($NAME, $FOOD, $FOOD_QUANTITY, $DRINK, $DRINK_QUANTITY, $PRICE, $Image)
     {
 
         // Insert into foodcombo
 
-        $sql = 'INSERT INTO `foodcombo` (`ID`, `NAME`, `PRICE`) VALUES (NULL, ?, ?)';
+        $sql = 'INSERT INTO `foodcombo` (`ID`, `NAME`, `PRICE`, `Image`) VALUES (NULL, ?, ?, ?)';
 
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($NAME, $PRICE));
+            $stmt->execute(array($NAME, $PRICE, $Image));
         } catch (PDOException $ex) {
             die(json_encode(array('status' => false, 'data' => $ex->getMessage())));
         }

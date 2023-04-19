@@ -12,4 +12,14 @@ class TransactionController extends AdminController
     {
         echo $this->model->getAll();
     }
+
+    public function getRevenue(){
+        $params = array(
+            'Month'
+        );
+        $data = $this->validateParams($params);
+        echo $this->model->getRevenue(
+            $data['Month'],
+        );
+    }
 }

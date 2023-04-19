@@ -24,4 +24,22 @@ class TransactionModel
         }
         return json_encode(array('status' => true, 'data' => $data));
     }
+
+    public function getRevenue($Month)
+    {
+        $sql = "CALL `get_revenue_of_month`(?)";
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute(array($Month));
+        } catch (PDOException $ex) {
+            return (json_encode(array('status' => false, 'data' => $ex->getMessage())));
+        }
+        $labels = [];
+        $data = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $labels[] = $row['order_date'];
+            $data[] = $row['total_price'];
+        }
+        return json_encode(array('status' => true, 'data' => [$labels,$data]));
+    }
 }

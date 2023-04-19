@@ -21,13 +21,13 @@ class ProductController extends AdminController
     public function add()
     {
         $params = array(
-            'NAME', 'TYPE', 'PRICE', 'QUANTITY', 'Expiry_Date'
+            'NAME', 'TYPE',  'QUANTITY', 'Expiry_Date'
         );
         $data = $this->validateParams($params);
         echo $this->model->add(
             $data['NAME'],
             $data['TYPE'],
-            $data['PRICE'],
+    
             $data['QUANTITY'],
             $data['Expiry_Date']
         );
@@ -45,13 +45,13 @@ class ProductController extends AdminController
     public function update()
     {
         $params = array(
-            'NAME', 'TYPE', 'PRICE', 'QUANTITY', 'Expiry_Date', 'ID'
+            'NAME', 'TYPE',  'QUANTITY', 'Expiry_Date', 'ID'
         );
         $data = $this->validateParams($params);
         echo $this->model->update(
             $data['NAME'],
             $data['TYPE'],
-            $data['PRICE'],
+    
             $data['QUANTITY'],
             $data['Expiry_Date'],
             $data['ID']

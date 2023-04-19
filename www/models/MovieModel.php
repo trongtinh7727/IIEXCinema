@@ -108,11 +108,26 @@ class MovieModel
 
     public function update($TITLE, $DIRECTOR, $ACTORS, $GENRE, $STORY, $DURATION, $OPENING_DAY, $CLOSING_DAY, $POSTER, $TRAILER, $ID)
     {
-        $sql = 'UPDATE `movie` SET `TITLE` = ?,`DIRECTOR` = ?,`ACTORS` = ?,`GENRE` = ?,`STORY` = ?,`DURATION` = ?,`OPENING_DAY` = ?,`CLOSING_DAY` = ?,`POSTER` = ?,`TRAILER` = ? WHERE `movie`.`ID` = ?';
+        $sql = 'UPDATE `movie` SET `TITLE` = ?,
+                        `DIRECTOR` = ?,`ACTORS` = ?,`GENRE` = ?,`STORY` = ?,
+                        `DURATION` = ?,`OPENING_DAY` = ?,`CLOSING_DAY` = ?';
+        $arr = array($TITLE, $DIRECTOR, $ACTORS, $GENRE, $STORY, $DURATION, $OPENING_DAY, $CLOSING_DAY);
+        if ($TRAILER != '0') {
+            $sql .= ',`TRAILER` = ? ';
+            array_push($arr, $TRAILER);
+        }
+        if ($POSTER != '0') {
+            $sql .= ',`POSTER` = ?';
+            array_push($arr, $POSTER);
+        }
+
+        $sql .= 'WHERE `movie`.`ID` = ? ';
+        array_push($arr, $ID);
+
 
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($TITLE, $DIRECTOR, $ACTORS, $GENRE, $STORY, $DURATION, $OPENING_DAY, $CLOSING_DAY, $POSTER, $TRAILER, $ID));
+            $stmt->execute($arr);
             $count = $stmt->rowCount();
 
             if ($count == 1) {

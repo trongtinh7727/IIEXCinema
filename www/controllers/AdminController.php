@@ -9,22 +9,14 @@ class AdminController extends AuthController
     }
 
     // validate if the params is null
-    function validateParams($params)
-    {
-        foreach ($params as $param) {
-            if (!isset($_POST[$param]) || strlen($_POST[$param]) < 1) {
-                die(json_encode(array('status' => false, 'data' => 'Parameters not valid')));
-            }
-        }
-        return array_map('trim', $_POST);
-    }
+    
 
     function isAuthenticated()
     {
         if (!isset($_SESSION['userLogin'])) {
             header("Location: /?admin/login");
             exit;
-        } else if ($_SESSION['userLogin'] == 2) {
+        } else if ($_SESSION['userLogin']['role'] == 2) {
             header("Location: /?");
             exit;
         }
@@ -90,6 +82,12 @@ class AdminController extends AuthController
     {
         $this->isAuthenticated();
         $path = 'Combo';
+        require_once('views/Admin/dashboard.php');
+    }
+    public function revenueAction()
+    {
+        $this->isAuthenticated();
+        $path = 'Revenue';
         require_once('views/Admin/dashboard.php');
     }
 }
