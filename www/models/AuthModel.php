@@ -12,10 +12,12 @@ class AuthModel
         and password = ?';
         $stmt = $this->db->prepare($sql);
         $stmt->execute(array($username, $password));
-        $count = 0;
+
+        $data = null;
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $count += 1;
+            $data = $row;
+            return $data;
         }
-        return $count;
+        return $data;
     }
 }

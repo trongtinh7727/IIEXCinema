@@ -75,17 +75,17 @@
 
 
         function load_ongoing_movie() {
-            $.get("./?api/movie/ongoing", function(data, status) {
-
-                console.log(data)
-                data.data.forEach(function(object) {
-                    var option = document.createElement('option');
-                    option.value = object.ID;
-                    option.dataset.duration = object.DURATION;
-                    option.innerText = object.TITLE;
-                    $('#movieBox').append(option);
-                });
-            }, "json");
+            $.get("./?api/movie/ongoing",
+                function(data, status) {
+                    console.log(data)
+                    data.data.forEach(function(object) {
+                        var option = document.createElement('option');
+                        option.value = object.ID;
+                        option.dataset.duration = object.DURATION;
+                        option.innerText = object.TITLE;
+                        $('#movieBox').append(option);
+                    });
+                }, "json");
         }
         load_ongoing_movie();
         let jsonArrayObj = [{}];

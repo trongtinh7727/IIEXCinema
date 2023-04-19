@@ -17,6 +17,24 @@
         font-family: 'Poppins', sans-serif;
     }
 
+    a:link {
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    a:visited {
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    a:active {
+        text-decoration: underline;
+    }
+
     .text-yellow {
         color: #FFBA08 !important;
     }
@@ -124,6 +142,53 @@
 
     .carousel-control-prev-icon {
         color: #FFBA08;
+    }
+
+    /* Sidenav */
+
+    #profileSideNav {
+        position: fixed;
+    }
+
+    #profileSideNav a {
+        left: -200px;
+        transition: 0.5s;
+        width: 240px;
+        border-radius: 0 5px 5px 0;
+    }
+
+    #profileSideNav a:hover {
+        left: 0;
+    }
+
+    #profileDetails {
+        top: 50px;
+    }
+
+    #changePassword {
+        background-color: rgba(217, 217, 217, 0.25);
+        top: 100px;
+    }
+
+    #logout {
+        background-color: rgba(217, 217, 217, 0.25);
+        top: 150px;
+    }
+
+    /* Main */
+    #profile-main {
+        background-color: rgba(217, 217, 217, 0.25);
+    }
+
+    #profile-main table {
+        border-collapse: separate;
+        border-spacing: 12px;
+    }
+
+    #profile-main input {
+        min-height: 44px;
+        background-color: rgba(217, 217, 217, 0.25);
+        border: #FFFFFF solid 1px;
     }
 
     @media screen and (max-width: 992px) {

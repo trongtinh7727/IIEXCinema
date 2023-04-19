@@ -54,9 +54,25 @@ class ScheduleModel
         return $data;
     }
 
+    public function getBookedSeat($ID)
+    {
+        $sql = " CALL `get_booked_seats`(?)";
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute(array($ID));
+        } catch (PDOException $ex) {
+            return (json_encode(array('status' => false, 'data' => $ex->getMessage())));
+        }
+        $data = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $data[] = $row;
+        }
+        return json_encode(array('status' => true, 'data' => $data));
+    }
+
     public function getByMovie($ID)
     {
-        $sql = "SELECT * FROM schedule where MOV_ID = '$ID' order by STARTTIME";
+        $sql = "SELECT * FROM schedule where MOV_ID = '$ID' AND NOW() < schedule.STARTTIME order by STARTTIME";
         try {
             $stmt = $this->db->prepare($sql);
             $stmt->execute();

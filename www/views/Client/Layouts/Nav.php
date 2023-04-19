@@ -15,7 +15,7 @@
                         <a id="HomePage" class="nav-link mx-4 hover-green fs-5 fw-semibold text-white  " aria-current="page" href="./?">Trang chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link mx-4 text-white hover-green fs-5 fw-semibold" aria-current="page" href="#">Phim</a>
+                        <a class="nav-link mx-4 text-white hover-green fs-5 fw-semibold" aria-current="page" href="./?movie">Phim</a>
                     </li>
                     <li class="nav-item">
                         <a id="Showtime" class="nav-link mx-4 text-white hover-green fs-5 fw-semibold" aria-current="page" href="./?showtime">Lịch chiếu</a>
@@ -26,11 +26,11 @@
                 </ul>
                 <div id="btn-signin" class="d-lg-flex col-lg-3 justify-content-lg-end">
                     <?php
-                    if (isset($_SESSION['userLogin']['username'])) {
+                    if (isset($_SESSION['userLogin']['name'])) {
                     ?>
-                        <a href="./?logout" class="btn text-green text-decoration-none hover-yellow">
+                        <a href="./?profile" class="btn text-green text-decoration-none hover-yellow">
                             <?php
-                            echo $_SESSION['userLogin']['username'];
+                            echo $_SESSION['userLogin']['name'];
                             ?>
                         </a>
                     <?php
@@ -49,6 +49,21 @@
             </div>
         </div>
     </nav> <!-- Slider -->
+    <!-- Sidenav -->
+    <div id="profileSideNav" class="sidenav">
+        <a class="position-absolute p-2 text-decoration-none text-dark bg-yellow fs-5 fw-medium d-flex align-items-center justify-content-between" href="./?profile" id="profileDetails">
+            Thông tin tài khoản
+            <i class="fa-solid fa-user"></i>
+        </a>
+        <a class="position-absolute p-2 text-decoration-none text-white hover-bg-green fs-5 fw-medium d-flex align-items-center justify-content-between" href="./?changepassword" id="changePassword">
+            Đổi mật khẩu
+            <i class="fa-solid fa-key"></i>
+        </a>
+        <a class="position-absolute p-2 text-decoration-none text-white hover-bg-green fs-5 fw-medium d-flex align-items-center justify-content-between" href="./?logout" id="logout">
+            Đăng xuất
+            <i class="fa-solid fa-right-from-bracket"></i>
+        </a>
+    </div>
 
     <!-- Swiper -->
     <div id="toppartSwiper" class="swiper w-100 py-5 mt-4">
@@ -61,12 +76,13 @@
                     <div class="swiper-slide-inner row px-lg-5">
                         <div class="swiper-slide-inner-left col-12 col-xl-5 position-relative px-0">
                             <!-- DATAFILL Poster -->
-                            <img class="align-self-center position-absolute" src="<?php echo $movie->POSTER ?>" alt="Swiper Photo">
+                            <a href="./?moviedetail&id=<?php echo $movie->ID ?>"><img class="align-self-center position-absolute" src="<?php echo $movie->POSTER ?>" alt="Swiper Photo"></a>
+
                         </div>
                         <div class="swiper-slide-inner-right col-12 col-xl-7 text-white">
                             <div class="swiper-slide-inner-right-main ms-4 py-3">
                                 <!-- DATAFILL Title -->
-                                <h3 name="swiper-slide-inner-movie-title"><?php echo $movie->TITLE ?></h3>
+                                <h3 name="swiper-slide-inner-movie-title"> <a href="./?moviedetail&id=<?php echo $movie->ID ?>"><?php echo $movie->TITLE ?></a></h3>
                                 <!-- DATAFILL Rating -->
                                 <div class="swiper-movie-rating text-green my-2">
                                     <i class="fa-solid fa-star fa-xl"></i>

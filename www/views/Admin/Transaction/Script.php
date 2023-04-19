@@ -23,16 +23,16 @@
                     data: "STARTTIME"
                 },
                 {
+                    data: "CREATED_AT"
+                },
+                {
                     data: "Seats"
                 },
                 {
-                    data: "ticketPrice"
+                    data: "TICKET_PRICE"
                 },
                 {
-                    data: "Food"
-                },
-                {
-                    data: "PRICE"
+                    data: "FOOD_PRICE"
                 },
                 {
                     data: "Total"

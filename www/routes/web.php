@@ -11,16 +11,22 @@ Route::add("/?admin/logout", "AdminController@logout");
 
 // Home
 Route::add("/?", "HomeController@indexAction");
+Route::add("/?profile", "HomeController@profile");
+Route::add("/?movie", "HomeController@movie");
 Route::add("/?moviedetail", "HomeController@movieDetail");
 Route::add("/?showtime", "HomeController@showtime");
 Route::add("/?ticketbooking", "HomeController@ticketBooking");
 Route::add("/?seatbooking", "HomeController@seatBooking");
+Route::add("/?combobooking", "HomeController@comboBooking");
+Route::add("/?confirmbooking", "HomeController@confirmBooking");
+Route::add("/?successbooking", "HomeController@successBooking");
 
 // Auth
 Route::add("/?admin/login", "AuthController@login");
 Route::add("/?login", "AuthController@login");
 Route::add("/?logout", "AuthController@logout");
 Route::add("/?register", "AuthController@register");
+Route::add("/?changepassword", "AuthController@changePassword");
 
 // manager
 Route::add("/?admin/staff", "AdminController@staffAction");
@@ -92,6 +98,7 @@ Route::add("/?api/theater/update", "TheaterController@update");
 Route::add("/?api/theater/delete", "TheaterController@delete");
 
 // Schedule
+Route::add("/?api/schedule/getbookedseat", "ScheduleController@getBookedSeat");
 Route::add("/?api/schedule/getByTheater", "ScheduleController@getByTheater");
 Route::add("/?api/schedule/getByMovie", "ScheduleController@getByMovie");
 Route::add("/?api/schedule/getbyid", "ScheduleController@getByID");

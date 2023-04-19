@@ -1,5 +1,5 @@
 <script>
-    function drawSeatCol(start, end) {
+    function drawSeatCols(start, end) {
         const seatCols = document.createElement('div');
         seatCols.classList.add('seatcol-big', 'd-flex');
         for (let j = start; j <= end; j++) {
@@ -11,14 +11,14 @@
             for (let k = 0; k < 8; k++) {
                 const seatItem = document.createElement('div');
                 seatItem.classList.add('seat-item');
-                seatItem.dataset.seat = String.fromCharCode(65 + k) + (k + 1);
+                seatItem.id = String.fromCharCode(65 + k) + (j);
                 seatCol.appendChild(seatItem);
             }
 
             // Create the seat letter for this column
             const seatLetter = document.createElement('div');
             seatLetter.classList.add('seat-letter');
-            seatLetter.textContent = j + 1;
+            seatLetter.textContent = j;
             seatCol.appendChild(seatLetter);
 
             // Add the seat item column to the seatCols container
@@ -46,11 +46,10 @@
             const numRows = 3;
             const numCols = 10;
             // Loop through each row and column to create the seat grid
-            // const seatCols = drawSeatCol(1, 2)
-            seatContainer.appendChild(drawSeatCol(1, 2))
-            seatContainer.appendChild(drawSeatCol(3, 8))
-            seatContainer.appendChild(drawSeatCol(9, 10))
-
+            // const seatCols = drawSeatCols(1, 2)
+            seatContainer.appendChild(drawSeatCols(1, 2))
+            seatContainer.appendChild(drawSeatCols(3, 8))
+            seatContainer.appendChild(drawSeatCols(9, 10))
 
             const letterColR = document.createElement('div');
             letterColR.classList.add('seatcol');
@@ -63,17 +62,91 @@
             seatContainer.appendChild(letterColR)
 
         }
-        dawSeat()
+        dawSingle()
 
+        function loadBooked() {
+            var schedule_id = <?php echo $_SESSION['booking']['schedule_id'] ?>;
+            $.post("./?api/schedule/getbookedseat", {
+                    schedule_id
+                },
+                function(data, status) {
+                    console.log(data)
+                    data.data.forEach(function(object) {
+                        var seatnumber = object.SEATNUMBER;
+                        $(`#${seatnumber}`).addClass('seat-sold')
 
+                    });
+                }, "json");
+        }
+        loadBooked()
 
+        // 10 cuple | 80 single
+        const seats = [];
+        var regular_quantity = parseInt($('#quantity_regular').text())
+        var couple_quantity = parseInt($('#quantity_couple').text())
         $("#bookticket-seat-main-seat").find($(".seat-item")).click(function() {
+
             if ($(this).hasClass("seat-choosing")) {
+
+                if ($(this).hasClass('seat-item-couple')) {
+                    couple_quantity += 1
+                } else {
+                    regular_quantity += 1;
+                }
+                const index = seats.indexOf($(this).attr("id"));
+                if (index > -1) {
+                    seats.splice(index, 1);
+                }
+                console.log($(this).attr("id"));
+                console.log(seats)
                 $(this).removeClass("seat-choosing");
             } else {
-                $(this).addClass("seat-choosing");
-                console.log($(this).data("seat"))
+                flag = true;
+                if ($(this).hasClass('seat-item-couple')) {
+                    if (couple_quantity <= 0) {
+                        alert("Đã chọn đủ số vé đôi!")
+                        flag = false;
+                    }
+                } else {
+                    if (regular_quantity <= 0) {
+                        alert("Đã chọn đủ số vé đơn!")
+                        flag = false;
+                    }
+                }
+
+                if (couple_quantity <= 0 && regular_quantity <= 0) {
+                    alert("Đã chọn đủ số vé! Vui lòng bấm vào 'Tiếp theo' để sang bước tiếp theo")
+                    flag = false;
+                }
+                if ($(this).hasClass('seat-sold')) {
+                    flag = false;
+                }
+                if (flag) {
+                    if ($(this).hasClass('seat-item-couple')) {
+                        couple_quantity -= 1
+                    } else {
+                        regular_quantity -= 1;
+                    }
+                    seats.push($(this).attr("id"));
+                    console.log(seats)
+                    $(this).addClass("seat-choosing");
+                    console.log($(this).attr("id"));
+                }
             }
         });
+
+        $('#bookticket-prev').click(
+            function() {
+                $(location).attr('href', '/?ticketbooking');
+            }
+        )
+        $('#bookticket-next').click(
+            function() {
+                $.post("./?seatbooking", {
+                    seats
+                }, function(data, status) {}, "json");
+                $(location).attr('href', '/?combobooking');
+            }
+        )
     })
 </script>

@@ -29,10 +29,10 @@
                         <th>Họ và tên</th>
                         <th>Tiêu đề phim</th>
                         <th>Thời gian bắt đầu</th>
+                        <th>Thời gian đặt</th>
                         <th>Các ghế</th>
                         <th>Tổng giá vé</th>
-                        <th>Combo đồ ăn</th>
-                        <th>Giá commbo</th>
+                        <th>Tổng giá combo</th>
                         <th>Thành tiền</th>
                     </tr>
                 </thead>
@@ -44,10 +44,10 @@
                         <th>Họ và tên</th>
                         <th>Tiêu đề phim</th>
                         <th>Thời gian bắt đầu</th>
+                        <th>Thời gian đặt</th>
                         <th>Các ghế</th>
                         <th>Tổng giá vé</th>
-                        <th>Combo đồ ăn</th>
-                        <th>Giá commbo</th>
+                        <th>Tổng giá combo</th>
                         <th>Thành tiền</th>
                     </tr>
                 </tfoot>
