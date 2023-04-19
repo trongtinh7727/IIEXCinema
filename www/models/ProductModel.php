@@ -24,7 +24,7 @@ class ProductModel
         }
         return json_encode(array('status' => true, 'data' => $data));
     }
-    public function add($NAME, $TYPE, $PRICE, $QUANTITY, $Expiry_Date)
+    public function add($NAME, $TYPE,  $QUANTITY, $Expiry_Date)
     {
         if ($TYPE == 1) {
             $TYPE = "Đồ ăn";
@@ -33,10 +33,10 @@ class ProductModel
             $TYPE = "Đồ uống";
         }
 
-        $sql = 'INSERT INTO Product(NAME, TYPE,PRICE, QUANTITY,Expiry_Date) VALUES(?,?,?,?,?)';
+        $sql = 'INSERT INTO Product(NAME, TYPE, QUANTITY,Expiry_Date) VALUES(?,?,?,?)';
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($NAME, $TYPE, $PRICE, $QUANTITY, $Expiry_Date));
+            $stmt->execute(array($NAME, $TYPE,  $QUANTITY, $Expiry_Date));
 
             return json_encode(array('status' => true, 'data' => 'Thêm sản phẩm thành công'));
         } catch (PDOException $ex) {
@@ -66,7 +66,7 @@ class ProductModel
         }
     }
 
-    public function update($NAME, $TYPE, $PRICE, $QUANTITY, $Expiry_Date, $ID)
+    public function update($NAME, $TYPE,  $QUANTITY, $Expiry_Date, $ID)
     {
         if ($TYPE == 1) {
             $TYPE = "Đồ ăn";
@@ -75,11 +75,11 @@ class ProductModel
             $TYPE = "Đồ uống";
         }
 
-        $sql = 'UPDATE `Product` SET `NAME` = ?, `TYPE` = ?, `PRICE` = ?,`QUANTITY` = ?,`Expiry_Date` = ? WHERE `Product`.`ID` = ?';
+        $sql = 'UPDATE `Product` SET `NAME` = ?, `TYPE` = ?, `QUANTITY` = ?,`Expiry_Date` = ? WHERE `Product`.`ID` = ?';
 
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($NAME, $TYPE, $PRICE, $QUANTITY, $Expiry_Date, $ID));
+            $stmt->execute(array($NAME, $TYPE,  $QUANTITY, $Expiry_Date, $ID));
             $count = $stmt->rowCount();
 
             if ($count == 1) {

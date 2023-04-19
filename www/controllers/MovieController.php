@@ -19,9 +19,12 @@ class MovieController extends AdminController
         $params = array(
             'TITLE', 'DIRECTOR',
             'ACTORS', 'GENRE', 'STORY', 'DURATION',
-            'OPENING_DAY', 'CLOSING_DAY', 'POSTER', 'TRAILER'
+            'OPENING_DAY', 'CLOSING_DAY'
         );
         $data = $this->validateParams($params);
+        $poster = (new UploadHelper())->uploadFile("movie", $_FILES['POSTER']);
+        $trailer = (new UploadHelper())->uploadFile("movie", $_FILES['TRAILER']);
+
         echo $this->model->add(
             $data['TITLE'],
             $data['DIRECTOR'],
@@ -31,8 +34,8 @@ class MovieController extends AdminController
             $data['DURATION'],
             $data['OPENING_DAY'],
             $data['CLOSING_DAY'],
-            $data['POSTER'],
-            $data['TRAILER']
+            $poster,
+            $trailer
         );
     }
 
@@ -52,13 +55,20 @@ class MovieController extends AdminController
     public function update()
     {
         $this->isAuthenticated();
-        $this->isAuthenticated();
         $params = array(
             'ID', 'TITLE', 'DIRECTOR',
             'ACTORS', 'GENRE', 'STORY', 'DURATION',
-            'OPENING_DAY', 'CLOSING_DAY', 'POSTER', 'TRAILER'
+            'OPENING_DAY', 'CLOSING_DAY'
         );
         $data = $this->validateParams($params);
+        $poster = '0';
+        $trailer = '0';
+        if (isset($_FILES['POSTER'])) {
+            $poster = (new UploadHelper())->uploadFile("movie", $_FILES['POSTER']);
+        }
+        if (isset($_FILES['TRAILER'])) {
+            $trailer = (new UploadHelper())->uploadFile("movie", $_FILES['TRAILER']);
+        }
         echo $this->model->update(
             $data['TITLE'],
             $data['DIRECTOR'],
@@ -68,8 +78,8 @@ class MovieController extends AdminController
             $data['DURATION'],
             $data['OPENING_DAY'],
             $data['CLOSING_DAY'],
-            $data['POSTER'],
-            $data['TRAILER'],
+            $poster,
+            $trailer,
             $data['ID']
         );
     }

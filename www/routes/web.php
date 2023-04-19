@@ -20,6 +20,7 @@ Route::add("/?seatbooking", "HomeController@seatBooking");
 Route::add("/?combobooking", "HomeController@comboBooking");
 Route::add("/?confirmbooking", "HomeController@confirmBooking");
 Route::add("/?successbooking", "HomeController@successBooking");
+Route::add("/?promotion", "HomeController@promotion");
 
 // Auth
 Route::add("/?admin/login", "AuthController@login");
@@ -38,6 +39,7 @@ Route::add("/?admin/product", "AdminController@productAction");
 Route::add("/?admin/client", "AdminController@clientAction");
 Route::add("/?admin/transaction", "AdminController@transactionAction");
 Route::add("/?admin/foodcombo", "AdminController@comboAction");
+Route::add("/?admin/revenue", "AdminController@revenueAction");
 
 
 // API
@@ -85,6 +87,7 @@ Route::add("/?api/seat/getByTheater", "SeatController@getByTheater");
 
 // Transaction
 Route::add("/?api/transaction/getall", "TransactionController@getAll");
+Route::add("/?api/transaction/getrevenue", "TransactionController@getRevenue");
 
 // Ticket
 Route::add("/?api/ticket/add", "TicketController@add");
