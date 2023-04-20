@@ -24,6 +24,22 @@ class HomeModel
         return $data;
     }
 
+    public function bookingHistory($ID)
+    {
+        $sql = " CALL `get_transactions_by_user`(?)";
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute(array($ID));
+        } catch (PDOException $ex) {
+            return (json_encode(array('status' => false, 'data' => $ex->getMessage())));
+        }
+        $data = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $data[] = $row;
+        }
+        return $data;
+    }
+
     public function saveTransaction($Clinet_ID, $Schedule_id, $seats, $foods)
     {
         try {

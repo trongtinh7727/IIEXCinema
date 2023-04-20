@@ -17,6 +17,12 @@
             console.log("run")
             $(<?php echo $path ?>).addClass("btn-dark")
         })
+
+        $(document).ready(function() {
+            $('#btn_logout').click(function() {
+                window.location.href = './?logout';
+            });
+        });
     </script>
     <!-- Log out modal -->
     <div class="modal fade align-content-center" id="signOutModal" tabindex="-1" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">

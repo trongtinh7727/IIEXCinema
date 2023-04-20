@@ -17,7 +17,6 @@
 
 <body>
     <div id="wrapper" class="min-vh-100 d-flex flex-column">
-        <!-- Navigation bar -->
         <nav class="navbar navbar-expand-lg bg-transparent" aria-label="Thirteenth navbar example" style="background: transparent;">
             <div class="container-fluid">
                 <!-- Navbar toggler for mobile -->
@@ -89,57 +88,48 @@
 
         <!-- Main -->
         <div class="container">
-            <div id="profile-main" class="my-5 p-3 text-white rounded-4">
-                <h2 class="text-uppercase text-yellow text-center">Thông tin tài khoản</h2>
-                <form action="">
-                    <table class="mx-auto">
-                        <!-- Username -->
-                        <tr style="height: 44px;">
-                            <td class="text-end fw-medium">Tên đăng nhập:</td>
-                            <td><input name="profile-username" value="<?php echo $profile[0]['USERNAME'] ?>" type="text" class="mx-3 rounded-3 text-white w-100" disabled></td>
-                        </tr>
-                        <!-- Name -->
-                        <tr style="height: 44px;">
-                            <td class="text-end fw-medium">Họ và tên:</td>
-                            <td><input name="profile-name" value="<?php echo $profile[0]['FIRSTNAME'] . " " . $profile[0]['LASTNAME']  ?>" type="text" class="mx-3 rounded-3 text-white w-100"></td>
-                        </tr>
-                        <!-- Birthday -->
-                        <tr style="height: 44px;">
-                            <td class="text-end fw-medium">Ngày sinh:</td>
-                            <td><input name="profile-birthday" value="<?php echo $profile[0]['BIRTHDAY'] ?>" type="date" class="mx-3 rounded-3 text-white w-100"></td>
-                        </tr>
-                        <!-- Gender -->
-                        <tr style="height: 44px;">
-                            <td class="text-end fw-medium">Giới tính:</td>
-                            <td class="d-flex align-items-center">
-                                <!-- Male -->
-                                <input name="profile-gender" id="profile-gender-male" type="radio" value="Male" class="ms-3 me-1 rounded-3 text-white">
-                                <label for="profile-gender-male">Nam</label>
-                                <!-- Female -->
-                                <input name="profile-gender" id="profile-gender-female" type="radio" value="Female" class="ms-3 me-1 rounded-3 text-white">
-                                <label for="profile-gender-male">Nữ</label>
-                            </td>
-                        </tr>
-                        <!-- Address -->
-                        <tr style="height: 44px;">
-                            <td class="text-end fw-medium">Địa chỉ:</td>
-                            <td><input name="profile-address" value="<?php echo $profile[0]['ADDRESS'] ?>" type="text" class="mx-3 rounded-3 text-white w-100"></td>
-                        </tr>
-                        <!-- Phone -->
-                        <tr style="height: 44px;">
-                            <td class="text-end fw-medium">Điện thoại:</td>
-                            <td><input name="profile-phone" type="tel" value="<?php echo $profile[0]['PHONE'] ?>" class="mx-3 rounded-3 text-white w-100"></td>
-                        </tr>
+            <div id="bookingHistory-main" class="rounded-4">
+                <div id="bookingHistory-main-inner" class="card mx-auto pb-4 pt-2 my-4 shadow rounded-4 container text-white">
+                    <!-- Title + Button -->
+                    <div id="bookingHistory-main-inner-title" class="card-header rounded-top-4 mb-3">
+                        <span class="fs-4 fw-medium">Lịch sử đặt vé</span>
+                        <br>
+                        <span>Kiểm tra lịch sử đặt vé của bạn </span>
+                    </div>
 
-                        <tr style="height: 44px;">
-                            <td></td>
-                            <td class="text-end">
-                                <input type="submit" class="mx-3 px-3 rounded-3 bg-yellow hover-bg-green border-0 fw-medium" value="Xác nhận">
-                            </td>
-                        </tr>
-                    </table>
+                    <!-- Main -->
+                    <div class="container">
+                        <table id="bookingHistoryDataTable" class="table table-dark table-borderless table-hover dt-responsive nowrapt">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Tiêu đề phim</th>
+                                    <th>Ngày đặt vé</th>
+                                    <th>Thời gian bắt đầu</th>
+                                    <th>Số ghế</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($transactions as $transaction) {
+                                ?>
+                                    <tr>
+                                        <td><?php echo $transaction['ID'] ?></td>
+                                        <td><?php echo $transaction['TITLE'] ?></td>
+                                        <td><?php echo $transaction['CREATED_AT'] ?></td>
+                                        <td><?php echo $transaction['STARTTIME'] ?></td>
+                                        <td><?php echo $transaction['Seats'] ?></td>
+                                        <td>
+                                            <a href="./?booking&id=<?php echo $transaction['ID'] ?>">Chi tiết</a>
+                                        </td>
+                                    </tr>
+                                <?php
+                                } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            </form>
         </div>
 
         <!-- Footer -->

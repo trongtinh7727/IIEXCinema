@@ -55,6 +55,10 @@
             Thông tin tài khoản
             <i class="fa-solid fa-user"></i>
         </a>
+        <a class="position-absolute p-2 text-decoration-none text-dark hover-bg-green fs-5 fw-medium d-flex align-items-center justify-content-between" href="./?bookinghistory" id="bookingHistory">
+            Lịch sử đặt vé
+            <i class="fa-solid fa-clock-rotate-left"></i>
+        </a>
         <a class="position-absolute p-2 text-decoration-none text-white hover-bg-green fs-5 fw-medium d-flex align-items-center justify-content-between" href="./?changepassword" id="changePassword">
             Đổi mật khẩu
             <i class="fa-solid fa-key"></i>
