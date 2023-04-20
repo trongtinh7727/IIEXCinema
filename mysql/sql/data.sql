@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 20, 2023 lúc 12:11 AM
--- Phiên bản máy phục vụ: 10.4.28-MariaDB
--- Phiên bản PHP: 8.2.4
+-- Host: 127.0.0.1
+-- Generation Time: Apr 20, 2023 at 08:29 PM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,12 +18,12 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `iiex_cinema`
+-- Database: `iiex_cinema`
 --
 
 DELIMITER $$
 --
--- Thủ tục
+-- Procedures
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `create_schedule` (IN `p_theaterID` INT, IN `p_movieID` INT, IN `p_startTime` DATETIME, IN `p_endTime` DATETIME, IN `p_price` DOUBLE)   BEGIN	
 Select THEATER.SEATCOUNT Into @seatCount from THEATER where ID =  p_theaterID;
@@ -214,7 +214,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `get_schedule_today` ()   SELECT sch
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_trailers` ()   SELECT id, trailer FROM movie WHERE LENGTH(trailer) > 1 LIMIT 10$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `get_transactions` ()   SELECT CLIENT
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_transactions` ()   SELECT 
+	booking.ID,
+	CLIENT
     .USERNAME,
     CLIENT.FIRSTNAME,
     CLIENT.LASTNAME,
@@ -245,6 +247,40 @@ AND ticket.BOO_ID = booking.ID
 AND ticket.ID = ticket_seat_schedule.TICKET_ID
 GROUP BY booking.ID$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_transactions_by_user` (IN `client_id` INT)   SELECT 
+	booking.ID,
+    CLIENT
+    .USERNAME,
+    CLIENT.FIRSTNAME,
+    CLIENT.LASTNAME,
+    CLIENT.PHONE,
+    CLIENT.ADDRESS,
+    movie.TITLE,
+    SCHEDULE.STARTTIME,
+    booking.CREATED_AT,
+    GROUP_CONCAT(seat.SEATNUMBER) AS Seats,
+    booking.TICKET_PRICE,
+    booking.FOOD_PRICE,
+    booking.FOOD_PRICE+booking.TICKET_PRICE AS Total
+FROM
+    `booking`,
+    CLIENT,
+    ticket_seat_schedule,
+    schedule,
+    seat,
+    movie,
+    ticket
+    
+WHERE 
+CLIENT.ID = booking.CLIENT_ID 
+AND SCHEDULE.ID = ticket_seat_schedule.SCHEDULE_ID 
+AND seat.ID = ticket_seat_schedule.SEAT_ID 
+AND movie.ID = SCHEDULE.MOV_ID 
+AND ticket.BOO_ID = booking.ID
+AND ticket.ID = ticket_seat_schedule.TICKET_ID
+AND client.ID = client_id
+GROUP BY booking.ID$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `isValidSchedule` (IN `stime` DATETIME, IN `theater_num` INT)   SELECT * FROM `schedule` 
 WHERE stime BETWEEN STARTTIME AND ENDTIME 
 AND THEA_ID = theater_num$$
@@ -260,7 +296,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `booking`
+-- Table structure for table `booking`
 --
 
 CREATE TABLE `booking` (
@@ -272,7 +308,7 @@ CREATE TABLE `booking` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `booking`
+-- Dumping data for table `booking`
 --
 
 INSERT INTO `booking` (`ID`, `CLIENT_ID`, `CREATED_AT`, `FOOD_PRICE`, `TICKET_PRICE`) VALUES
@@ -280,12 +316,13 @@ INSERT INTO `booking` (`ID`, `CLIENT_ID`, `CREATED_AT`, `FOOD_PRICE`, `TICKET_PR
 (2, 1, '2023-04-19 17:21:39', 260000, 270000),
 (3, 1, '2023-04-19 18:27:03', 130000, 180000),
 (4, 1, '2023-04-19 18:37:30', 130000, 90000),
-(5, 1, '2023-04-20 01:24:23', 100000, 90000);
+(5, 1, '2023-04-20 01:24:23', 100000, 90000),
+(6, 1, '2023-04-21 01:15:33', 300000, 390000);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `client`
+-- Table structure for table `client`
 --
 
 CREATE TABLE `client` (
@@ -302,16 +339,16 @@ CREATE TABLE `client` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `client`
+-- Dumping data for table `client`
 --
 
 INSERT INTO `client` (`ID`, `USERNAME`, `PASSWORD`, `FIRSTNAME`, `LASTNAME`, `SEX`, `BIRTHDAY`, `PHONE`, `ADDRESS`, `ROLE`) VALUES
-(1, 'user', 'aaaaaaaa', 'Võ', 'Trọng Tình', 'nam', '2004-04-09', '0843206397', 'Q7, Thành phố Hồ Chí minh', 2);
+(1, 'user', '123456', 'Võ', 'Trọng Tình', 'nam', '2004-04-09', '0843206397', 'Q7, Thành phố Hồ Chí minh', 2);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `foodcombo`
+-- Table structure for table `foodcombo`
 --
 
 CREATE TABLE `foodcombo` (
@@ -322,7 +359,7 @@ CREATE TABLE `foodcombo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `foodcombo`
+-- Dumping data for table `foodcombo`
 --
 
 INSERT INTO `foodcombo` (`ID`, `NAME`, `PRICE`, `Image`) VALUES
@@ -334,7 +371,7 @@ INSERT INTO `foodcombo` (`ID`, `NAME`, `PRICE`, `Image`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `food_booking`
+-- Table structure for table `food_booking`
 --
 
 CREATE TABLE `food_booking` (
@@ -344,18 +381,20 @@ CREATE TABLE `food_booking` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `food_booking`
+-- Dumping data for table `food_booking`
 --
 
 INSERT INTO `food_booking` (`FOOD_ID`, `BOOKING_ID`, `QUANTITY`) VALUES
 (1, 1, 0),
+(2, 6, 1),
 (3, 2, 2),
 (3, 3, 1),
 (3, 4, 1),
-(4, 5, 1);
+(4, 5, 1),
+(4, 6, 2);
 
 --
--- Bẫy `food_booking`
+-- Triggers `food_booking`
 --
 DELIMITER $$
 CREATE TRIGGER `delete_food_booking` AFTER DELETE ON `food_booking` FOR EACH ROW UPDATE booking
@@ -388,7 +427,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `movie`
+-- Table structure for table `movie`
 --
 
 CREATE TABLE `movie` (
@@ -407,7 +446,7 @@ CREATE TABLE `movie` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `movie`
+-- Dumping data for table `movie`
 --
 
 INSERT INTO `movie` (`ID`, `TITLE`, `DIRECTOR`, `ACTORS`, `GENRE`, `DURATION`, `RATING`, `STORY`, `POSTER`, `TRAILER`, `OPENING_DAY`, `CLOSING_DAY`) VALUES
@@ -434,12 +473,13 @@ INSERT INTO `movie` (`ID`, `TITLE`, `DIRECTOR`, `ACTORS`, `GENRE`, `DURATION`, `
 (60, 'THE GHOST WITHIN', 'Lawrence Fowler', 'Michaela Longden, Rebecca Phillipson', 'Horror', 103, 5, 'Bí ẩn về cái chết của em gái Evie 20 năm trước, vào lúc 09:09 hằng đêm, hàng loạt cuộc chạm trán kinh hoàng xảy ra. Liệu Margot có biết được sự thật ai là kẻ giết em gái mình?\r\n', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002674?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', 'https://www.youtube.com/watch?v=p_Ppe-2_Vh8', '2023-04-14', '2023-06-20'),
 (61, 'TRANSFORMERS: RISE OF THE BEASTS', 'Steven Caple Jr.', 'Michelle Yeoh, Dominique Fishback', 'Action', 112, 5, 'Bộ phim dựa trên sự kiện Beast Wars trong loạt phim hoạt hình \"Transformers\", nơi mà các robot có khả năng biến thành động vật khổng lồ cùng chiến đấu chống lại một mối đe dọa tiềm tàng', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002678?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', 'https://www.youtube.com/watch?v=gR2pkm9XVAY', '2023-06-09', '2023-06-20'),
 (62, 'THE POPES EXORCIST', 'Julius Avery', 'Russell Crowe, Daniel Zovatto', 'Horror', 104, 5, 'Từ những hồ sơ có thật của Cha Gabriele Amorth, Trưởng Trừ Tà của Vatican, \"The Popes Exorcist\" theo chân Amorth trong cuộc điều tra về vụ quỷ ám kinh hoàng của một cậu bé và dần khám phá ra những bí mật hàng thế kỉ mà Vatican đã cố giấu kín...', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002665?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', 'https://www.youtube.com/embed/S2kymv60ndQ', '2023-04-14', '2023-06-20'),
-(63, 'NGƯỜI GIỮ THỜI GIAN : TRI ÂM ', 'MỸ TÂM', 'Ca sĩ Mỹ Tâm', 'Musical', 106, NULL, 'Mỹ Tâm sẽ phác họa chân thực toàn bộ những diễn biến tâm lý và cảm xúc thăng trầm cùng những thăng hoa trong suốt quá trình thực hiện Liveshow \"Tri Âm\" lịch sử bằng những thước phim quý giá được quay lại trong 2 năm...', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002663?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', 'https://www.youtube.com/embed/8BdO_M8bUZo', '2023-04-08', '2023-06-20');
+(63, 'NGƯỜI GIỮ THỜI GIAN : TRI ÂM ', 'MỸ TÂM', 'Ca sĩ Mỹ Tâm', 'Musical', 106, NULL, 'Mỹ Tâm sẽ phác họa chân thực toàn bộ những diễn biến tâm lý và cảm xúc thăng trầm cùng những thăng hoa trong suốt quá trình thực hiện Liveshow \"Tri Âm\" lịch sử bằng những thước phim quý giá được quay lại trong 2 năm...', 'http://booking.bhdstar.vn/CDN/media/entity/get/FilmPosterGraphic/HO00002663?referenceScheme=HeadOffice&allowPlaceHolder=true&height=500', 'https://www.youtube.com/embed/8BdO_M8bUZo', '2023-04-08', '2023-06-20'),
+(66, 'ádsada', 'sdasd', 'ádasd', 'ádasd', 0, NULL, 'ádad', '../assets/uploads/movie/movie64416ba636d2f7.72965157.jpg', '0', '2023-04-13', '2023-04-21');
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `product`
+-- Table structure for table `product`
 --
 
 CREATE TABLE `product` (
@@ -451,7 +491,7 @@ CREATE TABLE `product` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `product`
+-- Dumping data for table `product`
 --
 
 INSERT INTO `product` (`ID`, `NAME`, `TYPE`, `QUANTITY`, `Expiry_Date`) VALUES
@@ -461,7 +501,7 @@ INSERT INTO `product` (`ID`, `NAME`, `TYPE`, `QUANTITY`, `Expiry_Date`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `product_fcb`
+-- Table structure for table `product_fcb`
 --
 
 CREATE TABLE `product_fcb` (
@@ -471,7 +511,7 @@ CREATE TABLE `product_fcb` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `product_fcb`
+-- Dumping data for table `product_fcb`
 --
 
 INSERT INTO `product_fcb` (`PRODUCT_ID`, `FCB_ID`, `QUANTITY`) VALUES
@@ -485,7 +525,7 @@ INSERT INTO `product_fcb` (`PRODUCT_ID`, `FCB_ID`, `QUANTITY`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `schedule`
+-- Table structure for table `schedule`
 --
 
 CREATE TABLE `schedule` (
@@ -497,16 +537,17 @@ CREATE TABLE `schedule` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `schedule`
+-- Dumping data for table `schedule`
 --
 
 INSERT INTO `schedule` (`ID`, `MOV_ID`, `STARTTIME`, `ENDTIME`, `THEA_ID`) VALUES
-(6, 47, '2023-04-20 12:19:00', '2023-04-20 14:26:00', 5);
+(6, 47, '2023-04-20 12:19:00', '2023-04-20 14:26:00', 5),
+(7, 47, '2023-04-22 06:20:00', '2023-04-22 08:27:00', 5);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `seat`
+-- Table structure for table `seat`
 --
 
 CREATE TABLE `seat` (
@@ -517,7 +558,7 @@ CREATE TABLE `seat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `seat`
+-- Dumping data for table `seat`
 --
 
 INSERT INTO `seat` (`ID`, `THE_ID`, `SEATNUMBER`, `SEATTYPE`) VALUES
@@ -615,7 +656,7 @@ INSERT INTO `seat` (`ID`, `THE_ID`, `SEATNUMBER`, `SEATTYPE`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `staff`
+-- Table structure for table `staff`
 --
 
 CREATE TABLE `staff` (
@@ -633,7 +674,7 @@ CREATE TABLE `staff` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `staff`
+-- Dumping data for table `staff`
 --
 
 INSERT INTO `staff` (`ID`, `USERNAME`, `PASSWORD`, `FIRSTNAME`, `LASTNAME`, `SEX`, `BIRTHDAY`, `PHONE`, `ADDRESS`, `SALARY`, `ROLE`) VALUES
@@ -643,7 +684,7 @@ INSERT INTO `staff` (`ID`, `USERNAME`, `PASSWORD`, `FIRSTNAME`, `LASTNAME`, `SEX
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `theater`
+-- Table structure for table `theater`
 --
 
 CREATE TABLE `theater` (
@@ -653,7 +694,7 @@ CREATE TABLE `theater` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `theater`
+-- Dumping data for table `theater`
 --
 
 INSERT INTO `theater` (`ID`, `THEATERNUM`, `SEATCOUNT`) VALUES
@@ -662,7 +703,7 @@ INSERT INTO `theater` (`ID`, `THEATERNUM`, `SEATCOUNT`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `ticket`
+-- Table structure for table `ticket`
 --
 
 CREATE TABLE `ticket` (
@@ -672,7 +713,7 @@ CREATE TABLE `ticket` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `ticket`
+-- Dumping data for table `ticket`
 --
 
 INSERT INTO `ticket` (`ID`, `BOO_ID`, `price`) VALUES
@@ -765,10 +806,100 @@ INSERT INTO `ticket` (`ID`, `BOO_ID`, `price`) VALUES
 (447, NULL, 120000),
 (448, NULL, 120000),
 (449, NULL, 120000),
-(450, NULL, 120000);
+(450, NULL, 120000),
+(451, NULL, 90000),
+(452, NULL, 90000),
+(453, NULL, 90000),
+(454, NULL, 90000),
+(455, NULL, 90000),
+(456, NULL, 90000),
+(457, NULL, 90000),
+(458, NULL, 90000),
+(459, NULL, 90000),
+(460, NULL, 90000),
+(461, NULL, 90000),
+(462, NULL, 90000),
+(463, NULL, 90000),
+(464, NULL, 90000),
+(465, NULL, 90000),
+(466, NULL, 90000),
+(467, 6, 90000),
+(468, NULL, 90000),
+(469, NULL, 90000),
+(470, NULL, 90000),
+(471, NULL, 90000),
+(472, NULL, 90000),
+(473, NULL, 90000),
+(474, NULL, 90000),
+(475, 6, 90000),
+(476, NULL, 90000),
+(477, NULL, 90000),
+(478, NULL, 90000),
+(479, NULL, 90000),
+(480, NULL, 90000),
+(481, NULL, 90000),
+(482, NULL, 90000),
+(483, 6, 90000),
+(484, NULL, 90000),
+(485, NULL, 90000),
+(486, NULL, 90000),
+(487, NULL, 90000),
+(488, NULL, 90000),
+(489, NULL, 90000),
+(490, NULL, 90000),
+(491, NULL, 90000),
+(492, NULL, 90000),
+(493, NULL, 90000),
+(494, NULL, 90000),
+(495, NULL, 90000),
+(496, NULL, 90000),
+(497, NULL, 90000),
+(498, NULL, 90000),
+(499, NULL, 90000),
+(500, NULL, 90000),
+(501, NULL, 90000),
+(502, NULL, 90000),
+(503, NULL, 90000),
+(504, NULL, 90000),
+(505, NULL, 90000),
+(506, NULL, 90000),
+(507, NULL, 90000),
+(508, NULL, 90000),
+(509, NULL, 90000),
+(510, NULL, 90000),
+(511, NULL, 90000),
+(512, NULL, 90000),
+(513, NULL, 90000),
+(514, NULL, 90000),
+(515, NULL, 90000),
+(516, NULL, 90000),
+(517, NULL, 90000),
+(518, NULL, 90000),
+(519, NULL, 90000),
+(520, NULL, 90000),
+(521, NULL, 90000),
+(522, NULL, 90000),
+(523, NULL, 90000),
+(524, NULL, 90000),
+(525, NULL, 90000),
+(526, NULL, 90000),
+(527, NULL, 90000),
+(528, NULL, 90000),
+(529, NULL, 90000),
+(530, NULL, 90000),
+(531, NULL, 120000),
+(532, NULL, 120000),
+(533, 6, 120000),
+(534, NULL, 120000),
+(535, NULL, 120000),
+(536, NULL, 120000),
+(537, NULL, 120000),
+(538, NULL, 120000),
+(539, NULL, 120000),
+(540, NULL, 120000);
 
 --
--- Bẫy `ticket`
+-- Triggers `ticket`
 --
 DELIMITER $$
 CREATE TRIGGER `update_ticket` AFTER UPDATE ON `ticket` FOR EACH ROW UPDATE booking
@@ -782,7 +913,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `ticket_seat_schedule`
+-- Table structure for table `ticket_seat_schedule`
 --
 
 CREATE TABLE `ticket_seat_schedule` (
@@ -793,152 +924,242 @@ CREATE TABLE `ticket_seat_schedule` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `ticket_seat_schedule`
+-- Dumping data for table `ticket_seat_schedule`
 --
 
 INSERT INTO `ticket_seat_schedule` (`SEAT_ID`, `SCHEDULE_ID`, `TICKET_ID`, `BOOKED`) VALUES
 (1, 6, 361, 0),
+(1, 7, 451, 0),
 (2, 6, 362, 0),
+(2, 7, 452, 0),
 (3, 6, 363, 0),
+(3, 7, 453, 0),
 (4, 6, 364, 0),
+(4, 7, 454, 0),
 (5, 6, 365, 0),
+(5, 7, 455, 0),
 (6, 6, 366, 0),
+(6, 7, 456, 0),
 (7, 6, 367, 0),
+(7, 7, 457, 0),
 (8, 6, 368, 0),
+(8, 7, 458, 0),
 (9, 6, 369, 0),
+(9, 7, 459, 0),
 (10, 6, 370, 0),
+(10, 7, 460, 0),
 (11, 6, 371, 0),
+(11, 7, 461, 0),
 (12, 6, 372, 0),
+(12, 7, 462, 0),
 (13, 6, 373, 0),
+(13, 7, 463, 0),
 (14, 6, 374, 0),
+(14, 7, 464, 0),
 (15, 6, 375, 0),
+(15, 7, 465, 0),
 (16, 6, 376, 0),
+(16, 7, 466, 0),
 (17, 6, 377, 0),
+(17, 7, 467, 1),
 (18, 6, 378, 0),
+(18, 7, 468, 0),
 (19, 6, 379, 0),
+(19, 7, 469, 0),
 (20, 6, 380, 0),
+(20, 7, 470, 0),
 (21, 6, 381, 0),
+(21, 7, 471, 0),
 (22, 6, 382, 0),
+(22, 7, 472, 0),
 (23, 6, 383, 0),
+(23, 7, 473, 0),
 (24, 6, 384, 0),
+(24, 7, 474, 0),
 (25, 6, 385, 1),
+(25, 7, 475, 1),
 (26, 6, 386, 0),
+(26, 7, 476, 0),
 (27, 6, 387, 0),
+(27, 7, 477, 0),
 (28, 6, 388, 0),
+(28, 7, 478, 0),
 (29, 6, 389, 0),
+(29, 7, 479, 0),
 (30, 6, 390, 0),
+(30, 7, 480, 0),
 (31, 6, 391, 0),
+(31, 7, 481, 0),
 (32, 6, 392, 0),
+(32, 7, 482, 0),
 (33, 6, 393, 0),
+(33, 7, 483, 1),
 (34, 6, 394, 0),
+(34, 7, 484, 0),
 (35, 6, 395, 0),
+(35, 7, 485, 0),
 (36, 6, 396, 0),
+(36, 7, 486, 0),
 (37, 6, 397, 0),
+(37, 7, 487, 0),
 (38, 6, 398, 0),
+(38, 7, 488, 0),
 (39, 6, 399, 0),
+(39, 7, 489, 0),
 (40, 6, 400, 0),
+(40, 7, 490, 0),
 (41, 6, 401, 0),
+(41, 7, 491, 0),
 (42, 6, 402, 0),
+(42, 7, 492, 0),
 (43, 6, 403, 0),
+(43, 7, 493, 0),
 (44, 6, 404, 0),
+(44, 7, 494, 0),
 (45, 6, 405, 0),
+(45, 7, 495, 0),
 (46, 6, 406, 0),
+(46, 7, 496, 0),
 (47, 6, 407, 0),
+(47, 7, 497, 0),
 (48, 6, 408, 0),
+(48, 7, 498, 0),
 (49, 6, 409, 0),
+(49, 7, 499, 0),
 (50, 6, 410, 0),
+(50, 7, 500, 0),
 (51, 6, 411, 0),
+(51, 7, 501, 0),
 (52, 6, 412, 0),
+(52, 7, 502, 0),
 (53, 6, 413, 0),
+(53, 7, 503, 0),
 (54, 6, 414, 0),
+(54, 7, 504, 0),
 (55, 6, 415, 0),
+(55, 7, 505, 0),
 (56, 6, 416, 0),
+(56, 7, 506, 0),
 (57, 6, 417, 0),
+(57, 7, 507, 0),
 (58, 6, 418, 0),
+(58, 7, 508, 0),
 (59, 6, 419, 0),
+(59, 7, 509, 0),
 (60, 6, 420, 0),
+(60, 7, 510, 0),
 (61, 6, 421, 0),
+(61, 7, 511, 0),
 (62, 6, 422, 0),
+(62, 7, 512, 0),
 (63, 6, 423, 0),
+(63, 7, 513, 0),
 (64, 6, 424, 0),
+(64, 7, 514, 0),
 (65, 6, 425, 0),
+(65, 7, 515, 0),
 (66, 6, 426, 0),
+(66, 7, 516, 0),
 (67, 6, 427, 0),
+(67, 7, 517, 0),
 (68, 6, 428, 0),
+(68, 7, 518, 0),
 (69, 6, 429, 0),
+(69, 7, 519, 0),
 (70, 6, 430, 0),
+(70, 7, 520, 0),
 (71, 6, 431, 0),
+(71, 7, 521, 0),
 (72, 6, 432, 0),
+(72, 7, 522, 0),
 (73, 6, 433, 0),
+(73, 7, 523, 0),
 (74, 6, 434, 0),
+(74, 7, 524, 0),
 (75, 6, 435, 0),
+(75, 7, 525, 0),
 (76, 6, 436, 0),
+(76, 7, 526, 0),
 (77, 6, 437, 0),
+(77, 7, 527, 0),
 (78, 6, 438, 0),
+(78, 7, 528, 0),
 (79, 6, 439, 0),
+(79, 7, 529, 0),
 (80, 6, 440, 0),
+(80, 7, 530, 0),
 (81, 6, 441, 0),
+(81, 7, 531, 0),
 (82, 6, 442, 0),
+(82, 7, 532, 0),
 (83, 6, 443, 0),
+(83, 7, 533, 1),
 (84, 6, 444, 0),
+(84, 7, 534, 0),
 (85, 6, 445, 0),
+(85, 7, 535, 0),
 (86, 6, 446, 0),
+(86, 7, 536, 0),
 (87, 6, 447, 0),
+(87, 7, 537, 0),
 (88, 6, 448, 0),
+(88, 7, 538, 0),
 (89, 6, 449, 0),
-(90, 6, 450, 0);
+(89, 7, 539, 0),
+(90, 6, 450, 0),
+(90, 7, 540, 0);
 
 --
--- Chỉ mục cho các bảng đã đổ
+-- Indexes for dumped tables
 --
 
 --
--- Chỉ mục cho bảng `booking`
+-- Indexes for table `booking`
 --
 ALTER TABLE `booking`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `FK_BOOKING_CLIENT` (`CLIENT_ID`);
 
 --
--- Chỉ mục cho bảng `client`
+-- Indexes for table `client`
 --
 ALTER TABLE `client`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Chỉ mục cho bảng `foodcombo`
+-- Indexes for table `foodcombo`
 --
 ALTER TABLE `foodcombo`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Chỉ mục cho bảng `food_booking`
+-- Indexes for table `food_booking`
 --
 ALTER TABLE `food_booking`
   ADD PRIMARY KEY (`FOOD_ID`,`BOOKING_ID`),
   ADD KEY `FK_BOOKING_FOOD` (`BOOKING_ID`);
 
 --
--- Chỉ mục cho bảng `movie`
+-- Indexes for table `movie`
 --
 ALTER TABLE `movie`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Chỉ mục cho bảng `product`
+-- Indexes for table `product`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Chỉ mục cho bảng `product_fcb`
+-- Indexes for table `product_fcb`
 --
 ALTER TABLE `product_fcb`
   ADD KEY `FK_FCB_PRODUCT` (`FCB_ID`),
   ADD KEY `FK_PRODUCT_FCB` (`PRODUCT_ID`);
 
 --
--- Chỉ mục cho bảng `schedule`
+-- Indexes for table `schedule`
 --
 ALTER TABLE `schedule`
   ADD PRIMARY KEY (`ID`),
@@ -946,140 +1167,140 @@ ALTER TABLE `schedule`
   ADD KEY `FK_SCHEDULE_THEATER` (`THEA_ID`);
 
 --
--- Chỉ mục cho bảng `seat`
+-- Indexes for table `seat`
 --
 ALTER TABLE `seat`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `FK_SEAT_THEATER` (`THE_ID`);
 
 --
--- Chỉ mục cho bảng `staff`
+-- Indexes for table `staff`
 --
 ALTER TABLE `staff`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Chỉ mục cho bảng `theater`
+-- Indexes for table `theater`
 --
 ALTER TABLE `theater`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Chỉ mục cho bảng `ticket`
+-- Indexes for table `ticket`
 --
 ALTER TABLE `ticket`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `FK_TICKET_BOOKING` (`BOO_ID`);
 
 --
--- Chỉ mục cho bảng `ticket_seat_schedule`
+-- Indexes for table `ticket_seat_schedule`
 --
 ALTER TABLE `ticket_seat_schedule`
   ADD PRIMARY KEY (`SEAT_ID`,`SCHEDULE_ID`,`TICKET_ID`);
 
 --
--- AUTO_INCREMENT cho các bảng đã đổ
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT cho bảng `booking`
+-- AUTO_INCREMENT for table `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT cho bảng `client`
+-- AUTO_INCREMENT for table `client`
 --
 ALTER TABLE `client`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT cho bảng `foodcombo`
+-- AUTO_INCREMENT for table `foodcombo`
 --
 ALTER TABLE `foodcombo`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT cho bảng `movie`
+-- AUTO_INCREMENT for table `movie`
 --
 ALTER TABLE `movie`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
--- AUTO_INCREMENT cho bảng `product`
+-- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT cho bảng `schedule`
+-- AUTO_INCREMENT for table `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT cho bảng `seat`
+-- AUTO_INCREMENT for table `seat`
 --
 ALTER TABLE `seat`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
--- AUTO_INCREMENT cho bảng `staff`
+-- AUTO_INCREMENT for table `staff`
 --
 ALTER TABLE `staff`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT cho bảng `theater`
+-- AUTO_INCREMENT for table `theater`
 --
 ALTER TABLE `theater`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT cho bảng `ticket`
+-- AUTO_INCREMENT for table `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=451;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=541;
 
 --
--- Các ràng buộc cho các bảng đã đổ
+-- Constraints for dumped tables
 --
 
 --
--- Các ràng buộc cho bảng `booking`
+-- Constraints for table `booking`
 --
 ALTER TABLE `booking`
   ADD CONSTRAINT `FK_BOOKING_CLIENT` FOREIGN KEY (`CLIENT_ID`) REFERENCES `client` (`ID`);
 
 --
--- Các ràng buộc cho bảng `food_booking`
+-- Constraints for table `food_booking`
 --
 ALTER TABLE `food_booking`
   ADD CONSTRAINT `FK_BOOKING_FOOD` FOREIGN KEY (`BOOKING_ID`) REFERENCES `booking` (`ID`),
   ADD CONSTRAINT `FK_FOOD_BOOKING` FOREIGN KEY (`FOOD_ID`) REFERENCES `foodcombo` (`ID`);
 
 --
--- Các ràng buộc cho bảng `product_fcb`
+-- Constraints for table `product_fcb`
 --
 ALTER TABLE `product_fcb`
-  ADD CONSTRAINT `FK_FCB_PRODUCT` FOREIGN KEY (`FCB_ID`) REFERENCES `foodcombo` (`ID`),
-  ADD CONSTRAINT `FK_PRODUCT_FCB` FOREIGN KEY (`PRODUCT_ID`) REFERENCES `product` (`ID`);
+  ADD CONSTRAINT `FK_FCB_PRODUCT` FOREIGN KEY (`FCB_ID`) REFERENCES `foodcombo` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_PRODUCT_FCB` FOREIGN KEY (`PRODUCT_ID`) REFERENCES `product` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Các ràng buộc cho bảng `schedule`
+-- Constraints for table `schedule`
 --
 ALTER TABLE `schedule`
   ADD CONSTRAINT `FK_SCHEDULE_MOVIE` FOREIGN KEY (`MOV_ID`) REFERENCES `movie` (`ID`),
   ADD CONSTRAINT `FK_SCHEDULE_THEATER` FOREIGN KEY (`THEA_ID`) REFERENCES `theater` (`ID`);
 
 --
--- Các ràng buộc cho bảng `seat`
+-- Constraints for table `seat`
 --
 ALTER TABLE `seat`
   ADD CONSTRAINT `FK_SEAT_THEATER` FOREIGN KEY (`THE_ID`) REFERENCES `theater` (`ID`);
 
 --
--- Các ràng buộc cho bảng `ticket`
+-- Constraints for table `ticket`
 --
 ALTER TABLE `ticket`
   ADD CONSTRAINT `FK_TICKET_BOOKING` FOREIGN KEY (`BOO_ID`) REFERENCES `booking` (`ID`);
