@@ -32,14 +32,13 @@
 </head>
 
 <body>
-    <div id="wrapper" class="vh-100 d-flex justify-content-around align-items-center">
-        <!-- Logo and photo -->
-        <div class="d-flex flex-column justify-content-center">
-            <img src="../assets/img/signin-signup/Logo.png" class="align-self-center" alt="Logo">
-            <img src="../assets/img/signin-signup/Photo.png" class="align-self-center" alt="Logo">
+    <div id="wrapper" class="d-flex flex-column align-items-center">
+        <!-- Logo -->
+        <div class="my-5">
+            <img class="object-fit-contain" src="../assets/img/signin-signup/Logo.png" alt="">
         </div>
         <!-- Login form -->
-        <div class="login-wrap rounded-5 w-50">
+        <div class="login-wrap w-50 rounded-5 mx-auto mb-5">
             <div class="login-html w-100 h-100 px-5 py-5 rounded-5 clearfix">
                 <!-- Tab 1 -->
                 <input id="tab-1" type="radio" name="tab" class="sign-in" checked>
@@ -57,21 +56,32 @@
 
                         <!-- Input -->
                         <div class="group mt-5">
-                            <label for="user" class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Username hoặc Email</label>
-                            <input id="sign-in-user" placeholder="Username" aria-label="sign-in-username" type="text" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
+                            <label for="user"
+                                class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Username hoặc
+                                Email</label>
+                            <input id="sign-in-user" placeholder="Username" aria-label="sign-in-username" type="text"
+                                class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
                         </div>
 
                         <!-- Input -->
                         <div class="group mt-5">
-                            <label for="pass" class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Mật khẩu</label>
-                            <input id="sign-in-pass" placeholder="Password" aria-label="sign-in-password" type="password" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold" data-type="password">
+                            <label for="pass" class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Mật
+                                khẩu</label>
+                            <input id="sign-in-pass" placeholder="Password" aria-label="sign-in-password"
+                                type="password" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold"
+                                data-type="password">
+                        </div>
+
+                        <div class="group mt-5">
+                            <a class="fst-italic fw-light" style="color: #3EFFF3;" href="">Quên mật khẩu</a>
                         </div>
 
                         <!-- Button -->
                         <div class="group mt-5">
-                            <input type="submit" class="button rounded-5 w-100 d-block text-black fw-semibold bg-yellow fs-4" value="Đăng nhập">
+                            <input type="submit"
+                                class="button rounded-5 w-100 d-block text-black fw-semibold bg-yellow fs-4"
+                                value="Đăng nhập">
                         </div>
-                        <hr style="height: 2px; background-color: rgb(0, 0, 0, 0.5);">
                     </div>
 
                     <!-- Sign up -->
@@ -80,28 +90,37 @@
                         <!-- Input -->
                         <!-- Sign up username -->
                         <div class="group mt-5">
-                            <label for="user" class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Username</label>
-                            <input id="sign-up-user" placeholder="Username123" type="text" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
+                            <label for="user"
+                                class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Username</label>
+                            <input id="sign-up-user" placeholder="Username123" type="text"
+                                class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
                         </div>
                         <!-- Sign up email -->
                         <div class="group mt-5">
-                            <label for="user" class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Email</label>
-                            <input id="sign-up-email" placeholder="abc123@xyz.com.vn" type="email" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
+                            <label for="user"
+                                class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Email</label>
+                            <input id="sign-up-email" placeholder="abc123@xyz.com.vn" type="email"
+                                class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
                         </div>
                         <!-- Sign up password -->
                         <div class="group mt-5">
-                            <label for="user" class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Mật khẩu</label>
-                            <input id="sign-up-password" placeholder="p@sSword" type="password" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
+                            <label for="user" class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Mật
+                                khẩu</label>
+                            <input id="sign-up-password" placeholder="p@sSword" type="password"
+                                class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
                         </div>
                         <!-- Sign up confirm password -->
                         <div class="group mt-5">
-                            <label for="user" class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Xác nhận mật khẩu</label>
-                            <input id="sign-up-cfpassword" placeholder="p@sSword" type="password" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
+                            <label for="user" class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Xác
+                                nhận mật khẩu</label>
+                            <input id="sign-up-cfpassword" placeholder="p@sSword" type="password"
+                                class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
                         </div>
                         <div class="group mt-5">
-                            <input type="submit" class="button rounded-5 w-100 d-block text-black fw-semibold bg-yellow fs-4" value="Đăng ký">
+                            <input type="submit"
+                                class="button rounded-5 w-100 d-block text-black fw-semibold bg-yellow fs-4"
+                                value="Đăng ký">
                         </div>
-                        <hr style="height: 2px; background-color: rgb(0, 0, 0, 0.5);">
                     </div>
                 </div>
             </div>
