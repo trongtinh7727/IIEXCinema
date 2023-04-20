@@ -43,7 +43,7 @@
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="">Poster</span>
-                        <input id="POSTER" type="text" class="form-control">
+                        <input id="POSTER" type="file" class="form-control">
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="">Trailer</span>

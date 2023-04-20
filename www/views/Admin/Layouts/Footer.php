@@ -10,13 +10,19 @@
     <!-- Datatable Bootstrap -->
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 
-    <!-- JS -->
-    <script language="JavaScript" type="text/javascript" src="./script.js"></script>
+    <!-- ChartJS -->
+
     <script>
         $(function() {
             console.log("run")
             $(<?php echo $path ?>).addClass("btn-dark")
         })
+
+        $(document).ready(function() {
+            $('#btn_logout').click(function() {
+                window.location.href = './?logout';
+            });
+        });
     </script>
     <!-- Log out modal -->
     <div class="modal fade align-content-center" id="signOutModal" tabindex="-1" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">

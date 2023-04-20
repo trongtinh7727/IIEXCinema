@@ -21,6 +21,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Ảnh</th>
                     <th>Tên combo</th>
                     <th>Tên đồ ăn</th>
                     <th>Giá đồ ăn</th>
@@ -33,6 +34,7 @@
             <tfoot>
                 <tr>
                     <th>ID</th>
+                    <th>Ảnh</th>
                     <th>Tên combo</th>
                     <th>Tên đồ ăn</th>
                     <th>Giá đồ ăn</th>

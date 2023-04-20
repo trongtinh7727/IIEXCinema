@@ -7,6 +7,12 @@
                     data: 'ID'
                 },
                 {
+                    data: 'Image',
+                    render: function(data, type, row) {
+                        return '<img src="' + data + '" width="100"/>';
+                    }
+                },
+                {
                     data: 'NAME'
                 },
                 {
@@ -75,29 +81,76 @@
             let action = $("#action").val();
 
             if (action == "Add") {
-                $.post("./?api/foodcombo/add", {
-                    NAME,
-                    FOOD,
-                    FOOD_QUANTITY,
-                    DRINK,
-                    DRINK_QUANTITY,
-                    PRICE
-                }, function(data, status) {
-                    console.log(data)
-                    if (data.status) {
-                        console.log("Okee")
-                        table.ajax.reload();
-                        let msg = data.data;
-                        console.log(msg)
-                        $("#msg-success").css('display', 'flex').text(msg)
-                        $("#msg-failed").css('display', 'none')
-                    } else {
-                        let msg = data.data;
-                        console.log(msg)
-                        $("#msg-failed").css('display', 'flex').text("Có lỗi xảy ra! Vui lòng thử lại sau: " + msg)
-                        $("#msg-success").css('display', 'none')
-                    }
-                }, "json")
+
+
+                // Get the image file from the input element
+                var imageFile = $('#Image')[0].files[0];
+
+                // Create a new FormData object
+                var formData = new FormData();
+
+                // Append the form data to the FormData object
+                formData.append('NAME', NAME);
+                formData.append('FOOD', FOOD);
+                formData.append('FOOD_QUANTITY', FOOD_QUANTITY);
+                formData.append('DRINK', DRINK);
+                formData.append('DRINK_QUANTITY', DRINK_QUANTITY);
+                formData.append('PRICE', PRICE);
+                formData.append('Image', imageFile);
+
+                // Send the POST request with the form data
+                $.ajax({
+                    url: './?api/foodcombo/add',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(data, status) {
+                        console.log(data);
+                        if (data.status) {
+                            console.log('Okee');
+                            table.ajax.reload();
+                            let msg = data.data;
+                            console.log(msg);
+                            $('#msg-success').css('display', 'flex').text(msg);
+                            $('#msg-failed').css('display', 'none');
+                        } else {
+                            let msg = data.data;
+                            console.log(msg);
+                            $('#msg-failed').css('display', 'flex').text('Có lỗi xảy ra! Vui lòng thử lại sau: ' + msg);
+                            $('#msg-success').css('display', 'none');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(xhr.responseText);
+                    },
+                    dataType: 'json'
+                });
+
+
+                // $.post("./?api/foodcombo/add", {
+                //     NAME,
+                //     FOOD,
+                //     FOOD_QUANTITY,
+                //     DRINK,
+                //     DRINK_QUANTITY,
+                //     PRICE
+                // }, function(data, status) {
+                //     console.log(data)
+                //     if (data.status) {
+                //         console.log("Okee")
+                //         table.ajax.reload();
+                //         let msg = data.data;
+                //         console.log(msg)
+                //         $("#msg-success").css('display', 'flex').text(msg)
+                //         $("#msg-failed").css('display', 'none')
+                //     } else {
+                //         let msg = data.data;
+                //         console.log(msg)
+                //         $("#msg-failed").css('display', 'flex').text("Có lỗi xảy ra! Vui lòng thử lại sau: " + msg)
+                //         $("#msg-success").css('display', 'none')
+                //     }
+                // }, "json")
             } else {
                 alert("Tính năng không hỗ trợ")
                 console.log("Tính năng không hỗ trợ")

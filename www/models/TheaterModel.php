@@ -9,22 +9,6 @@ class TheaterModel
         $this->db = $db;
     }
 
-    public function getByCinema($cinema_id)
-    {
-        $sql = "SELECT * FROM theater where cin_id = ? order by theaternum asc";
-        try {
-            $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($cinema_id));
-        } catch (PDOException $ex) {
-            die(json_encode(array('status' => false, 'data' => $ex->getMessage())));
-        }
-        $data = array();
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $data[] = $row;
-        }
-
-        return json_encode(array('status' => true, 'data' => $data));
-    }
 
     public function getByID($ID)
     {

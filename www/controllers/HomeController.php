@@ -30,6 +30,12 @@ class HomeController extends AuthController
         $path = "Proflie";
         require_once('views/Client/Profile/Content.php');
     }
+    public function bookingHistory()
+    {
+        $transactions = $this->model->bookingHistory($_SESSION['userLogin']['ID']);
+        $path = "BookingHistory";
+        require_once('views/Client/BookingHistory/Content.php');
+    }
     public function indexAction()
     {
         $ongoing = $this->ongoing;

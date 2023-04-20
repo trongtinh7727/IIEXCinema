@@ -86,6 +86,11 @@
     top: 130px;
 }
 
+#bookingHistory {
+    background-color: rgba(217, 217, 217, 0.25);
+    top: 180px;
+}
+
 /* Main */
 #profile-main {
     background-color: rgba(217, 217, 217, 0.25);

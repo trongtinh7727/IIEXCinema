@@ -18,6 +18,7 @@
     <!-- Bootstrap 5.3 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 
+    <!-- CSS -->
     <style>
         * {
             margin: 0;
@@ -39,7 +40,7 @@
 
         body {
             margin: 0;
-            background: url(https://livewallp.com/wp-content/uploads/2021/09/AION-4.0-Login-Screen-Blank.jpg?fbclid=IwAR0NfdUCuRoQK80c0pjD1SbwF9w3_Tae-hUjPIdkE8g9fhXHZWm5FbIbsNc);
+            background: url(../assets/img/signin-signup/container-main.png);
             background-size: cover;
             font: 600 16px/18px 'Open Sans', sans-serif;
         }
@@ -157,18 +158,17 @@
 </head>
 
 <body>
-    <div id="wrapper" class="vh-100 d-flex justify-content-around align-items-center">
-        <!-- Logo and photo -->
-        <div class="d-flex flex-column justify-content-center">
-            <img src="../assets/img/signin-signup/Logo.png" class="align-self-center" alt="Logo">
-            <img src="../assets/img/signin-signup/Photo.png" class="align-self-center" alt="Logo">
+    <div id="wrapper" class="d-flex flex-column align-items-center">
+        <!-- Logo -->
+        <div class="my-5">
+            <img class="object-fit-contain" src="../assets/img/signin-signup/Logo.png" alt="">
         </div>
         <!-- Login form -->
-        <div class="login-wrap rounded-5 w-50">
+        <div class="login-wrap w-50 rounded-5 mx-auto mb-5">
             <div class="login-html w-100 h-100 px-5 py-5 rounded-5 clearfix">
                 <!-- Tab 1 -->
                 <input id="tab-1" type="radio" name="tab" class="sign-in" checked>
-                <label id="tab-1-label" for="tab-1" class="tab fs-3 text-white text-yellow">Admin</label>
+                <label id="tab-1-label" for="tab-1" class="tab fs-3 text-white text-yellow">Đăng nhập</label>
 
                 <!-- Tab 2 -->
                 <input id="tab-2" type="radio" name="tab" class="sign-up" disabled>
@@ -177,7 +177,6 @@
                 <!-- Form main -->
                 <div class="login-form">
 
-                    <!-- Sign in -->
                     <div class="sign-in-html">
                         <form action="./?admin/login" method="post">
                             <!-- Input -->
@@ -200,7 +199,6 @@
                             <input type="hidden" name="tb" value="staff">
                         </form>
                     </div>
-
                     <!-- Sign up -->
                     <div class="sign-up-html">
 
@@ -217,18 +215,19 @@
                         </div>
                         <!-- Sign up password -->
                         <div class="group mt-5">
-                            <label for="user" class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Mật khẩu</label>
+                            <label for="user" class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Mật
+                                khẩu</label>
                             <input id="sign-up-password" placeholder="p@sSword" type="password" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
                         </div>
                         <!-- Sign up confirm password -->
                         <div class="group mt-5">
-                            <label for="user" class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Xác nhận mật khẩu</label>
+                            <label for="user" class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Xác
+                                nhận mật khẩu</label>
                             <input id="sign-up-cfpassword" placeholder="p@sSword" type="password" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
                         </div>
                         <div class="group mt-5">
                             <input type="submit" class="button rounded-5 w-100 d-block text-black fw-semibold bg-yellow fs-4" value="Đăng ký">
                         </div>
-                        <hr style="height: 2px; background-color: rgb(0, 0, 0, 0.5);">
                     </div>
                 </div>
             </div>
@@ -246,7 +245,7 @@
         $(document).ready(function() {
             $('#tab-1').click(function(e) {
                 $('.login-wrap').css({
-                    "height": "480px",
+                    "height": "540px",
                     "transition": ".3s"
                 });
                 $('#tab-2-label').removeClass('text-yellow')
@@ -254,7 +253,7 @@
             });
             $('#tab-2').click(function(e) {
                 $('.login-wrap').css({
-                    "height": "740px",
+                    "height": "720px",
                     "transition": ".3s"
                 });
                 $('#tab-1-label').removeClass('text-yellow')

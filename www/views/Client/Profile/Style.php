@@ -78,6 +78,12 @@
     /* ============================= */
 
     /* Sidenav */
+    /* Sidenav */
+
+    #profileSideNav {
+        position: fixed;
+    }
+
     #profileSideNav a {
         left: -200px;
         transition: 0.5s;
@@ -93,14 +99,21 @@
         top: 50px;
     }
 
-    #changePassword {
+    #bookingHistory {
         background-color: rgba(217, 217, 217, 0.25);
         top: 100px;
     }
 
-    #logout {
+
+
+    #changePassword {
         background-color: rgba(217, 217, 217, 0.25);
         top: 150px;
+    }
+
+    #logout {
+        background-color: rgba(217, 217, 217, 0.25);
+        top: 200px;
     }
 
 

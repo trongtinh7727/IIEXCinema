@@ -25,11 +25,11 @@ class FoodComboController extends AdminController
     {
         $this->isAuthenticated();
 
-        $image_path = (new UploadHelper())->uploadFile("foodcombo", $_FILES['Image']);
         $params = array(
             'NAME', 'FOOD', 'FOOD_QUANTITY', 'DRINK', 'DRINK_QUANTITY', 'PRICE'
         );
         $data = $this->validateParams($params);
+        $image_path = (new UploadHelper())->uploadFile("foodcombo", $_FILES['Image']);
         echo $this->model->add(
             $data['NAME'],
             $data['FOOD'],
