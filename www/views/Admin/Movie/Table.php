@@ -21,6 +21,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Ảnh</th>
                     <th>Tiêu đề</th>
                     <th>Tác giả</th>
                     <th>Diễn viên</th>
@@ -34,6 +35,7 @@
             <tfoot>
                 <tr>
                     <th>ID</th>
+                    <th>Ảnh</th>
                     <th>Tiêu đề</th>
                     <th>Tác giả</th>
                     <th>Diễn viên</th>

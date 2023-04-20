@@ -19,7 +19,7 @@
                 $('#DURATION').val(object.DURATION)
                 $('#OPENING_DAY').val(object.OPENING_DAY)
                 $('#CLOSING_DAY').val(object.CLOSING_DAY)
-                $('#POSTER').val(object.POSTER)
+                // $('#POSTER').val(object.POSTER)
                 $('#TRAILER').val(object.TRAILER)
             });
         }, "json");
@@ -30,6 +30,12 @@
             ajax: "./?api/movie/getall",
             columns: [{
                     data: 'ID'
+                },
+                {
+                    data: 'POSTER',
+                    render: function(data, type, row) {
+                        return '<img src="' + data + '" width="100"/>';
+                    }
                 },
                 {
                     data: 'TITLE'
@@ -63,77 +69,87 @@
 
 
         $("#add").click(function() {
-            let TITLE = $('#TITLE').val()
-            let DIRECTOR = $('#DIRECTOR').val()
-            let ACTORS = $('#ACTORS').val()
-            let GENRE = $('#GENRE').val()
-            let STORY = $('#STORY').val()
-            let DURATION = $('#DURATION').val()
-            let OPENING_DAY = $('#OPENING_DAY').val()
-            let CLOSING_DAY = $('#CLOSING_DAY').val()
-            let POSTER = $('#POSTER').val()
-            let TRAILER = $('#TRAILER').val()
+
+            // Create a new FormData object
+            var formData = new FormData();
+
+            // Append the movie data to the form data
+            formData.append("TITLE", $('#TITLE').val());
+            formData.append("DIRECTOR", $('#DIRECTOR').val());
+            formData.append("ACTORS", $('#ACTORS').val());
+            formData.append("GENRE", $('#GENRE').val());
+            formData.append("STORY", $('#STORY').val());
+            formData.append("DURATION", $('#DURATION').val());
+            formData.append("OPENING_DAY", $('#OPENING_DAY').val());
+            formData.append("CLOSING_DAY", $('#CLOSING_DAY').val());
+            formData.append("TRAILER", $('#TRAILER').val());
+
+            // Append the poster file to the form data
+            formData.append("POSTER", document.getElementById("POSTER").files[0]);
+
+
 
             let action = $("#action").val();
 
             if (action == "Add") {
-                $.post("./?api/movie/add", {
-                    TITLE,
-                    DIRECTOR,
-                    ACTORS,
-                    GENRE,
-                    STORY,
-                    DURATION,
-                    OPENING_DAY,
-                    CLOSING_DAY,
-                    POSTER,
-                    TRAILER
-                }, function(data, status) {
-                    console.log(data)
-                    if (data.status) {
-                        console.log("Okee")
-                        table.ajax.reload();
-                        let msg = data.data;
-                        console.log(msg)
-                        $("#msg-success").css('display', 'flex').text(msg)
-                        $("#msg-failed").css('display', 'none')
-                    } else {
-                        let msg = data.data;
-                        console.log(msg)
-                        $("#msg-failed").css('display', 'flex').text("Có lỗi xảy ra! Vui lòng thử lại sau: " + msg)
-                        $("#msg-success").css('display', 'none')
-                    }
-                }, "json")
+
+                $.ajax({
+                    url: './?api/movie/add',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(data, status) {
+                        console.log(data);
+                        if (data.status) {
+                            console.log('Okee');
+                            table.ajax.reload();
+                            let msg = data.data;
+                            console.log(msg);
+                            $('#msg-success').css('display', 'flex').text(msg);
+                            $('#msg-failed').css('display', 'none');
+                        } else {
+                            let msg = data.data;
+                            console.log(msg);
+                            $('#msg-failed').css('display', 'flex').text('Có lỗi xảy ra! Vui lòng thử lại sau: ' + msg);
+                            $('#msg-success').css('display', 'none');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(xhr.responseText);
+                    },
+                    dataType: 'json'
+                });
             } else {
                 let ID = $("#action").val();
-                $.post("./?api/movie/update", {
-                    TITLE,
-                    DIRECTOR,
-                    ACTORS,
-                    GENRE,
-                    STORY,
-                    DURATION,
-                    OPENING_DAY,
-                    CLOSING_DAY,
-                    POSTER,
-                    TRAILER,
-                    ID
-                }, function(data, status) {
-                    console.log(data)
-                    if (data.status) {
-                        console.log("Okee")
-                        table.ajax.reload();
-                        let msg = data.data;
-                        console.log(msg)
-                        $("#msg-success").css('display', 'flex').text(msg)
-                        $("#msg-failed").css('display', 'none')
-                    } else {
-                        let msg = data.data;
-                        console.log(msg)
-                        $("#msg-failed").css('display', 'flex').text("Có lỗi xảy ra! Vui lòng thử lại sau: " + msg)
-                        $("#msg-success").css('display', 'none')
-                    }
-                }, "json")
+                formData.append("ID", ID);
+                $.ajax({
+                    url: './?api/movie/update',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(data, status) {
+                        console.log(data);
+                        if (data.status) {
+                            console.log('Okee');
+                            table.ajax.reload();
+                            let msg = data.data;
+                            console.log(msg);
+                            $('#msg-success').css('display', 'flex').text(msg);
+                            $('#msg-failed').css('display', 'none');
+                        } else {
+                            let msg = data.data;
+                            console.log(msg);
+                            $('#msg-failed').css('display', 'flex').text('Có lỗi xảy ra! Vui lòng thử lại sau: ' + msg);
+                            $('#msg-success').css('display', 'none');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(xhr.responseText);
+                    },
+                    dataType: 'json'
+                });
                 $("#action").val("Add");
             }
             clearForm()

@@ -31,7 +31,6 @@ Route::add("/?changepassword", "AuthController@changePassword");
 
 // manager
 Route::add("/?admin/staff", "AdminController@staffAction");
-Route::add("/?admin/cinema", "AdminController@cinemaAction");
 Route::add("/?admin/movie", "AdminController@movieAction");
 Route::add("/?admin/schedule", "AdminController@scheduleAction");
 Route::add("/?admin/theater", "AdminController@theaterAction");
@@ -75,13 +74,6 @@ Route::add("/?api/foodcombo/add", "FoodComboController@add");
 Route::add("/?api/foodcombo/update", "FoodComboController@update");
 Route::add("/?api/foodcombo/delete", "FoodComboController@delete");
 
-// Cinema
-Route::add("/?api/cinema/getbyid", "CinemaController@getByID");
-Route::add("/?api/cinema/getall", "CinemaController@getAll");
-Route::add("/?api/cinema/add", "CinemaController@add");
-Route::add("/?api/cinema/update", "CinemaController@update");
-Route::add("/?api/cinema/delete", "CinemaController@delete");
-
 // Seat
 Route::add("/?api/seat/getByTheater", "SeatController@getByTheater");
 
@@ -94,7 +86,6 @@ Route::add("/?api/ticket/add", "TicketController@add");
 Route::add("/?api/ticket/addticketseatschedule", "TicketController@addTicketSeatSchedule");
 
 // Theater
-Route::add("/?api/theater/getByCinema", "TheaterController@getByCinema");
 Route::add("/?api/theater/getall", "TheaterController@getAll");
 Route::add("/?api/theater/add", "TheaterController@add");
 Route::add("/?api/theater/update", "TheaterController@update");

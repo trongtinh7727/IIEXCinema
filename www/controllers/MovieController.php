@@ -19,11 +19,10 @@ class MovieController extends AdminController
         $params = array(
             'TITLE', 'DIRECTOR',
             'ACTORS', 'GENRE', 'STORY', 'DURATION',
-            'OPENING_DAY', 'CLOSING_DAY'
+            'OPENING_DAY', 'CLOSING_DAY', 'TRAILER'
         );
         $data = $this->validateParams($params);
         $poster = (new UploadHelper())->uploadFile("movie", $_FILES['POSTER']);
-        $trailer = (new UploadHelper())->uploadFile("movie", $_FILES['TRAILER']);
 
         echo $this->model->add(
             $data['TITLE'],
@@ -35,7 +34,7 @@ class MovieController extends AdminController
             $data['OPENING_DAY'],
             $data['CLOSING_DAY'],
             $poster,
-            $trailer
+            $data['TRAILER']
         );
     }
 
@@ -58,16 +57,13 @@ class MovieController extends AdminController
         $params = array(
             'ID', 'TITLE', 'DIRECTOR',
             'ACTORS', 'GENRE', 'STORY', 'DURATION',
-            'OPENING_DAY', 'CLOSING_DAY'
+            'OPENING_DAY', 'CLOSING_DAY', 'TRAILER'
         );
         $data = $this->validateParams($params);
         $poster = '0';
         $trailer = '0';
         if (isset($_FILES['POSTER'])) {
             $poster = (new UploadHelper())->uploadFile("movie", $_FILES['POSTER']);
-        }
-        if (isset($_FILES['TRAILER'])) {
-            $trailer = (new UploadHelper())->uploadFile("movie", $_FILES['TRAILER']);
         }
         echo $this->model->update(
             $data['TITLE'],
@@ -79,7 +75,7 @@ class MovieController extends AdminController
             $data['OPENING_DAY'],
             $data['CLOSING_DAY'],
             $poster,
-            $trailer,
+            $data['TRAILER'],
             $data['ID']
         );
     }

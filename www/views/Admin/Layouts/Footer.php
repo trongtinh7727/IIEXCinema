@@ -10,8 +10,8 @@
     <!-- Datatable Bootstrap -->
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 
-    <!-- JS -->
-    <script language="JavaScript" type="text/javascript" src="./script.js"></script>
+    <!-- ChartJS -->
+
     <script>
         $(function() {
             console.log("run")

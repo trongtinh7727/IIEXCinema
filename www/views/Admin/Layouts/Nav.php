@@ -59,6 +59,9 @@
         <a href="/?admin/transaction" id="Transaction" class="btn btn-lg my-1 w-100">
             Quản lý lịch sử đặt vé
         </a>
+        <a href="/?admin/revenue" id="Revenue" class="btn btn-lg my-1 w-100">
+            Quản lý doanh thu
+        </a>
     </div>
 
     <!-- Offcanvas footer -->

@@ -37,6 +37,10 @@
                         <span class="input-group-text" id="">Giá</span>
                         <input id="PRICE" type="number" class="form-control">
                     </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="">Ảnh</span>
+                        <input id="Image" type="file" class="form-control">
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
