@@ -2,9 +2,9 @@
 
     <!-- Title + Button -->
     <div class="card-header bg-white rounded-top-4">
-        <span class="fs-4">Lịch sử đặt vé</span>
+        <span class="fs-4">Quản lý doanh thu</span>
         <br>
-        <span>Kiểm tra lịch sử đặt vé</span>
+        <span>Kiểm tra doanh thu theo tháng</span>
     </div>
     <div class="container my-4">
         <div class="d-flex flex-wrap justify-content-between">

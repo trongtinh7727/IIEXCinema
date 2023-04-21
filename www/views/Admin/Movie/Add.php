@@ -58,4 +58,5 @@
         </div>
     </div>
 </div>
-<input type="hiden" style="display: none;" name="" id="action" value="Add">
+<!-- Check which add or update action -->
+<input type="hidden" style="display: none;" name="" id="action" value="Add">

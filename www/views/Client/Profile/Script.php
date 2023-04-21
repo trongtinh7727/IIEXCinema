@@ -40,5 +40,56 @@
             $('.swiper-trailer-video').attr('src', $('.trailer-video').attr('src'));
         });
     })
-    $('#<?php echo  $path ?>').addClass('active').addClass('custom-active').removeClass('text-white').addClass('text-yellow')
+    $(document).ready(function() {
+        $('form').submit(function(event) {
+            event.preventDefault();
+
+            var firstName = $('input[name="FIRSTNAME"]').val().trim();
+            var lastName = $('input[name="LASTNAME"]').val().trim();
+            var birthday = $('input[name="BIRTHDAY"]').val().trim();
+            var address = $('input[name="ADDRESS"]').val().trim();
+            var phone = $('input[name="PHONE"]').val().trim();
+
+            // Perform validation checks
+            var isValid = true;
+
+            if (firstName.length == 0) {
+                isValid = false;
+                alert('Họ không được để trống');
+            }
+
+            if (lastName.length == 0) {
+                isValid = false;
+                alert('Tên không được để trống');
+            }
+
+            if (birthday.length == 0) {
+                isValid = false;
+                alert('Ngày sinh không được để trống');
+            }
+
+            if (address.length == 0) {
+                isValid = false;
+                alert('Địa chỉ không được để trống');
+            }
+
+            if (phone.length == 0) {
+                isValid = false;
+                alert('Số điện thoại không được để trống');
+            }
+            var phoneRegex = /^\d{10}$/;
+
+            if (!phoneRegex.test(phone)) {
+                isValid = false;
+                alert('Số điện thoại không đúng');
+            }
+
+            if (!isValid) {
+                return false;
+            }
+
+            // If all validation checks pass, submit the form
+            this.submit();
+        });
+    });
 </script>

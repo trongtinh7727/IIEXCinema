@@ -7,6 +7,8 @@
 
 <!-- JQuery -->
 <script language="JavaScript" type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+
 
 <!-- Swiper -->
 <script language="JavaScript" type="text/javascript" src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
@@ -40,5 +42,41 @@
             $('.swiper-trailer-video').attr('src', $('.trailer-video').attr('src'));
         });
     })
-    $('#<?php echo  $path ?>').addClass('active').addClass('custom-active').removeClass('text-white').addClass('text-yellow')
+
+    $(document).ready(function() {
+        $('#change-password-form').validate({
+            rules: {
+                password: {
+                    required: true
+                },
+                newpassword: {
+                    required: true
+                },
+                confirmpassword: {
+                    required: true,
+                    equalTo: '#newpassword'
+                }
+            },
+            messages: {
+                password: {
+                    required: 'Vui lòng nhập mật khẩu cũ'
+                },
+                newpassword: {
+                    required: 'Vui lòng nhập mật khẩu mới'
+                },
+                confirmpassword: {
+                    required: 'Vui lòng nhập lại mật khẩu mới',
+                    equalTo: 'Mật khẩu không khớp'
+                }
+            },
+            errorElement: 'small',
+            errorClass: 'text-danger',
+            highlight: function(element, errorClass, validClass) {
+                $(element).addClass(errorClass).removeClass(validClass);
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).removeClass(errorClass).addClass(validClass);
+            }
+        });
+    });
 </script>

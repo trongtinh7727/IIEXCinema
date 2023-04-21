@@ -6,8 +6,10 @@ include_once(__DIR__ . '/Route.php');
 // ADMIN
 Route::add("/?admin", "AdminController@indexAction");
 Route::add("/?admin/home", "AdminController@indexAction");
-
 Route::add("/?admin/logout", "AdminController@logout");
+
+// Client
+Route::add("/?updateprofile", "ClientController@updateProfile");
 
 // Home
 Route::add("/?", "HomeController@indexAction");

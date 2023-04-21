@@ -90,17 +90,24 @@
     }
 
     #profileDetails {
-        top: 80px;
+        top: 50px;
     }
+
+    #bookingHistory {
+        background-color: rgba(217, 217, 217, 0.25);
+        top: 100px;
+    }
+
+
 
     #changePassword {
         background-color: rgba(217, 217, 217, 0.25);
-        top: 130px;
+        top: 150px;
     }
 
     #logout {
         background-color: rgba(217, 217, 217, 0.25);
-        top: 150px;
+        top: 200px;
     }
 
     /* Main */

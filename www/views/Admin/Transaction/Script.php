@@ -5,6 +5,8 @@
         var table = $('#dataTable').DataTable({
             ajax: "./?api/transaction/getall",
             columns: [{
+                    data: "ID"
+                }, {
                     data: "USERNAME"
                 },
                 {

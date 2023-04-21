@@ -77,7 +77,7 @@ class AuthController
             $newpassword = $_POST['newpassword'];
             $tb = $_POST['tb'];
             $check =  $this->model->changePassword($username, $password, $newpassword, $tb);
-            if ($check != null) {
+            if ($check) {
                 $msg = "Đổi mật khẩu thành công";
                 require_once('views/Client/Auths/changepass.php');
             } else {
@@ -91,8 +91,16 @@ class AuthController
 
     function register()
     {
+        if (isset($_POST['NAME'])) {
+
+            $words = explode(' ', $_POST['NAME']);
+
+            $_POST['LASTNAME'] = array_pop($words);
+            $_POST['FIRSTNAME'] = implode(' ', $words);
+        }
+
         $params = array(
-            'USERNAME', 'FIRSTNAME', 'LASTNAME', 'SEX', 'BIRTHDAY', 'PHONE', 'ADDRESS', 'PASSWORD'
+            'USERNAME', 'FIRSTNAME', 'LASTNAME',  'PHONE',  'PASSWORD'
         );
         $data = $this->validateParams($params);
         $check =  $this->model->add(
@@ -100,10 +108,7 @@ class AuthController
             $data['PASSWORD'],
             $data['FIRSTNAME'],
             $data['LASTNAME'],
-            $data['SEX'],
-            $data['BIRTHDAY'],
-            $data['PHONE'],
-            $data['ADDRESS']
+            $data['PHONE']
         );
 
         if ($check == true) {
@@ -113,6 +118,7 @@ class AuthController
             $this->Login();
         } else {
             $err = $check;
+            require_once('views/Client/Auths/login.php');
         }
     }
 

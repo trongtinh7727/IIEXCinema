@@ -46,4 +46,4 @@
         </div>
     </div>
 </div>
-<input type="hiden" style="display: none;" name="" id="action" value="Add">
+<input type="hidden" style="display: none;" name="" id="action" value="Add">
