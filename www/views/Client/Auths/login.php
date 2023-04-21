@@ -207,28 +207,28 @@
                             <!-- Sign up username -->
                             <div class="group mt-5">
                                 <label for="user" class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Username</label>
-                                <input id="sign-up-user" name="username" placeholder="Username123" type="text" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
+                                <input id="sign-up-user" name="USERNAME" placeholder="Username123" type="text" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
                             </div>
                             <!-- Sign up name -->
                             <div class="group mt-5">
                                 <label for="user" class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Họ và tên</label>
-                                <input id="sign-up-name" name="name" placeholder="abc123@xyz.com.vn" type="text" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
+                                <input id="sign-up-name" name="NAME" placeholder="abc123@xyz.com.vn" type="text" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
                             </div>
                             <!-- Sign up phone -->
                             <div class="group mt-5">
                                 <label for="user" class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Số điện thoại</label>
-                                <input id="sign-up-phone" name="phone" placeholder="08432...." type="tel" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
+                                <input id="sign-up-phone" name="PHONE" placeholder="08432...." type="tel" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
                             </div>
 
                             <!-- Sign up password -->
                             <div class="group mt-5">
                                 <label for="user" class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Mật khẩu</label>
-                                <input id="sign-up-password" name="password" placeholder="p@sSword" type="password" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
+                                <input id="sign-up-password" name="PASSWORD" placeholder="p@sSword" type="password" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
                             </div>
                             <!-- Sign up confirm password -->
                             <div class="group mt-5">
                                 <label for="user" class="label w-100 d-block text-black fw-semibold text-yellow fs-6">Xác nhận mật khẩu</label>
-                                <input id="sign-up-cfpassword" placeholder="p@sSword" type="password" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
+                                <input id="sign-up-cfpassword" name="CONFIRMPASSWORD" placeholder="p@sSword" type="password" class="input mt-3 rounded-5 w-100 d-block text-black fw-semibold">
                             </div>
                             <div class="group mt-5">
                                 <input type="submit" class="button rounded-5 w-100 d-block text-black fw-semibold bg-yellow fs-4" value="Đăng ký">
@@ -236,6 +236,9 @@
                         </form>
                         <hr style="height: 2px; background-color: rgb(0, 0, 0, 0.5);">
                     </div>
+                    <?php if (isset($err)) : ?>
+                        <div class="alert alert-danger"><?php echo $err; ?></div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -260,13 +263,65 @@
             });
             $('#tab-2').click(function(e) {
                 $('.login-wrap').css({
-                    "height": "720px",
+                    "height": "900px",
                     "transition": ".3s"
                 });
                 $('#tab-1-label').removeClass('text-yellow')
                 $('#tab-2-label').addClass('text-yellow')
             });
         })
+
+        $(document).ready(function() {
+            $('form').submit(function(e) {
+                // Prevent form submission
+                e.preventDefault();
+
+                // Get form input values
+                var username = $('#sign-up-user').val();
+                var name = $('#sign-up-name').val();
+                var phone = $('#sign-up-phone').val();
+                var password = $('#sign-up-password').val();
+                var confirmPassword = $('#sign-up-cfpassword').val();
+
+                // Validation checks
+                var valid = true;
+
+                // Check if username is empty
+                if (!username) {
+                    valid = false;
+                    alert('Please enter a username.');
+                }
+
+                // Check if name is empty
+                if (!name) {
+                    valid = false;
+                    alert('Please enter your name.');
+                }
+
+                // Check if phone number is empty and contains only numbers
+                if (!phone || !/^\d+$/.test(phone)) {
+                    valid = false;
+                    alert('Please enter a valid phone number.');
+                }
+
+                // Check if password is empty and has at least 8 characters
+                if (!password || password.length < 8) {
+                    valid = false;
+                    alert('Please enter a password with at least 8 characters.');
+                }
+
+                // Check if confirm password matches password
+                if (password !== confirmPassword) {
+                    valid = false;
+                    alert('Confirm password does not match password.');
+                }
+
+                // Submit form if validation passes
+                if (valid) {
+                    $('form').unbind('submit').submit();
+                }
+            });
+        });
     </script>
 </body>
 

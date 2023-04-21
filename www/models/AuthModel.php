@@ -30,29 +30,27 @@ class AuthModel
                     `username` = ? and password = ?;";
 
         $stmt = $this->db->prepare($sql);
-        $stmt->execute(array($newPassword,$username, $password));
-
-        $data = null;
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $data = $row;
-            return $data;
+        $stmt->execute(array($newPassword, $username, $password));
+        if ($stmt->rowCount() == 1) {
+            return true;
+        } else {
+            return false;
         }
-        return $data;
     }
 
-    public function add($USERNAME, $PASSWORD, $FIRSTNAME, $LASTNAME, $SEX, $BIRTHDAY, $PHONE, $ADDRESS)
+    public function add($USERNAME, $PASSWORD, $FIRSTNAME, $LASTNAME, $PHONE)
     {
         if ($this->isExists($USERNAME)) {
             return  "username đã tồn tại";
         }
-        $sql = 'INSERT INTO client(USERNAME, PASSWORD, FIRSTNAME,LASTNAME, SEX,BIRTHDAY,PHONE, ADDRESS) VALUES(?,?,?,?,?,?,?,?)';
+        $sql = 'INSERT INTO client(USERNAME, PASSWORD, FIRSTNAME,LASTNAME, PHONE) VALUES(?,?,?,?,?)';
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($USERNAME, $PASSWORD, $FIRSTNAME, $LASTNAME, $SEX, $BIRTHDAY, $PHONE, $ADDRESS));
+            $stmt->execute(array($USERNAME, $PASSWORD, $FIRSTNAME, $LASTNAME, $PHONE));
 
             return true;
         } catch (PDOException $ex) {
-            return (array('status' => false, 'data' => $ex->getMessage()));
+            return ($ex->getMessage());
         }
     }
 

@@ -24,6 +24,7 @@
                 <!-- Table Header -->
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Tên đăng nhập</th>
                         <th>Số điện thoại</th>
                         <th>Họ và tên</th>
@@ -39,6 +40,7 @@
 
                 <tfoot>
                     <tr>
+                        <th>ID</th>
                         <th>Tên đăng nhập</th>
                         <th>Số điện thoại</th>
                         <th>Họ và tên</th>

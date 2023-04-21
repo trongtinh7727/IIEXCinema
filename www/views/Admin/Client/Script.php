@@ -101,7 +101,6 @@
             } else {
                 let ID = $("#action").val();
                 $.post("./?api/client/update", {
-                    USERNAME,
                     FIRSTNAME,
                     LASTNAME,
                     SEX,

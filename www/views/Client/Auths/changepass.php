@@ -73,6 +73,10 @@
                 Thông tin tài khoản
                 <i class="fa-solid fa-user"></i>
             </a>
+            <a class="position-absolute p-2 text-decoration-none text-dark hover-bg-green fs-5 fw-medium d-flex align-items-center justify-content-between" href="./?bookinghistory" id="bookingHistory">
+                Lịch sử đặt vé
+                <i class="fa-solid fa-clock-rotate-left"></i>
+            </a>
             <a class="position-absolute p-2 text-decoration-none text-white hover-bg-green fs-5 fw-medium d-flex align-items-center justify-content-between" href="./?changepassword" id="changePassword">
                 Đổi mật khẩu
                 <i class="fa-solid fa-key"></i>
@@ -87,22 +91,23 @@
         <div class="container">
             <div id="changepassword-main" class="my-5 p-3 text-white rounded-4">
                 <h2 class="text-uppercase text-yellow text-center">Đổi mật khẩu</h2>
-                <form action="./?changepassword">
+                <form id="change-password-form" action="./?changepassword" method="post">
+                    <input type="hidden" name="tb" value="Client">
                     <table class="mx-auto">
                         <!-- Old password -->
                         <tr style="height: 44px;">
                             <td class="text-end fw-medium">Mật khẩu cũ:</td>
-                            <td><input name="password" type="password" class="mx-3 rounded-3 text-white w-100"></td>
+                            <td><input id="password" name="password" type="password" class="mx-3 rounded-3 text-black w-100 required"></td>
                         </tr>
                         <!-- New password -->
                         <tr style="height: 44px;">
                             <td class="text-end fw-medium">Mật khẩu mới:</td>
-                            <td><input name="newpassword" type="password" class="mx-3 rounded-3 text-white w-100"></td>
+                            <td><input id="newpassword" name="newpassword" type="password" class="mx-3 rounded-3 text-black w-100 required"></td>
                         </tr>
                         <!-- Confirm password -->
                         <tr style="height: 44px;">
                             <td class="text-end fw-medium">Xác nhận mật khẩu:</td>
-                            <td><input name="confirmpassword" type="password" class="mx-3 rounded-3 text-white w-100"></td>
+                            <td><input id="confirmpassword" name="confirmpassword" type="password" class="mx-3 rounded-3 text-black w-100 required"></td>
                         </tr>
 
                         <!-- Submit -->
@@ -113,8 +118,13 @@
                             </td>
                         </tr>
                     </table>
+                </form>
+                <?php if (isset($msg)) : ?>
+                    <div class="alert alert-success"><?php echo $msg; ?></div>
+                <?php elseif (isset($err)) : ?>
+                    <div class="alert alert-danger"><?php echo $err; ?></div>
+                <?php endif; ?>
             </div>
-            </form>
         </div>
 
         <!-- Footer -->

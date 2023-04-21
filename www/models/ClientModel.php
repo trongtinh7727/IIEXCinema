@@ -73,24 +73,24 @@ class ClientModel
         }
     }
 
-    public function update($USERNAME, $FIRSTNAME, $LASTNAME, $SEX, $BIRTHDAY, $PHONE, $ADDRESS, $ID)
+    public function update($FIRSTNAME, $LASTNAME, $SEX, $BIRTHDAY, $PHONE, $ADDRESS, $ID)
     {
 
 
-        $sql = 'UPDATE `client` SET `USERNAME` = ?, `FIRSTNAME` = ?, `LASTNAME` = ?,`SEX` = ?,`BIRTHDAY` = ?, `PHONE` = ?, `ADDRESS` = ? WHERE `client`.`ID` = ?';
+        $sql = 'UPDATE `client` SET  `FIRSTNAME` = ?, `LASTNAME` = ?,`SEX` = ?,`BIRTHDAY` = ?, `PHONE` = ?, `ADDRESS` = ? WHERE `client`.`ID` = ?';
 
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($USERNAME, $FIRSTNAME, $LASTNAME, $SEX, $BIRTHDAY, $PHONE, $ADDRESS, $ID));
+            $stmt->execute(array($FIRSTNAME, $LASTNAME, $SEX, $BIRTHDAY, $PHONE, $ADDRESS, $ID));
             $count = $stmt->rowCount();
 
             if ($count == 1) {
-                echo json_encode(array('status' => true, 'data' => 'Cập nhật nhân viên thành công'));
+                echo json_encode(array('status' => "true", 'data' => 'Cập nhật nhân viên thành công'));
             } else {
-                return (json_encode(array('status' => false, 'data' => 'Không có nhân viên nào được cập nhật')));
+                return (json_encode(array('status' => "false", 'data' => 'Không có nhân viên nào được cập nhật')));
             }
         } catch (PDOException $ex) {
-            return (json_encode(array('status' => false, 'data' => $ex->getMessage())));
+            return (json_encode(array('status' => "false", 'data' => $ex->getMessage())));
         }
     }
 
