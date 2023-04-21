@@ -6,7 +6,11 @@
             ajax: "./?api/transaction/getall",
             columns: [{
                     data: "ID"
-                }, {
+                }, 
+                {
+                    data: "CINEMA"
+                },
+                {
                     data: "USERNAME"
                 },
                 {
@@ -31,13 +35,16 @@
                     data: "Seats"
                 },
                 {
-                    data: "TICKET_PRICE"
+                    data: "TICKET_PRICE",
+                    render: $.fn.dataTable.render.number(',', '.', 0, '$')
                 },
                 {
-                    data: "FOOD_PRICE"
+                    data: "FOOD_PRICE",
+                    render: $.fn.dataTable.render.number(',', '.', 0, '$')
                 },
                 {
-                    data: "Total"
+                    data: "Total",
+                    render: $.fn.dataTable.render.number(',', '.', 0, '$')
                 }
             ]
         });

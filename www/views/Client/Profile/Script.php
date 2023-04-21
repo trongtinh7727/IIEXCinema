@@ -10,6 +10,11 @@
 
 <!-- Swiper -->
 <script language="JavaScript" type="text/javascript" src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+<!-- Datatables -->
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+<!-- Datatable Bootstrap -->
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 
 <script>
     $(document).ready(function() {
@@ -41,6 +46,8 @@
         });
     })
     $(document).ready(function() {
+        $('#bookingHistoryDataTable').DataTable();
+
         $('form').submit(function(event) {
             event.preventDefault();
 

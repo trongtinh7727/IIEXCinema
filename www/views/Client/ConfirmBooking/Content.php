@@ -29,6 +29,8 @@
                 <div id="bookticket-confirm-main-movieinfo-title-showtime" class="my-3 me-4 text-end">Suất
                     chiếu:</div>
                 <div id="bookticket-confirm-main-movieinfo-title-room" class="my-3 me-4 text-end">Rạp:</div>
+                <div id="bookticket-confirm-main-movieinfo-title-room" class="my-3 me-4 text-end">Địa chỉ:</div>
+                <div id="bookticket-confirm-main-movieinfo-title-room" class="my-3 me-4 text-end">Phòng số:</div>
                 <div id="bookticket-confirm-main-movieinfo-title-seat" class="my-3 me-4 text-end">Ghế:</div>
             </div>
             <!-- DATAFILL VALUE -->
@@ -37,7 +39,9 @@
                 </div>
                 <div id="bookticket-confirm-main-movieinfo-value-date" class="my-3"><?php echo date("d/m/Y", strtotime($_SESSION['booking']['schedule'][0]->STARTTIME)) ?></div>
                 <div id="bookticket-confirm-main-movieinfo-value-showtime" class="my-3"><?php echo date("h:i", strtotime($_SESSION['booking']['schedule'][0]->STARTTIME)) ?></div>
-                <div id="bookticket-confirm-main-movieinfo-value-room" class="my-3">Rạp <?php echo ($_SESSION['booking']['schedule'][0]->THEATERNUM)  ?></div>
+                <div id="bookticket-confirm-main-movieinfo-value-room" class="my-3">Rạp <?php echo ($_SESSION['booking']['schedule'][0]->NAME)  ?></div>
+                <div id="bookticket-confirm-main-movieinfo-value-room" class="my-3"><?php echo ($_SESSION['booking']['schedule'][0]->ADDRESS)  ?></div>
+                <div id="bookticket-confirm-main-movieinfo-value-room" class="my-3"><?php echo ($_SESSION['booking']['schedule'][0]->SHOWROOMNUM)  ?></div>
                 <div id="bookticket-confirm-main-movieinfo-value-seat" class="my-3">
                     <?php
                     $string = implode(",", $_SESSION['booking']['seats']);

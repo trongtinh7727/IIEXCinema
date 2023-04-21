@@ -12,146 +12,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
-    <?php include_once(__DIR__ . "/"  . "/Style.php"); ?>
+    <?php include_once(__DIR__  . "/Style.php"); ?>
 </head>
 
 <body>
     <div id="wrapper" class="min-vh-100 d-flex flex-column">
-        <!-- Navigation bar -->
-        <nav class="navbar navbar-expand-lg bg-transparent" aria-label="Thirteenth navbar example" style="background: transparent;">
-            <div class="container-fluid">
-                <!-- Navbar toggler for mobile -->
-                <button class="navbar-toggler collapsed bg-yellow" type="button" data-bs-toggle="collapse" data-bs-target="#homepageNavBar" aria-controls="homepageNavBar" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse d-lg-flex collapse mt-sm-3" id="homepageNavBar">
-                    <a class="navbar-brand col-lg-3 me-0" href="./?">
-                        <img src="../assets/img/homepage/Logo.png" alt="Logo" style="height: 4rem;">
-                    </a>
-                    <ul class="navbar-nav col-lg-6 justify-content-lg-center">
-                        <li class="nav-item position-relative">
-                            <a id="HomePage" class="nav-link mx-4 hover-green fs-5 fw-semibold text-white  " aria-current="page" href="./?">Trang chủ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link mx-4 text-white hover-green fs-5 fw-semibold" aria-current="page" href="./?movie">Phim</a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="Showtime" class="nav-link mx-4 text-white hover-green fs-5 fw-semibold" aria-current="page" href="./?showtime">Lịch chiếu</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link mx-4 text-white hover-green fs-5 fw-semibold" aria-current="page" href="../template_promotion/">Khuyến mãi</a>
-                        </li>
-                    </ul>
-                    <div id="btn-signin" class="d-lg-flex col-lg-3 justify-content-lg-end">
-                        <?php
-                        if (isset($_SESSION['userLogin']['name'])) {
-                        ?>
-                            <a href="./?profile" class="btn text-green text-decoration-none hover-yellow">
-                                <?php
-                                echo $_SESSION['userLogin']['name'];
-                                ?>
-                            </a>
-                        <?php
-                        } else {
-                        ?>
-                            <a href="./?login" class="btn text-green text-decoration-none hover-yellow">
-                                <?php
-                                echo 'Đăng nhập';
-                                ?>
-                            </a>
-                        <?php
-                        }
-                        ?>
 
-                    </div>
-                </div>
-            </div>
-        </nav> <!-- Slider -->
-        <!-- Sidenav -->
-        <div id="profileSideNav" class="sidenav">
-            <a class="position-absolute p-2 text-decoration-none text-dark bg-yellow fs-5 fw-medium d-flex align-items-center justify-content-between" href="./?profile" id="profileDetails">
-                Thông tin tài khoản
-                <i class="fa-solid fa-user"></i>
-            </a>
-            <a class="position-absolute p-2 text-decoration-none text-dark hover-bg-green fs-5 fw-medium d-flex align-items-center justify-content-between" href="./?bookinghistory" id="bookingHistory">
-                Lịch sử đặt vé
-                <i class="fa-solid fa-clock-rotate-left"></i>
-            </a>
-            <a class="position-absolute p-2 text-decoration-none text-white hover-bg-green fs-5 fw-medium d-flex align-items-center justify-content-between" href="./?changepassword" id="changePassword">
-                Đổi mật khẩu
-                <i class="fa-solid fa-key"></i>
-            </a>
-            <a class="position-absolute p-2 text-decoration-none text-white hover-bg-green fs-5 fw-medium d-flex align-items-center justify-content-between" href="./?logout" id="logout">
-                Đăng xuất
-                <i class="fa-solid fa-right-from-bracket"></i>
-            </a>
-        </div>
-
+        <?php include_once(__DIR__  . "/Nav.php"); ?>
         <!-- Main -->
-        <div class="container">
-            <div id="profile-main" class="my-5 p-3 text-white rounded-4">
-                <h2 class="text-uppercase text-yellow text-center">Thông tin tài khoản</h2>
-                <form action="./?updateprofile" method="post">
-                    <input type="hidden" name="ID" value="<?php echo $profile[0]['ID'] ?>">
-                    <table class="mx-auto">
-                        <!-- Username -->
-                        <tr style="height: 44px;">
-                            <td class="text-end fw-medium">Tên đăng nhập:</td>
-                            <td><input name="profile-username" value="<?php echo $profile[0]['USERNAME'] ?>" type="text" class="mx-3 rounded-3 text-white w-100" disabled></td>
-                        </tr>
-                        <!-- Name -->
-                        <tr style="height: 44px;">
-                            <td class="text-end fw-medium">Họ:</td>
-                            <td><input name="FIRSTNAME" value="<?php echo $profile[0]['FIRSTNAME'] ?>" type="text" class="mx-3 rounded-3 text-white w-100"></td>
-                        </tr>
-                        <tr style="height: 44px;">
-                            <td class="text-end fw-medium">Tên:</td>
-                            <td><input name="LASTNAME" value="<?php echo  $profile[0]['LASTNAME']  ?>" type="text" class="mx-3 rounded-3 text-white w-100"></td>
-                        </tr>
-                        <!-- Birthday -->
-                        <tr style="height: 44px;">
-                            <td class="text-end fw-medium">Ngày sinh:</td>
-                            <td><input name="BIRTHDAY" value="<?php echo $profile[0]['BIRTHDAY'] ?>" type="date" class="mx-3 rounded-3 text-white w-100"></td>
-                        </tr>
-                        <!-- Gender -->
-                        <tr style="height: 44px;">
-                            <td class="text-end fw-medium">Giới tính:</td>
-                            <td class="d-flex align-items-center">
-                                <!-- Male -->
-                                <input name="SEX" id="SEX-male" type="radio" value="Nam" <?php if ($profile[0]['SEX'] == 'Nam') echo 'checked'; ?> class="ms-3 me-1 rounded-3 text-white">
-                                <label for="SEX-male">Nam</label>
-                                <!-- Female -->
-                                <input name="SEX" id="SEX-female" type="radio" value="Nữ" <?php if ($profile[0]['SEX'] == 'Nữ') echo 'checked'; ?> class="ms-3 me-1 rounded-3 text-white">
-                                <label for="SEX-female">Nữ</label>
-                            </td>
-                        </tr>
-                        <!-- Address -->
-                        <tr style="height: 44px;">
-                            <td class="text-end fw-medium">Địa chỉ:</td>
-                            <td><input name="ADDRESS" value="<?php echo $profile[0]['ADDRESS'] ?>" type="text" class="mx-3 rounded-3 text-white w-100"></td>
-                        </tr>
-                        <!-- Phone -->
-                        <tr style="height: 44px;">
-                            <td class="text-end fw-medium">Điện thoại:</td>
-                            <td><input name="PHONE" type="tel" value="<?php echo $profile[0]['PHONE'] ?>" class="mx-3 rounded-3 text-white w-100"></td>
-                        </tr>
-
-                        <tr style="height: 44px;">
-                            <td></td>
-                            <td class="text-end">
-                                <input type="submit" class="mx-3 px-3 rounded-3 bg-yellow hover-bg-green border-0 fw-medium" value="Xác nhận">
-                            </td>
-                        </tr>
-                    </table>
-                </form>
-            </div>
-            <?php if (isset($_GET['success'])) : ?>
-                <div class="alert alert-success"><?php echo "Cập nhật thành công"; ?></div>
-            <?php elseif (isset($_GET['error'])) : ?>
-                <div class="alert alert-danger"><?php echo "Cập nhật thất bại"; ?></div>
-            <?php endif; ?>
-        </div>
-
+        <?php include_once(__DIR__  . "/".$path.".php"); ?>
         <!-- Footer -->
         <div id="footer" class="container-fluid" style="background-color: rgba(0, 19, 55, 0.48);">
             <div class="container">
@@ -187,7 +56,7 @@
             </div>
         </div>
     </div>
-    <?php include_once(__DIR__ . "/" . "/Script.php"); ?>
+    <?php include_once(__DIR__ . "/Script.php"); ?>
 </body>
 
 </html>

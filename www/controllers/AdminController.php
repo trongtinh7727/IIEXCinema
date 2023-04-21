@@ -9,7 +9,7 @@ class AdminController extends AuthController
     }
 
     // validate if the params is null
-    
+
 
     function isAuthenticated()
     {
@@ -59,10 +59,10 @@ class AdminController extends AuthController
         $path = 'Schedule';
         require_once('views/Admin/dashboard.php');
     }
-    public function theaterAction()
+    public function showroomAction()
     {
         $this->isAuthenticated();
-        $path = 'theater';
+        $path = 'Showroom';
         require_once('views/Admin/dashboard.php');
     }
     public function productAction()

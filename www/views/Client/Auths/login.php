@@ -202,7 +202,7 @@
 
                     <!-- Sign up -->
                     <div class="sign-up-html">
-                        <form action="./?register" method="post">
+                        <form id="sign-up" action="./?register" method="post">
                             <!-- Input -->
                             <!-- Sign up username -->
                             <div class="group mt-5">
@@ -272,7 +272,7 @@
         })
 
         $(document).ready(function() {
-            $('form').submit(function(e) {
+            $('#sign-up').submit(function(e) {
                 // Prevent form submission
                 e.preventDefault();
 

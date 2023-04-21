@@ -132,4 +132,16 @@
         background-color: rgba(217, 217, 217, 0.25);
         border: #FFFFFF solid 1px;
     }
+
+    /* Main */
+    #bookingHistory-main-inner {
+        background-color: rgba(255, 255, 255, 0.25);
+    }
+    .dataTables_filter {
+        float: right;
+    }
+
+    .dataTables_paginate {
+        float: right;
+    }
 </style>

@@ -24,7 +24,7 @@
 
                         var totalRevenue = 0;
                         for (var i = 0; i < myChart.data.datasets[0].data.length; i++) {
-                            totalRevenue += myChart.data.datasets[0].data[i];
+                            totalRevenue +=  parseInt(myChart.data.datasets[0].data[i]);
                         }
 
                         $('#total_revenue').text(totalRevenue.toLocaleString() + " VNĐ")

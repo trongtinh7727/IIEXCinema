@@ -123,6 +123,62 @@
         width: 44px;
     }
 
+    /* Movie Details toggler */
+#moviedetails-separator .container::after {
+    content: "";
+    position: absolute;
+    background-color: #ffffff;
+    height: 1px;
+    width: 100%;
+    bottom: -10px;
+}
+
+/* Movie Details Main Item */
+.moviedetails-main-content-item {
+    background: rgba(217, 217, 217, 0.25);
+}
+
+.moviedetails-main-content-item-infohead {
+    width: 8rem;
+}
+
+.moviedetails-main-content-item-info {
+    height: 40px;
+    border-radius: 10px 0 10px 0;
+}
+
+#moviedetails-main-content-item-modal-trigger {
+    width: auto;
+    background-color: #D9D9D9;
+    border-radius: 10px 0 10px 0;
+}
+
+/* Trailer */
+#moviedetails-main-content-item-trailer-modal iframe {
+    width: 100%;
+    aspect-ratio: 16/9;
+}
+
+/* Shift */
+.moviedetails-main-shift-theater-item-time {
+    width: 80%;
+    height: 80px;
+}
+
+.moviedetails-main-shift-theater-item-time-slot {
+    width: 72px;
+    height: 44px;
+    background-color: rgb(85, 189, 203);
+}
+
+.moviedetails-main-shift-theater-item-date {
+    width: 20%;
+    height: 80px;
+}
+.moviedetails-main-shift-theater {
+    border-bottom: #FFFFFF solid 2px;
+}
+
     /* Main content */
     #content-toggler .row::after,
     #trailer-separator .container::after {
