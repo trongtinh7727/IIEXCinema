@@ -106,18 +106,18 @@
 }
 
 /* Shift */
-.moviedetails-main-shift-item-time {
+.moviedetails-main-shift-theater-item-time {
     width: 80%;
     height: 80px;
 }
 
-.moviedetails-main-shift-item-time-slot {
+.moviedetails-main-shift-theater-item-time-slot {
     width: 72px;
     height: 44px;
     background-color: rgb(85, 189, 203);
 }
 
-.moviedetails-main-shift-item-date {
+.moviedetails-main-shift-theater-item-date {
     width: 20%;
     height: 80px;
 }
@@ -134,4 +134,8 @@
     height: 0px;
     border-top: 80px solid rgb(255, 186, 8);
     border-right: 40px solid transparent;
+}
+
+.moviedetails-main-shift-theater {
+    border-bottom: #FFFFFF solid 2px;
 }
