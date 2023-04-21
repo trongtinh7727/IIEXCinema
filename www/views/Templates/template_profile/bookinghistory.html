@@ -28,7 +28,7 @@
 
     <!-- Datatables Responsive -->
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css">
-    
+
     <!-- Datatables Responsive Bootstrap -->
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap5.min.css">
 
@@ -101,7 +101,8 @@
         <!-- Main -->
         <div class="container">
             <div id="bookingHistory-main" class="rounded-4">
-                <div id="bookingHistory-main-inner" class="card mx-auto pb-4 pt-2 my-4 shadow rounded-4 container text-white">
+                <div id="bookingHistory-main-inner"
+                    class="card mx-auto pb-4 pt-2 my-4 bg-dark shadow rounded-4 container text-white">
                     <!-- Title + Button -->
                     <div id="bookingHistory-main-inner-title" class="card-header rounded-top-4 mb-3">
                         <span class="fs-4 fw-medium">Lịch sử đặt vé</span>
@@ -111,7 +112,8 @@
 
                     <!-- Main -->
                     <div class="container">
-                        <table id="bookingHistoryDataTable" class="table table-dark table-borderless table-hover dt-responsive nowrapt">
+                        <table id="bookingHistoryDataTable"
+                            class="table table-dark table-borderless table-hover dt-responsive nowrapt">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -129,42 +131,75 @@
                                     <td>22/2/2022</td>
                                     <td>17:30</td>
                                     <td>A1,A2</td>
-                                    <td>
-                                        <a href="#">Chi tiết</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Chia cắt đất nước</td>
-                                    <td>22/2/2022</td>
-                                    <td>17:30</td>
-                                    <td>A1,A2</td>
-                                    <td>
-                                        <a href="#">Chi tiết</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Chia cắt đất nước</td>
-                                    <td>22/2/2022</td>
-                                    <td>17:30</td>
-                                    <td>A1,A2</td>
-                                    <td>
-                                        <a href="#">Chi tiết</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Chia cắt đất nước</td>
-                                    <td>22/2/2022</td>
-                                    <td>17:30</td>
-                                    <td>A1,A2</td>
-                                    <td>
-                                        <a href="#">Chi tiết</a>
+                                    <td class="text-end">
+                                        <button type="button" class="btn text-white border-0" data-bs-toggle="modal"
+                                            data-bs-target="#historyItemModal">
+                                            Chi tiết
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="historyItemModal" tabindex="-1" aria-labelledby="historyItemModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body text-white bg-dark">
+                        <!-- Title -->
+                        <h3 class="text-center">Title</h3>
+                        <!-- Showtime -->
+                        <div class="modal-showtime text-yellow text-center">
+                            <span>Suất chiếu:</span>
+                            <h5>22/2/2022</h5>
+                            <p>15:30</p>
+                        </div>
+                        <!-- Details -->
+                        <div class="modal-details mx-5">
+                            <!-- Theater -->
+                            <div class="modal-details-theater d-flex justify-content-between align-items-center">
+                                <span class="mx-3">Phòng chiếu:</span>
+                                <p class="mx-3">01</p>
+                            </div>
+                            <!-- Seat -->
+                            <div class="modal-details-seat d-flex justify-content-between align-items-center">
+                                <span class="mx-3">Ghế:</span>
+                                <p class="mx-3">A01</p>
+                            </div>
+                            <!-- Combo -->
+                            <div class="modal-details-combo d-flex justify-content-between align-items-center">
+                                <span class="mx-3">Loại combo:</span>
+                                <p class="mx-3">Không ăn gì</p>
+                            </div>
+                            <!-- Transaction time -->
+                            <div class="modal-details-transactiontime d-flex justify-content-between align-items-center">
+                                <span class="mx-3">Thời gian thanh toán:</span>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p class="mx-3">22/02/2022</p>
+                                    <p class="mx-3">17:30:20</p>
+                                </div>
+                            </div>
+                            <!-- Movie price -->
+                            <div class="modal-details-movieprice d-flex justify-content-between align-items-center">
+                                <span class="mx-3">Tiền vé:</span>
+                                <p class="mx-3">1,000</p>
+                            </div>
+                            <!-- Combo price -->
+                            <div class="modal-details-comboprice d-flex justify-content-between align-items-center">
+                                <span class="mx-3">Tiền combo:</span>
+                                <p class="mx-3">1,000</p>
+                            </div>
+                            <!-- Total -->
+                            <div class="modal-details-total d-flex justify-content-between align-items-center">
+                                <span class="mx-3">Tổng:</span>
+                                <p class="mx-3">2,000</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
