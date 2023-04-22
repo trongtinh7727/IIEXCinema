@@ -110,6 +110,8 @@ The code for the application is organized into the following packages:
 
 <!-- USAGE EXAMPLES -->
 ## Usage
+- Demo video: [Click](https://drive.google.com/drive/folders/1MwH8qy1RNr985bdMroo4FlElteEpqaol?usp=sharing)
+
 After `Run compose` access to:
 * Account (username/password): 
   - Admin: `admin`/`123456`
