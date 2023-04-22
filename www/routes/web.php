@@ -34,6 +34,7 @@ Route::add("/?changepassword", "AuthController@changePassword");
 
 // manager
 Route::add("/?admin/staff", "AdminController@staffAction");
+Route::add("/?admin/changepassword", "AdminController@changePasswordAction");
 Route::add("/?admin/movie", "AdminController@movieAction");
 Route::add("/?admin/schedule", "AdminController@scheduleAction");
 Route::add("/?admin/showroom", "AdminController@ShowroomAction");

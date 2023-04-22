@@ -125,4 +125,35 @@
         background-color: rgba(217, 217, 217, 0.25);
         border: #FFFFFF solid 1px;
     }
+    @media screen and (max-width: 992px) {
+        #icon-camera {
+            display: flex;
+            justify-content: center;
+        }
+
+        .custom-active::after {
+            content: "";
+            position: absolute;
+            background-color: #FFBA08;
+            height: 1px;
+            width: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 0;
+        }
+    }
+
+    @media screen and (max-width: 1200px) {
+        .swiper-slide {
+            background-color: transparent;
+        }
+
+        .swiper-slide-inner-right {
+            display: none;
+        }
+
+        .swiper-slide-inner-left {
+            height: 300px;
+        }
+    }
 </style>

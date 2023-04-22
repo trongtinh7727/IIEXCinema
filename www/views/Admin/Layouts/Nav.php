@@ -15,6 +15,12 @@
                 </div>
                 <!-- Right -->
                 <div>
+                    <a href="/?changepassword">
+                        <button id="btn-logout" type="button" name="btn-logout" class="btn text-white shadow border-0 btn-custom">
+                            Đổi mật khẩu
+                            <i class="fa-solid fa-key"></i>
+                        </button>
+                    </a>
                     <button id="btn-logout" type="button" name="btn-logout" class="btn text-white shadow border-0 btn-custom" data-bs-toggle="modal" data-bs-target="#signOutModal">
                         Đăng xuất
                         <i class="fa-solid fa-right-from-bracket ms-2"></i>

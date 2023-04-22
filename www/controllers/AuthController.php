@@ -70,22 +70,42 @@ class AuthController
 
     public function changePassword()
     {
+        $this->isAuthenticated();
 
-        if (isset($_POST['newpassword'])) {
-            $username = $_SESSION['userLogin']['username'];
-            $password = $_POST['password'];
-            $newpassword = $_POST['newpassword'];
-            $tb = $_POST['tb'];
-            $check =  $this->model->changePassword($username, $password, $newpassword, $tb);
-            if ($check) {
-                $msg = "Đổi mật khẩu thành công";
-                require_once('views/Client/Auths/changepass.php');
+        if ($_SESSION['userLogin']['role'] == 2) {
+            if (isset($_POST['newpassword'])) {
+                $username = $_SESSION['userLogin']['username'];
+                $password = $_POST['password'];
+                $newpassword = $_POST['newpassword'];
+                $tb = "Client";
+                $check =  $this->model->changePassword($username, $password, $newpassword, $tb);
+                if ($check) {
+                    $msg = "Đổi mật khẩu thành công";
+                    require_once('views/Client/Auths/changepass.php');
+                } else {
+                    $err = "Có lỗi xảy ra!";
+                    require_once('views/Client/Auths/changepass.php');
+                }
             } else {
-                $err = "Có lỗi xảy ra!";
                 require_once('views/Client/Auths/changepass.php');
             }
         } else {
-            require_once('views/Client/Auths/changepass.php');
+            if (isset($_POST['newpassword'])) {
+                $username = $_SESSION['userLogin']['username'];
+                $password = $_POST['password'];
+                $newpassword = $_POST['newpassword'];
+                $tb = "Staff";
+                $check =  $this->model->changePassword($username, $password, $newpassword, $tb);
+                if ($check) {
+                    $msg = "Đổi mật khẩu thành công";
+                    require_once('views/Admin/Auths/changepass.php');
+                } else {
+                    $err = "Có lỗi xảy ra!";
+                    require_once('views/Admin/Auths/changepass.php');
+                }
+            } else {
+                require_once('views/Admin/Auths/changepass.php');
+            }
         }
     }
 
@@ -94,7 +114,6 @@ class AuthController
         if (isset($_POST['NAME'])) {
 
             $words = explode(' ', $_POST['NAME']);
-
             $_POST['LASTNAME'] = array_pop($words);
             $_POST['FIRSTNAME'] = implode(' ', $words);
         }

@@ -28,6 +28,11 @@ class AdminController extends AuthController
         $path = 'Staff';
         require_once('views/Admin/dashboard.php');
     }
+    public function changePasswordAction()
+    {
+        $this->isAuthenticated();
+        require_once('views/Admin/Auths/changepass.php');
+    }
 
     public function staffAction()
     {
