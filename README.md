@@ -126,7 +126,6 @@ _For more examples, please refer to the [Documentation](https://gitlab.duthu.net
 
 # Project structure:
     
-
 * `mysql`:
     *  `sql`: include `*.sql` file 
 	* `data`: database 
