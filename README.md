@@ -65,8 +65,18 @@ This is the final report for `WebUD` course
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## Software Development Principles, Patterns, and Practices
+- `Model-View-Controller (MVC)`: The application follows the MVC architectural pattern, with the model representing the data, the view displaying the data, and the controller handling the user's input and updating the model and view accordingly.
+- `Dynamic routing` : Dynamic routing refers to the process of mapping URLs to specific code in a PHP application. This allows for more flexible and customizable routing of user requests to different parts of the application.
 
+- `Dynamic layout`: Dynamic layout in PHP refers to the process of creating customizable interface templates at runtime based on data or user actions. This enables web applications to quickly and flexibly respond to user requests, improving user experience.
 
+## Code Structure
+The code for the application is organized into the following packages:
+
+- `Docs`: Contains the documentation of project.
+- `mysql.data.sql`: Contains sql code to create database.
+- `www`: Contains source code of this project.
 <!-- GETTING STARTED -->
 ## Getting Started
 
@@ -90,6 +100,8 @@ This is the final report for `WebUD` course
    ```sh
    docker-compose up -d
    ```
+5. Import database: 
+- Go to phpMyAdmin at `http://localhost:8888` with username/password: `root/root` and import `data.sql` in `mysql/sql` package.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -98,7 +110,12 @@ This is the final report for `WebUD` course
 <!-- USAGE EXAMPLES -->
 ## Usage
 After `Run compose` access to:
-* Web-app: `http://localhost:8080`
+* Account (username/password): 
+  - Admin: `admin`/`123456`
+  - Client: `user`/`123456`
+* Web-app:
+  - Admin page `http://localhost:8080/?admin`
+  - Client page: `http://localhost:8080/?admin`
 * phpMyAdmin (acount root/root): `http://localhost:8888`
 
 _For more examples, please refer to the [Documentation](https://gitlab.duthu.net/S52100852/webud)_

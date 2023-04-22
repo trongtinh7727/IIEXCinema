@@ -155,7 +155,7 @@
                                             <div class="moviedetails-main-shift-theater-item-time bg-yellow d-flex align-items-center">
                                                 <!-- Time slot -->
                                                 <a href="./?ticketbooking&schedule=<?php echo $time['ID']  ?>" class="moviedetails-main-shift-theater-item-time-slot ms-3 text-white d-flex align-items-center justify-content-center text-decoration-none my-0 hover-bg-green">
-                                                    <div class="fs-4 fw-medium"><?php echo date('h:i', strtotime($time['TIME']))  ?></div>
+                                                    <div class="fs-4 fw-medium"><?php echo date('H:i', strtotime($time['TIME']))  ?></div>
                                                 </a>
                                             </div>
                                         <?php

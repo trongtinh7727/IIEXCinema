@@ -109,7 +109,7 @@ class ScheduleModel
             $sql = 'CALL `create_schedule`(?, ?, ?, ?, ?);';
             try {
                 $stmt = $this->db->prepare($sql);
-                $stmt->execute(array($SHOWROOM_ID, $MOV_ID, $STARTTIME, $ENDTIME, $PRICE));
+                $stmt->execute(array($SHOWROOM_ID, $MOV_ID, date('Y-m-d H:i:s', strtotime($STARTTIME)), date('Y-m-d H:i:s', strtotime($ENDTIME)), $PRICE));
                 $schedule_id = $this->db->lastInsertId();
                 return json_encode(array('status' => true, 'data' => array('schedule_id' => $schedule_id, 'message' => 'Thêm lịch chiếu thành công')));
             } catch (PDOException $ex) {

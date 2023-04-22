@@ -85,9 +85,9 @@ class ClientModel
             $count = $stmt->rowCount();
 
             if ($count == 1) {
-                echo json_encode(array('status' => "true", 'data' => 'Cập nhật nhân viên thành công'));
+                return json_encode(array('status' => "true", 'data' => 'Cập thành công'));
             } else {
-                return (json_encode(array('status' => "false", 'data' => 'Không có nhân viên nào được cập nhật')));
+                return (json_encode(array('status' => "false", 'data' => 'Không có người dùng nào được cập nhật')));
             }
         } catch (PDOException $ex) {
             return (json_encode(array('status' => "false", 'data' => $ex->getMessage())));

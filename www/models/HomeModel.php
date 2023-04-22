@@ -107,12 +107,12 @@ class HomeModel
             foreach ($seats as $seat) {
                 $sql = "UPDATE `ticket` 
                     SET `BOO_ID` = ? 
-                    WHERE `ID` = (
+                    WHERE `ID` in (
                     SELECT
-                        ticket.ID
+                        t.ID
                     FROM
                         `seat`,
-                        ticket,
+                       (SELECT * FROM ticket) AS  t,
                         ticket_seat_schedule
                     WHERE
                         ticket_seat_schedule.SEAT_ID = seat.ID 
@@ -128,19 +128,21 @@ class HomeModel
                         SET
                             `BOOKED` = '1'
                         WHERE
-                             `ticket_seat_schedule`.`TICKET_ID` = (
-                    SELECT
-                        ticket.ID
-                    FROM
-                        `seat`,
-                        ticket,
-                        ticket_seat_schedule
-                    WHERE
-                        ticket_seat_schedule.SEAT_ID = seat.ID 
-                        AND ticket_seat_schedule.TICKET_ID = ticket.ID 
-                        AND ticket_seat_schedule.SCHEDULE_ID = ?
-                        AND `SEATNUMBER` = ?
-                    )";
+                            `ticket_seat_schedule`.`TICKET_ID` IN(
+                            SELECT
+                                ticket.ID
+                            FROM
+                                (
+                                SELECT
+                                    *
+                                FROM
+                                    ticket_seat_schedule
+                            ) AS t,
+                            `seat`,
+                            ticket
+                        WHERE
+                            ticket_seat_schedule.SEAT_ID = seat.ID AND ticket_seat_schedule.TICKET_ID = ticket.ID AND ticket_seat_schedule.SCHEDULE_ID = ? AND `SEATNUMBER` = ?
+                        )";
                 $stmt = $this->db->prepare($sql);
                 $stmt->execute(array($Schedule_id, $seat));
             }
@@ -166,4 +168,3 @@ class HomeModel
         }
     }
 }
-

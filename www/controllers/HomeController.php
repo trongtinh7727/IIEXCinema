@@ -59,9 +59,7 @@ class HomeController extends AuthController
     {
         $ongoing = $this->ongoing;
         $movie_id = $_GET['id'];
-        $movie_schedule = $this->model->getMovieSchedule($movie_id); 
-        // print_r($movie_schedule);
-        // die();
+        $movie_schedule = $this->model->getMovieSchedule($movie_id);
         $path = "MovieDetail";
         require_once('views/Client/index.php');
     }
