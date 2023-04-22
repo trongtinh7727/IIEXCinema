@@ -62,6 +62,7 @@ This is the final report for `WebUD` course
 * [![Docker][Docker.com]][Docker-url]
 * [![Bootstrap][Bootstrap.com]][Bootstrap-url]
 * [![JQuery][JQuery.com]][JQuery-url]
+* [![PHP][PHP.com]][PHP-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -141,3 +142,6 @@ _For more examples, please refer to the [Documentation](https://gitlab.duthu.net
 
 [JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
 [JQuery-url]: https://jquery.com 
+
+[PHP.com]: https://img.shields.io/badge/php-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white
+[PHP-url]: https://php.net
