@@ -33,6 +33,14 @@ class ScheduleController extends AdminController
             echo $this->model->getByID($_POST['ID']);
         }
     }
+    public function getByIDv2()
+    {
+        if (isset($_POST['ID'])) {
+            echo $this->model->getByIDv2($_POST['ID']);
+        }
+    }
+
+
 
     public function add()
     {

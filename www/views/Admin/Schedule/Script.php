@@ -4,7 +4,7 @@
         let tds = $(btn).closest('tr').find('td')
         let ID = tds[0].innerHTML;
         $("#action").val(ID);
-        $.post("./?api/schedule/getbyid", {
+        $.post("./?api/schedule/getbyidv2", {
             ID
         }, function(data, status) {
             var table = $('#table');
@@ -158,7 +158,6 @@
                         SHOWROOM_ID,
                         MOV_ID,
                         STARTTIME,
-
                         ENDTIME,
                         ID
                     }, function(data, status) {

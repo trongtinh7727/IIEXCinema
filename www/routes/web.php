@@ -109,6 +109,7 @@ Route::add("/?api/schedule/getbookedseat", "ScheduleController@getBookedSeat");
 Route::add("/?api/schedule/getByShowroom", "ScheduleController@getByShowroom");
 Route::add("/?api/schedule/getByMovie", "ScheduleController@getByMovie");
 Route::add("/?api/schedule/getbyid", "ScheduleController@getByID");
+Route::add("/?api/schedule/getbyidv2", "ScheduleController@getByIDv2");
 Route::add("/?api/schedule/add", "ScheduleController@add");
 Route::add("/?api/schedule/update", "ScheduleController@update");
 Route::add("/?api/schedule/delete", "ScheduleController@delete");

@@ -101,6 +101,21 @@ class ScheduleModel
         }
         return json_encode(array('status' => true, 'data' => $data));
     }
+    public function getByIDv2($ID)
+    {
+        $sql = "Select * from schedule where schedule.id = ?";
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute(array($ID));
+        } catch (PDOException $ex) {
+            return (json_encode(array('status' => false, 'data' => $ex->getMessage())));
+        }
+        $data = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $data[] = $row;
+        }
+        return json_encode(array('status' => true, 'data' => $data));
+    }
 
     public function add($SHOWROOM_ID, $MOV_ID, $STARTTIME, $ENDTIME, $PRICE)
     {
