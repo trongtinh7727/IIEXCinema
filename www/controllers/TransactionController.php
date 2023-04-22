@@ -22,4 +22,12 @@ class TransactionController extends AdminController
             $data['Month'],
         );
     }
+
+    public function getByID(){
+        if (isset($_GET['booking_id'])) {
+            echo $this->model->getByID(
+                $_GET['booking_id']
+            );
+        }
+    }
 }

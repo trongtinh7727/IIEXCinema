@@ -44,30 +44,11 @@
                     <?php
                     }
                     ?>
-
                 </div>
             </div>
         </div>
     </nav> <!-- Slider -->
-    <!-- Sidenav -->
-    <div id="profileSideNav" class="sidenav">
-        <a class="position-absolute p-2 text-decoration-none text-dark bg-yellow fs-5 fw-medium d-flex align-items-center justify-content-between" href="./?profile" id="profileDetails">
-            Thông tin tài khoản
-            <i class="fa-solid fa-user"></i>
-        </a>
-        <a class="position-absolute p-2 text-decoration-none text-dark hover-bg-green fs-5 fw-medium d-flex align-items-center justify-content-between" href="./?bookinghistory" id="bookingHistory">
-            Lịch sử đặt vé
-            <i class="fa-solid fa-clock-rotate-left"></i>
-        </a>
-        <a class="position-absolute p-2 text-decoration-none text-white hover-bg-green fs-5 fw-medium d-flex align-items-center justify-content-between" href="./?changepassword" id="changePassword">
-            Đổi mật khẩu
-            <i class="fa-solid fa-key"></i>
-        </a>
-        <a class="position-absolute p-2 text-decoration-none text-white hover-bg-green fs-5 fw-medium d-flex align-items-center justify-content-between" href="./?logout" id="logout">
-            Đăng xuất
-            <i class="fa-solid fa-right-from-bracket"></i>
-        </a>
-    </div>
+    
 
     <!-- Swiper -->
     <div id="toppartSwiper" class="swiper w-100 py-5 mt-4">

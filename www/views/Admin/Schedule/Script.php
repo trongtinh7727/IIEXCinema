@@ -22,27 +22,43 @@
 
     $(document).ready(function() {
 
-        function load_theater() {
-            $('#theaterBox').empty()
-            var option = document.createElement('option');
-            option.value = -1;
-            option.innerText = "Chọn phòng chiếu";
-            $('#theaterBox').append(option);
-            $.get("./?api/theater/getall", function(data, status) {
-                var table = $('#table');
+        function load_cinema() {
+            $.get("./?api/cinema/getall", function(data, status) {
                 console.log(data)
                 data.data.forEach(function(object) {
                     var option = document.createElement('option');
                     option.value = object.ID;
-                    option.innerText = "Phòng số " + object.THEATERNUM;
-                    $('#theaterBox').append(option);
+                    option.innerText = object.NAME;
+                    $('#cinemaBox').append(option);
                 });
             }, "json");
         }
-        load_theater()
+        load_cinema();
+
+
+        function load_showroom(cinema_id) {
+            $('#showroomBox').empty()
+            var option = document.createElement('option');
+            option.value = -1;
+            option.innerText = "Chọn phòng chiếu";
+            $('#showroomBox').append(option);
+            $.get("./?api/showroom/getByCinema&cinema_id=" + cinema_id, function(data, status) {
+                console.log(data)
+                data.data.forEach(function(object) {
+                    var option = document.createElement('option');
+                    option.value = object.ID;
+                    option.innerText = "Phòng số " + object.SHOWROOMNUM;
+                    $('#showroomBox').append(option);
+                });
+            }, "json");
+        }
+        $('#cinemaBox').change(function() {
+            load_showroom($('#cinemaBox').val());
+        })
+
 
         var table = $('#dataTable').DataTable({
-            ajax: "./?api/schedule/getByTheater&theater_id=-1",
+            ajax: "./?api/schedule/getByShowroom&showroom_id=-1",
             columns: [{
                     data: 'ID'
                 },
@@ -89,16 +105,16 @@
         }
         load_ongoing_movie();
         let jsonArrayObj = [{}];
-        $('#theaterBox').change(function() {
-            let theater_id = $('#theaterBox').val();
-            table.ajax.url("./?api/schedule/getByTheater&theater_id=" + theater_id).load();
+        $('#showroomBox').change(function() {
+            let showroom_id = $('#showroomBox').val();
+            table.ajax.url("./?api/schedule/getByShowroom&showroom_id=" + showroom_id).load();
         })
 
 
         $("#addStaff").click(function() {
 
-            let THEA_ID = $('#theaterBox').val();
-            if (THEA_ID == '-1') {
+            let SHOWROOM_ID = $('#showroomBox').val();
+            if (SHOWROOM_ID == '-1') {
                 $("#msg-failed").css('display', 'flex').text("Vui lòng chọn rạp và phòng chiếu!")
                 $("#msg-success").css('display', 'none')
             } else {
@@ -114,7 +130,7 @@
                 if (action == "Add") {
                     // Tao lich chieu
                     $.post("./?api/schedule/add", {
-                        THEA_ID,
+                        SHOWROOM_ID,
                         MOV_ID,
                         STARTTIME,
                         ENDTIME,
@@ -139,7 +155,7 @@
                 } else {
                     let ID = $("#action").val();
                     $.post("./?api/schedule/update", {
-                        THEA_ID,
+                        SHOWROOM_ID,
                         MOV_ID,
                         STARTTIME,
 

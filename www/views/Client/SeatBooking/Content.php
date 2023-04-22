@@ -29,15 +29,25 @@
                             <h3 id="bookticket-ticket-main-info-title" class="text-yellow text-center text-uppercase my-3"><?php echo $_SESSION['booking']['schedule'][0]->TITLE ?></h3>
                             <div id="bookticket-ticket-main-info-time" class="my-3 text-white">
                                 <h4 class="d-inline-block mx-2" style="min-width: 140px;">Thời gian:</h4>
-                                <h6 class="d-inline-block mx-2" id="bookticket-ticket-main-info-time-time"> <?php echo date("h:i", strtotime($_SESSION['booking']['schedule'][0]->STARTTIME)) ?>
-                                </h6>
-                                <h6 class="d-inline-block mx-2" id="bookticket-ticket-main-info-time-date">
-                                    <?php echo date("d/m/Y", strtotime($_SESSION['booking']['schedule'][0]->STARTTIME)) ?></h6>
+                                <h5 class="d-inline-block mx-2" id="bookticket-ticket-main-info-time-time"> <?php echo date("h:i", strtotime($_SESSION['booking']['schedule'][0]->STARTTIME)) ?>
+                                </h5>
+                                <h5 class="d-inline-block mx-2" id="bookticket-ticket-main-info-time-date">
+                                    <?php echo date("d/m/Y", strtotime($_SESSION['booking']['schedule'][0]->STARTTIME)) ?></h5>
                             </div>
-                            <div id="bookticket-ticket-main-info-theater" class="my-3 text-white d-inline">
+                            <div id="bookticket-ticket-main-info-theater" class="my-3 text-white">
                                 <h4 class="d-inline-block mx-2" style="width: 140px;">Rạp:</h4>
-                                <h6 class="d-inline-block mx-2" id="bookticket-ticket-main-info-theater-room"><?php echo $_SESSION['booking']['schedule'][0]->THEATERNUM ?>
-                                </h6>
+                                <h5 class="d-inline-block mx-2" id="bookticket-ticket-main-info-theater-room"><?php echo $_SESSION['booking']['schedule'][0]->NAME ?>
+                                </h5>
+                            </div>
+                            <div id="bookticket-ticket-main-info-theater" class="my-3 text-white ">
+                                <h4 class="d-inline-block mx-2" style="width: 140px;">Địa chỉ:</h4>
+                                <h5 class="d-inline-block mx-2" id="bookticket-ticket-main-info-theater-room"><?php echo $_SESSION['booking']['schedule'][0]->ADDRESS ?>
+                                </h5>
+                            </div>
+                            <div id="bookticket-ticket-main-info-theater" class="my-3 text-white ">
+                                <h4 class="d-inline-block mx-2" style="width: 140px;">Phòng số:</h4>
+                                <h5 class="d-inline-block mx-2" id="bookticket-ticket-main-info-theater-room"><?php echo $_SESSION['booking']['schedule'][0]->SHOWROOMNUM ?>
+                                </h5>
                             </div>
                         </div>
                     </div>

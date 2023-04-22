@@ -122,15 +122,68 @@
     </div>
     <!-- Shift -->
     <div id="moviedetails-main-shift" class="my-5">
+        <!-- Title -->
         <h3 class="text-white text-center">Chọn suất chiếu</h3>
         <div class="container">
-            <div class="row justify-content-center align-items-center g-4" id="shift-container">
-                <!-- Item -->
+            <?php
+            foreach ($movie_schedule as $cinema) {
+            ?>
 
-                <!-- Item -->
-
-
-            </div>
+                <!-- Rạp -->
+                <div class="moviedetails-main-shift-theater row justify-content-center align-items-center g-4 my-3">
+                    <!-- Title -->
+                    <div class="moviedetails-main-shift-theater-name text-white fs-4 fw-medium">
+                        <?php echo $cinema['NAME'] ?>
+                    </div>
+                    <?php
+                    foreach ($cinema['Showrooms'] as $showroom) {
+                    ?>
+                        <div class="moviedetails-main-shift-theater row justify-content-center align-items-center g-4 my-3">
+                            <div class="moviedetails-main-shift-theater-name text-white fs-4 fw-medium">
+                                Phòng chiếu số <?php echo $showroom['SHOWROOMNUM'] ?>
+                            </div>
+                            <?php
+                            foreach ($showroom['showtimes'] as $showtime) {
+                            ?>
+                                <!-- Item -->
+                                <div name="moviedetails-main-shift-theater-item" class="moviedetails-main-shift-theater-item col-12 col-xl-4 my-4">
+                                    <div class="d-flex">
+                                        <?php
+                                        foreach ($showtime['times'] as $time) {
+                                        ?>
+                                            <!-- Time slot -->
+                                            <div class="moviedetails-main-shift-theater-item-time bg-yellow d-flex align-items-center">
+                                                <!-- Time slot -->
+                                                <a href="./?ticketbooking&schedule=<?php echo $time['ID']  ?>" class="moviedetails-main-shift-theater-item-time-slot ms-3 text-white d-flex align-items-center justify-content-center text-decoration-none my-0 hover-bg-green">
+                                                    <div class="fs-4 fw-medium"><?php echo date('h:i', strtotime($time['TIME']))  ?></div>
+                                                </a>
+                                            </div>
+                                        <?php
+                                        }
+                                        ?>
+                                        <div class="triangle-bottom-left"></div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="moviedetails-main-shift-theater-item-date bg-yellow">
+                                            <div class="moviedetails-main-shift-theater-item-date-dm fs-5 fw-semibold ms-3"><?php echo date('d/m', strtotime($showtime['DAY'])) ?>
+                                            </div>
+                                            <div class="moviedetails-main-shift-theater-item-date-y fs-4 fw-semibold ms-3"><?php echo date('y', strtotime($showtime['DAY'])) ?>
+                                            </div>
+                                        </div>
+                                        <div class="triangle-top-left"></div>
+                                    </div>
+                                </div>
+                            <?php
+                            }
+                            ?>
+                        </div>
+                    <?php
+                    }
+                    ?>
+                </div>
+            <?php
+            }
+            ?>
         </div>
     </div>
 </div>

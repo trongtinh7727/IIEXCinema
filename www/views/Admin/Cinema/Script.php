@@ -4,31 +4,21 @@
         let tds = $(btn).closest('tr').find('td');
         let ID = tds[0].innerHTML;
         $("#action").val(ID);
-
-        $.post("./?api/product/getbyid", {
+        $.post("./?api/cinema/getbyid", {
             ID
         }, function(data, status) {
             var table = $('#table');
             console.log(data)
             data.data.forEach(function(object) {
                 $('#NAME').val(object.NAME)
-                if (object.TYPE == "Đồ ăn") {
-                    $('#TYPE').val(1)
-                }else{
-                    $('#TYPE').val(2)
-                }
-                $('#PRICE').val(object.PRICE)
-                $('#QUANTITY').val(object.QUANTITY)
-                $('#STORY').val(object.STORY)
-                $('#Expiry_Date').val(object.Expiry_Date)
-
+                $('#PHONE').val(object.PHONE)
+                $('#ADDRESS').val(object.ADDRESS)
             });
         }, "json");
     }
     $(document).ready(function() {
-
         var table = $('#dataTable').DataTable({
-            ajax: "./?api/product/getall",
+            ajax: "./?api/cinema/getall",
             columns: [{
                     data: 'ID'
                 },
@@ -36,13 +26,10 @@
                     data: 'NAME'
                 },
                 {
-                    data: 'TYPE'
+                    data: 'PHONE'
                 },
                 {
-                    data: 'QUANTITY'
-                },
-                {
-                    data: 'Expiry_Date'
+                    data: 'ADDRESS'
                 },
                 {
                     data: null,
@@ -53,25 +40,22 @@
             ]
         });
 
+        $('#addEmployeeModal').on('hidden.bs.modal', function() {
+            clearForm()
+        })
+
 
         $("#add").click(function() {
             let NAME = $('#NAME').val()
-            let TYPE = $('#TYPE').val()
-            let PRICE = $('#PRICE').val()
-            let QUANTITY = $('#QUANTITY').val()
-
-            let Expiry_Date = $('#Expiry_Date').val()
-
-
+            let PHONE = $('#PHONE').val()
+            let ADDRESS = $('#ADDRESS').val()
             let action = $("#action").val();
 
             if (action == "Add") {
-                $.post("./?api/product/add", {
+                $.post("./?api/cinema/add", {
                     NAME,
-                    TYPE,
-                    PRICE,
-                    QUANTITY,
-                    Expiry_Date
+                    PHONE,
+                    ADDRESS
                 }, function(data, status) {
                     console.log(data)
                     if (data.status) {
@@ -90,12 +74,10 @@
                 }, "json")
             } else {
                 let ID = $("#action").val();
-                $.post("./?api/product/update", {
+                $.post("./?api/cinema/update", {
                     NAME,
-                    TYPE,
-                    PRICE,
-                    QUANTITY,
-                    Expiry_Date,
+                    PHONE,
+                    ADDRESS,
                     ID
                 }, function(data, status) {
                     console.log(data)
@@ -121,7 +103,7 @@
 
         $("#delete-button").on('click', function() {
             let uid = $('#delete-button').attr('uid');
-            $.post("./?api/product/delete", {
+            $.post("./?api/cinema/delete", {
                 id: uid
             }, function(data, status) {
                 console.log(data)
@@ -145,10 +127,6 @@
 
 
     });
-    $('#addEmployeeModal').on('hidden.bs.modal', function() {
-        clearForm()
-        $("#action").val("Add");
-    })
 
     // hiện dialog xác nhận khi xóa
     function confirmRemoval(btn) {
@@ -161,10 +139,8 @@
     }
 
     function clearForm() {
-        $('#NAME').val("")
-        $('#TYPE').val("")
-        $('#PRICE').val("")
-        $('#QUANTITY').val("")
-        $('#Expiry_Date').val("")
+        $('#NAME').val("");
+        $("#PHONE").val("");
+        $("#ADDRESS").val("");
     }
 </script>

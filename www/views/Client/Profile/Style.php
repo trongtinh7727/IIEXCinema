@@ -80,9 +80,9 @@
     /* Sidenav */
     /* Sidenav */
 
-    #profileSideNav {
+    /* #profileSideNav {
         position: fixed;
-    }
+    } */
 
     #profileSideNav a {
         left: -200px;
@@ -96,24 +96,24 @@
     }
 
     #profileDetails {
-        top: 50px;
+        top: 100px;
     }
 
     #bookingHistory {
         background-color: rgba(217, 217, 217, 0.25);
-        top: 100px;
+        top: 150px;
     }
 
 
 
     #changePassword {
         background-color: rgba(217, 217, 217, 0.25);
-        top: 150px;
+        top: 200px;
     }
 
     #logout {
         background-color: rgba(217, 217, 217, 0.25);
-        top: 200px;
+        top: 250px;
     }
 
 
@@ -131,5 +131,48 @@
         min-height: 44px;
         background-color: rgba(217, 217, 217, 0.25);
         border: #FFFFFF solid 1px;
+    }
+
+    /* Main */
+    #bookingHistory-main-inner {
+        background-color: rgba(255, 255, 255, 0.25);
+    }
+    .dataTables_filter {
+        float: right;
+    }
+
+    .dataTables_paginate {
+        float: right;
+    }
+    @media screen and (max-width: 992px) {
+        #icon-camera {
+            display: flex;
+            justify-content: center;
+        }
+
+        .custom-active::after {
+            content: "";
+            position: absolute;
+            background-color: #FFBA08;
+            height: 1px;
+            width: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 0;
+        }
+    }
+
+    @media screen and (max-width: 1200px) {
+        .swiper-slide {
+            background-color: transparent;
+        }
+
+        .swiper-slide-inner-right {
+            display: none;
+        }
+
+        .swiper-slide-inner-left {
+            height: 300px;
+        }
     }
 </style>

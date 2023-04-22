@@ -36,7 +36,8 @@ Route::add("/?changepassword", "AuthController@changePassword");
 Route::add("/?admin/staff", "AdminController@staffAction");
 Route::add("/?admin/movie", "AdminController@movieAction");
 Route::add("/?admin/schedule", "AdminController@scheduleAction");
-Route::add("/?admin/theater", "AdminController@theaterAction");
+Route::add("/?admin/showroom", "AdminController@ShowroomAction");
+Route::add("/?admin/cinema", "AdminController@CinemaAction");
 Route::add("/?admin/product", "AdminController@productAction");
 Route::add("/?admin/client", "AdminController@clientAction");
 Route::add("/?admin/transaction", "AdminController@transactionAction");
@@ -78,25 +79,33 @@ Route::add("/?api/foodcombo/update", "FoodComboController@update");
 Route::add("/?api/foodcombo/delete", "FoodComboController@delete");
 
 // Seat
-Route::add("/?api/seat/getByTheater", "SeatController@getByTheater");
+Route::add("/?api/seat/getByShowroom", "SeatController@getByShowroom");
 
 // Transaction
 Route::add("/?api/transaction/getall", "TransactionController@getAll");
 Route::add("/?api/transaction/getrevenue", "TransactionController@getRevenue");
+Route::add("/?api/transaction/getbyid", "TransactionController@getByID");
 
 // Ticket
 Route::add("/?api/ticket/add", "TicketController@add");
 Route::add("/?api/ticket/addticketseatschedule", "TicketController@addTicketSeatSchedule");
 
-// Theater
-Route::add("/?api/theater/getall", "TheaterController@getAll");
-Route::add("/?api/theater/add", "TheaterController@add");
-Route::add("/?api/theater/update", "TheaterController@update");
-Route::add("/?api/theater/delete", "TheaterController@delete");
+// Showroom
+Route::add("/?api/showroom/getByCinema", "ShowroomController@getByCinema");
+Route::add("/?api/showroom/getall", "ShowroomController@getAll");
+Route::add("/?api/showroom/add", "ShowroomController@add");
+Route::add("/?api/showroom/update", "ShowroomController@update");
+Route::add("/?api/showroom/delete", "ShowroomController@delete");
+
+// Cinema
+Route::add("/?api/cinema/getall", "CinemaController@getAll");
+Route::add("/?api/cinema/add", "CinemaController@add");
+Route::add("/?api/cinema/update", "CinemaController@update");
+Route::add("/?api/cinema/delete", "CinemaController@delete");
 
 // Schedule
 Route::add("/?api/schedule/getbookedseat", "ScheduleController@getBookedSeat");
-Route::add("/?api/schedule/getByTheater", "ScheduleController@getByTheater");
+Route::add("/?api/schedule/getByShowroom", "ScheduleController@getByShowroom");
 Route::add("/?api/schedule/getByMovie", "ScheduleController@getByMovie");
 Route::add("/?api/schedule/getbyid", "ScheduleController@getByID");
 Route::add("/?api/schedule/add", "ScheduleController@add");

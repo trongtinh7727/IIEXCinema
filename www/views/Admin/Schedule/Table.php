@@ -12,11 +12,14 @@
             <button id="btn_add_employee" type="button" name="btn_add_employee" class="btn text-white shadow border-0 btn_custom" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
                 <i class="fa-solid fa-plus me-1"></i>Thêm mới!
             </button>
-            <select id="theaterBox" class="form-select w-25" aria-label="Default select example">
+            <select id="cinemaBox" class="form-select w-25" aria-label="Default select example">
+                <option value="-1">Chọn rạp phim</option>
+            </select>
+
+            <select id="showroomBox" class="form-select w-25" aria-label="Default select example">
                 <option value="-1">Chọn phòng chiếu</option>
 
             </select>
-
         </div>
     </div>
 

@@ -10,6 +10,11 @@
 
 <!-- Swiper -->
 <script language="JavaScript" type="text/javascript" src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+<!-- Datatables -->
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+<!-- Datatable Bootstrap -->
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 
 <script>
     $(document).ready(function() {
@@ -41,6 +46,8 @@
         });
     })
     $(document).ready(function() {
+        $('#bookingHistoryDataTable').DataTable();
+
         $('form').submit(function(event) {
             event.preventDefault();
 
@@ -90,6 +97,42 @@
 
             // If all validation checks pass, submit the form
             this.submit();
+        });
+    });
+
+
+    $(document).ready(function() {
+        // When the modal is shown
+        $('#historyItemModal').on('show.bs.modal', function (e) {
+            // Get the booking ID from the trigger element
+            var bookingId = $(e.relatedTarget).data('booking-id');
+            
+            // Make the AJAX call to get transaction details
+            $.ajax({
+                url: './?api/transaction/getbyid&booking_id=' + bookingId,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    // Fill the modal content with the transaction details
+                    // var modalBody = $('#historyItemModal').find('.modal-body');
+                    console.log(data.data)
+                    $('#TITLE').text(data.data[0]['TITLE']);
+                    $('#ySTARTTIME').text(data.data[0]['STARTTIME']);
+                    $('#tSTARTTIME').text(data.data[0]['STARTTIME']);
+                    $('#CINEMA').text(data.data[0]['CINEMA']);
+                    $('#ADDRESS').text(data.data[0]['ADDRESS']);
+                    $('#SHOWROOMNUM').text(data.data[0]['SHOWROOMNUM']);
+                    $('#SEATS').text(data.data[0]['Seats']);
+                    $('#yCREATED_AT').text(data.data[0]['CREATED_AT']);
+                    $('#tCREATED_AT').text(data.data[0]['CREATED_AT']);
+                    $('#TICKET_PRICE').text(data.data[0]['TICKET_PRICE']);
+                    $('#FOOD_PRICE').text(data.data[0]['FOOD_PRICE']);
+                    $('#Total').text(data.data[0]['Total']);
+                },
+                error: function() {
+                    alert('Error getting transaction details');
+                }
+            });
         });
     });
 </script>

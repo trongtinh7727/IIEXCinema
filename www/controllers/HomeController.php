@@ -27,14 +27,14 @@ class HomeController extends AuthController
     public function profile()
     {
         $profile = $this->model->getProfile($_SESSION['userLogin']['ID']);
-        $path = "Proflie";
+        $path = "Profile";
         require_once('views/Client/Profile/Content.php');
     }
     public function bookingHistory()
     {
         $transactions = $this->model->bookingHistory($_SESSION['userLogin']['ID']);
         $path = "BookingHistory";
-        require_once('views/Client/BookingHistory/Content.php');
+        require_once('views/Client/Profile/Content.php');
     }
     public function indexAction()
     {
@@ -59,6 +59,9 @@ class HomeController extends AuthController
     {
         $ongoing = $this->ongoing;
         $movie_id = $_GET['id'];
+        $movie_schedule = $this->model->getMovieSchedule($movie_id); 
+        // print_r($movie_schedule);
+        // die();
         $path = "MovieDetail";
         require_once('views/Client/index.php');
     }

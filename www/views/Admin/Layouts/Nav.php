@@ -39,7 +39,10 @@
                 <a href="./?admin/client" id="Client" class="btn btn-lg hover-bg-green my-1 w-100 text-start">
                     Khách hàng
                 </a>
-                <a href="/?admin/theater" id="theater" class="btn btn-lg hover-bg-green my-1 w-100 text-start">
+                <a href="/?admin/cinema" id="Cinema" class="btn btn-lg hover-bg-green my-1 w-100 text-start">
+                    Rạp chiếu phim
+                </a>
+                <a href="/?admin/showroom" id="Showroom" class="btn btn-lg hover-bg-green my-1 w-100 text-start">
                     Phòng chiếu phim
                 </a>
                 <a href="/?admin/movie" id="Movie" class="btn btn-lg hover-bg-green my-1 w-100 text-start">

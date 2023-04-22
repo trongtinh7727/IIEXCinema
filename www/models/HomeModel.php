@@ -24,6 +24,60 @@ class HomeModel
         return $data;
     }
 
+    public function getMovieSchedule($movie_id)
+    {
+        // get cinemas
+        $sql = "CALL `get_movie_schedule`(?)";
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute(array($movie_id));
+        } catch (PDOException $ex) {
+            return (json_encode(array('status' => false, 'data' => $ex->getMessage())));
+        }
+        $showtimes  = array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $showtimes[] = $row;
+        }
+
+        $grouped = array();
+        foreach ($showtimes as $showtime) {
+            $cinemaId = $showtime['cinema_ID'];
+            $showroomId = $showtime['showroom_ID'];
+            $day = $showtime['DAY'];
+
+            if (!isset($grouped[$cinemaId])) {
+                $grouped[$cinemaId] = array(
+                    "CINEMA_ID" => $showtime['cinema_ID'],
+                    "NAME" => $showtime['NAME'],
+                    "ADDRESS" => $showtime['ADDRESS'],
+                    "Showrooms" => array()
+                );
+            }
+
+            if (!isset($grouped[$cinemaId]["Showrooms"][$showroomId])) {
+                $grouped[$cinemaId]["Showrooms"][$showroomId] = array(
+
+                    "showroom_ID" => $showtime['showroom_ID'],
+                    "SHOWROOMNUM" => $showtime['SHOWROOMNUM'],
+                    "showtimes" => array()
+                );
+            }
+
+            if (!isset($grouped[$cinemaId]["Showrooms"][$showroomId]['showtimes'][$day])) {
+                $grouped[$cinemaId]["Showrooms"][$showroomId]['showtimes'][$day] = array(
+                    "DAY" => $showtime['DAY'],
+                    "times" => array()
+                );
+            }
+
+            $grouped[$cinemaId]["Showrooms"][$showroomId]['showtimes'][$day]["times"][] = array(
+                "ID" => $showtime['ID'],
+                "TIME" =>  $showtime['TIME']
+            );
+        }
+        return $grouped;
+    }
+
     public function bookingHistory($ID)
     {
         $sql = " CALL `get_transactions_by_user`(?)";
@@ -112,3 +166,4 @@ class HomeModel
         }
     }
 }
+

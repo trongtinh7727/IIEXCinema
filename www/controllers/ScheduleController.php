@@ -7,10 +7,10 @@ class ScheduleController extends AdminController
     {
         $this->model = $model;
     }
-    public function getByTheater()
+    public function getByShowroom()
     {
-        if (isset($_GET['theater_id'])) {
-            echo $this->model->getByTheater($_GET['theater_id']);
+        if (isset($_GET['showroom_id'])) {
+            echo $this->model->getByShowroom($_GET['showroom_id']);
         }
     }
 
@@ -38,11 +38,11 @@ class ScheduleController extends AdminController
     {
         $this->isAuthenticated();
         $params = array(
-            'THEA_ID', 'PRICE', 'MOV_ID', 'STARTTIME', 'ENDTIME'
+            'SHOWROOM_ID', 'PRICE', 'MOV_ID', 'STARTTIME', 'ENDTIME'
         );
         $data = $this->validateParams($params);
         echo $this->model->add(
-            $data['THEA_ID'],
+            $data['SHOWROOM_ID'],
             $data['MOV_ID'],
             $data['STARTTIME'],
             $data['ENDTIME'],
@@ -67,11 +67,11 @@ class ScheduleController extends AdminController
     {
         $this->isAuthenticated();
         $params = array(
-            'THEA_ID', 'ID', 'MOV_ID', 'STARTTIME', 'ENDTIME'
+            'SHOWROOM_ID', 'ID', 'MOV_ID', 'STARTTIME', 'ENDTIME'
         );
         $data = $this->validateParams($params);
         echo $this->model->update(
-            $data['THEA_ID'],
+            $data['SHOWROOM_ID'],
             $data['MOV_ID'],
             $data['STARTTIME'],
             $data['ENDTIME'],

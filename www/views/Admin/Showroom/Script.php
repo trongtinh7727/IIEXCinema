@@ -1,48 +1,62 @@
 <script>
+    $('#addEmployeeModal').on('hidden.bs.modal', function() {
+        clearForm()
+    })
+
     function fillEditForm(btn) {
-        $("#addCinemaModalLabel").val("Update Cinema");
+        $("#addEmployeeModal").val("Update");
         let tds = $(btn).closest('tr').find('td');
         let ID = tds[0].innerHTML;
         $("#action").val(ID);
-
-        $.post("./?api/product/getbyid", {
-            ID
-        }, function(data, status) {
-            var table = $('#table');
-            console.log(data)
-            data.data.forEach(function(object) {
-                $('#NAME').val(object.NAME)
-                if (object.TYPE == "Đồ ăn") {
-                    $('#TYPE').val(1)
-                }else{
-                    $('#TYPE').val(2)
-                }
-                $('#PRICE').val(object.PRICE)
-                $('#QUANTITY').val(object.QUANTITY)
-                $('#STORY').val(object.STORY)
-                $('#Expiry_Date').val(object.Expiry_Date)
-
-            });
-        }, "json");
+        $("#SEATCOUNT").prop('disabled', true);
+        $('#SHOWROOMNUM').val(tds[1].innerText)
+        console.log("edit")
+        console.log(tds[1].innerText)
     }
+
+    // hiện dialog xác nhận khi xóa
+    function confirmRemoval(btn) {
+        let tds = $(btn).closest('tr').find('td')
+        let msg = `Lịch chiếu của phim ${tds[1].innerText} (ID = ${tds[0].innerText})`;
+        document.getElementById("student_name").innerHTML = msg;
+        console.log(tds[2].innerText)
+        $('#delete-button').attr('uid', tds[0].innerHTML)
+        var myModal = new bootstrap.Modal(document.getElementById("confirm-removal-modal"), {});
+        myModal.show();
+    }
+
+
+    function clearForm() {
+        $('#SHOWROOMNUM').val("")
+        $('#SEATCOUNT').val("")
+    }
+
     $(document).ready(function() {
+        function load_cinema() {
+            $.get("./?api/cinema/getall", function(data, status) {
+
+                console.log(data)
+                data.data.forEach(function(object) {
+                    var option = document.createElement('option');
+                    option.value = object.ID;
+                    option.innerText = object.NAME;
+                    $('#cinemaBox').append(option);
+                });
+            }, "json");
+        }
+        load_cinema();
+
 
         var table = $('#dataTable').DataTable({
-            ajax: "./?api/product/getall",
+            ajax: "./?api/showroom/getByCinema&cinema_id=-1",
             columns: [{
                     data: 'ID'
                 },
                 {
-                    data: 'NAME'
+                    data: 'SHOWROOMNUM'
                 },
                 {
-                    data: 'TYPE'
-                },
-                {
-                    data: 'QUANTITY'
-                },
-                {
-                    data: 'Expiry_Date'
+                    data: 'SEATCOUNT'
                 },
                 {
                     data: null,
@@ -53,29 +67,24 @@
             ]
         });
 
-
-        $("#add").click(function() {
-            let NAME = $('#NAME').val()
-            let TYPE = $('#TYPE').val()
-            let PRICE = $('#PRICE').val()
-            let QUANTITY = $('#QUANTITY').val()
-
-            let Expiry_Date = $('#Expiry_Date').val()
+        $('#cinemaBox').change(function() {
+            let cinema_id = $('#cinemaBox').val();
+            console.log(cinema_id);
+            table.ajax.url("./?api/showroom/getByCinema&cinema_id=" + cinema_id).load();
+        })
 
 
+        $("#addStaff").click(function() {
+            let SHOWROOMNUM = $('#SHOWROOMNUM').val();
+            let CINEMA_ID = $('#cinemaBox').val();
             let action = $("#action").val();
-
             if (action == "Add") {
-                $.post("./?api/product/add", {
-                    NAME,
-                    TYPE,
-                    PRICE,
-                    QUANTITY,
-                    Expiry_Date
+                $.post("./?api/showroom/add", {
+                    SHOWROOMNUM,
+                    CINEMA_ID
                 }, function(data, status) {
                     console.log(data)
                     if (data.status) {
-                        console.log("Okee")
                         table.ajax.reload();
                         let msg = data.data;
                         console.log(msg)
@@ -90,17 +99,13 @@
                 }, "json")
             } else {
                 let ID = $("#action").val();
-                $.post("./?api/product/update", {
-                    NAME,
-                    TYPE,
-                    PRICE,
-                    QUANTITY,
-                    Expiry_Date,
-                    ID
+                $.post("./?api/showroom/update", {
+                    SHOWROOM_ID: ID,
+                    CINEMA_ID,
+                    SHOWROOMNUM
                 }, function(data, status) {
                     console.log(data)
                     if (data.status) {
-                        console.log("Okee")
                         table.ajax.reload();
                         let msg = data.data;
                         console.log(msg)
@@ -113,15 +118,12 @@
                         $("#msg-success").css('display', 'none')
                     }
                 }, "json")
-                $("#action").val("Add");
             }
-            clearForm()
         });
-
 
         $("#delete-button").on('click', function() {
             let uid = $('#delete-button').attr('uid');
-            $.post("./?api/product/delete", {
+            $.post("./?api/showroom/delete", {
                 id: uid
             }, function(data, status) {
                 console.log(data)
@@ -144,27 +146,5 @@
         })
 
 
-    });
-    $('#addEmployeeModal').on('hidden.bs.modal', function() {
-        clearForm()
-        $("#action").val("Add");
     })
-
-    // hiện dialog xác nhận khi xóa
-    function confirmRemoval(btn) {
-        let tds = $(btn).closest('tr').find('td')
-        document.getElementById("student_name").innerHTML = tds[1].innerText;
-        console.log(tds[2].innerText)
-        $('#delete-button').attr('uid', tds[0].innerHTML)
-        var myModal = new bootstrap.Modal(document.getElementById("confirm-removal-modal"), {});
-        myModal.show();
-    }
-
-    function clearForm() {
-        $('#NAME').val("")
-        $('#TYPE').val("")
-        $('#PRICE').val("")
-        $('#QUANTITY').val("")
-        $('#Expiry_Date').val("")
-    }
 </script>

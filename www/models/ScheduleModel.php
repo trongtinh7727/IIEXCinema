@@ -9,12 +9,12 @@ class ScheduleModel
         $this->db = $db;
     }
 
-    public function getByTheater($theater_id)
+    public function getByShowroom($showroom_id)
     {
-        $sql = "CALL `get_schedule_by_theater`(?)";
+        $sql = "CALL `get_schedule_by_showroom`(?)";
         try {
             $stmt = $this->db->prepare($sql);
-            $stmt->execute(array($theater_id));
+            $stmt->execute(array($showroom_id));
         } catch (PDOException $ex) {
             return (json_encode(array('status' => false, 'data' => $ex->getMessage())));
         }
@@ -26,11 +26,11 @@ class ScheduleModel
         return json_encode(array('status' => true, 'data' => $data));
     }
 
-    private function isValidSchedule($STARTTIME, $THEA_ID)
+    private function isValidSchedule($STARTTIME, $SHOWROOM_ID)
     {
         $sql = 'CALL `isValidSchedule`(?, ?)';
         $stmt = $this->db->prepare($sql);
-        $stmt->execute(array($STARTTIME, $THEA_ID));
+        $stmt->execute(array($STARTTIME, $SHOWROOM_ID));
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             return (json_encode(array('status' => false, 'data' => "Trùng lịch chiếu!")));
         }
@@ -102,14 +102,14 @@ class ScheduleModel
         return json_encode(array('status' => true, 'data' => $data));
     }
 
-    public function add($THEA_ID, $MOV_ID, $STARTTIME, $ENDTIME, $PRICE)
+    public function add($SHOWROOM_ID, $MOV_ID, $STARTTIME, $ENDTIME, $PRICE)
     {
-        $isValid = $this->isValidSchedule($STARTTIME, $THEA_ID);
+        $isValid = $this->isValidSchedule($STARTTIME, $SHOWROOM_ID);
         if ($isValid == 1) {
             $sql = 'CALL `create_schedule`(?, ?, ?, ?, ?);';
             try {
                 $stmt = $this->db->prepare($sql);
-                $stmt->execute(array($THEA_ID, $MOV_ID, $STARTTIME, $ENDTIME, $PRICE));
+                $stmt->execute(array($SHOWROOM_ID, $MOV_ID, $STARTTIME, $ENDTIME, $PRICE));
                 $schedule_id = $this->db->lastInsertId();
                 return json_encode(array('status' => true, 'data' => array('schedule_id' => $schedule_id, 'message' => 'Thêm lịch chiếu thành công')));
             } catch (PDOException $ex) {
@@ -141,16 +141,16 @@ class ScheduleModel
         }
     }
 
-    public function update($THEA_ID, $MOV_ID, $STARTTIME, $ENDTIME, $ID)
+    public function update($SHOWROOM_ID, $MOV_ID, $STARTTIME, $ENDTIME, $ID)
     {
-        $isValid = $this->isValidSchedule($STARTTIME, $THEA_ID);
+        $isValid = $this->isValidSchedule($STARTTIME, $SHOWROOM_ID);
         if ($isValid == 1) {
-            $sql = 'UPDATE `schedule` SET  `THEA_ID` = ?,
+            $sql = 'UPDATE `schedule` SET  `SHOWROOM_ID` = ?,
                 `MOV_ID` = ?, `STARTTIME` = ?, `ENDTIME` = ? WHERE `schedule`.`ID` = ?';
 
             try {
                 $stmt = $this->db->prepare($sql);
-                $stmt->execute(array($THEA_ID, $MOV_ID, $STARTTIME, $ENDTIME, $ID));
+                $stmt->execute(array($SHOWROOM_ID, $MOV_ID, $STARTTIME, $ENDTIME, $ID));
                 $count = $stmt->rowCount();
 
                 if ($count == 1) {
