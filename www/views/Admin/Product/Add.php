@@ -22,10 +22,6 @@
                         </select>
                     </div>
                     <div class="input-group mb-3">
-                        <span class="input-group-text" id="">Giá mỗi sản phẩm</span>
-                        <input id="PRICE" type="number" class="form-control">
-                    </div>
-                    <div class="input-group mb-3">
                         <span class="input-group-text" id="">Số lượng</span>
                         <input id="QUANTITY" type="text" class="form-control">
                     </div>

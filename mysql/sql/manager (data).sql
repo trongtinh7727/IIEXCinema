@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 22, 2023 lúc 12:35 AM
+-- Thời gian đã tạo: Th4 22, 2023 lúc 03:07 AM
 -- Phiên bản máy phục vụ: 10.4.28-MariaDB
 -- Phiên bản PHP: 8.0.28
 
@@ -144,16 +144,6 @@ AND schedule.ID = ticket_seat_schedule.SCHEDULE_ID
 AND ticket_seat_schedule.BOOKED = 1
 AND schedule.ID = schedule_id$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `get_cinema_has_movie_schedule` (IN `PMOV_ID` INT)   SELECT cinema.ID as cinema_ID, cinema.NAME, cinema.ADDRESS
-FROM schedule , showroom, cinema
-where 
-MOV_ID = PMOV_ID
-AND cinema.ID = showroom.CINEMA_ID
-AND SHOWROOM.ID = schedule.SHOWROOM_ID
-AND NOW() < schedule.STARTTIME 
-GROUP BY cinema.ID
-order by STARTTIME$$
-
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_foodcombo` ()   SELECT
     `foodcombo`.`ID` AS `ID`,
     `foodcombo`.`NAME` AS `NAME`,
@@ -211,14 +201,30 @@ WHERE
 GROUP BY
     date(booking.CREATED_AT)$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `get_schedule_by_id` (IN `schedule_id` INT(1))   SELECT movie.TITLE,movie.POSTER,movie.TRAILER, schedule.STARTTIME, SHOWROOM.SHOWROOMNUM, ticket.price
-FROM movie, schedule, SHOWROOM, ticket, ticket_seat_schedule
-WHERE movie.ID = schedule.MOV_ID
-AND schedule.SHOWROOM_ID = SHOWROOM.ID
-AND ticket.ID = ticket_seat_schedule.TICKET_ID
-AND schedule.ID = ticket_seat_schedule.SCHEDULE_ID
-AND schedule.ID = schedule_id
-GROUP BY schedule.ID$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_schedule_by_id` (IN `schedule_id` INT(1))   SELECT
+    movie.TITLE,
+    movie.POSTER,
+    movie.TRAILER,
+    SCHEDULE.STARTTIME,
+    SHOWROOM.SHOWROOMNUM,
+    ticket.price,
+    cinema.NAME,
+    cinema.ADDRESS
+FROM
+    movie,
+    SCHEDULE,
+    SHOWROOM,
+    ticket,
+    ticket_seat_schedule,
+    cinema
+WHERE
+    movie.ID = SCHEDULE.MOV_ID 
+    AND SCHEDULE.SHOWROOM_ID = SHOWROOM.ID 
+    AND ticket.ID = ticket_seat_schedule.TICKET_ID 
+    AND SCHEDULE.ID = ticket_seat_schedule.SCHEDULE_ID 
+    AND cinema.ID = showroom.CINEMA_ID
+    AND SCHEDULE.ID = schedule_id
+GROUP BY SCHEDULE.ID$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_schedule_by_showroom` (IN `SHOWROOM_id` INT)   SELECT movie.TITLE, movie.DURATION,schedule.* ,  SHOWROOM.SEATCOUNT, COUNT(ticket_seat_schedule.TICKET_ID) AS EMPTYSEAT
 FROM schedule, SHOWROOM, ticket_seat_schedule, movie
@@ -229,23 +235,13 @@ AND ticket_seat_schedule.BOOKED  = 0
 AND SHOWROOM.ID = SHOWROOM_id
 GROUP BY schedule.ID$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `get_schedule_today` ()   SELECT schedule.ID,movie.ID as MID, movie.TITLE, movie.POSTER, movie.STORY, GROUP_CONCAT(TIME(schedule.STARTTIME)) AS TIME, DATE(schedule.STARTTIME) as DAY FROM schedule JOIN movie ON movie.ID = schedule.MOV_ID WHERE now()< schedule.STARTTIME AND DATE(now()) = DATE(schedule.STARTTIME) GROUP BY MID$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `get_showroom_has_movie_schedule` (IN `PMOV_ID` INT(47), IN `PCINEMA_ID` INT(1))   SELECT showroom.ID AS showroom_ID, showroom.SHOWROOMNUM
-FROM schedule , showroom, cinema
-where 
-MOV_ID = PMOV_ID
-AND cinema.ID = PCINEMA_ID
-AND cinema.ID = showroom.CINEMA_ID
-AND SHOWROOM.ID = schedule.SHOWROOM_ID
-AND NOW() < schedule.STARTTIME 
-GROUP BY showroom.ID
-order by STARTTIME$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_schedule_today` ()   SELECT schedule.ID,movie.ID as MID, movie.TITLE, movie.POSTER, movie.STORY, GROUP_CONCAT(DISTINCT  TIME(schedule.STARTTIME)) AS TIME, DATE(schedule.STARTTIME) as DAY FROM schedule JOIN movie ON movie.ID = schedule.MOV_ID WHERE now()< schedule.STARTTIME AND DATE(now()) = DATE(schedule.STARTTIME) GROUP BY MID$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_trailers` ()   SELECT id, trailer FROM movie WHERE LENGTH(trailer) > 1 LIMIT 10$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_transactions` ()   SELECT 
 	booking.ID,
+    cinema.NAME AS CINEMA,
 	CLIENT
     .USERNAME,
     CLIENT.FIRSTNAME,
@@ -266,7 +262,9 @@ FROM
     schedule,
     seat,
     movie,
-    ticket
+    ticket,
+    cinema,
+    showroom
     
 WHERE 
 CLIENT.ID = booking.CLIENT_ID 
@@ -275,6 +273,8 @@ AND seat.ID = ticket_seat_schedule.SEAT_ID
 AND movie.ID = SCHEDULE.MOV_ID 
 AND ticket.BOO_ID = booking.ID
 AND ticket.ID = ticket_seat_schedule.TICKET_ID
+AND schedule.SHOWROOM_ID = showroom.ID
+AND cinema.ID = showroom.CINEMA_ID
 GROUP BY booking.ID$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_transactions_by_user` (IN `client_id` INT)   SELECT 
@@ -309,6 +309,41 @@ AND movie.ID = SCHEDULE.MOV_ID
 AND ticket.BOO_ID = booking.ID
 AND ticket.ID = ticket_seat_schedule.TICKET_ID
 AND client.ID = client_id
+GROUP BY booking.ID$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_transaction_by_id` (IN `booking_id` INT)   SELECT 
+	booking.ID,
+    cinema.NAME AS CINEMA,
+    cinema.ADDRESS,
+    showroom.SHOWROOMNUM,
+    movie.TITLE,
+    SCHEDULE.STARTTIME,
+    booking.CREATED_AT,
+    GROUP_CONCAT(seat.SEATNUMBER) AS Seats,
+    booking.TICKET_PRICE,
+    booking.FOOD_PRICE,
+    booking.FOOD_PRICE+booking.TICKET_PRICE AS Total
+FROM
+    `booking`,
+    CLIENT,
+    ticket_seat_schedule,
+    schedule,
+    seat,
+    movie,
+    ticket,
+    cinema,
+    showroom
+    
+WHERE 
+CLIENT.ID = booking.CLIENT_ID 
+AND SCHEDULE.ID = ticket_seat_schedule.SCHEDULE_ID 
+AND seat.ID = ticket_seat_schedule.SEAT_ID 
+AND movie.ID = SCHEDULE.MOV_ID 
+AND ticket.BOO_ID = booking.ID
+AND ticket.ID = ticket_seat_schedule.TICKET_ID
+AND schedule.SHOWROOM_ID = showroom.ID
+AND cinema.ID = showroom.CINEMA_ID
+AND booking.ID = booking_id
 GROUP BY booking.ID$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `isValidSchedule` (IN `stime` DATETIME, IN `SHOWROOM_num` INT)   SELECT * FROM `schedule` 
@@ -348,7 +383,11 @@ INSERT INTO `booking` (`ID`, `CLIENT_ID`, `CREATED_AT`, `FOOD_PRICE`, `TICKET_PR
 (4, 1, '2023-04-19 18:37:30', 130000, 90000),
 (5, 1, '2023-04-20 01:24:23', 100000, 90000),
 (6, 1, '2023-04-21 01:15:33', 300000, 390000),
-(7, 1, '2023-04-21 06:22:55', 330000, 90000);
+(7, 1, '2023-04-21 06:22:55', 330000, 90000),
+(8, 1, '2023-04-22 05:55:14', 330000, 210000),
+(9, 1, '2023-04-22 06:48:28', 130000, 420000),
+(10, 1, '2023-04-22 07:29:49', 260000, 90900),
+(11, 1, '2023-04-22 07:31:09', 260000, 90900);
 
 -- --------------------------------------------------------
 
@@ -369,7 +408,8 @@ CREATE TABLE `cinema` (
 
 INSERT INTO `cinema` (`ID`, `NAME`, `PHONE`, `ADDRESS`) VALUES
 (1, 'Lotte Q7', '0843206397', 'Quận 7, TP Hồ Chí Minh'),
-(2, 'Lotte Quận 8', '084123456', 'Quận 8, TP Hồ Chí Minh');
+(2, 'Lotte Quận 8', '084123456', 'Quận 8, TP Hồ Chí Minh'),
+(3, 'Movie City', '0843206399', 'Quận 10, TP Hồ Chí Minh');
 
 -- --------------------------------------------------------
 
@@ -395,8 +435,9 @@ CREATE TABLE `client` (
 --
 
 INSERT INTO `client` (`ID`, `USERNAME`, `PASSWORD`, `FIRSTNAME`, `LASTNAME`, `SEX`, `BIRTHDAY`, `PHONE`, `ADDRESS`, `ROLE`) VALUES
-(1, 'user', '123456', 'Võ', 'Trọng Tình', 'Nam', '2004-04-09', '0843206390', 'Q7, Thành phố Hồ Chí minh', 2),
-(2, 'mod', 'aaaaaaaa', 'Trọng Tình', 'Võ', 'Nam', '2023-04-13', '0843206396', 'Dong Nai', 2);
+(1, 'user', '123456', 'Võ', 'Trọng Tình', 'Nam', '2004-04-09', '0843206399', 'Q7, Thành phố Hồ Chí minh', 2),
+(3, 'mod', 'Demo@123', 'Lê Hoàng', 'Phúc', 'nam', '2003-08-20', '084113554', 'Quẩn 7, TP Hồ Chí Minh', 2),
+(4, 'pucpeo115', '12345678', 'Lê', 'Phúc', NULL, NULL, '0843206345', NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -441,13 +482,19 @@ INSERT INTO `food_booking` (`FOOD_ID`, `BOOKING_ID`, `QUANTITY`) VALUES
 (1, 1, 0),
 (2, 6, 1),
 (2, 7, 1),
+(2, 8, 1),
 (3, 2, 2),
 (3, 3, 1),
 (3, 4, 1),
 (3, 7, 1),
+(3, 8, 1),
+(3, 9, 1),
+(3, 10, 2),
+(3, 11, 2),
 (4, 5, 1),
 (4, 6, 2),
-(4, 7, 1);
+(4, 7, 1),
+(4, 8, 1);
 
 --
 -- Bẫy `food_booking`
@@ -462,12 +509,16 @@ WHERE booking.ID = Old.BOOKING_ID
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `insert_food_booking` AFTER INSERT ON `food_booking` FOR EACH ROW UPDATE booking
+CREATE TRIGGER `insert_food_booking` AFTER INSERT ON `food_booking` FOR EACH ROW BEGIN
+UPDATE booking
 SET booking.FOOD_PRICE = (SELECT SUM(foodcombo.PRICE*food_booking.QUANTITY) 
 FROM foodcombo, food_booking
 WHERE food_booking.FOOD_ID = foodcombo.ID
 AND food_booking.BOOKING_ID =New.BOOKING_ID)
-WHERE booking.ID = New.BOOKING_ID
+WHERE booking.ID = New.BOOKING_ID;
+
+UPDATE product p INNER JOIN product_fcb pf ON p.ID = pf.PRODUCT_ID INNER JOIN food_booking fb ON pf.FCB_ID = fb.FOOD_ID SET p.QUANTITY = p.QUANTITY - (fb.QUANTITY * pf.QUANTITY) WHERE fb.BOOKING_ID = New.BOOKING_ID;
+END
 $$
 DELIMITER ;
 DELIMITER $$
@@ -550,8 +601,8 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`ID`, `NAME`, `TYPE`, `QUANTITY`, `Expiry_Date`) VALUES
-(6, 'Bắp rang bơ L1', 'Đồ ăn', 1000, '2023-04-30'),
-(8, 'Coca cola', 'Đồ uống', 1000, '2023-04-30');
+(6, 'Bắp rang bơ L1', 'Đồ ăn', 990, '2023-04-30'),
+(8, 'Coca cola', 'Đồ uống', 9990, '2023-04-30');
 
 -- --------------------------------------------------------
 
@@ -603,7 +654,8 @@ INSERT INTO `schedule` (`ID`, `MOV_ID`, `STARTTIME`, `ENDTIME`, `SHOWROOM_ID`) V
 (11, 47, '2023-04-22 00:00:00', '2023-04-22 02:07:00', 7),
 (13, 47, '2023-04-22 15:59:00', '2023-04-22 18:06:00', 8),
 (14, 47, '2023-04-22 22:15:00', '2023-04-23 00:22:00', 5),
-(15, 47, '2023-04-22 13:15:00', '2023-04-22 15:22:00', 5);
+(15, 47, '2023-04-22 13:15:00', '2023-04-22 15:22:00', 5),
+(16, 43, '2023-04-23 18:57:00', '2023-04-23 20:56:00', 9);
 
 -- --------------------------------------------------------
 
@@ -982,7 +1034,97 @@ INSERT INTO `seat` (`ID`, `THE_ID`, `SEATNUMBER`, `SEATTYPE`) VALUES
 (357, 8, 'I4', 'Couple'),
 (358, 8, 'J4', 'Couple'),
 (359, 8, 'I5', 'Couple'),
-(360, 8, 'J5', 'Couple');
+(360, 8, 'J5', 'Couple'),
+(361, 9, 'A1', 'Standard'),
+(362, 9, 'B1', 'Standard'),
+(363, 9, 'C1', 'Standard'),
+(364, 9, 'D1', 'Standard'),
+(365, 9, 'E1', 'Standard'),
+(366, 9, 'F1', 'Standard'),
+(367, 9, 'G1', 'Standard'),
+(368, 9, 'H1', 'Standard'),
+(369, 9, 'A2', 'Standard'),
+(370, 9, 'B2', 'Standard'),
+(371, 9, 'C2', 'Standard'),
+(372, 9, 'D2', 'Standard'),
+(373, 9, 'E2', 'Standard'),
+(374, 9, 'F2', 'Standard'),
+(375, 9, 'G2', 'Standard'),
+(376, 9, 'H2', 'Standard'),
+(377, 9, 'A3', 'Standard'),
+(378, 9, 'B3', 'Standard'),
+(379, 9, 'C3', 'Standard'),
+(380, 9, 'D3', 'Standard'),
+(381, 9, 'E3', 'Standard'),
+(382, 9, 'F3', 'Standard'),
+(383, 9, 'G3', 'Standard'),
+(384, 9, 'H3', 'Standard'),
+(385, 9, 'A4', 'Standard'),
+(386, 9, 'B4', 'Standard'),
+(387, 9, 'C4', 'Standard'),
+(388, 9, 'D4', 'Standard'),
+(389, 9, 'E4', 'Standard'),
+(390, 9, 'F4', 'Standard'),
+(391, 9, 'G4', 'Standard'),
+(392, 9, 'H4', 'Standard'),
+(393, 9, 'A5', 'Standard'),
+(394, 9, 'B5', 'Standard'),
+(395, 9, 'C5', 'Standard'),
+(396, 9, 'D5', 'Standard'),
+(397, 9, 'E5', 'Standard'),
+(398, 9, 'F5', 'Standard'),
+(399, 9, 'G5', 'Standard'),
+(400, 9, 'H5', 'Standard'),
+(401, 9, 'A6', 'Standard'),
+(402, 9, 'B6', 'Standard'),
+(403, 9, 'C6', 'Standard'),
+(404, 9, 'D6', 'Standard'),
+(405, 9, 'E6', 'Standard'),
+(406, 9, 'F6', 'Standard'),
+(407, 9, 'G6', 'Standard'),
+(408, 9, 'H6', 'Standard'),
+(409, 9, 'A7', 'Standard'),
+(410, 9, 'B7', 'Standard'),
+(411, 9, 'C7', 'Standard'),
+(412, 9, 'D7', 'Standard'),
+(413, 9, 'E7', 'Standard'),
+(414, 9, 'F7', 'Standard'),
+(415, 9, 'G7', 'Standard'),
+(416, 9, 'H7', 'Standard'),
+(417, 9, 'A8', 'Standard'),
+(418, 9, 'B8', 'Standard'),
+(419, 9, 'C8', 'Standard'),
+(420, 9, 'D8', 'Standard'),
+(421, 9, 'E8', 'Standard'),
+(422, 9, 'F8', 'Standard'),
+(423, 9, 'G8', 'Standard'),
+(424, 9, 'H8', 'Standard'),
+(425, 9, 'A9', 'Standard'),
+(426, 9, 'B9', 'Standard'),
+(427, 9, 'C9', 'Standard'),
+(428, 9, 'D9', 'Standard'),
+(429, 9, 'E9', 'Standard'),
+(430, 9, 'F9', 'Standard'),
+(431, 9, 'G9', 'Standard'),
+(432, 9, 'H9', 'Standard'),
+(433, 9, 'A10', 'Standard'),
+(434, 9, 'B10', 'Standard'),
+(435, 9, 'C10', 'Standard'),
+(436, 9, 'D10', 'Standard'),
+(437, 9, 'E10', 'Standard'),
+(438, 9, 'F10', 'Standard'),
+(439, 9, 'G10', 'Standard'),
+(440, 9, 'H10', 'Standard'),
+(441, 9, 'I1', 'Couple'),
+(442, 9, 'J1', 'Couple'),
+(443, 9, 'I2', 'Couple'),
+(444, 9, 'J2', 'Couple'),
+(445, 9, 'I3', 'Couple'),
+(446, 9, 'J3', 'Couple'),
+(447, 9, 'I4', 'Couple'),
+(448, 9, 'J4', 'Couple'),
+(449, 9, 'I5', 'Couple'),
+(450, 9, 'J5', 'Couple');
 
 -- --------------------------------------------------------
 
@@ -1005,7 +1147,8 @@ INSERT INTO `showroom` (`ID`, `SHOWROOMNUM`, `SEATCOUNT`, `CINEMA_ID`) VALUES
 (5, 1, 90, 1),
 (6, 2, 90, 1),
 (7, 1, 90, 2),
-(8, 2, 90, 2);
+(8, 2, 90, 2),
+(9, 1, 90, 3);
 
 -- --------------------------------------------------------
 
@@ -1248,7 +1391,7 @@ INSERT INTO `ticket` (`ID`, `BOO_ID`, `price`) VALUES
 (554, NULL, 90900),
 (555, NULL, 90900),
 (556, NULL, 90900),
-(557, NULL, 90900),
+(557, 10, 90900),
 (558, NULL, 90900),
 (559, NULL, 90900),
 (560, NULL, 90900),
@@ -1262,7 +1405,7 @@ INSERT INTO `ticket` (`ID`, `BOO_ID`, `price`) VALUES
 (568, NULL, 90900),
 (569, NULL, 90900),
 (570, NULL, 90900),
-(571, NULL, 90900),
+(571, 11, 90900),
 (572, NULL, 90900),
 (573, NULL, 90900),
 (574, NULL, 90900),
@@ -1608,7 +1751,7 @@ INSERT INTO `ticket` (`ID`, `BOO_ID`, `price`) VALUES
 (914, NULL, 90000),
 (915, NULL, 90000),
 (916, NULL, 90000),
-(917, NULL, 90000),
+(917, 9, 90000),
 (918, NULL, 90000),
 (919, NULL, 90000),
 (920, NULL, 90000),
@@ -1616,7 +1759,7 @@ INSERT INTO `ticket` (`ID`, `BOO_ID`, `price`) VALUES
 (922, NULL, 90000),
 (923, NULL, 90000),
 (924, NULL, 90000),
-(925, NULL, 90000),
+(925, 9, 90000),
 (926, NULL, 90000),
 (927, NULL, 90000),
 (928, NULL, 90000),
@@ -1674,9 +1817,9 @@ INSERT INTO `ticket` (`ID`, `BOO_ID`, `price`) VALUES
 (980, NULL, 90000),
 (981, NULL, 120000),
 (982, NULL, 120000),
-(983, NULL, 120000),
+(983, 9, 120000),
 (984, NULL, 120000),
-(985, NULL, 120000),
+(985, 9, 120000),
 (986, NULL, 120000),
 (987, NULL, 120000),
 (988, NULL, 120000),
@@ -1698,7 +1841,7 @@ INSERT INTO `ticket` (`ID`, `BOO_ID`, `price`) VALUES
 (1004, NULL, 90000),
 (1005, NULL, 90000),
 (1006, NULL, 90000),
-(1007, NULL, 90000),
+(1007, 8, 90000),
 (1008, NULL, 90000),
 (1009, NULL, 90000),
 (1010, NULL, 90000),
@@ -1764,7 +1907,7 @@ INSERT INTO `ticket` (`ID`, `BOO_ID`, `price`) VALUES
 (1070, NULL, 90000),
 (1071, NULL, 120000),
 (1072, NULL, 120000),
-(1073, NULL, 120000),
+(1073, 8, 120000),
 (1074, NULL, 120000),
 (1075, NULL, 120000),
 (1076, NULL, 120000),
@@ -1861,7 +2004,97 @@ INSERT INTO `ticket` (`ID`, `BOO_ID`, `price`) VALUES
 (1167, NULL, 120000),
 (1168, NULL, 120000),
 (1169, NULL, 120000),
-(1170, NULL, 120000);
+(1170, NULL, 120000),
+(1171, NULL, 100000),
+(1172, NULL, 100000),
+(1173, NULL, 100000),
+(1174, NULL, 100000),
+(1175, NULL, 100000),
+(1176, NULL, 100000),
+(1177, NULL, 100000),
+(1178, NULL, 100000),
+(1179, NULL, 100000),
+(1180, NULL, 100000),
+(1181, NULL, 100000),
+(1182, NULL, 100000),
+(1183, NULL, 100000),
+(1184, NULL, 100000),
+(1185, NULL, 100000),
+(1186, NULL, 100000),
+(1187, NULL, 100000),
+(1188, NULL, 100000),
+(1189, NULL, 100000),
+(1190, NULL, 100000),
+(1191, NULL, 100000),
+(1192, NULL, 100000),
+(1193, NULL, 100000),
+(1194, NULL, 100000),
+(1195, NULL, 100000),
+(1196, NULL, 100000),
+(1197, NULL, 100000),
+(1198, NULL, 100000),
+(1199, NULL, 100000),
+(1200, NULL, 100000),
+(1201, NULL, 100000),
+(1202, NULL, 100000),
+(1203, NULL, 100000),
+(1204, NULL, 100000),
+(1205, NULL, 100000),
+(1206, NULL, 100000),
+(1207, NULL, 100000),
+(1208, NULL, 100000),
+(1209, NULL, 100000),
+(1210, NULL, 100000),
+(1211, NULL, 100000),
+(1212, NULL, 100000),
+(1213, NULL, 100000),
+(1214, NULL, 100000),
+(1215, NULL, 100000),
+(1216, NULL, 100000),
+(1217, NULL, 100000),
+(1218, NULL, 100000),
+(1219, NULL, 100000),
+(1220, NULL, 100000),
+(1221, NULL, 100000),
+(1222, NULL, 100000),
+(1223, NULL, 100000),
+(1224, NULL, 100000),
+(1225, NULL, 100000),
+(1226, NULL, 100000),
+(1227, NULL, 100000),
+(1228, NULL, 100000),
+(1229, NULL, 100000),
+(1230, NULL, 100000),
+(1231, NULL, 100000),
+(1232, NULL, 100000),
+(1233, NULL, 100000),
+(1234, NULL, 100000),
+(1235, NULL, 100000),
+(1236, NULL, 100000),
+(1237, NULL, 100000),
+(1238, NULL, 100000),
+(1239, NULL, 100000),
+(1240, NULL, 100000),
+(1241, NULL, 100000),
+(1242, NULL, 100000),
+(1243, NULL, 100000),
+(1244, NULL, 100000),
+(1245, NULL, 100000),
+(1246, NULL, 100000),
+(1247, NULL, 100000),
+(1248, NULL, 100000),
+(1249, NULL, 100000),
+(1250, NULL, 100000),
+(1251, NULL, 130000),
+(1252, NULL, 130000),
+(1253, NULL, 130000),
+(1254, NULL, 130000),
+(1255, NULL, 130000),
+(1256, NULL, 130000),
+(1257, NULL, 130000),
+(1258, NULL, 130000),
+(1259, NULL, 130000),
+(1260, NULL, 130000);
 
 --
 -- Bẫy `ticket`
@@ -1975,8 +2208,8 @@ INSERT INTO `ticket_seat_schedule` (`SEAT_ID`, `SCHEDULE_ID`, `TICKET_ID`, `BOOK
 (16, 15, 1096, 0),
 (17, 6, 377, 0),
 (17, 7, 467, 1),
-(17, 9, 557, 0),
-(17, 14, 1007, 0),
+(17, 9, 557, 1),
+(17, 14, 1007, 1),
 (17, 15, 1097, 0),
 (18, 6, 378, 0),
 (18, 7, 468, 0),
@@ -2045,7 +2278,7 @@ INSERT INTO `ticket_seat_schedule` (`SEAT_ID`, `SCHEDULE_ID`, `TICKET_ID`, `BOOK
 (30, 15, 1110, 0),
 (31, 6, 391, 0),
 (31, 7, 481, 0),
-(31, 9, 571, 0),
+(31, 9, 571, 1),
 (31, 14, 1021, 0),
 (31, 15, 1111, 0),
 (32, 6, 392, 0),
@@ -2306,7 +2539,7 @@ INSERT INTO `ticket_seat_schedule` (`SEAT_ID`, `SCHEDULE_ID`, `TICKET_ID`, `BOOK
 (83, 6, 443, 0),
 (83, 7, 533, 1),
 (83, 9, 623, 0),
-(83, 14, 1073, 0),
+(83, 14, 1073, 1),
 (83, 15, 1163, 0),
 (84, 6, 444, 0),
 (84, 7, 534, 0),
@@ -2556,7 +2789,7 @@ INSERT INTO `ticket_seat_schedule` (`SEAT_ID`, `SCHEDULE_ID`, `TICKET_ID`, `BOOK
 (286, 12, 826, 0),
 (286, 13, 916, 0),
 (287, 12, 827, 0),
-(287, 13, 917, 0),
+(287, 13, 917, 1),
 (288, 12, 828, 0),
 (288, 13, 918, 0),
 (289, 12, 829, 0),
@@ -2572,7 +2805,7 @@ INSERT INTO `ticket_seat_schedule` (`SEAT_ID`, `SCHEDULE_ID`, `TICKET_ID`, `BOOK
 (294, 12, 834, 0),
 (294, 13, 924, 0),
 (295, 12, 835, 0),
-(295, 13, 925, 0),
+(295, 13, 925, 1),
 (296, 12, 836, 0),
 (296, 13, 926, 0),
 (297, 12, 837, 0),
@@ -2688,11 +2921,11 @@ INSERT INTO `ticket_seat_schedule` (`SEAT_ID`, `SCHEDULE_ID`, `TICKET_ID`, `BOOK
 (352, 12, 892, 0),
 (352, 13, 982, 0),
 (353, 12, 893, 0),
-(353, 13, 983, 0),
+(353, 13, 983, 1),
 (354, 12, 894, 0),
 (354, 13, 984, 0),
 (355, 12, 895, 0),
-(355, 13, 985, 0),
+(355, 13, 985, 1),
 (356, 12, 896, 0),
 (356, 13, 986, 0),
 (357, 12, 897, 0),
@@ -2702,7 +2935,97 @@ INSERT INTO `ticket_seat_schedule` (`SEAT_ID`, `SCHEDULE_ID`, `TICKET_ID`, `BOOK
 (359, 12, 899, 0),
 (359, 13, 989, 0),
 (360, 12, 900, 0),
-(360, 13, 990, 0);
+(360, 13, 990, 0),
+(361, 16, 1171, 0),
+(362, 16, 1172, 0),
+(363, 16, 1173, 0),
+(364, 16, 1174, 0),
+(365, 16, 1175, 0),
+(366, 16, 1176, 0),
+(367, 16, 1177, 0),
+(368, 16, 1178, 0),
+(369, 16, 1179, 0),
+(370, 16, 1180, 0),
+(371, 16, 1181, 0),
+(372, 16, 1182, 0),
+(373, 16, 1183, 0),
+(374, 16, 1184, 0),
+(375, 16, 1185, 0),
+(376, 16, 1186, 0),
+(377, 16, 1187, 0),
+(378, 16, 1188, 0),
+(379, 16, 1189, 0),
+(380, 16, 1190, 0),
+(381, 16, 1191, 0),
+(382, 16, 1192, 0),
+(383, 16, 1193, 0),
+(384, 16, 1194, 0),
+(385, 16, 1195, 0),
+(386, 16, 1196, 0),
+(387, 16, 1197, 0),
+(388, 16, 1198, 0),
+(389, 16, 1199, 0),
+(390, 16, 1200, 0),
+(391, 16, 1201, 0),
+(392, 16, 1202, 0),
+(393, 16, 1203, 0),
+(394, 16, 1204, 0),
+(395, 16, 1205, 0),
+(396, 16, 1206, 0),
+(397, 16, 1207, 0),
+(398, 16, 1208, 0),
+(399, 16, 1209, 0),
+(400, 16, 1210, 0),
+(401, 16, 1211, 0),
+(402, 16, 1212, 0),
+(403, 16, 1213, 0),
+(404, 16, 1214, 0),
+(405, 16, 1215, 0),
+(406, 16, 1216, 0),
+(407, 16, 1217, 0),
+(408, 16, 1218, 0),
+(409, 16, 1219, 0),
+(410, 16, 1220, 0),
+(411, 16, 1221, 0),
+(412, 16, 1222, 0),
+(413, 16, 1223, 0),
+(414, 16, 1224, 0),
+(415, 16, 1225, 0),
+(416, 16, 1226, 0),
+(417, 16, 1227, 0),
+(418, 16, 1228, 0),
+(419, 16, 1229, 0),
+(420, 16, 1230, 0),
+(421, 16, 1231, 0),
+(422, 16, 1232, 0),
+(423, 16, 1233, 0),
+(424, 16, 1234, 0),
+(425, 16, 1235, 0),
+(426, 16, 1236, 0),
+(427, 16, 1237, 0),
+(428, 16, 1238, 0),
+(429, 16, 1239, 0),
+(430, 16, 1240, 0),
+(431, 16, 1241, 0),
+(432, 16, 1242, 0),
+(433, 16, 1243, 0),
+(434, 16, 1244, 0),
+(435, 16, 1245, 0),
+(436, 16, 1246, 0),
+(437, 16, 1247, 0),
+(438, 16, 1248, 0),
+(439, 16, 1249, 0),
+(440, 16, 1250, 0),
+(441, 16, 1251, 0),
+(442, 16, 1252, 0),
+(443, 16, 1253, 0),
+(444, 16, 1254, 0),
+(445, 16, 1255, 0),
+(446, 16, 1256, 0),
+(447, 16, 1257, 0),
+(448, 16, 1258, 0),
+(449, 16, 1259, 0),
+(450, 16, 1260, 0);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -2808,19 +3131,19 @@ ALTER TABLE `ticket_seat_schedule`
 -- AUTO_INCREMENT cho bảng `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT cho bảng `cinema`
 --
 ALTER TABLE `cinema`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `client`
 --
 ALTER TABLE `client`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `foodcombo`
@@ -2844,19 +3167,19 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT cho bảng `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT cho bảng `seat`
 --
 ALTER TABLE `seat`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=361;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=451;
 
 --
 -- AUTO_INCREMENT cho bảng `showroom`
 --
 ALTER TABLE `showroom`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT cho bảng `staff`
@@ -2868,7 +3191,7 @@ ALTER TABLE `staff`
 -- AUTO_INCREMENT cho bảng `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1171;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1261;
 
 --
 -- Các ràng buộc cho các bảng đã đổ

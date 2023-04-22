@@ -84,6 +84,7 @@ Route::add("/?api/seat/getByShowroom", "SeatController@getByShowroom");
 // Transaction
 Route::add("/?api/transaction/getall", "TransactionController@getAll");
 Route::add("/?api/transaction/getrevenue", "TransactionController@getRevenue");
+Route::add("/?api/transaction/getbyid", "TransactionController@getByID");
 
 // Ticket
 Route::add("/?api/ticket/add", "TicketController@add");

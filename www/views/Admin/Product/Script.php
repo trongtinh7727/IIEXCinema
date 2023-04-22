@@ -12,7 +12,11 @@
             console.log(data)
             data.data.forEach(function(object) {
                 $('#NAME').val(object.NAME)
-                $('#TYPE').val(object.TYPE)
+                if (object.TYPE == "Đồ ăn") {
+                    $('#TYPE').val(1)
+                }else{
+                    $('#TYPE').val(2)
+                }
                 $('#PRICE').val(object.PRICE)
                 $('#QUANTITY').val(object.QUANTITY)
                 $('#STORY').val(object.STORY)
